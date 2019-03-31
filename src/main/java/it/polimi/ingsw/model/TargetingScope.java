@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class TaargetingScope extends PowerUp {
+public class TargetingScope extends PowerUp {
 
     //when the player shot, he could pay a cube to make an additional damage
     @Override
