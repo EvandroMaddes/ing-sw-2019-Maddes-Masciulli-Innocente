@@ -8,11 +8,11 @@ public class BasicSquare extends Square {
 
     }
 
-    public void replaceAmmo(){
+    public void removeAmmoTile(){
 
     }
 
-    public void removeAmmoTile(){
+    public void replaceAmmoTile(){
 
     }
 }

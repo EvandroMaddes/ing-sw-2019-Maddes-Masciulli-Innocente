@@ -2,10 +2,10 @@ package it.polimi.ingsw.model;
 
 public class DamageToken {
 
-    private Character character;
+    private final Character character;
 
     public Character getCharacter()
     {
-
+        return character;
     }
 }

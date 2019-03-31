@@ -10,15 +10,18 @@ public class Square {
     private Direction westDirection;
     private Room squareRoom;
 
-    public ArrayList<Player> getSquarePlayers(){
+    public ArrayList<Player> getSquarePlayers()
+    {
 
     }
 
-    public Square getNextSquare(Direction direction){
-
+    public Square getNextSquare(Direction direction)
+    {
+        return direction.getSquare();
     }
 
-    public boolean checkDirection(Direction direction){
-
+    public boolean checkDirection(Direction direction)
+    {
+        return direction.isReachable();
     }
 }
