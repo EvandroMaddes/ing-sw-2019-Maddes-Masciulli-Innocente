@@ -14,4 +14,15 @@ public class Game {
 
     private Game() {
     }
+
+    private void initialize(){
+
+    }
+    private void getGameTrackPoints(){
+
+    }
+
+    private ArrayList<Player> winner(){
+        
+    }
 }
