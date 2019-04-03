@@ -6,6 +6,8 @@ public enum Character {
     BANSHEE,
     DOZER,
     VIOLET,
-    SPROG
+    SPROG;
+
+    private Player itsPlayer;
 
 }
