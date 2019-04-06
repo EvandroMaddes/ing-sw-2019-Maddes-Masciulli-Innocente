@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.game_components;
+package it.polimi.ingsw.model.game_components.cards;
 
 public class Teleporter extends PowerUp{
 

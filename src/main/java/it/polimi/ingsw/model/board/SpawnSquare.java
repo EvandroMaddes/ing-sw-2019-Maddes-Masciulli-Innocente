@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.game_components.CubeColour;
-import it.polimi.ingsw.model.game_components.Weapon;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 
 import java.util.ArrayList;
 

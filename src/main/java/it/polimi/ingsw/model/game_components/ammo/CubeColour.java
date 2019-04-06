@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.game_components;
+package it.polimi.ingsw.model.game_components.ammo;
 
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 
