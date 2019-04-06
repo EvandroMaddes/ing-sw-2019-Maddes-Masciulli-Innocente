@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.board.GameBoard;
+import it.polimi.ingsw.model.game_components.Round;
+import it.polimi.ingsw.model.player.Player;
+
 import java.util.ArrayList;
 
 public class Game {
