@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.GameModel;
+
 import java.util.Observer;
 import java.util.Observable;
 

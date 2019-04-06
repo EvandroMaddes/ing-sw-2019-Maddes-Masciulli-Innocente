@@ -10,7 +10,9 @@ public class Controller implements Observer {
 
     public boolean checkSyntax()
     {
+        boolean i = true;
 
+        return i;
     }
 
     @Override

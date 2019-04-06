@@ -31,7 +31,9 @@ public class RoundController {
 
     public boolean checkAction()
     {
+        boolean i = true;
 
+        return i;
     }
 
     public void endRound()

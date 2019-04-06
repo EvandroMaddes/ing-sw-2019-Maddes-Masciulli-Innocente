@@ -18,7 +18,9 @@ public class GameController {
 
     public GameController instance()
     {
+        GameController i = null;
 
+        return i;
     }
 
     public void inizialize()
@@ -33,12 +35,16 @@ public class GameController {
 
     public ArrayList<Player> winner()
     {
+        ArrayList<Player> i = null;
 
+        return i;
     }
 
     public boolean checkAviable( Player player, Character character)
     {
+        boolean i = true;
 
+        return i;
     }
 
     public void addPlayer (Player player, Character character)
