@@ -1,6 +1,7 @@
-package it.polimi.ingsw.model.game_components;
+package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.board.Direction;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;

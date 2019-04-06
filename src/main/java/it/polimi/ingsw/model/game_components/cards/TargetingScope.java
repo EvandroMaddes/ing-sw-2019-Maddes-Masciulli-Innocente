@@ -1,4 +1,6 @@
-package it.polimi.ingsw.model.game_components;
+package it.polimi.ingsw.model.game_components.cards;
+
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 
 public class TargetingScope extends PowerUp {
 

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.model.game_components.AmmoCube;
-import it.polimi.ingsw.model.game_components.PowerUp;
-import it.polimi.ingsw.model.game_components.Weapon;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.board.Square;
 
 import java.util.ArrayList;
