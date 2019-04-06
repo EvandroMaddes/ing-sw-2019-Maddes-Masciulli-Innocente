@@ -20,12 +20,12 @@ public class KillShotTrack extends GameTrack {
             killShotTrack = new KillShotTrack();
     }
 
-    public void replaceSkull( DamageToken damageToken )
+    public void evalueteDamage( DamageToken damageToken, int number )
     {
 
     }
 
-    public void addDamage( DamageToken damageToken )
+    private void addDamage( DamageToken damageToken )
     {
 
     }

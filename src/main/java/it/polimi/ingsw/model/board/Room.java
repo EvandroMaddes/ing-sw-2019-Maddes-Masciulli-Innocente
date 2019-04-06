@@ -6,9 +6,12 @@ import java.util.ArrayList;
 
 public class Room {
     private ArrayList<Square> squares;
+    private String roomColour;
 
     public ArrayList<Player> getRoomPlayers(){
+        ArrayList<Player> players = null;
 
+        return players;
     }
 
 }

@@ -4,7 +4,8 @@ public class AmmoCube {
 
     private CubeColour colour;
 
-    public CubeColour getColour() {
+    public CubeColour getColour()
+    {
         return colour;
     }
 }

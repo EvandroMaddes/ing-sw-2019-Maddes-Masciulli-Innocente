@@ -9,12 +9,19 @@ public class PowerUpDeck implements DeckManagement {
 
 
     @Override
-    public void draw() {
+    public void draw()
+    {
 
     }
 
     @Override
-    public void shuffle() {
+    public void shuffle()
+    {
+
+    }
+
+    public void reshuffle()
+    {
 
     }
 }

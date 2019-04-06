@@ -14,6 +14,9 @@ public class Square {
 
     public ArrayList<Player> getSquarePlayers()
     {
+        ArrayList<Player> players = null;
+
+        return players;
 
     }
 

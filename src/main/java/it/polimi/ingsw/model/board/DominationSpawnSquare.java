@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class DominationSpawnSquare extends SpawnSquare {
 
-    int i
 
     public void damage(ArrayList<Player> target){
 

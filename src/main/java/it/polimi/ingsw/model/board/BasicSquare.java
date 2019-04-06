@@ -7,10 +7,12 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     public boolean checkAmmo(){
+        boolean i=true;
+        return i;
 
     }
 
-    public void removeAmmoTile(){
+    public void grabAmmoTile(){
 
     }
 

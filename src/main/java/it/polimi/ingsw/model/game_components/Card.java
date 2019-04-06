@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public abstract class Card implements BaseFightAction {
 
     private CubeColour colour;
-    String name;
+    private String name;
 
     //Player damage the targets with the amount number of token
     @Override
@@ -24,6 +24,12 @@ public abstract class Card implements BaseFightAction {
     @Override
     public void move(Player target, Direction direction) {
 
+    }
+
+    public CubeColour getColour()
+    {
+        CubeColour i=null;
+        return i;
     }
 
 

@@ -7,4 +7,9 @@ public class TargetingScope extends PowerUp {
     public void useEffect() {
 
     }
+
+    public void payCube(AmmoCube cube)
+    {
+
+    }
 }

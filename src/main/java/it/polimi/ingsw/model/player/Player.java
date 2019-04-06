@@ -11,6 +11,7 @@ public class Player {
 
     private String username;
     private Character character;
+    private String battleCry;
     private PlayerBoard playerBoard;
     private int points;
     private Square position;
@@ -31,7 +32,8 @@ public class Player {
 
     public Square getPosition()
     {
-
+        Square currentSquare = null;
+        return currentSquare;
     }
 
     public void setUsername(String username)

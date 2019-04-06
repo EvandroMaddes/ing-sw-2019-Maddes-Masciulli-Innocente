@@ -16,4 +16,10 @@ public class AmmoTilesDeck implements DeckManagement {
     public void shuffle() {
 
     }
+
+    public void reshuffle()
+    {
+
+    }
+
 }
