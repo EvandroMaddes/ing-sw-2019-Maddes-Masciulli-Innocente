@@ -25,6 +25,11 @@ public class Player {
 
     }
 
+    public Character getCharacter()
+    {
+        return character;
+    }
+
     public void addPowerUp(PowerUp powerUp)
     {
 

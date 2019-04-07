@@ -2,11 +2,12 @@ package it.polimi.ingsw.model.player;
 
 public class DamageToken {
 
-    private final Character character=null;
+    private final Character character;
 
-    public void setCharacter()
+
+    public DamageToken(Player player)
     {
-
+        character = player.getCharacter();
     }
 
     public Character getCharacter()
