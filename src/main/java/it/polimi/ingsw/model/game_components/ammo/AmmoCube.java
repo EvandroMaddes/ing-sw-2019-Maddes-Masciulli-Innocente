@@ -13,6 +13,7 @@ public class AmmoCube {
         this.colour = colour;
     }
 
+
     public CubeColour getColour()
     {
         return colour;

@@ -13,6 +13,10 @@ public abstract class GameTrack {
 
     }
 
+    /**
+     * if the number of skulls is zero, it means that game is over
+     * @return
+     */
     public boolean checkEndTrack()
     {
         boolean i=true;
