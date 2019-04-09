@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
+/**
+ * @author Federico Innocente
+ */
+
 public class AmmoCube {
 
     private CubeColour colour;
