@@ -7,10 +7,19 @@ public class Direction {
     private Square nextSquare;
     private boolean reachable;
 
-    public Square getSquare()
+    /**
+     *
+     * @return the square in this direction
+     */
+    public Square getNextSquare()
     {
         return nextSquare;
     }
+
+    /**
+     * it checks if there is wall or not
+     * @return
+     */
 
     public boolean isReachable()
     {
