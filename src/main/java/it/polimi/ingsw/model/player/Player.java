@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.player;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.board.Square;
@@ -30,6 +31,10 @@ public class Player {
         return character;
     }
 
+    public ArrayList<PowerUp> getPowerUps() {
+        return powerUps;
+    }
+
     public void addPowerUp(PowerUp powerUp)
     {
 
@@ -42,6 +47,11 @@ public class Player {
     }
 
     public void setUsername(String username)
+    {
+
+    }
+
+    public int getCubeColourNumber(CubeColour colour)
     {
 
     }
