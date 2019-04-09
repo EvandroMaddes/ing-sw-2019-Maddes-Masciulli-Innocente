@@ -21,8 +21,7 @@ public class PlayerBoard {
 
     public int getSkullsNumber()
     {
-        int i=0;
-        return i;
+        return skullsNumber;
     }
 
     public void resetDamages()
@@ -32,7 +31,7 @@ public class PlayerBoard {
 
     public void addSkull()
     {
-
+        skullsNumber += 1;
     }
 
     public boolean checkAdrenalinicGrab()
@@ -48,6 +47,17 @@ public class PlayerBoard {
     }
 
     public void  setFinalFrenzyBoard()
+    {
+
+    }
+
+    // contiene un return di default per poter eseguire sonar
+    public int checkNumberOfMarks(Player enemy)
+    {
+        return 1;
+    }
+
+    public void removeMarks (Player enemy)
     {
 
     }
