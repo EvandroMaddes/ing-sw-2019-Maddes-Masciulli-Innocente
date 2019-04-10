@@ -21,6 +21,11 @@ public class DominationTrack extends GameTrack {
 
     }
 
+    /**
+     *
+     * @param track
+     * @param damageToken
+     */
     public void addDamage( ArrayList<DamageToken> track, DamageToken damageToken )
     {
 

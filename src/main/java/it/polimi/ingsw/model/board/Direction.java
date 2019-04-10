@@ -2,6 +2,9 @@ package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.board.Square;
 
+/**
+ * @author Evandro Maddes
+ */
 public class Direction {
 
     private Square nextSquare;

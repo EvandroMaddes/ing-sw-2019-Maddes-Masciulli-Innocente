@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.game_components.cards.Weapon;
 
 import java.util.ArrayList;
 
+/**
+ * @author Evandro Maddes
+ * @// TODO: 10/04/2019 metodo comparecolour 
+ */
 public class SpawnSquare extends Square {
      private ArrayList<Weapon> weapons;
 
@@ -29,19 +33,27 @@ public class SpawnSquare extends Square {
      }
 
      /**
-      * If one player picks-up a weapon, this metod replaces it or leaves empty(only if there are non more weapons)
+      * After one player picks-up a weapon, this metod replaces it or leaves empty(only if there are non more weapons)
+      * @param weaponCard card that is drawed 
       */
-     public void replaceWeapon()
-     {
-
+     public void replaceWeapon(Weapon weaponCard) throws NullPointerException
+           {int i=0;
+                try {
+                     while(weapons.get(i)==null && i<3){
+                          weapons.add(weaponCard);
+                     }
+                }
+             catch (NullPointerException){
+                     
+             }
      }
 
      /**
-      *
+      * @param weaponCard crad that is selected by a player
       */
-     public void removeWeapon()
+     public void removeWeapon(Weapon weaponCard)
      {
-
+          weapons.remove(weaponCard);
      }
 
 }

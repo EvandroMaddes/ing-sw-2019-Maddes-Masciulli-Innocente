@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.board.Square;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 
 public class Player {
@@ -20,6 +21,7 @@ public class Player {
     private boolean firstPlayer;
     private Weapon[] weapons;
     private ArrayList<PowerUp> powerUps;
+
 
     public void addAmmo(AmmoCube ammo)
     {
@@ -42,8 +44,7 @@ public class Player {
 
     public Square getPosition()
     {
-        Square currentSquare = null;
-        return currentSquare;
+        return position;
     }
 
     public void setUsername(String username)
