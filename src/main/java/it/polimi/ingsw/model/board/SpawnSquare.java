@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 
 import java.util.ArrayList;
@@ -21,14 +22,18 @@ public class SpawnSquare extends Square {
           return weapons;
      }
 
-     /**
+     /**SIAMO SICURI SERVA?--->PROBLEMA: COLERE DEI PWERUP è DI TIPO CUBE COLOUR MENTRE COLORE STANZE è DI TIPO STRING
       * it checks if the discard card and spawn square have the same colour
-      * @param choosenColour
+      * @param discardCard
       * @return
       */
-     public boolean compareColour(CubeColour choosenColour)
+     public boolean compareColour(Card discardCard)
      {
           boolean i=true;
+        //  if(discardCard.getColour()==)
+          {
+
+          }
           return i;
      }
 
@@ -43,8 +48,9 @@ public class SpawnSquare extends Square {
                           weapons.add(weaponCard);
                      }
                 }
-             catch (NullPointerException){
-                     
+             catch (NullPointerException e)
+             {
+                     //cosa lancia?
              }
      }
 

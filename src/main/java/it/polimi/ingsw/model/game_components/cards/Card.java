@@ -29,8 +29,7 @@ public abstract class Card implements BaseFightAction {
 
     public CubeColour getColour()
     {
-        CubeColour i=null;
-        return i;
+       return this.colour;
     }
 
 

@@ -2,6 +2,10 @@ package it.polimi.ingsw.model.board;
 
 import java.util.ArrayList;
 
+/**
+ * @author Evandro Maddes
+ * Todo implementare metodi set
+ */
 public class Map {
 
     private int mapNumber;
@@ -19,6 +23,20 @@ public class Map {
     private Map() {
     }
 
+    /**
+     * lega tutte le stanze alla mappa
+     */
+    public void setRooms()
+    {
 
+    }
+
+    /**
+     * lega tutti i punti di generazione alla mappa
+     */
+    public void setSpawnSquares()
+    {
+
+    }
 
 }

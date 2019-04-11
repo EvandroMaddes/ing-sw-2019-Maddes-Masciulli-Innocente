@@ -17,7 +17,7 @@ public class Square {
     private Room squareRoom;
 
 
-    /**
+    /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
      * this metod checks which players are on this square
      * @param playersGame  who are playing
      * @return players on the square

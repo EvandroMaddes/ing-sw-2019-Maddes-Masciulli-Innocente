@@ -57,4 +57,12 @@ public class Player {
 
     }
 
+    /**
+     * when player is on a spawn square in domination mode
+     */
+    public void receiveDamege()
+    {
+        this.playerBoard.addDamages(this,1);
+    }
+
 }

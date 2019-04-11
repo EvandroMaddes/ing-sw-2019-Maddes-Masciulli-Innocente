@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.board;
 
+/**
+ * @author Evandro Maddes
+ */
 public abstract class GameTrack {
 
     private int skullBox;
@@ -10,7 +13,7 @@ public abstract class GameTrack {
      */
     public void removeSkull()
     {
-
+        skullBox--;
     }
 
     /**
@@ -19,7 +22,12 @@ public abstract class GameTrack {
      */
     public boolean checkEndTrack()
     {
-        boolean i=true;
+        boolean i;
+
+        if(skullBox==0)
+            i=true;
+        else i=false;
+
         return i;
     }
 
