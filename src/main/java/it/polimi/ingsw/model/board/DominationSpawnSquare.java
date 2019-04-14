@@ -9,6 +9,8 @@ import java.util.ArrayList;
 /**
  * @Evandro Maddes
  * todo rivedi metodo damage
+ * @Francesco Masciulli
+ * commentata la chiamata alla riga 27 per compilare
  */
 
 public class DominationSpawnSquare extends SpawnSquare {
@@ -22,7 +24,7 @@ public class DominationSpawnSquare extends SpawnSquare {
 
         while(i<target.size())
         {
-            target.get(i).receiveDamege();
+           // target.get(i).receiveDamege();
         }
 
     }

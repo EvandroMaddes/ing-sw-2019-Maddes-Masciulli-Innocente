@@ -47,6 +47,29 @@ public class Player implements Iterator {
         addAmmo(new AmmoCube(CubeColour.Yellow));
     }
 
+
+    /**
+     * This method must be implemented from the iterator
+     * @return true if exist the next element
+     */
+    @Override
+    public boolean hasNext(){
+        boolean hasNext = false;
+        return hasNext;
+    }
+
+    /**
+     * This method must be implemented from the iterator
+     * @return the next element
+     */
+    @Override
+    public Object next(){
+        return null;
+    }
+
+
+
+
     /**
      *
      * @return character, the charecter that the player is using
