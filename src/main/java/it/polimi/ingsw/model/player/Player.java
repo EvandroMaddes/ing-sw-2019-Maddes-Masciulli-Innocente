@@ -53,8 +53,16 @@ public class Player {
     }
 
     public int getCubeColourNumber(CubeColour colour)
-    {
+    {   int cubeColourNumber=0;
+        int i=0;
+            while(i<ammo.size()){
+                if (ammo.get(i).getColour()==colour)
+                {
+                    cubeColourNumber++;
+                }
+            }
 
+        return(cubeColourNumber);
     }
 
     /**
