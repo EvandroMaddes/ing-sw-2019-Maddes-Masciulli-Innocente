@@ -42,16 +42,18 @@ public class SpawnSquare extends Square {
       * @param weaponCard card that is drawed 
       */
      public void replaceWeapon(Weapon weaponCard) throws NullPointerException
-           {int i=0;
-                try {
-                     while(weapons.get(i)==null && i<3){
-                          weapons.add(weaponCard);
-                     }
-                }
-             catch (NullPointerException e)
-             {
-                     //cosa lancia?
-             }
+     {
+          int i=0;
+          try {
+               while(i<3){
+                    weapons.add(weaponCard);
+
+               }
+          }
+          catch (NullPointerException e)
+          {
+               weapons.add(null);
+          }
      }
 
      /**

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * @author Evandro Maddes
- * todo metosi SET
  */
 public class Room {
     private ArrayList<Square> squares;
@@ -29,18 +28,16 @@ public class Room {
 
     /**
      *
-     * metodo per legare le stanze ai quadrati
+     * @param squares sqares belonging at the room
      */
-    public void setSquares()
-    {
-
+    public void setSquares(ArrayList<Square> squares) {
+        this.squares = squares;
     }
 
     /**
-     * imposta il colore di una stanza
+     * @param roomColour colour of the room
      */
-    public void setRoomColour()
-    {
-        //this.roomColour=
+    public void setRoomColour(String roomColour) {
+        this.roomColour = roomColour;
     }
 }
