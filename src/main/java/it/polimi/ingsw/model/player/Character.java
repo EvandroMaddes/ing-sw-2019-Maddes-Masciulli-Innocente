@@ -9,6 +9,6 @@ public enum Character {
     VIOLET,
     SPROG;
 
-    private Player itsPlayer;
+    private Player player;
 
 }

@@ -12,6 +12,22 @@ public class Direction {
 
     /**
      *
+     * @param nextSquare
+     */
+    public void setNextSquare(Square nextSquare) {
+        this.nextSquare = nextSquare;
+    }
+
+    /**
+     *
+     * @param reachable
+     */
+    public void setReachable(boolean reachable) {
+        this.reachable = reachable;
+    }
+
+    /**
+     *
      * @return the square in this direction
      */
     public Square getNextSquare()

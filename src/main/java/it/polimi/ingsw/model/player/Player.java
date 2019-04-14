@@ -6,14 +6,19 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.board.Square;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Player {
+/**
+ * @author Federico Innocente
+ *
+ * class to manage the players
+ */
+public class Player implements Iterator {
 
-    private String username;
-    private Character character;
-    private String battleCry;
+    private final String username;
+    private final Character character;
+    private final String battleCry;
     private PlayerBoard playerBoard;
     private int points;
     private Square position;
@@ -22,55 +27,133 @@ public class Player {
     private Weapon[] weapons;
     private ArrayList<PowerUp> powerUps;
 
-
-    public void addAmmo(AmmoCube ammo)
+    /**
+     *
+     * @param username player's username
+     * @param character is the character choosen by the player
+     * @param battleCry is the battle cry
+     *
+     * costructor of player, set the preferences of the player (username, character, battleCry) and give him one ammoCube for each colour
+     */
+    public Player(String username, Character character, String battleCry)
     {
-
+        this.username = username;
+        this.character = character;
+        this.battleCry = battleCry;
+        this.playerBoard = new PlayerBoard();
+        this.points = 0;
+        addAmmo(new AmmoCube(CubeColour.Red));
+        addAmmo(new AmmoCube(CubeColour.Blue));
+        addAmmo(new AmmoCube(CubeColour.Yellow));
     }
 
+    /**
+     *
+     * @return character, the charecter that the player is using
+     */
     public Character getCharacter()
     {
         return character;
     }
 
+    /**
+     *
+     * @return powerUps
+     */
     public ArrayList<PowerUp> getPowerUps() {
         return powerUps;
     }
 
-    public void addPowerUp(PowerUp powerUp)
-    {
-
-    }
-
+    /**
+     *
+     * @return position
+     */
     public Square getPosition()
     {
         return position;
     }
 
-    public void setUsername(String username)
+    /**
+     *
+     * @return player's points
+     */
+    public int getPoints()
     {
-
-    }
-
-    public int getCubeColourNumber(CubeColour colour)
-    {   int cubeColourNumber=0;
-        int i=0;
-            while(i<ammo.size()){
-                if (ammo.get(i).getColour()==colour)
-                {
-                    cubeColourNumber++;
-                }
-            }
-
-        return(cubeColourNumber);
+        return points;
     }
 
     /**
-     * when player is on a spawn square in domination mode
+     *
+     * @return username
      */
-    public void receiveDamege()
+    public String getUsername()
     {
-        this.playerBoard.addDamages(this,1);
+        return username;
+    }
+
+    /**
+     *
+     * @return battleCry
+     */
+    public String getBattleCry()
+    {
+        return battleCry;
+    }
+
+    /**
+     *
+     * @return firstPlayer , true or false
+     */
+    public boolean isFirstPlayer()
+    {
+        return firstPlayer;
+    }
+
+    /**
+     *
+     * @param ammo is the ammo picked
+     *
+     * add the ammo into the player reserve
+     */
+    public void addAmmo(AmmoCube ammo)
+    {
+        this.ammo.add(ammo);
+    }
+
+    /**
+     *
+     * @param powerUp, is the powerUp picked
+     *
+     * add the powerUp into the player reserve
+     */
+    public void addPowerUp(PowerUp powerUp)
+    {
+        this.powerUps.add(powerUp);
+    }
+
+    /**
+     *
+     * @param colour , is the colour of the cube that i want to know the number of
+     * @return amount , is the number of cube of that colour that the player has
+     *
+     * return the number of the cube of the colour passed as paramether owned by the player
+     */
+    public int getCubeColourNumber(CubeColour colour)
+    {
+        Iterator iterator = ammo.iterator();
+        AmmoCube cube;
+        int amount = 0;
+
+        while (iterator.hasNext())
+        {
+            cube = (AmmoCube)iterator.next();
+
+            if( cube.getColour() == colour )
+            {
+                amount++;
+            }
+        }
+        return amount;
     }
 
 }
