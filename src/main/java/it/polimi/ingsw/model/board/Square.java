@@ -16,6 +16,13 @@ public class Square {
     private Direction westDirection;
     private Room squareRoom;
 
+    /**
+     *
+     * @param squareRoom room of the square
+     */
+    public void setSquareRoom(Room squareRoom) {
+        this.squareRoom = squareRoom;
+    }
 
     /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
      * this metod checks which players are on this square

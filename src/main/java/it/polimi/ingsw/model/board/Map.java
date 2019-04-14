@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * @author Evandro Maddes
- * Todo implementare metodi set
  */
 public class Map {
 
@@ -24,19 +23,17 @@ public class Map {
     }
 
     /**
-     * lega tutte le stanze alla mappa
+     *
+     * @param rooms rooms belonging at the current game
      */
-    public void setRooms()
-    {
-
+    public void setRooms(ArrayList<Room> rooms) {
+        this.rooms = rooms;
     }
 
     /**
-     * lega tutti i punti di generazione alla mappa
+     * @param spawnSquares spawnSquare belonging at the current game
      */
-    public void setSpawnSquares()
-    {
-
+    public void setSpawnSquares(ArrayList<SpawnSquare> spawnSquares) {
+        this.spawnSquares = spawnSquares;
     }
-
 }

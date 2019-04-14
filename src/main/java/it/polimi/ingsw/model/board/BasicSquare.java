@@ -14,6 +14,14 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     /**
+     * 
+     * @param ammo
+     */
+    public void setAmmo(AmmoTile ammo) {
+        this.ammo = ammo;
+    }
+
+    /**
      * it checks if on the square there is an ammo or not
      * @return
      */
