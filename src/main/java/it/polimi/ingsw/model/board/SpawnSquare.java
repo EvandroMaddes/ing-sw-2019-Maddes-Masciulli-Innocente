@@ -22,7 +22,7 @@ public class SpawnSquare extends Square {
           return weapons;
      }
 
-     /**SIAMO SICURI SERVA?--->PROBLEMA: COLERE DEI PWERUP è DI TIPO CUBE COLOUR MENTRE COLORE STANZE è DI TIPO STRING
+     /**SIAMO SICURI SERVA?--->PROBLEMA: COLERE DEI POWER-UP è DI TIPO CUBE_COLOUR MENTRE COLORE STANZE è DI TIPO STRING
       * it checks if the discard card and spawn square have the same colour
       * @param discardCard
       * @return

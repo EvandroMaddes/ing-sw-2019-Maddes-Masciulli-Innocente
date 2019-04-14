@@ -13,14 +13,17 @@ import java.util.ArrayList;
 
 public class DominationSpawnSquare extends SpawnSquare {
 
-    /**NON è PIù COMODO NON PASSARE N ESSUN PARAMETRO E CHIAMARE IL METODO GETsQUAREpLAYER SU THIS(?)
+    /**NON è PIù COMODO NON PASSARE NESSUN PARAMETRO E CHIAMARE IL METODO GETsQUAREpLAYER SU THIS(?)
      * at the end of every round it damage all the player on this square whit one hit
      * @param target list of players on this square
      */
     public void damage(ArrayList<Player> target) {
+        int i=0;
 
-                target.get(i).receiveDamege();
-
+        while(i<target.size())
+        {
+            target.get(i).receiveDamege();
+        }
 
     }
 
