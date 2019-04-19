@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 public class AmmoTilesDeck extends DeckManagement {
 
-    private ArrayList<AmmoTile> discardDeck;
+    private ArrayList<AmmoTile> discardDeck = new ArrayList<>();
 
     /**
-     *
-     * todo implement the method that add a discarded element in the discard Deck;
+     * this method add a discarded AmmoTile in the discardDeck, used by reshuffle method
+     * @param discardedAmmoTile is the card that a player discard (if he grab the 4th one)
      */
-    public void discardCard(PowerUp discardedPowerUp) {
-
+    public void discardCard(AmmoTile discardedAmmoTile) {
+        discardDeck.add(discardedAmmoTile);
     }
 
     /**

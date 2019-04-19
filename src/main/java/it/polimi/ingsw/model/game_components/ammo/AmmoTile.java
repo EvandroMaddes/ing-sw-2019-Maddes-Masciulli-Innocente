@@ -11,11 +11,18 @@ import it.polimi.ingsw.model.player.Player;
  */
 public abstract class AmmoTile {
 
-    AmmoCube firstAmmo;
-    AmmoCube secondAmmo;
+    private AmmoCube firstAmmo;
+    private AmmoCube secondAmmo;
 
+    public AmmoCube getFirstAmmo() {
+        return firstAmmo;
+    }
 
-    public AmmoTile( AmmoCube firstAmmo, AmmoCube secondAmmo )
+    public AmmoCube getSecondAmmo() {
+        return secondAmmo;
+    }
+
+    public AmmoTile(AmmoCube firstAmmo, AmmoCube secondAmmo )
     {
         this.firstAmmo = firstAmmo;
         this.secondAmmo = secondAmmo;

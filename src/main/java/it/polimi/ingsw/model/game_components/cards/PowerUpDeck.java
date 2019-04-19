@@ -8,14 +8,14 @@ import java.util.ArrayList;
  */
 public class PowerUpDeck extends DeckManagement {
 
-    private ArrayList<PowerUp> discardDeck;
+    private ArrayList<PowerUp> discardDeck = new ArrayList<>();
 
     /**
-     *
-     * todo implement the method that add a discarded element in the discard Deck;
+     * this method add a discarded PowerUp Card in the discardDeck, used by reshuffle method
+     * @param discardedPowerUp is the card that a player discard (if he grab the 4th one)
      */
     public void discardCard(PowerUp discardedPowerUp) {
-
+        discardDeck.add(discardedPowerUp);
     }
 
     /**

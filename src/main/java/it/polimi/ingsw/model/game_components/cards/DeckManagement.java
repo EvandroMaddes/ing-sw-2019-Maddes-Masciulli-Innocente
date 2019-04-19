@@ -44,11 +44,16 @@ public abstract class DeckManagement {
 
     //Da controllare il caso in cui verrà passata l'eccezione e le sottoclassi la casteranno
     public Object draw() throws IndexOutOfBoundsException{
+        Object drawnCard = new Object();
         try {
-            Object drawnCard = deck.get(0);
+            drawnCard = deck.get(0);
             deck.remove(0);
+        }
+        catch(IndexOutOfBoundsException emptyDeckException){
+            drawnCard = emptyDeckException;
+        }
+        finally {
             return drawnCard;
         }
-        catch(IndexOutOfBoundsException emptyDeckException){return emptyDeckException;}
     }
 }

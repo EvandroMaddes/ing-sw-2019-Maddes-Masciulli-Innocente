@@ -27,6 +27,12 @@ public abstract class Card implements BaseFightAction {
 
     }
 
+    public String getName(){ return this.name; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public CubeColour getColour()
     {
        return this.colour;

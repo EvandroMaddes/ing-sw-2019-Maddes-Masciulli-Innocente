@@ -12,6 +12,8 @@ public class CubeAmmoTile extends AmmoTile {
 
     private AmmoCube thirdAmmo;
 
+    //todo Aggiungere getter per thirdAmmo, gli altri sono implementati nella super classe
+
 
     public CubeAmmoTile( AmmoCube firstAmmo, AmmoCube secondAmmo, AmmoCube thirdAmmo )
     {
