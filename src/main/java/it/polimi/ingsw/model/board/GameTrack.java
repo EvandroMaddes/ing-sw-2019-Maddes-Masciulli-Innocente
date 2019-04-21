@@ -9,6 +9,23 @@ public abstract class GameTrack {
     final static int points[] = new int[]{ 8,6,4,2,1,1 };
 
     /**
+     *
+     * @param skullBox
+     */
+
+    public void setSkullBox(int skullBox) {
+        this.skullBox = skullBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getSkullBox() {
+        return skullBox;
+    }
+
+    /**
      * Rimuove i teschi dalla Gametrack ogni volta che muore un giocatore
      */
     public void removeSkull()

@@ -14,7 +14,7 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     /**
-     * 
+     *
      * @param ammo
      */
     public void setAmmo(AmmoTile ammo) {
