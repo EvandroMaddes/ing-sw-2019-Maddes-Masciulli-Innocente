@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.board.GameTrack;
@@ -27,6 +28,7 @@ public class GameTrackTest {
 
     @Test
     public void testCheckEndTrack(){
-      
+
     }
 }
+*/
