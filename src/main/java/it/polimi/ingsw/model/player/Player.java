@@ -48,6 +48,10 @@ public class Player implements Iterator {
     }
 
 
+
+
+
+
     /**
      * This method must be implemented from the iterator
      * @return true if exist the next element
@@ -69,6 +73,21 @@ public class Player implements Iterator {
 
 
 
+
+
+
+
+
+
+
+    /**
+     *
+     * @return the player board
+     */
+    public PlayerBoard getPlayerBoard()
+    {
+        return playerBoard;
+    }
 
     /**
      *
@@ -130,6 +149,15 @@ public class Player implements Iterator {
     public boolean isFirstPlayer()
     {
         return firstPlayer;
+    }
+
+    /**
+     *
+     * @param position is the new position
+     */
+    public void setPosition(Square position)
+    {
+        this.position = position;
     }
 
     /**

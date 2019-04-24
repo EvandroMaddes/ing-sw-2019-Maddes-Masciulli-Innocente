@@ -1,18 +1,32 @@
 package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
-import java.util.ArrayList;
 
-public class AlternateFireWeapon extends Weapon {
+public abstract class AlternateFireWeapon extends Weapon {
 
-    private ArrayList<AmmoCube> alternateEffectCost;
+    private AmmoCube[] alternativeEffectCost;
 
-    public void useEffectOne(){
 
+    /**
+     *
+     * @param colour
+     * @param name
+     * @param reloadCost
+     * @param alternativeEffectCost is the alternative effect cost
+     */
+    public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost)
+    {
+        super(colour, name, reloadCost);
+        this.alternativeEffectCost = alternativeEffectCost;
     }
 
-    public void useEffectTwo(){
+    /**
+     * overrided for every alternative effect weapon
+     */
+    public void alterativeEffect()
+    {
 
     }
 

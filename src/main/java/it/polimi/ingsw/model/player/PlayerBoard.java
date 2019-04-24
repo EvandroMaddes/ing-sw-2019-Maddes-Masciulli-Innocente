@@ -20,12 +20,20 @@ public class PlayerBoard implements Iterator {
     private int skullsNumber;
     private ArrayList<DamageToken> marks;
 
+
+
+
+
+
     /**
      * This method must be implemented from the iterator
      * @return true if exist the next element
      */
     @Override
-    public boolean hasNext(){
+
+
+
+    /*!!!!!*/  public boolean hasNext(){
         boolean hasNext = false;
         return hasNext;
     }
@@ -38,6 +46,15 @@ public class PlayerBoard implements Iterator {
     public Object next(){
         return null;
     }
+
+
+
+
+
+
+
+
+
 
     /**
      *
