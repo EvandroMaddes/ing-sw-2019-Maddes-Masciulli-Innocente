@@ -13,11 +13,16 @@ import java.util.Iterator;
  *
  * abstract class that is the base for both weapons and powerUps
  */
-public abstract class Card implements BaseFightAction, Iterator {
+public abstract class Card implements BaseFightAction {
 
     private CubeColour colour;
     private String name;
 
+
+
+    public Card() {
+
+    }
 
     /**
      *
@@ -29,6 +34,7 @@ public abstract class Card implements BaseFightAction, Iterator {
         this.name = name;
         this.colour = colour;
     }
+
 
     /**
      *

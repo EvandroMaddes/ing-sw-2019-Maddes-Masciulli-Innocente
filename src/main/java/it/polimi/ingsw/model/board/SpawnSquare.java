@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * @author Evandro Maddes
- * @// TODO: 10/04/2019 metodo comparecolour 
+ *
  */
 public class SpawnSquare extends Square {
      private ArrayList<Weapon> weapons;
@@ -22,19 +22,15 @@ public class SpawnSquare extends Square {
           return weapons;
      }
 
-     /**SIAMO SICURI SERVA?--->PROBLEMA: COLERE DEI POWER-UP è DI TIPO CUBE_COLOUR MENTRE COLORE STANZE è DI TIPO STRING
-      * it checks if the discard card and spawn square have the same colour
-      * @param discardCard
-      * @return
+     /**
+      * @author Francesco Masciulli
+      * it checks if the discard card and spawn square have the same colour, comparing the Colour's String
+      * @param discardCard is the Player's discarded Card;
+      * @return isSameColour the result of comparison.
       */
      public boolean compareColour(Card discardCard)
      {
-          boolean i=true;
-        //  if(discardCard.getColour()==)
-          {
-
-          }
-          return i;
+         return (discardCard.getColour().toString() == this.getSquareRoom().getRoomColour());
      }
 
      /**

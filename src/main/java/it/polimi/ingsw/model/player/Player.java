@@ -14,7 +14,7 @@ import java.util.Iterator;
  *
  * class to manage the players
  */
-public class Player implements Iterator {
+public class Player {
 
     private final String username;
     private final Character character;
@@ -46,38 +46,6 @@ public class Player implements Iterator {
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
     }
-
-
-
-
-
-
-    /**
-     * This method must be implemented from the iterator
-     * @return true if exist the next element
-     */
-    @Override
-    public boolean hasNext(){
-        boolean hasNext = false;
-        return hasNext;
-    }
-
-    /**
-     * This method must be implemented from the iterator
-     * @return the next element
-     */
-    @Override
-    public Object next(){
-        return null;
-    }
-
-
-
-
-
-
-
-
 
 
     /**

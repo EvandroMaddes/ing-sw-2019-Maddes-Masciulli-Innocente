@@ -12,6 +12,14 @@ public class Room {
     private String roomColour;
 
     /**
+     * Getter method
+     * @return the String of the Room's colour
+     */
+    public String getRoomColour() {
+        return roomColour;
+    }
+
+    /**
      * chiama il metodo getplayer su ogni quadrato
      * @param playersGame who are playing
      * @return i giocatori prendeti in una stanza

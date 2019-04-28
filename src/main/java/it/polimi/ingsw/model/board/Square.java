@@ -17,6 +17,14 @@ public class Square {
     private Room squareRoom;
 
     /**
+     * Getter method
+     * @return the Room of this Square;
+     */
+    public Room getSquareRoom() {
+        return squareRoom;
+    }
+
+    /**
      *
      * @param squareRoom room of the square
      */

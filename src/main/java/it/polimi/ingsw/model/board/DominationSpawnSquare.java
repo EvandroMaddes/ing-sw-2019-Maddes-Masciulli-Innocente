@@ -5,27 +5,32 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.player.PlayerBoard;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
- * @Evandro Maddes
- * todo rivedi metodo damage
- * @Francesco Masciulli
- * commentata la chiamata alla riga 27 per compilare
+ * @author Evandro Maddes
+ *
+ *
+ *
  */
 
 public class DominationSpawnSquare extends SpawnSquare {
 
-    /**NON è PIù COMODO NON PASSARE NESSUN PARAMETRO E CHIAMARE IL METODO GETsQUAREpLAYER SU THIS(?)
+    /**
+     * @author Francesco Masciulli
      * at the end of every round it damage all the player on this square whit one hit
-     * @param target list of players on this square
+     * @param targets list of players on this square, visited with an Iterator
      */
-    public void damage(ArrayList<Player> target) {
-        int i=0;
+    public void damage(ArrayList<Player> targets) {
 
-        while(i<target.size())
+        Iterator iterator = targets.iterator();
+        Player target;
+        while (iterator.hasNext())
         {
-           // target.get(i).receiveDamege();
+            target = (Player)iterator.next();
+            target.getPlayerBoard().addDamages(target, 1);
         }
+
 
     }
 
