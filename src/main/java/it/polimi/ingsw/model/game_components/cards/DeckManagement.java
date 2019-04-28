@@ -48,12 +48,11 @@ public abstract class DeckManagement {
         try {
             drawnCard = deck.get(0);
             deck.remove(0);
-        }
-        catch(IndexOutOfBoundsException emptyDeckException){
-            drawnCard = emptyDeckException;
-        }
-        finally {
             return drawnCard;
         }
+        catch(IndexOutOfBoundsException emptyDeckException){
+            return  emptyDeckException;
+        }
+
     }
 }

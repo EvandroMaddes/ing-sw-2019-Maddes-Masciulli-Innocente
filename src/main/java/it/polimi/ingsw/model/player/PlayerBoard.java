@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @author Federico Innocente
  *
  */
-public class PlayerBoard implements Iterator {
+public class PlayerBoard  {
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;
@@ -19,42 +19,6 @@ public class PlayerBoard implements Iterator {
     private int damageAmount;
     private int skullsNumber;
     private ArrayList<DamageToken> marks;
-
-
-
-
-
-
-    /**
-     * This method must be implemented from the iterator
-     * @return true if exist the next element
-     */
-    @Override
-
-
-
-    /*!!!!!*/  public boolean hasNext(){
-        boolean hasNext = false;
-        return hasNext;
-    }
-
-    /**
-     * This method must be implemented from the iterator
-     * @return the next element
-     */
-    @Override
-    public Object next(){
-        return null;
-    }
-
-
-
-
-
-
-
-
-
 
     /**
      *
