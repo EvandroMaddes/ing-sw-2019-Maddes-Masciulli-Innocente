@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.game_components.cards;
 
 
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,10 +27,8 @@ public class TestPowerUpDeck {
         //necessita di un parametro di tipo ArrayList<Object>
         //bisognerà fare casting dei parametri in fase di init
         ArrayList<Object> givenDeck = new ArrayList<>();
-        Card powerUp1 = new Newton();
-        Card powerUp2 = new Teleporter();
-        powerUp1.setName("Newton");
-        powerUp2.setName("Teleporter");
+        Card powerUp1 = new Newton(CubeColour.Red);
+        Card powerUp2 = new Teleporter(CubeColour.Blue);
         givenDeck.add(0, powerUp1);
         givenDeck.add(1, powerUp2);
         testedDeck = new PowerUpDeck();

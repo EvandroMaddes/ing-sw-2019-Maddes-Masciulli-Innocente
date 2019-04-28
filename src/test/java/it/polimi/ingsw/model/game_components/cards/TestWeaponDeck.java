@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +20,11 @@ import static org.junit.Assert.*;
 
 public class TestWeaponDeck {
 
+    private class TestWeapon extends Weapon{
+        TestWeapon(CubeColour colour, String name, AmmoCube[] reloadCost){
+            super(colour, name, reloadCost);
+        }
+    }
     private WeaponDeck testedDeck;
 
 
@@ -31,10 +38,8 @@ public class TestWeaponDeck {
         //necessita di un parametro di tipo ArrayList<Object>
         //bisognerà fare casting dei parametri in fase di init
         ArrayList<Object> givenDeck = new ArrayList<>();
-        Card weapon1 = new Weapon();
-        Card weapon2 = new Weapon();
-        weapon1.setName("FirstWeapon");
-        weapon2.setName("SecondWeapon");
+        Card weapon1 = new TestWeapon(CubeColour.Red, "FirstWeapon", null);
+        Card weapon2 = new TestWeapon(CubeColour.Blue, "SeconWeapon", null);
         givenDeck.add(0, weapon1);
         givenDeck.add(1, weapon2);
         testedDeck = new WeaponDeck();

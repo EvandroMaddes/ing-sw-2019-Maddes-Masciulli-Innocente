@@ -12,12 +12,19 @@ public class PowerUpAmmoTile extends AmmoTile {
 
     private PowerUp powerUp;
 
-    //todo Aggiungere getter per powerUp, gli altri sono implementati nella superclasse
 
     public PowerUpAmmoTile( AmmoCube firstAmmo, AmmoCube secondAmmo, PowerUp powerUp )
     {
         super(firstAmmo, secondAmmo);
         this.powerUp = powerUp;
+    }
+
+    /**
+     * Getter method
+     * @return the powerup of this tile
+     */
+    public PowerUp getPowerUp() {
+        return powerUp;
     }
 
     /**

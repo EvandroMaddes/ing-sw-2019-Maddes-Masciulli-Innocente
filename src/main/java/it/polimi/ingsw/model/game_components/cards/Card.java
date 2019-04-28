@@ -35,6 +35,14 @@ public abstract class Card implements BaseFightAction {
         this.colour = colour;
     }
 
+    /**
+     * Getter method
+     * @return the card's name
+     */
+    public String getName() {
+        return name;
+    }
+
 
     /**
      *
