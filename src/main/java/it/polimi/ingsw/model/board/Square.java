@@ -9,27 +9,62 @@ import java.util.ArrayList;
  * @author Evandro Maddes
  */
 public class Square {
-
+    private int row;
+    private int column;
     private Direction northDirection;
     private Direction southDirection;
     private Direction eastDirection;
     private Direction westDirection;
-    private Room squareRoom;
+    private String roomColour;
+
+    /**
+     *
+     * @param column
+     */
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    /**
+     *
+     * @param row
+     */
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+
+
+    /**
+     *
+     * @param roomColour room of the square
+     */
+    public void setSquareRoom(String roomColour) {
+        this.roomColour = roomColour;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getColumn() {
+        return column;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getRow() {
+        return row;
+    }
 
     /**
      * Getter method
      * @return the Room of this Square;
      */
-    public Room getSquareRoom() {
-        return squareRoom;
-    }
-
-    /**
-     *
-     * @param squareRoom room of the square
-     */
-    public void setSquareRoom(Room squareRoom) {
-        this.squareRoom = squareRoom;
+    public String getSquareRoom() {
+        return roomColour;
     }
 
     /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO

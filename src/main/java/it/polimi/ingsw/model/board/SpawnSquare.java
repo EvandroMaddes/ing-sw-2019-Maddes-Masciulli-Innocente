@@ -30,7 +30,7 @@ public class SpawnSquare extends Square {
       */
      public boolean compareColour(Card discardCard)
      {
-         return (discardCard.getColour().toString() == this.getSquareRoom().getRoomColour());
+         return (discardCard.getColour().toString() == this.getSquareRoom());
      }
 
      /**
