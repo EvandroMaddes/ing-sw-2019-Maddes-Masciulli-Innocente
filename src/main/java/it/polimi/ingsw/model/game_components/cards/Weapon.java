@@ -10,7 +10,6 @@ public abstract class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
     private boolean loaded;
-    private Player owner;
 
     /**
      *
@@ -23,7 +22,6 @@ public abstract class Weapon extends Card {
         super(colour, name);
         this.reloadCost = reloadCost;
         loaded = true;
-        owner = null;
     }
 
     /**

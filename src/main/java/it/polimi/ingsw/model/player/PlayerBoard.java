@@ -20,6 +20,7 @@ public class PlayerBoard  {
     private int skullsNumber;
     private ArrayList<DamageToken> marks;
 
+
     /**
      *
      * @return skullsNumber
@@ -42,7 +43,6 @@ public class PlayerBoard  {
      * @param player is the the enemy who damage the player
      * @param numberOfDamage is the number of damage tokens
      *
-     *
      */
     public void addDamages( Player player, int numberOfDamage )
     {
@@ -63,6 +63,7 @@ public class PlayerBoard  {
     {
         damageAmount = 0;
     }
+
 
     /**
      * Remove the marks from the list and add them into the damage receved
@@ -91,6 +92,7 @@ public class PlayerBoard  {
         }
     }
 
+
     /**
      * Add the marks given by player. The marks that a player has can't be more than MAX_MARKS (=3)
      *
@@ -110,6 +112,7 @@ public class PlayerBoard  {
             this.marks.add(new DamageToken(player));
         }
     }
+
 
     /**
      * count the number of marks inflicted by a player

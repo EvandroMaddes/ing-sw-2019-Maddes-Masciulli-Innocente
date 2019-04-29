@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.player;
 
+/**
+ * @author Federico Innocente
+ */
 
 public enum Character {
 
@@ -11,4 +14,13 @@ public enum Character {
 
     private Player player;
 
+
+    /**
+     *
+     * @return the player associated with the character
+     */
+    public Player getPlayer()
+    {
+        return player;
+    }
 }

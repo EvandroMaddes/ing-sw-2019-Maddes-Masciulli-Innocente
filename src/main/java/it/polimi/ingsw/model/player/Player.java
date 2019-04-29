@@ -59,7 +59,7 @@ public class Player {
 
     /**
      *
-     * @return character, the charecter that the player is using
+     * @return the charecter that the player is using
      */
     public Character getCharacter()
     {
@@ -68,7 +68,7 @@ public class Player {
 
     /**
      *
-     * @return powerUps
+     * @return player's power ups
      */
     public ArrayList<PowerUp> getPowerUps() {
         return powerUps;

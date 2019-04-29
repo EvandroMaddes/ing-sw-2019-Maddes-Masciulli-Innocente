@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.board.Direction;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -17,6 +19,7 @@ public abstract class Card implements BaseFightAction {
 
     private CubeColour colour;
     private String name;
+    private Player owner;
 
 
 
@@ -33,6 +36,7 @@ public abstract class Card implements BaseFightAction {
     {
         this.name = name;
         this.colour = colour;
+        this.owner = null;
     }
 
     /**
@@ -51,6 +55,15 @@ public abstract class Card implements BaseFightAction {
     public CubeColour getColour()
     {
         return this.colour;
+    }
+
+    /**
+     *
+     * @return card owner
+     */
+    public Player getOwner()
+    {
+        return owner;
     }
 
     /**
@@ -96,11 +109,12 @@ public abstract class Card implements BaseFightAction {
      * @param target is the player moved
      * @param direction is the direction in which the player is moved
      */
-    // !!! dovrei lanciare un eccezione quando provo a muovere in direzione in cui non posso andare?
     @Override
     public void move(Player target, Direction direction)
     {
         if (target.getPosition().checkDirection(direction))
             target.setPosition(target.getPosition().getNextSquare(direction));
+        else
+            throw new InvalidParameterException("La direzione non è percorribile");
     }
 }
