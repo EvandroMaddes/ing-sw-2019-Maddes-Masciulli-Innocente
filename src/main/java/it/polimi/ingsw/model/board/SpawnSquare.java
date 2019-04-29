@@ -28,9 +28,8 @@ public class SpawnSquare extends Square {
       * @param discardCard is the Player's discarded Card;
       * @return isSameColour the result of comparison.
       */
-     public boolean compareColour(Card discardCard)
-     {
-         return ( this.getSquareRoom().getRoomColour().equals(discardCard.getColour().toString()));
+     public boolean compareColour(Card discardCard){
+          return (this.getSquareRoom().equals(discardCard.getColour().toString()));
      }
 
      /**
