@@ -13,22 +13,37 @@ import java.util.ArrayList;
 public class Square {
     private final int row;
     private final int column;
-    private Direction northDirection;
-    private Direction southDirection;
-    private Direction eastDirection;
-    private Direction westDirection;
+    private final Square[] nearSquares = new Square[4];//north,south, east,west
+    private  final boolean[] reachable = new boolean[4];//north,south, east,west
     private final String squareColour;
 
     /**
-     * constructor of generic square
+     *
      * @param row
      * @param column
-     * @param colour use to identify room
+     * @param north
+     * @param reachableNorth
+     * @param south
+     * @param reachableSouth
+     * @param east
+     * @param reachableEast
+     * @param west
+     * @param reachableWest
+     * @param colour
      */
-    public Square(int row, int column, String colour){
+    public Square(int row, int column,Square north,boolean reachableNorth, Square south,boolean reachableSouth, Square east,boolean reachableEast, Square west, boolean reachableWest, String colour){
+
         this.row = row;
         this.column = column;
         this.squareColour = colour;
+        nearSquares[0]=north;
+        nearSquares[1]=south;
+        nearSquares[2]=east;
+        nearSquares[3]=west;
+        reachable[0]=reachableNorth;
+        reachable[1]=reachableSouth;
+        reachable[2]=reachableEast;
+        reachable[3]=reachableWest;
 
     }
 
@@ -53,7 +68,7 @@ public class Square {
     }
 
     /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
-     * this metod checks which players are on this square
+     * this method checks which players are on this square
      * @param playersGame  who are playing
      * @return players on the square
      */
@@ -76,22 +91,22 @@ public class Square {
 
     /**
      *It calls checkDirection and it sees the square in passed direction
-     * @param direction direction of the moviment
+     * @param direction direction of the movement
      * @return square in passed direction
      */
-    public Square getNextSquare(Direction direction)
+    public Square getNextSquare( int direction)
     {
-        return direction.getNextSquare();
+        return nearSquares[direction];
     }
 
     /**
-     * it checks if the square in the passed direction is richeable by the value of attribute richeable
-     * @param direction direction of the moviment
-     * @return true if the value of attribute richeable is true
+     * it checks if the square in the passed direction is reachable by the value of attribute reachable
+     * @param direction direction of the movement
+     * @return true if the value of attribute reachable is true
      */
-    public boolean checkDirection(Direction direction)
+    public boolean checkDirection(int direction)
     {
-        return direction.isReachable();
+        return reachable[direction];
     }
 
 
