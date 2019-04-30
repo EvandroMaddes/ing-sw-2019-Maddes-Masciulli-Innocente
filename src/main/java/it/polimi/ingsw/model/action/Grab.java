@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
 
 
+/**
+ * @author Federico Innocente
+ */
 public class Grab extends ActionDecorator {
 
     private Weapon chooseWeapon;

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.player.Player;
-
 
 /**
  * @author Federico Innocetnte
@@ -26,6 +24,8 @@ public class TagbackGrenade extends PowerUp {
     @Override
     public void useEffect()
     {
+
+
         getTarget().getPlayerBoard().addMarks(this.getOwner(), 1);
         super.useEffect();
     }

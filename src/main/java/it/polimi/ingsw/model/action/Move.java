@@ -1,23 +1,25 @@
 package it.polimi.ingsw.model.action;
 
-import it.polimi.ingsw.model.board.Direction;
 import it.polimi.ingsw.model.player.Player;
 
 
+/**
+ * @author Federico Innocente
+ */
 public class Move extends ActionDecorator {
 
-    private Direction movement;
+    private int movementDirection;
 
 
     /**
      *
      * @param action is the decorated action
-     * @param movement is the direction of the movement
+     * @param movementDirection is the direction of the movement
      */
-    public Move (Action action, Direction movement)
+    public Move (Action action, int movementDirection)
     {
         super(action);
-        this.movement = movement;
+        this.movementDirection = movementDirection;
     }
 
     /**
@@ -27,6 +29,6 @@ public class Move extends ActionDecorator {
     @Override
     public void performAction(Player player)
     {
-        player.setPosition( movement.getNextSquare() );
+        player.setPosition( player.getPosition().getNextSquare(movementDirection) );
     }
 }

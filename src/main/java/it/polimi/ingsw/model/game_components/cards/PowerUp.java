@@ -3,6 +3,10 @@ package it.polimi.ingsw.model.game_components.cards;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 
+
+/**
+ * @author federicoinnocente
+ */
 public class  PowerUp extends Card {
 
     private Player target;

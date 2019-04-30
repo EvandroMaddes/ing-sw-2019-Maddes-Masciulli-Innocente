@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.game_components.cards;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import it.polimi.ingsw.model.board.Direction;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 
@@ -119,7 +117,7 @@ public abstract class Card implements BaseFightAction {
      * @param direction is the direction in which the player is moved
      */
     @Override
-    public void move(Player target, Direction direction)
+    public void move(Player target, int direction)
     {
         if (target.getPosition().checkDirection(direction))
             target.setPosition(target.getPosition().getNextSquare(direction));
