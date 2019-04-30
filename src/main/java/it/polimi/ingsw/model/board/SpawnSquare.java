@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,16 @@ import java.util.ArrayList;
  */
 public class SpawnSquare extends Square {
      private ArrayList<Weapon> weapons;
+
+     /**
+      *Constructor of a single square
+      * @param row
+      * @param column
+      * @param colour
+      */
+     public SpawnSquare(int row, int column, String colour){
+          super(row,column,colour);
+     }
 
      /**
       *
@@ -29,10 +40,11 @@ public class SpawnSquare extends Square {
       * @return isSameColour the result of comparison.
       */
      public boolean compareColour(Card discardCard) {
-          return (this.getSquareRoom().equals(discardCard.getColour().toString()));
+          return (this.getSquareColour().equals(discardCard.getColour().toString()));
      }
 
      /**
+      *it adds three weapons or
       * After one player picks-up a weapon, this metod replaces it or leaves empty(only if there are non more weapons)
       * @param weaponCard card that is drawed 
       */
@@ -52,11 +64,15 @@ public class SpawnSquare extends Square {
      }
 
      /**
-      * @param weaponCard crad that is selected by a player
+      * @param weaponCard card that is selected by a player
       */
      public void removeWeapon(Weapon weaponCard)
      {
           weapons.remove(weaponCard);
+     }
+
+     public void grabWeapon(Weapon weaponSelected, Player player){
+          player.addWeapon(weaponSelected);
      }
 
 }
