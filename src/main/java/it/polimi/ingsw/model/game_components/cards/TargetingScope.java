@@ -3,21 +3,70 @@ package it.polimi.ingsw.model.game_components.cards;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
+import java.security.InvalidParameterException;
+
+
+/**
+ * @author Federico Innocente
+ */
 public class TargetingScope extends PowerUp {
 
+    boolean chooseCube;
+    AmmoCube cubeChoice;
+    PowerUp powerUpChoice;
 
-    public TargetingScope(CubeColour colour){
+
+    /**
+     *
+     * @param cubeChoice is the cube to pay
+     */
+    public void setCubeChoice(AmmoCube cubeChoice)
+    {
+        this.cubeChoice = cubeChoice;
+        chooseCube = true;
+    }
+
+    /**
+     *
+     * @param powerUpChoice is the powerUp choosen as payment
+     * @throws InvalidParameterException if the power up passed is the same of the card
+     */
+    public void setPowerUpChoice(PowerUp powerUpChoice) throws InvalidParameterException
+    {
+        if (powerUpChoice == this)
+            throw new InvalidParameterException("Non puoi pagare con il power up stesso");
+        this.powerUpChoice = powerUpChoice;
+        chooseCube = false;
+    }
+
+    /**
+     *
+     * @param colour is the card colour
+     */
+    public TargetingScope(CubeColour colour)
+    {
         super(colour, "TargetingScope");
     }
 
-    //when the player shot, he could pay a cube to make an additional damage
+    /**
+     * damage the target
+     */
     @Override
-    public void useEffect() {
-
+    public void useEffect()
+    {
+        payCost();
+        getTarget().getPlayerBoard().addDamages(this.getOwner(), 1);
+        super.useEffect();
     }
 
-    public void payCube(AmmoCube cube)
+    /**
+     * pay the cost for the effect
+     */
+    public void payCost()
     {
-
+        if (chooseCube)
+            getOwner().getAmmo().remove(cubeChoice);
+        else
+            getOwner().getPowerUps().remove(powerUpChoice);
     }
 }

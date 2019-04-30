@@ -1,17 +1,34 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
 
+
+/**
+ * @author Federico Innocente
+ */
 public class Teleporter extends PowerUp{
 
-    public Teleporter(CubeColour colour){
+    Square destination;
+
+    public Teleporter(CubeColour colour)
+    {
         super(colour, "Teleporter");
     }
 
+    public void setDestination(Square destination)
+    {
+        this.destination = destination;
+    }
 
-    //Move the player in a choosen position in the map; it could be used before and after any of the user action
+    /**
+     * teleport the target to the destination
+     */
     @Override
-    public void useEffect() {
-
+    public void useEffect()
+    {
+        getTarget().setPosition(destination);
+        super.useEffect();
     }
 }

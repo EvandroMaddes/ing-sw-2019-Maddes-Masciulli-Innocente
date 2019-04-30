@@ -1,16 +1,32 @@
 package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
 
+
+/**
+ * @author Federico Innocetnte
+ */
 public class TagbackGrenade extends PowerUp {
 
-    public TagbackGrenade(CubeColour colour){
+    /**
+     *
+     * @param colour is the colour of the powerup
+     */
+    public TagbackGrenade(CubeColour colour)
+    {
         super(colour, "TagbackGranade");
     }
 
-    //If an enemy player damages the player, he could mark that enemy player
-    @Override
-    public void useEffect() {
 
+
+    /**
+     * add 1 mark to the target by the owner of the powerUp
+     */
+    @Override
+    public void useEffect()
+    {
+        getTarget().getPlayerBoard().addMarks(this.getOwner(), 1);
+        super.useEffect();
     }
 }

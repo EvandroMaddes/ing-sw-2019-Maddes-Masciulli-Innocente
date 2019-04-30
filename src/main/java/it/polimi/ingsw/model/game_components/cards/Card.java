@@ -66,6 +66,10 @@ public abstract class Card implements BaseFightAction {
         return owner;
     }
 
+    /**
+     *
+     * @param player
+     */
     public void setOwner(Player player)
     {
         this.owner = player;

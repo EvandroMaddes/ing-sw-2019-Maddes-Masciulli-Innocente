@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * @author Evandro Maddes
  */
 public class Square {
-    private final int row;
-    private final int column;
+    private int row;
+    private int column;
     private Direction northDirection;
     private Direction southDirection;
     private Direction eastDirection;

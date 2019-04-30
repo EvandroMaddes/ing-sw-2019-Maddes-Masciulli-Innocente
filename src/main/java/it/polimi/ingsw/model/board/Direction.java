@@ -7,24 +7,8 @@ import it.polimi.ingsw.model.board.Square;
  */
 public class Direction {
 
-    private Square nextSquare;
-    private boolean reachable;
-
-    /**
-     *
-     * @param nextSquare
-     */
-    public void setNextSquare(Square nextSquare) {
-        this.nextSquare = nextSquare;
-    }
-
-    /**
-     *
-     * @param reachable
-     */
-    public void setReachable(boolean reachable) {
-        this.reachable = reachable;
-    }
+    private final Square nextSquare;
+    private final boolean reachable;
 
     /**
      *

@@ -241,4 +241,15 @@ public class Player {
         return amount;
     }
 
+
+    /**
+     *
+     * @param powerUp is discarded powerUp
+     */
+    public void discardPowerUp(PowerUp powerUp)
+    {
+        powerUps.remove(powerUp);
+        powerUp.setOwner(null);
+    }
+
 }
