@@ -18,7 +18,7 @@ public class Square {
     private final String squareColour;
 
     /**
-     *
+     *Constructor of a single square
      * @param row
      * @param column
      * @param north
