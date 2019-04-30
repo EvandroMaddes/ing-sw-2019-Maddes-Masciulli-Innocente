@@ -14,6 +14,17 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     /**
+     * Constructor of a single square
+     * @param row
+     * @param column
+     * @param colour
+     */
+    public BasicSquare(int row, int column, String colour){
+        super(row, column, colour);
+    }
+
+
+    /**
      *
      * @param ammo
      */

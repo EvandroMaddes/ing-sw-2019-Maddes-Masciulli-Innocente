@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.CubeAmmoTile;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
@@ -9,44 +11,27 @@ import java.util.ArrayList;
  * @author Evandro Maddes
  */
 public class Square {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     private Direction northDirection;
     private Direction southDirection;
     private Direction eastDirection;
     private Direction westDirection;
-    private String roomColour;
+    private final String squareColour;
 
     /**
-     *
-     * @param column
-     */
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
-    /**
-     *
+     * constructor of generic square
      * @param row
+     * @param column
+     * @param colour use to identify room
      */
-    public void setRow(int row) {
+    public Square(int row, int column, String colour){
         this.row = row;
+        this.column = column;
+        this.squareColour = colour;
+
     }
 
-
-
-    /**
-     *
-     * @param roomColour room of the square
-     */
-    public void setSquareRoom(String roomColour) {
-        this.roomColour = roomColour;
-    }
-
-    /**
-     *
-     * @return
-     */
     public int getColumn() {
         return column;
     }
@@ -61,10 +46,10 @@ public class Square {
 
     /**
      * Getter method
-     * @return the Room of this Square;
+     * @return the room's colour of this Square;
      */
-    public String getSquareRoom() {
-        return roomColour;
+    public String getSquareColour() {
+        return squareColour;
     }
 
     /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
@@ -108,4 +93,6 @@ public class Square {
     {
         return direction.isReachable();
     }
+
+
 }

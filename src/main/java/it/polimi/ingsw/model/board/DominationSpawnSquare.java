@@ -17,10 +17,23 @@ import java.util.Iterator;
 public class DominationSpawnSquare extends SpawnSquare {
 
     /**
+     *Constructor of a single square
+     * @param row
+     * @param column
+     * @param colour
+     */
+    public DominationSpawnSquare(int row, int column, String colour){
+        super(row,column,colour);
+    }
+
+
+
+    /**
      * @author Francesco Masciulli
      * at the end of every round it damage all the player on this square whit one hit
      * @param targets list of players on this square, visited with an Iterator
      */
+
     public void damage(ArrayList<Player> targets) {
 
         Iterator iterator = targets.iterator();
