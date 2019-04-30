@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 
-public abstract class Weapon extends Card {
+public class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
     private boolean loaded;
@@ -22,6 +22,15 @@ public abstract class Weapon extends Card {
         super(colour, name);
         this.reloadCost = reloadCost;
         loaded = true;
+    }
+
+    /**
+     *
+     * @return reload cost
+     */
+    public AmmoCube[] getReloadCost()
+    {
+        return reloadCost;
     }
 
     /**
@@ -48,6 +57,7 @@ public abstract class Weapon extends Card {
     {
         invertLoadedState();
     }
+
 
 
 

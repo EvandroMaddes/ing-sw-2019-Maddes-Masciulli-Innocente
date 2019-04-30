@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
@@ -16,6 +17,8 @@ import java.util.Iterator;
  */
 public class Player {
 
+    private static final int MAX_WEAPONS = 3;
+
     private final String username;
     private final Character character;
     private final String battleCry;
@@ -26,6 +29,7 @@ public class Player {
     private boolean firstPlayer;
     private Weapon[] weapons;
     private ArrayList<PowerUp> powerUps;
+    private int numberOfWeapons;
 
     /**
      *
@@ -42,6 +46,7 @@ public class Player {
         this.battleCry = battleCry;
         this.playerBoard = new PlayerBoard();
         this.points = 0;
+        this.numberOfWeapons = 0;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -110,6 +115,31 @@ public class Player {
         return battleCry;
     }
 
+
+    /**
+     *
+     * @return ammo list
+     */
+    public ArrayList<AmmoCube> getAmmo()
+    {
+        return ammo;
+    }
+
+    /**
+     *
+     * @param weapon is the weapon searched
+     * @return the index of the weapon in the inventory, -1 if the player haven't it
+     */
+    public int getWeaponIndex(Weapon weapon)
+    {
+        for(int i = 0; i < weapons.length; i++)
+        {
+            if (weapons[i] == weapon)
+                return i;
+        }
+        return -1;
+    }
+
     /**
      *
      * @return firstPlayer , true or false
@@ -149,6 +179,42 @@ public class Player {
     {
         this.powerUps.add(powerUp);
     }
+
+
+    /**
+     *
+     * @param weapon
+     */
+    public void addWeapon(Weapon weapon)
+    {
+        weapons[numberOfWeapons] = weapon;
+        weapon.setOwner(this);
+        numberOfWeapons++;
+    }
+
+
+    /**
+     *
+     * @param weapon is the weapon dropped
+     * @param spawnSquare is the spawn square in which the weapon is dropped
+     */
+    public void removeWeapon(Weapon weapon, SpawnSquare spawnSquare)
+    {
+        for (int i = 0; i < MAX_WEAPONS; i++)
+        {
+            if (weapons[i] == weapon)
+            {
+                weapons[i] = null;
+            }
+        }
+        numberOfWeapons--;
+        weapon.setOwner(null);
+        if ( !weapon.isLoaded() )
+        {
+            weapon.invertLoadedState();
+        }
+    }
+
 
     /**
      *
