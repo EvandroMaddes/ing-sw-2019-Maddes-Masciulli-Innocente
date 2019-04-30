@@ -66,6 +66,11 @@ public abstract class Card implements BaseFightAction {
         return owner;
     }
 
+    public void setOwner(Player player)
+    {
+        this.owner = player;
+    }
+
     /**
      *
      * @param targets are the targets who are applied the damage to

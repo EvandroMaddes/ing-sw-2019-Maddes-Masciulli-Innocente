@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model.action;
 
+import it.polimi.ingsw.model.player.Player;
+
+
 public interface ActionComponent {
-    public void doAction();
+
+    public void performAction(Player player);
+
 }
