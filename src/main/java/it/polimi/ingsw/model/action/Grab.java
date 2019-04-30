@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class Grab extends ActionDecorator {
 
-    private Weapon chooseWeapon;
+    private Weapon choosenWeapon;
 
     /**
      *
@@ -20,14 +20,17 @@ public class Grab extends ActionDecorator {
     public Grab (Action action, Weapon choice)
     {
         super(action);
-        chooseWeapon = choice;
+        choosenWeapon = choice;
     }
 
-
+    /**
+     * if the player is on a spawn square, grab the choosen weapon; if he is on a basic square, grab the ammo
+     * @param player is the player who perform the action
+     */
     @Override
     public void performAction(Player player)
     {
-        if (/* se il quadrato è base */)
+        if (player.getPosition() instanceof BasicSquare)
         {
             BasicSquare position = (BasicSquare) player.getPosition();
             position.grabAmmoTile(player);
@@ -35,7 +38,7 @@ public class Grab extends ActionDecorator {
         else
         {
             SpawnSquare position = (SpawnSquare) player.getPosition();
-            position.
+            position.grabWeapon(choosenWeapon, player);
         }
     }
 }

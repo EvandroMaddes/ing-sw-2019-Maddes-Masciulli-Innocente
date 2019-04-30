@@ -57,10 +57,9 @@ public class BasicSquare extends Square {
 
     /**
      * it calls metod of AmmoTile to grab Ammo
-     * @param ammo this is picked-up by a player
      * @param player who receives the ammo
      */
-    public void grabAmmoTile(AmmoTile ammo, Player player){
+    public void grabAmmoTile( Player player){
 
            ammo.pickAmmo(player);
 
