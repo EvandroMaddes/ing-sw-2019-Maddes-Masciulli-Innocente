@@ -11,16 +11,9 @@ public class GameController {
     private GameBoard gameBoard;
     private RoundController currentRount;
 
-    private GameController()
+    public GameController()
     {
 
-    }
-
-    public GameController instance()
-    {
-        GameController i = null;
-
-        return i;
     }
 
     public void inizialize()

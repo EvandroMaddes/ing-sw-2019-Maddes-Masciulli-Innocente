@@ -7,6 +7,9 @@ import java.util.ArrayList;
  */
 public class Map {
 
+    public final static int DIM_X = 4;
+    public final static int DIM_Y = 3;
+
     private int mapNumber;
     private Map map;
     private ArrayList<SpawnSquare> spawnSquares;

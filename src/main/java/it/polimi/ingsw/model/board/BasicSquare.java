@@ -77,5 +77,13 @@ public class BasicSquare extends Square {
         }
 
     }
+
+    @Override
+    public boolean isGrabbable() {
+        if (ammo != null)
+            return true;
+        else
+            return false;
+    }
 }
 

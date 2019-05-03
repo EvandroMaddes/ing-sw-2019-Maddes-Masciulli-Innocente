@@ -10,11 +10,11 @@ import java.util.ArrayList;
 /**
  * @author Evandro Maddes
  */
-public class Square {
+public abstract class Square {
     private final int row;
     private final int column;
     private final Square[] nearSquares = new Square[4];//north,south, east,west
-    private  final boolean[] reachable = new boolean[4];//north,south, east,west
+    private final boolean[] reachable = new boolean[4];//north,south, east,west
     private final String squareColour;
 
     /**
@@ -60,12 +60,33 @@ public class Square {
     }
 
     /**
+     *
+     * @return
+     */
+    public boolean[] getReachable() {
+        return reachable;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Square[] getNearSquares() {
+        return nearSquares;
+    }
+
+    /**
      * Getter method
      * @return the room's colour of this Square;
      */
     public String getSquareColour() {
         return squareColour;
     }
+
+    /**
+     * @return true if the square have ammo or at least a weapon to grab
+     */
+    public abstract boolean isGrabbable();
 
     /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
      * this method checks which players are on this square

@@ -83,4 +83,11 @@ public class SpawnSquare extends Square {
           player.addWeapon(weaponSelected);
      }
 
+     @Override
+     /**
+      * return true if there is at leat 1 weapon in the square
+      */
+     public boolean isGrabbable() {
+          return !weapons.isEmpty();
+     }
 }

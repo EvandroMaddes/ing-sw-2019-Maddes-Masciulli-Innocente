@@ -8,7 +8,6 @@ public class RoundController {
     private Player currentPlayer;
     private Action currentAction;
 
-
     public void selectAction()
     {
 
