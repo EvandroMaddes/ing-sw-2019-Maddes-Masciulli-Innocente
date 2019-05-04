@@ -85,7 +85,7 @@ public class Encoder {
     public CardRequestEvent encodeCardRequestEvent(String user, ArrayList<Card> availableCards) {
         ArrayList<String> cards = new ArrayList<>();
         ArrayList<CubeColour> colours = new ArrayList<>();
-        //get(0) è una Card, dinamicamente Weapon o PowerUp
+        //get(0) è una Card, dinamicamente Weapon o PowerUp, SimpleName è la classe
         String type= availableCards.get(0).getClass().getSimpleName();
         iterator= availableCards.iterator();
         while(iterator.hasNext()){
