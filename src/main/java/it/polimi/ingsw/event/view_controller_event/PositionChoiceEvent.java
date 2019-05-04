@@ -7,10 +7,10 @@ public class PositionChoiceEvent extends Event {
     private int positionX;
     private int positionY;
 
-    public PositionChoiceEvent(String user, int positionX){
+    public PositionChoiceEvent(String user, int positionX, int positionY){
         super(user);
         this.positionX=positionX;
-        this.positionX=positionX;
+        this.positionY=positionY;
     }
 
 }
