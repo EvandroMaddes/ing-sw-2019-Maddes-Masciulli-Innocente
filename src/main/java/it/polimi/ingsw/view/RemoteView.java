@@ -8,7 +8,7 @@ import java.util.Observer;
 
 public class RemoteView extends Observable implements ViewInterface {
     private GameModel gameModel;
-    private Event currentevent;
+    private Event currentEvent;
 
     //Implementing the ViewInterface methods
 

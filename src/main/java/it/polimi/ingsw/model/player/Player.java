@@ -126,7 +126,7 @@ public class Player {
     }
 
     /**
-     *
+     * @todo check return?
      * @param weapon is the weapon searched
      * @return the index of the weapon in the inventory, -1 if the player haven't it
      */

@@ -1,6 +1,12 @@
 package it.polimi.ingsw.event;
 
-public abstract class Event {
+import java.io.Serializable;
+
+/**@author Francesco Masciulli
+ * this is the abstract Class representing the messages between Server and Client
+ *
+ */
+public abstract class Event implements Serializable {
     private String user;
 
     /**
