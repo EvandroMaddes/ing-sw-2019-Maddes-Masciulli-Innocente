@@ -12,6 +12,14 @@ public class PlayerRequestEvent extends Event {
     private boolean[] targetPlayers = new boolean[5];
     private int targetsNumber;
 
+    public boolean[] getTargetPlayers() {
+        return targetPlayers;
+    }
+
+    public int getTargetsNumber() {
+        return targetsNumber;
+    }
+
     /**
      * Constructor
      * @param user the Client user

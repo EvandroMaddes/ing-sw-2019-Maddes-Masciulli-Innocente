@@ -28,11 +28,17 @@ public class RoundController {
 
     }
 
-    public boolean checkAction()
+    /**
+     * todo su currPlayer, calcola le MacroAzioni(ex puòMove, puòGrab), setta codedMacroAction[5]=true perchè indica Fineturno
+     * può essere comodo inserire String macroType in Action per trovare subito damageContext e macroAction nella view
+     * @return the boolean Array that will be incapsulated in ActionRequestEvent(la codifica è in quest'ultima classe)
+     */
+    public boolean[] checkAction()
     {
-        boolean i = true;
+        boolean codedMacroAction[] = new boolean[5];
+        codedMacroAction[5]=true;
 
-        return i;
+        return codedMacroAction;
     }
 
     public void endRound()

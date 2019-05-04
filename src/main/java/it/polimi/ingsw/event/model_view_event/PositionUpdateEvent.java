@@ -1,6 +1,5 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.model.board.Square;
 
 /**
  * @author Francesco Masciulli
@@ -8,17 +7,20 @@ import it.polimi.ingsw.model.board.Square;
  */
 public class PositionUpdateEvent extends AbstractUpdateEvent {
 
-    private Square position;
+    private int positionX;
+    private int positionY;
 
     /**
      * Constructor
      * @param user the Client user
      * @param updatedPlayer the updated Player
-     * @param position  his next position
+     * @param positionX  his next position X coordinate
+     * @param positionY his next position Y coordinate
      */
-    public PositionUpdateEvent(String user, String updatedPlayer, Square position){
+    public PositionUpdateEvent(String user, String updatedPlayer, int positionX, int positionY){
         super(user, updatedPlayer);
-        this.position=position;
+        this.positionX=positionX;
+        this.positionY=positionY;
 
     }
 }

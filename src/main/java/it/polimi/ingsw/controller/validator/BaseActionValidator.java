@@ -30,5 +30,6 @@ public class BaseActionValidator extends Validator {
             if (!currentSquare.isGrabbable())
                 grabbableSquare.remove(currentSquare);
         }
+        return grabbableSquare;
     }
 }

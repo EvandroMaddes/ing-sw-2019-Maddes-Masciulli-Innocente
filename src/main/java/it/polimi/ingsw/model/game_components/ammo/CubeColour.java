@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
-public enum CubeColour {
+import java.io.Serializable;
+
+public enum CubeColour implements Serializable {
     Blue,
     Yellow,
     Red,
