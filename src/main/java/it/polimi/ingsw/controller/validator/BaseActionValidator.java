@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.validator;
 
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
@@ -32,5 +33,11 @@ public class BaseActionValidator extends Validator {
                 grabbableSquare.remove(currentSquare);
         }
         return grabbableSquare;
+    }
+
+    /* da implementare */
+    @Override
+    public ArrayList<Player> aviableShot(Weapon weapon) {
+        return null;
     }
 }
