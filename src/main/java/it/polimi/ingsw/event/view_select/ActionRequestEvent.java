@@ -28,7 +28,8 @@ public class ActionRequestEvent extends Event {
      *                          1:  couldGrab
      *                          2:  couldShot
      *                          3:  couldReload
-     *                          4:  endTurn (Always true, must be set by Controller)
+     *                          4:  couldUsePowerUp
+     *                          5:  endTurn (Always true, must be set by Controller)
      * @param damageContext set the right available action
      *                         1: normal action
      *                         2: + first Adrenalinic

@@ -14,7 +14,7 @@ public class ActionChoiceEvent extends Event {
      * Constructor
      * @param user the Client user
      * @param action the chosen action encoding
-     *               (Map: Action-> int)
+     *               (?Map: Action-> int)
      */
     public ActionChoiceEvent(String user, int action){
         super(user);

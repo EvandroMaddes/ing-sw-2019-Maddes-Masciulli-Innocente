@@ -1,4 +1,4 @@
-package it.polimi.ingsw.event;
+package it.polimi.ingsw.event.coder;
 
 import it.polimi.ingsw.event.view_select.ActionRequestEvent;
 import it.polimi.ingsw.event.view_select.CardRequestEvent;
@@ -14,9 +14,9 @@ import java.util.*;
 
 /**
  * @author Francesco Masciulli
- * this class, instatiated in Server and Client, ensure the correct encoding and decoding of the Event messages
+ * implements the encoding of ViweSelect and ModelView Events
  */
-public class Encoder {
+public class ServerEncoder {
     /**
      * is the map between Character and its index in the boolean Array of PlayerRequest
      */
@@ -27,7 +27,7 @@ public class Encoder {
      * Constructor
      * set the EnumMap
      */
-    public Encoder(){
+    public ServerEncoder(){
         characterIntegerMap.put(Character.D_STRUCT_OR,0);
         characterIntegerMap.put(Character.BANSHEE,1);
         characterIntegerMap.put(Character.DOZER,2);
@@ -44,15 +44,14 @@ public class Encoder {
      *
      * @param user is the Client User
      * @param targetPlayers is an ArrayList of the Players that could be chosen
-     * @param targetsNumber is the number of targets that the user must select
      * @return
      */
-    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers,int targetsNumber){
+    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers){
         Character currCharacter;
         int i;
         boolean[] availablePlayers = {false, false, false, false, false};
         iterator = targetPlayers.iterator();
-
+        int targetsNumber = targetPlayers.size();
 
         while(iterator.hasNext()){
             currCharacter=(Character) iterator.next();
@@ -113,6 +112,8 @@ public class Encoder {
         }
         return new PositionRequestEvent(user, coordinatesX, coordinatesY);
     }
+
+
 
 
 

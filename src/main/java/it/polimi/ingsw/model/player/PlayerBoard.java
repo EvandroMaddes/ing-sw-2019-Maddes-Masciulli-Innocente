@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import java.util.Iterator;
  * @author Federico Innocente
  *
  */
-public class PlayerBoard  {
+public class PlayerBoard implements Serializable {
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;

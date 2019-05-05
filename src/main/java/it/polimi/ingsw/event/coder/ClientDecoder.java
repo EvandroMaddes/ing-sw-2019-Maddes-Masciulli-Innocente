@@ -1,4 +1,4 @@
-package it.polimi.ingsw.event;
+package it.polimi.ingsw.event.coder;
 
 import it.polimi.ingsw.event.view_select.CardRequestEvent;
 import it.polimi.ingsw.event.view_select.PlayerRequestEvent;
@@ -13,12 +13,16 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Iterator;
 
-public class Decoder {
+/**
+ * @author Francesco Masciulli
+ * it implements the method that decode a ModelView or ViewSelect Event
+ */
+public class ClientDecoder {
 
     /**
      * it DON'T decode the targetsNumber, because is an int
      * @param message is the given PlayerRequestEvent
-     * @param characterIntegerMap is the Encoder EnumMap
+     * @param characterIntegerMap is the ServerEncoder EnumMap
      * @return the targets Characters ArrayList
      */
     public ArrayList<Character> decodePlayerRequestEvent (PlayerRequestEvent message,EnumMap<Character, Integer> characterIntegerMap){
@@ -69,7 +73,7 @@ public class Decoder {
 
     /**
      *
-     * @param characterIntegerMap is the Encoder CharacterIntegerMap (Character, Integer)
+     * @param characterIntegerMap is the ServerEncoder CharacterIntegerMap (Character, Integer)
      * @param index is the Index that is represented by the Player in the Map
      * @return the Character mapped with the index
      */
