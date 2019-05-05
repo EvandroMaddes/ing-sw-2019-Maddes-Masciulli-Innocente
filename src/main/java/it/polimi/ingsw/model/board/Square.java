@@ -15,31 +15,44 @@ public abstract class Square {
     private final int column;
     private final Square[] nearSquares = new Square[4];//north,south, east,west
     private final boolean[] reachable = new boolean[4];//north,south, east,west
-    private final String squareColour;
+    private  String squareColour;
 
     /**
-     *Constructor of a single square
+     * constructor
      * @param row
      * @param column
-     * @param north
-     * @param reachableNorth
-     * @param south
-     * @param reachableSouth
-     * @param east
-     * @param reachableEast
-     * @param west
-     * @param reachableWest
-     * @param colour
      */
-    public Square(int row, int column,Square north,boolean reachableNorth, Square south,boolean reachableSouth, Square east,boolean reachableEast, Square west, boolean reachableWest, String colour){
+    public Square(int row, int column ){
 
         this.row = row;
         this.column = column;
-        this.squareColour = colour;
+
+    }
+
+    /**
+     *
+     * @param north
+     * @param south
+     * @param east
+     * @param west
+     */
+    public void setNearSquares(Square north, Square south, Square east,Square west){
+
         nearSquares[0]=north;
         nearSquares[1]=south;
         nearSquares[2]=east;
         nearSquares[3]=west;
+
+    }
+
+    /**
+     *
+     * @param reachableNorth
+     * @param reachableSouth
+     * @param reachableEast
+     * @param reachableWest
+     */
+    public void setSquareReachable(boolean reachableNorth,boolean reachableSouth,boolean reachableEast,boolean reachableWest){
         reachable[0]=reachableNorth;
         reachable[1]=reachableSouth;
         reachable[2]=reachableEast;
@@ -47,6 +60,18 @@ public abstract class Square {
 
     }
 
+    /**
+     *
+     * @param squareColour
+     */
+    public void setSquareColour(String squareColour) {
+        this.squareColour = squareColour;
+    }
+
+    /**
+     *
+     * @return
+     */
     public int getColumn() {
         return column;
     }
