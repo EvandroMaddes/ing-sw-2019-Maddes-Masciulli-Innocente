@@ -14,7 +14,7 @@ import java.util.*;
 
 /**
  * @author Francesco Masciulli
- * implements the encoding of ViweSelect and ModelView Events
+ * implements the encoding of ViewSelect and ModelView Events
  */
 public class ServerEncoder {
     /**
@@ -44,14 +44,15 @@ public class ServerEncoder {
      *
      * @param user is the Client User
      * @param targetPlayers is an ArrayList of the Players that could be chosen
+     * @param targetsNumber is the number of targets that the user must select
      * @return
      */
-    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers){
+    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers,int targetsNumber){
         Character currCharacter;
         int i;
         boolean[] availablePlayers = {false, false, false, false, false};
         iterator = targetPlayers.iterator();
-        int targetsNumber = targetPlayers.size();
+
 
         while(iterator.hasNext()){
             currCharacter=(Character) iterator.next();
@@ -112,8 +113,6 @@ public class ServerEncoder {
         }
         return new PositionRequestEvent(user, coordinatesX, coordinatesY);
     }
-
-
 
 
 
