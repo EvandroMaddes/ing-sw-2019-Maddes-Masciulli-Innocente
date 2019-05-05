@@ -1,4 +1,4 @@
 package it.polimi.ingsw.controller.validator;
 
-public class AdrenalinicShotValidator {
+public class AdrenalinicShotValidator extends AdrenalinicGrabValidator {
 }
