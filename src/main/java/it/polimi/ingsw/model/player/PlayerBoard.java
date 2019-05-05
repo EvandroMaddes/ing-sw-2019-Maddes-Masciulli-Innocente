@@ -80,7 +80,7 @@ public class PlayerBoard  {
         {
             mark = (DamageToken)iterator.next();
 
-            if (mark.getCharacter() == player.getCharacter())
+            if (mark.getPlayer() == player)
             {
                 if (damageAmount < 12)
                 {
@@ -129,7 +129,7 @@ public class PlayerBoard  {
         while (iterator.hasNext())
         {
             mark = (DamageToken) iterator.next();
-            if (mark.getCharacter() == player.getCharacter())
+            if (mark.getPlayer() == player)
                 numberOfMarks++;
         }
 

@@ -6,17 +6,11 @@ import java.util.ArrayList;
 
 public class GameController {
 
-    private GameController gameController;
     private ArrayList<Player> players;
     private GameBoard gameBoard;
     private RoundController currentRount;
 
     public GameController()
-    {
-
-    }
-
-    public void inizialize()
     {
 
     }
@@ -28,9 +22,7 @@ public class GameController {
 
     public ArrayList<Player> winner()
     {
-        ArrayList<Player> i = null;
-
-        return i;
+        return null;
     }
 
     public boolean checkAviable( Player player, Character character)
@@ -45,7 +37,7 @@ public class GameController {
 
     }
 
-    public void buldGameboard()
+    public void buildGameboard()
     {
 
     }

@@ -2,16 +2,16 @@ package it.polimi.ingsw.model.player;
 
 public class DamageToken {
 
-    private final Character character;
+    private final Player player;
 
 
     public DamageToken(Player player)
     {
-        character = player.getCharacter();
+        this.player = player;
     }
 
-    public Character getCharacter()
+    public Player getPlayer()
     {
-        return character;
+        return player;
     }
 }
