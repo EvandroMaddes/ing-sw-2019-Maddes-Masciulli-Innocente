@@ -8,6 +8,11 @@ public class RoundController {
     private Player currentPlayer;
     private Action currentAction;
 
+
+    public RoundController(Player currentPlayer){
+        this.currentPlayer = currentPlayer;
+    }
+
     public void selectAction()
     {
 

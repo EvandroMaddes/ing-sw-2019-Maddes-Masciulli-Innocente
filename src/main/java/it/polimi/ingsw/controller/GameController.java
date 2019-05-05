@@ -20,8 +20,7 @@ public class GameController {
 
     }
 
-    public ArrayList<Player> winner()
-    {
+    public ArrayList<Player> calculateWinner() {
         return null;
     }
 
