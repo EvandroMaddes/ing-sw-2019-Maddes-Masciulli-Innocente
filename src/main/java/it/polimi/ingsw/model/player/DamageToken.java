@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.player;
 
-public class DamageToken {
+import java.io.Serializable;
+
+public class DamageToken implements Serializable {
 
     private final Player player;
 

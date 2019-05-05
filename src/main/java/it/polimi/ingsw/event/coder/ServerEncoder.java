@@ -1,4 +1,4 @@
-package it.polimi.ingsw.event;
+package it.polimi.ingsw.event.coder;
 
 import it.polimi.ingsw.event.view_select.ActionRequestEvent;
 import it.polimi.ingsw.event.view_select.CardRequestEvent;
@@ -9,14 +9,15 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.Player;
 
 import java.util.*;
 
 /**
  * @author Francesco Masciulli
- * this class, instatiated in Server and Client, ensure the correct encoding and decoding of the Event messages
+ * implements the encoding of ViewSelect and ModelView Events
  */
-public class Encoder {
+public class ServerEncoder {
     /**
      * is the map between Character and its index in the boolean Array of PlayerRequest
      */
@@ -27,7 +28,7 @@ public class Encoder {
      * Constructor
      * set the EnumMap
      */
-    public Encoder(){
+    public ServerEncoder(){
         characterIntegerMap.put(Character.D_STRUCT_OR,0);
         characterIntegerMap.put(Character.BANSHEE,1);
         characterIntegerMap.put(Character.DOZER,2);
@@ -47,21 +48,19 @@ public class Encoder {
      * @param targetsNumber is the number of targets that the user must select
      * @return
      */
-    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers,int targetsNumber){
+    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Player> targetPlayers, int targetsNumber){
         Character currCharacter;
-        int i;
-        boolean[] availablePlayers = {false, false, false, false, false};
+        ArrayList<Character> availablePlayers = new ArrayList<>();
         iterator = targetPlayers.iterator();
 
 
         while(iterator.hasNext()){
-            currCharacter=(Character) iterator.next();
-            i=characterIntegerMap.get(currCharacter);
-            availablePlayers[i]=true;
+            currCharacter=((Player)iterator.next()).getCharacter();
+            availablePlayers.add(currCharacter);
 
         }
         
-        return new PlayerRequestEvent(user,availablePlayers, targetsNumber);
+        return new PlayerRequestEvent(user, availablePlayers, targetsNumber);
         
     }
 
