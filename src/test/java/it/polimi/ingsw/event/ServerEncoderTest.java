@@ -36,7 +36,7 @@ public class ServerEncoderTest {
 
     }
 
-    @Test
+   /* @Test
     public void testEncodePlayerRequestEvent(){
         //represent: D_STRUCT_OR, DOZER, SPROG;
         boolean[] expectedCharacters = {true,false,true,false,true};
@@ -53,7 +53,7 @@ public class ServerEncoderTest {
         Assert.assertEquals(1, event.getTargetsNumber());
         System.out.println("Tested PlayerRequestEvent encoding");
     }
-
+*/
     @Test
     public void testEncodeCardRequestEvent(){
         ArrayList<Card> testedCards = new ArrayList<>();

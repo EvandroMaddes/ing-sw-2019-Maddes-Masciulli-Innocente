@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.Player;
 
 import java.util.*;
 
@@ -47,21 +48,19 @@ public class ServerEncoder {
      * @param targetsNumber is the number of targets that the user must select
      * @return
      */
-    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Character> targetPlayers,int targetsNumber){
+    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Player> targetPlayers, int targetsNumber){
         Character currCharacter;
-        int i;
-        boolean[] availablePlayers = {false, false, false, false, false};
+        ArrayList<Character> availablePlayers = new ArrayList<>();
         iterator = targetPlayers.iterator();
 
 
         while(iterator.hasNext()){
-            currCharacter=(Character) iterator.next();
-            i=characterIntegerMap.get(currCharacter);
-            availablePlayers[i]=true;
+            currCharacter=((Player)iterator.next()).getCharacter();
+            availablePlayers.add(currCharacter);
 
         }
         
-        return new PlayerRequestEvent(user,availablePlayers, targetsNumber);
+        return new PlayerRequestEvent(user, availablePlayers, targetsNumber);
         
     }
 

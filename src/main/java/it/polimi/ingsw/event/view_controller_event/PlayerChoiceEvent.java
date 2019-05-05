@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class PlayerChoiceEvent extends Event {
 
-    private ArrayList<Integer> targetPlayersOrder;
+    private ArrayList<Character> targetPlayersOrder;
 
     /**
      * Constructor
@@ -20,7 +20,7 @@ public class PlayerChoiceEvent extends Event {
      * @param targetPlayersOrder the chosen Players,
      *                           the integer indicates the player encoding Character -> int
      */
-    public PlayerChoiceEvent(String user, ArrayList<Integer> targetPlayersOrder){
+    public PlayerChoiceEvent(String user, ArrayList<Character> targetPlayersOrder){
         super(user);
         this.targetPlayersOrder=targetPlayersOrder;
     }

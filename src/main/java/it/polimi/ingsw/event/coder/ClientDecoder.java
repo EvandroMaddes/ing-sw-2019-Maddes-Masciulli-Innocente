@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -18,14 +19,14 @@ import java.util.Iterator;
  * it implements the method that decode a ModelView or ViewSelect Event
  */
 public class ClientDecoder {
-
     /**
      * it DON'T decode the targetsNumber, because is an int
      * @param message is the given PlayerRequestEvent
      * @param characterIntegerMap is the ServerEncoder EnumMap
      * @return the targets Characters ArrayList
      */
-    public ArrayList<Character> decodePlayerRequestEvent (PlayerRequestEvent message,EnumMap<Character, Integer> characterIntegerMap){
+    //todo reimplementare
+ /*   public ArrayList<Player> decodePlayerRequestEvent (PlayerRequestEvent message, EnumMap<Character, Integer> characterIntegerMap){
         ArrayList<Character> characters = new ArrayList<>();
         boolean[] targetPlayers = message.getTargetPlayers();
         for(int i=0; i<5; i++){
@@ -35,7 +36,7 @@ public class ClientDecoder {
         }
         return characters;
     }
-
+*/
     /**
      * todo richiamare ricostruzione armi con json
      * @param message

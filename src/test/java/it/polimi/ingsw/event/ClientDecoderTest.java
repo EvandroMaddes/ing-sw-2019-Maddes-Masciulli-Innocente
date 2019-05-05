@@ -31,7 +31,7 @@ public class ClientDecoderTest {
 
     }
 
-    @Test
+  /*  @Test
     public void testDecodePlayerRequestEvent(){
         ArrayList<Character> expectedCharacters = new ArrayList<>();
         expectedCharacters.add(Character.VIOLET);
@@ -45,4 +45,6 @@ public class ClientDecoderTest {
         System.out.println("Tested PlayerRequest decoding");
 
     }
+
+   */
 }

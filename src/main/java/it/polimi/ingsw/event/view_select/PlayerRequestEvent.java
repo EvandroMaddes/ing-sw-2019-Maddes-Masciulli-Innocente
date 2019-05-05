@@ -1,6 +1,9 @@
 package it.polimi.ingsw.event.view_select;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.player.Character;
+
+import java.util.ArrayList;
 
 /**
  * @author Francesco Masciulli
@@ -9,10 +12,10 @@ import it.polimi.ingsw.event.Event;
  */
 public class PlayerRequestEvent extends Event {
 
-    private boolean[] targetPlayers = new boolean[5];
+    private ArrayList<Character> targetPlayers;
     private int targetsNumber;
 
-    public boolean[] getTargetPlayers() {
+    public ArrayList<Character> getTargetPlayers() {
         return targetPlayers;
     }
 
@@ -26,7 +29,7 @@ public class PlayerRequestEvent extends Event {
      * @param targetPlayers the playerList from wich he must chose
      * @param targetsNumber the number of player that he must chose
      */
-    public PlayerRequestEvent(String user,boolean[] targetPlayers, int targetsNumber){
+    public PlayerRequestEvent(String user, ArrayList<Character> targetPlayers, int targetsNumber){
         super(user);
         this.targetPlayers=targetPlayers;
         this.targetsNumber= targetsNumber;
