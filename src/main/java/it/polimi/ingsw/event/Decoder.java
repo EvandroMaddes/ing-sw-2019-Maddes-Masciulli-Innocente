@@ -4,7 +4,9 @@ import it.polimi.ingsw.event.view_select.CardRequestEvent;
 import it.polimi.ingsw.event.view_select.PlayerRequestEvent;
 import it.polimi.ingsw.event.view_select.PositionRequestEvent;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Character;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class Decoder {
     /**
      * it DON'T decode the targetsNumber, because is an int
      * @param message is the given PlayerRequestEvent
+     * @param characterIntegerMap is the Encoder EnumMap
      * @return the targets Characters ArrayList
      */
     public ArrayList<Character> decodePlayerRequestEvent (PlayerRequestEvent message,EnumMap<Character, Integer> characterIntegerMap){
@@ -38,23 +41,25 @@ public class Decoder {
         boolean isWeapon = message.getType().equals("Weapon");
         ArrayList<Card> cards = new ArrayList<>();
         Iterator cardsIterator = message.getCards().iterator();
+        Iterator coloursIterator = message.getColour().iterator();
         while (cardsIterator.hasNext()){
-              /*  if(isWeapon){
+                if(isWeapon){
                     String currWeapon= (String)cardsIterator.next();
                     //set da nome e Json
 
                 }
 
                 else{
+                    cards.add(new PowerUp((CubeColour) coloursIterator.next(),(String)cardsIterator.next()));
 
-                }*/
+                }
         }
 
         return cards;
     }
 
     /**
-     *
+     * todo implementare la decodifica da coordinate
      * @param message
      * @return
      */

@@ -13,7 +13,7 @@ public class PlayerBoardUpdateEvent extends AbstractUpdateEvent {
     /**
      * Constructor
      * @param user the Client user
-     * @param updatedPlayer the hit Player
+     * @param updatedPlayer the hit Player (given by int)
      * @param playerBoard the Updated Board
      */
     public PlayerBoardUpdateEvent(String user, String updatedPlayer, PlayerBoard playerBoard){

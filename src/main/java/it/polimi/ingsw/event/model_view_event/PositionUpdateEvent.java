@@ -13,7 +13,7 @@ public class PositionUpdateEvent extends AbstractUpdateEvent {
     /**
      * Constructor
      * @param user the Client user
-     * @param updatedPlayer the updated Player
+     * @param updatedPlayer the updated Player (given by int)
      * @param positionX  his next position X coordinate
      * @param positionY his next position Y coordinate
      */
