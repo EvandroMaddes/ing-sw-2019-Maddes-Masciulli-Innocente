@@ -11,16 +11,4 @@ public enum Character {
     DOZER,
     VIOLET,
     SPROG;
-
-    private Player player;
-
-
-    /**
-     *
-     * @return the player associated with the character
-     */
-    public Player getPlayer()
-    {
-        return player;
-    }
 }

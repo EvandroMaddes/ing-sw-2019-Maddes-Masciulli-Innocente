@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class DamageToken implements Serializable {
 
-    private final Character character;
+    private final Player player;
 
 
     public DamageToken(Player player)
     {
-        character = player.getCharacter();
+        this.player = player;
     }
 
-    public Character getCharacter()
+    public Player getPlayer()
     {
-        return character;
+        return player;
     }
 }

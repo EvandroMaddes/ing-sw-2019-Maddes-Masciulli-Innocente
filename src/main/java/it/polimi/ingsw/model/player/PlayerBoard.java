@@ -81,7 +81,7 @@ public class PlayerBoard implements Serializable {
         {
             mark = (DamageToken)iterator.next();
 
-            if (mark.getCharacter() == player.getCharacter())
+            if (mark.getPlayer() == player)
             {
                 if (damageAmount < 12)
                 {
@@ -130,7 +130,7 @@ public class PlayerBoard implements Serializable {
         while (iterator.hasNext())
         {
             mark = (DamageToken) iterator.next();
-            if (mark.getCharacter() == player.getCharacter())
+            if (mark.getPlayer() == player)
                 numberOfMarks++;
         }
 
