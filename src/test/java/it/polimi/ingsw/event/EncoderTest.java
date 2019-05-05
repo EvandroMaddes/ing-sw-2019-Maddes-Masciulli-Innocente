@@ -50,6 +50,7 @@ public class EncoderTest {
         for(int i = 0; i<5; i++){
             Assert.assertTrue( expectedCharacters[i]==resultCharacters[i]);
         }
+        Assert.assertEquals(1, event.getTargetsNumber());
         System.out.println("Tested PlayerRequestEvent encoding");
     }
 
@@ -78,10 +79,8 @@ public class EncoderTest {
     @Test
     public void testEncodePositionRequestEvent(){
         ArrayList<Square> testedSquare = new ArrayList<>();
-        testedSquare.add(new BasicSquare(3,0,null,false,null, false,
-                null,false,null,false,"Red"));
-        testedSquare.add(new SpawnSquare(0,2,null,false,null, false,
-                null,false,null,false,"Blue"));
+        testedSquare.add(new BasicSquare(3,0));
+        testedSquare.add(new SpawnSquare(0,2));
 
         PositionRequestEvent event = testedEncoder.encodePositionRequestEvent(user, testedSquare);
         Assert.assertEquals( 3,event.getPossiblePositionsY().get(0).intValue());
