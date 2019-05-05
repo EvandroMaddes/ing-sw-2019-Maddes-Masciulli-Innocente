@@ -20,10 +20,9 @@ public class DominationSpawnSquare extends SpawnSquare {
      *Constructor of a single square
      * @param row
      * @param column
-     * @param colour
      */
-    public DominationSpawnSquare(int row, int column,Square north,boolean reachableNorth, Square south,boolean reachableSouth, Square east,boolean reachableEast, Square west, boolean reachableWest, String colour){
-        super( row,  column, north, reachableNorth,  south, reachableSouth,  east, reachableEast,  west,  reachableWest,  colour);
+    public DominationSpawnSquare(int row, int column){
+        super( row,  column);
     }
 
 

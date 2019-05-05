@@ -24,13 +24,14 @@ public class KillShotTrack extends GameTrack {
     }
 
     /**
-     * A cosa serve questo metodo
-     * @param damageToken
-     * @param number
+     * this method add the number (1 or more) of DamageToken to the Track
+     * @param damageToken that represent the player
+     * @param number of token that replace a skull
      */
-    public void evalueteDamage( DamageToken damageToken, int number )
-    {
-
+    public void evaluateDamage( DamageToken damageToken, int number )
+    {   for(int i=0; i<number; i++){
+            addDamage(damageToken);
+        }
     }
 
     /**

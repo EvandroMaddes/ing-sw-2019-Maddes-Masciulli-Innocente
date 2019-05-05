@@ -47,6 +47,8 @@ public class Player {
         this.playerBoard = new PlayerBoard();
         this.points = 0;
         this.numberOfWeapons = 0;
+        this.powerUps = new ArrayList<>();
+        this.ammo = new ArrayList<>();
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));

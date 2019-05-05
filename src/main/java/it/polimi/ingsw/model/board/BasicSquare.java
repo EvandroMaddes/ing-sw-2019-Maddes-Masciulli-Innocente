@@ -14,24 +14,15 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     /**
-     * Constructor of a single square
+     * constructor
      * @param row
      * @param column
-     * @param north
-     * @param reachableNorth
-     * @param south
-     * @param reachableSouth
-     * @param east
-     * @param reachableEast
-     * @param west
-     * @param reachableWest
-     * @param colour
      */
-    public BasicSquare(int row, int column,Square north,boolean reachableNorth, Square south,boolean reachableSouth, Square east,boolean reachableEast, Square west, boolean reachableWest, String colour){
-        super( row,  column, north, reachableNorth,  south, reachableSouth,  east, reachableEast,  west,  reachableWest,  colour);
+    public BasicSquare(int row, int column ){
+
+        super(row,column);
+
     }
-
-
     /**
      *
      * @param ammo

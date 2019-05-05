@@ -9,7 +9,7 @@ import java.util.Observable;
 public class VirtualView extends Observable implements ViewInterface {
 
     private GameModel gameModel;
-    private Event currentevent;
+    private Event currentEvent;
 
     //Implementing the ViewInterface methods
 
