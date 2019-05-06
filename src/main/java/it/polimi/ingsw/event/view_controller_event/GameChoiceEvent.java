@@ -24,4 +24,11 @@ public class GameChoiceEvent extends Event {
         this.mod=mod;
     }
 
+    public String getMap() {
+        return map;
+    }
+
+    public String getMod() {
+        return mod;
+    }
 }

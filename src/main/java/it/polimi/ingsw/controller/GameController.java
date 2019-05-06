@@ -1,18 +1,19 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.board.GameBoard;
+import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.player.Player;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class GameController {
 
     private ArrayList<Player> players;
-    private GameBoard gameBoard;
+    private GameModel model;
     private RoundController currentRount;
 
-    public GameController()
-    {
-
+    public GameController() {
     }
 
     public void getGameTrackPoints()

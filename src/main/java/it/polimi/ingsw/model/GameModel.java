@@ -19,5 +19,5 @@ public class GameModel extends Observable{
     }
 
 
-    }
+}
 

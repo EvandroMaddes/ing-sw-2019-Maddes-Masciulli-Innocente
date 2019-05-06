@@ -1,29 +1,32 @@
 package it.polimi.ingsw.controller;
 
 
-import java.util.Observable;
+
+import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.GameModel;
+
+import java.security.InvalidParameterException;
 import java.util.Observer;
 
 public class Controller implements Observer {
 
+    private GameModel model;
     private GameController gameController;
 
 
-    public boolean checkSyntax()
-    {
-        boolean i = true;
-
-        return i;
-    }
-
-
-    //update su Event, con switch case gestisco il contenuto del Event
     @Override
-    public void update(Observable o, Object arg)
-    {
-      /*  switch (arg) {
-            case arg.equals("Quit"):
-        } */
-
+    /**
+     *
+     * @param message is the message that arrives from view with the map and mode choice
+     * @throws InvalidParameterException if the choice are not allowed
+     */
+    public void update(Event message) throws InvalidParameterException {
+        switch (message.getType()){
+        }
     }
+
+    public Controller (GameModel model){
+        this.model = model;
+    }
+
 }
