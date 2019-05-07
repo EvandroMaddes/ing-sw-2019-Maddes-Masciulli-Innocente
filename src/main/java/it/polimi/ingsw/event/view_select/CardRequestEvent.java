@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.view_select;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.EventType;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 import java.util.ArrayList;
@@ -14,29 +15,30 @@ import java.util.ArrayList;
 public class CardRequestEvent extends Event {
 
     private ArrayList<String> cards;
-    private String type;
+    private String cardType;
     private ArrayList<CubeColour> colour;
 
     /**
      * Constructor
      * @param user the Client user
      * @param cards the cardList from which the user must chose
-     * @param type the type of cards that are sent
+     * @param cardType the type of cards that are sent
      * @param colour the colour of each card
      */
-    public CardRequestEvent(String user, ArrayList<String> cards, String type, ArrayList<CubeColour> colour){
+    public CardRequestEvent(String user, ArrayList<String> cards, String cardType, ArrayList<CubeColour> colour){
         super(user);
         this.cards=cards;
-        this.type=type;
+        this.cardType=cardType;
         this.colour=colour;
+        type= EventType.CardRequestEvent;
     }
 
     public ArrayList<String> getCards() {
         return cards;
     }
 
-    public String getType() {
-        return type;
+    public String getCardType() {
+        return cardType;
     }
 
     public ArrayList<CubeColour> getColour() {

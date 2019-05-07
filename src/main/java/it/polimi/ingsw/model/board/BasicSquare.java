@@ -14,6 +14,14 @@ public class BasicSquare extends Square {
     private AmmoTile ammo;
 
     /**
+     * Getter method
+     * @return the ammo AmmoTile
+     */
+    public AmmoTile getAmmo() {
+        return ammo;
+    }
+
+    /**
      * constructor
      * @param row
      * @param column

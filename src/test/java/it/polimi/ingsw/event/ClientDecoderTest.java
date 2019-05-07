@@ -16,19 +16,10 @@ public class ClientDecoderTest {
     private ClientDecoder testedClientDecoder;
     private String user;
     private Iterator iterator;
-    //by now, is given by the ServerEncoder, already tested;
-    private EnumMap<Character, Integer> characterIntegerMap = new EnumMap<>(Character.class);
 
     @Before
     public void setUp(){
-        testedClientDecoder =new ClientDecoder();
         user="TestUser";
-        characterIntegerMap.put(Character.D_STRUCT_OR,0);
-        characterIntegerMap.put(Character.BANSHEE,1);
-        characterIntegerMap.put(Character.DOZER,2);
-        characterIntegerMap.put(Character.VIOLET,3);
-        characterIntegerMap.put(Character.SPROG,4);
-
     }
 
   /*  @Test

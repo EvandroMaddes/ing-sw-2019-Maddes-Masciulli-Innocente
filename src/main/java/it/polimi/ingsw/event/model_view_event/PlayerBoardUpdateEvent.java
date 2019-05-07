@@ -1,5 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
+import it.polimi.ingsw.event.EventType;
 import it.polimi.ingsw.model.player.PlayerBoard;
 
 /**
@@ -19,5 +20,6 @@ public class PlayerBoardUpdateEvent extends AbstractUpdateEvent {
     public PlayerBoardUpdateEvent(String user, String updatedPlayer, PlayerBoard playerBoard){
         super(user, updatedPlayer);
         this.playerBoard=playerBoard;
+        type= EventType.PlayerBoardUpdateEvent;
     }
 }

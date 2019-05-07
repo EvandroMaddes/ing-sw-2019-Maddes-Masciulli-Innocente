@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.EventType;
 
 /**
  * @author Francesco Masciulli
@@ -22,6 +23,7 @@ public class GameChoiceEvent extends Event {
         super(user);
         this.map=map;
         this.mod=mod;
+        type= EventType.GameChoiceEvent;
     }
 
     public String getMap() {

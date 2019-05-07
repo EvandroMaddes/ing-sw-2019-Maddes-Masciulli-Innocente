@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.EventType;
 
 public class PositionChoiceEvent extends Event {
 
@@ -11,6 +12,7 @@ public class PositionChoiceEvent extends Event {
         super(user);
         this.positionX=positionX;
         this.positionY=positionY;
+        type= EventType.PositionChoiceEvent;
     }
 
 }

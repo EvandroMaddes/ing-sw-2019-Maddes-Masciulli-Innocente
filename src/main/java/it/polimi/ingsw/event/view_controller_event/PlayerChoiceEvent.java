@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.EventType;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 
@@ -13,17 +14,25 @@ import java.util.ArrayList;
  */
 public class PlayerChoiceEvent extends Event {
 
+    /**
+     * Context: set the choosing context:
+     *      1) "Character choice"
+     *      2) "Targets choice"
+     */
     private ArrayList<Character> targetPlayersOrder;
+    private String context;
+
 
     /**
      * Constructor
      * @param user the Client user
      * @param targetPlayersOrder the chosen Players,
-     *                           the integer indicates the player encoding Character -> int
      */
-    public PlayerChoiceEvent(String user, ArrayList<Character> targetPlayersOrder){
+    public PlayerChoiceEvent(String user, String context, ArrayList<Character> targetPlayersOrder){
         super(user);
+        this.context=context;
         this.targetPlayersOrder=targetPlayersOrder;
+        type= EventType.PlayerChoiceEvent;
     }
 
     public ArrayList<Character> getTargetPlayersOrder() {
