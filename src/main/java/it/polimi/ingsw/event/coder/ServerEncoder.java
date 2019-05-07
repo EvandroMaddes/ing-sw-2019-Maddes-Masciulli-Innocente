@@ -65,7 +65,7 @@ public class ServerEncoder {
     }
 
     /**
-     * todo RoundController deve passare Actions, damageContext(sempre, vd ActionRequestEvent)
+     * todo RoundManager deve passare Actions, damageContext(sempre, vd ActionRequestEvent)
      * @param user
      * @param availableActions
      * @param damageContext

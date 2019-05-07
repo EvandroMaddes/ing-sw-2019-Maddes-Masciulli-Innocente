@@ -1,16 +1,21 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.action.Action;
 import it.polimi.ingsw.model.player.Player;
 
-public class RoundController {
+public class RoundManager {
 
     private Player currentPlayer;
-    private Action currentAction;
 
 
-    public RoundController(Player currentPlayer){
+    public RoundManager(Player currentPlayer){
         this.currentPlayer = currentPlayer;
+    }
+
+    /**
+     * A round is split in 6 phase: in 1,3,5 players can use their power up, in 2,4 they can perform actions and the 6th is used to reload
+     */
+    public void manageRound(){
+
     }
 
     public void selectAction()

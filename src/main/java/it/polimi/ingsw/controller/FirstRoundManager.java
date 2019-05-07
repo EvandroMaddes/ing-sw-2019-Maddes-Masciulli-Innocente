@@ -2,9 +2,9 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.player.Player;
 
-public class FirstRoundController extends RoundController {
+public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundController(Player currentPlayer){
+    public FirstRoundManager(Player currentPlayer){
         super(currentPlayer);
     }
 

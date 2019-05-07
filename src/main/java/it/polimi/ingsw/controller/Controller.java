@@ -11,7 +11,7 @@ import java.util.Observer;
 public class Controller implements Observer {
 
     private GameModel model;
-    private GameController gameController;
+    private GameManager gameManager;
 
 
     @Override
@@ -22,6 +22,7 @@ public class Controller implements Observer {
      */
     public void update(Event message) throws InvalidParameterException {
         switch (message.getType()){
+            case AmmoTileUpdate:
         }
     }
 
