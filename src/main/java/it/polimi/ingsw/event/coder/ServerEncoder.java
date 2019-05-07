@@ -24,6 +24,7 @@ import java.util.*;
 public class ServerEncoder {
 
     private final String mapUpdate = "MAPUPDATE";
+    private int[] coordinates;
     private Iterator iterator;
 
     /**
@@ -72,35 +73,44 @@ public class ServerEncoder {
      */
     public AmmoTileUpdateEvent encodeAmmoTileUpdateEvent(String user, BasicSquare updatedAmmoSquare){
         AmmoTile ammoTile = updatedAmmoSquare.getAmmo();
-        int positionRow = updatedAmmoSquare.getRow();
-        int positionColumn = updatedAmmoSquare.getColumn();
+        evaluateSquareIndex(updatedAmmoSquare);
         String[] colours = new String[3];
-        colours[0]= ammoTile.getFirstAmmo().getColour().toString();
-        colours[1]= ammoTile.getSecondAmmo().getColour().toString();
-        if(updatedAmmoSquare.getClass().getSimpleName()== "PowerUpAmmoTile"){
+        colours[0]= ammoTile.getAmmoCubes()[0].getColour().toString();
+        colours[1]= ammoTile.getAmmoCubes()[1].getColour().toString();
+        if(ammoTile.isPowerUpTile()){
             colours[2]= "PowerUp";
         }
         else{
-            colours[2]= ((CubeAmmoTile) updatedAmmoSquare.getAmmo()).getThirdAmmo().getColour().toString();
+            colours[2]= ammoTile.getAmmoCubes()[2].getColour().toString();
         }
-        return new AmmoTileUpdateEvent(user, mapUpdate, positionColumn, positionRow, colours[0], colours[1], colours[2]);
+        return new AmmoTileUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1], colours[0], colours[1], colours[2]);
     }
 
     public WeaponUpdateEvent encodeWeaponUpdateEvent(String user, SpawnSquare updatedWeaponSquare){
-        int positionRow = updatedWeaponSquare.getRow();
-        int positionColumn = updatedWeaponSquare.getColumn();
+        evaluateSquareIndex(updatedWeaponSquare);
         iterator = updatedWeaponSquare.getWeapons().iterator();
         ArrayList<String> weaponsName = new ArrayList<>();
         while(iterator.hasNext()){
             weaponsName.add(((Weapon)iterator.next()).getName());
         }
 
-        return new WeaponUpdateEvent(user, mapUpdate, positionColumn, positionRow, weaponsName);
+        return new WeaponUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1], weaponsName);
     }
 
     public PositionUpdateEvent encodePositionUpdateEvent(String user, String updatedPlayer, Square updatedPosition){
-        int positionRow = updatedPosition.getRow();
-        int positionColumn = updatedPosition.getColumn();
-        return new PositionUpdateEvent(user, mapUpdate, positionColumn,positionRow);
+        evaluateSquareIndex(updatedPosition);
+        return new PositionUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1]);
+    }
+
+    /**
+     * a method that find the Square column (int[0]) and row (int[1])
+     * @param square
+     * @return a vector that indicates Square's Column and Row
+     */
+    private void evaluateSquareIndex(Square square){
+        coordinates = new int[2];
+        coordinates[0] = square.getColumn();
+        coordinates[1] = square.getRow();
+
     }
 }

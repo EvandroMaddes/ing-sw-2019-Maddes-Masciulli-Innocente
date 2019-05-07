@@ -13,7 +13,7 @@ public class AmmoTileTest {
     private AmmoTile testedCubeTile;
     private AmmoTile testedPowerUpTile;
     private  Player testedPlayer;
-    PowerUp testedPowerUp = new Teleporter(CubeColour.Red);
+
 
     @Before
     public void setUp(){
@@ -22,29 +22,33 @@ public class AmmoTileTest {
         testedCube[0] = new AmmoCube(CubeColour.Blue);
         testedCube[1] = new AmmoCube(CubeColour.Yellow);
         testedCube[2] = new AmmoCube(CubeColour.Red);
-        testedCubeTile = new CubeAmmoTile(testedCube[0],testedCube[1],testedCube[2]);
-        testedPowerUpTile = new PowerUpAmmoTile(testedCube[0],testedCube[1],testedPowerUp);
+        testedCubeTile = new AmmoTile(testedCube[0],testedCube[1],testedCube[2], false);
+        testedPowerUpTile = new AmmoTile(testedCube[0],testedCube[1], null, true);
     }
 
     /**
      * Test that, according to setUp, the Player Grab 3 different coloured AmmoCubes;
      *      (expected = 2 for each colour, the grabbed and the initial Cubes)
      */
-    @Test
+   @Test
     public void testCubeAmmoTile(){
         testedCubeTile.pickAmmo(testedPlayer);
-        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getFirstAmmo().getColour()));
-        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getSecondAmmo().getColour()));
-        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(((CubeAmmoTile)testedCubeTile).getThirdAmmo().getColour()));
+        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[0].getColour()));
+        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[1].getColour()));
+        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[2].getColour()));
         System.out.println("Tested CubeAmmoTile");
     }
 
+
+
     @Test
     public void testPowerUpTile(){
+        Assert.assertTrue(testedPowerUpTile.isPowerUpTile());
         testedPowerUpTile.pickAmmo(testedPlayer);
-        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getFirstAmmo().getColour()));
-        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getSecondAmmo().getColour()));
-        Assert.assertEquals(testedPowerUp,testedPlayer.getPowerUps().get(0));
-        System.out.println("Tested PowerUpTile\n"+testedPlayer.getBattleCry());
+        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[0].getColour()));
+        Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[1].getColour()));
+        Assert.assertEquals(5, testedPlayer.getCubeColourNumber(CubeColour.Yellow)
+                +testedPlayer.getCubeColourNumber(CubeColour.Red)+testedPlayer.getCubeColourNumber(CubeColour.Yellow));
+        System.out.println("Tested PowerUpTile");
     }
 }
