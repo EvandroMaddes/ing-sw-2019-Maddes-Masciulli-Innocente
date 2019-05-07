@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 
 import java.security.InvalidParameterException;
@@ -22,7 +23,9 @@ public class Controller implements Observer {
      */
     public void update(Event message) throws InvalidParameterException {
         switch (message.getType()){
-            case AmmoTileUpdate:
+            case GameChoiceEvent:{
+                gameManager = new GameManager( (GameChoiceEvent)message);
+            }
         }
     }
 

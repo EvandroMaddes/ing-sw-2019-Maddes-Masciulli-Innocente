@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.EventType;
 
 /**
  * @author Francesco Masciulli
@@ -19,5 +20,6 @@ public class ActionChoiceEvent extends Event {
     public ActionChoiceEvent(String user, int action){
         super(user);
         this.action=action;
+        type = EventType.ActionChoiceEvent;
     }
 }
