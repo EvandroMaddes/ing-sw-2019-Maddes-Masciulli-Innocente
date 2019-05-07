@@ -15,4 +15,11 @@ public class PositionChoiceEvent extends Event {
         type= EventType.PositionChoiceEvent;
     }
 
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
 }

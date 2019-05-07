@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
 import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 
 public class GameBoard {
-
+    //todo check attributo
     //private ModeTrack modeTrack; if we develop a new game mode
     private  Map map;
     private  WeaponDeck weaponDeck;
