@@ -10,27 +10,35 @@ import java.util.ArrayList;
 public class KillShotTrack extends GameTrack {
 
     private static KillShotTrack killShotTrack;
-    private ArrayList<DamageToken> tokenTrack;
+    private ArrayList<DamageToken> tokenTrack = new ArrayList<>();
 
     private KillShotTrack()
     {
 
     }
 
-    public static void instance()
+    public static GameTrack getInstance()
     {
         if (killShotTrack == null)
             killShotTrack = new KillShotTrack();
+        return killShotTrack;
+    }
+
+    public ArrayList<DamageToken> getTokenTrack() {
+        return tokenTrack;
     }
 
     /**
-     * this method add the number (1 or more) of DamageToken to the Track
+     * this method add the number (1 or 2) of DamageToken to the Track
      * @param damageToken that represent the player
      * @param number of token that replace a skull
      */
     public void evaluateDamage( DamageToken damageToken, int number )
     {   for(int i=0; i<number; i++){
             addDamage(damageToken);
+            if(!checkEndTrack()) {
+                removeSkull();
+            }
         }
     }
 

@@ -5,7 +5,7 @@ package it.polimi.ingsw.model.board;
  */
 public abstract class GameTrack {
 
-    private int skullBox;
+    private int skullBox = 8;
     final static int points[] = new int[]{ 8,6,4,2,1,1 };
 
     /**
@@ -26,7 +26,7 @@ public abstract class GameTrack {
     }
 
     /**
-     * Rimuove i teschi dalla Gametrack ogni volta che muore un giocatore
+     * Remove a skull for every Player death
      */
     public void removeSkull()
     {

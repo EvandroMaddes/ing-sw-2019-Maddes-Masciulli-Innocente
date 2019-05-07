@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InvalidObjectException;
 
 
 public class PowerUpTest {
@@ -35,7 +33,7 @@ public class PowerUpTest {
         ((Teleporter)testedPowerUp).setDestination(expectedPosition);
         testedPowerUp.useEffect();
         Assert.assertEquals(expectedPosition,testPlayer.getPosition());
-        System.out.println("Tested Teleporter useEffect()");
+        System.out.println("Tested Teleporter");
     }
 
     @Test
@@ -108,7 +106,7 @@ public class PowerUpTest {
         try {
             testedPowerUp.useEffect();
         }catch (IllegalArgumentException illegalPosition){
-            System.out.println("Exception Catched"+illegalPosition.getMessage());
+            System.out.println("Exception Catched:  "+illegalPosition.getMessage());
         }
 
         Assert.assertNotEquals(wrongPosition,testPlayer.getPosition());
@@ -118,7 +116,6 @@ public class PowerUpTest {
 
 
     }
-
 
 
     private void evaluateDamageTokenPlayer(){
