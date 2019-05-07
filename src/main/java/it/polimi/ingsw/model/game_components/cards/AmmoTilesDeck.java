@@ -56,7 +56,7 @@ public class AmmoTilesDeck extends DeckManagement {
         ArrayList<Object> deck = new ArrayList<Object>();
 
         JsonParser parser = new JsonParser();
-        InputStream input = getClass().getClassLoader().getResourceAsStream("map.json");
+        InputStream input = getClass().getClassLoader().getResourceAsStream("ammoTile.json");
         Reader reader = new InputStreamReader(input);
         JsonElement rootElement = parser.parse(reader);
         JsonArray jsonCubeAmmo = rootElement.getAsJsonObject().getAsJsonArray("CubeAmmoTile");
