@@ -2,6 +2,9 @@ package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
+
+import java.util.ArrayList;
 
 
 public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
@@ -30,4 +33,6 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
     {
 
     }
+
+    public abstract ArrayList<Player> getTargetSecondOptionalEffect();
 }

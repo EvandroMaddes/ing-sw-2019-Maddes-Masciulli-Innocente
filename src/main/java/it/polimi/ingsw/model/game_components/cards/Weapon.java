@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 
-public class Weapon extends Card {
+public abstract class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
     private boolean loaded;
@@ -50,15 +51,12 @@ public class Weapon extends Card {
         loaded = !loaded;
     }
 
-    /**
-     * this method is overloaded for every weapon
-     */
-    public void fire()
-    {
-        invertLoadedState();
-    }
 
+    public abstract void fire(ArrayList<Player> targets, Square destination , int selectedEffect);
 
+    public abstract ArrayList<Player> getTarget(int selectedEffect);
+
+    public abstract ArrayList<Player> getTargetBaseEffect();
 
 
 }
