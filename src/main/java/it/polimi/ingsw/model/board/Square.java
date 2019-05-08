@@ -152,5 +152,9 @@ public abstract class Square {
         return reachable[direction];
     }
 
+    public ArrayList<Player> findVisiblePlayers(){
+
+    }
+
 
 }
