@@ -73,42 +73,18 @@ public abstract class Card implements BaseFightAction {
         this.owner = player;
     }
 
-    /**
-     *
-     * @param targets are the targets who are applied the damage to
-     * @param amount is the number of damage applied
-     * @param damager is the player who applied the damage
-     */
-    @Override
-    public void damage(ArrayList<Player> targets, int amount, Player damager)
-    {
-        Iterator iterator = targets.iterator();
-        Player target;
 
-        while (iterator.hasNext())
-        {
-            target = (Player)iterator.next();
-            target.getPlayerBoard().addDamages(damager, amount);
-        }
+    @Override
+    public void damage(Player target, int amount)
+    {
+        target.getPlayerBoard().addDamages(getOwner(), amount);
     }
 
-    /**
-     *
-     * @param targets ate the targets of the marking
-     * @param amount is the number of marks given
-     * @param marker is the player who apply marks
-     */
-    @Override
-    public void mark(ArrayList<Player> targets, int amount, Player marker)
-    {
-        Iterator iterator = targets.iterator();
-        Player target;
 
-        while (iterator.hasNext())
-        {
-            target = (Player)iterator.next();
-            target.getPlayerBoard().addMarks(marker, amount);
-        }
+    @Override
+    public void mark(Player target, int amount)
+    {
+        target.getPlayerBoard().addMarks(getOwner(),amount);
     }
 
     /**

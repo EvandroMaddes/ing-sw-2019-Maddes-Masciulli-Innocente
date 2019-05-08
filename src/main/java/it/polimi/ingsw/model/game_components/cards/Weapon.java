@@ -54,9 +54,11 @@ public abstract class Weapon extends Card {
 
     public abstract void fire(ArrayList<Player> targets, Square destination , int selectedEffect);
 
-    public abstract ArrayList<Player> getTarget(int selectedEffect);
+    public ArrayList<Player> getTarget(int selectedEffect){
+        switch
+    }
 
-    public abstract ArrayList<Player> getTargetBaseEffect();
+
 
 
 }

@@ -153,7 +153,7 @@ public abstract class Square {
     }
 
     public ArrayList<Player> findVisiblePlayers(){
-
+        return null;
     }
 
 

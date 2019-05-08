@@ -33,5 +33,4 @@ public abstract class OneOptionalEffectWeapon extends Weapon {
 
     }
 
-    public abstract ArrayList<Player> getTargetFirstOptionalEffect();
 }
