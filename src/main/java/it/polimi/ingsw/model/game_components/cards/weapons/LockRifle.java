@@ -8,12 +8,12 @@ import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 
-public class Distructor extends OneOptionalEffectWeapon {
+public class LockRifle extends OneOptionalEffectWeapon {
 
-    public Distructor(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost) {
+    public LockRifle(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost) {
         super(colour, name, reloadCost, firstOptionalEffectCost);
     }
-    
+
 
     @Override
     public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
