@@ -1,12 +1,16 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
+import it.polimi.ingsw.event.EventType;
+
+import java.util.ArrayList;
+
 /**
  * @author Francesco Masciulli
  * represent a Player Position Update (after a Spawn o Movement)
  */
 public class WeaponUpdateEvent extends PositionUpdateEvent {
-    private String weapon;
+    private ArrayList<String> weapon;
 
     /**
      * Constructor
@@ -16,8 +20,9 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
      * @param squareY the square Y coordinate that must be updated
      * @param weapon the new weapon based on the ground
      */
-    public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY, String weapon){
+    public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY, ArrayList<String> weapon){
         super(user, mapUpdate, squareX, squareY);
         this.weapon=weapon;
+        type= EventType.WeaponUpdateEvent;
     }
 }

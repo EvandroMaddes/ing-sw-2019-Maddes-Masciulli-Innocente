@@ -1,9 +1,25 @@
 package it.polimi.ingsw.event;
 
 public enum EventType {
+
+    //View_Controller_EventType
     ActionChoiceEvent,
     CardChoiceEvent,
     GameChoiceEvent,
     PlayerChoiceEvent,
-    PositionChoiceEvent;
+    PositionChoiceEvent,
+    StartGameEvent,
+
+    //Model_View_EventType
+    AmmoTileUpdateEvent,
+    GameTrackUpdateEvent,
+    PlayerBoardUpdateEvent,
+    PositionUpdateEvent,
+    WeaponUpdateEvent,
+
+    //View_Select_EventType
+    ActionRequestEvent,
+    CardRequestEvent,
+    PlayerRequestEvent,
+    PositionRequestEvent;
 }

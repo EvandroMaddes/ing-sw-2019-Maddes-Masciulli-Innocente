@@ -28,32 +28,7 @@ public class ServerEncoderTest {
 
     }
 
-    @Test
-    public void testEnumMap(){
-        Assert.assertTrue(testedServerEncoder.getCharacterIntegerMap().get(Character.D_STRUCT_OR)==0);
-        Assert.assertTrue( testedServerEncoder.getCharacterIntegerMap().get(Character.SPROG)==4);
-        System.out.println("Tested EnumMap Initialization");
 
-    }
-
-   /* @Test
-    public void testEncodePlayerRequestEvent(){
-        //represent: D_STRUCT_OR, DOZER, SPROG;
-        boolean[] expectedCharacters = {true,false,true,false,true};
-
-        ArrayList <Character> testedCharacters = new ArrayList<>();
-        testedCharacters.add(Character.SPROG);
-        testedCharacters.add(Character.D_STRUCT_OR);
-        testedCharacters.add(Character.DOZER);
-        PlayerRequestEvent event = testedServerEncoder.encodePlayerRequestEvent(user,testedCharacters,1);
-        boolean[] resultCharacters = event.getTargetPlayers();
-        for(int i = 0; i<5; i++){
-            Assert.assertTrue( expectedCharacters[i]==resultCharacters[i]);
-        }
-        Assert.assertEquals(1, event.getTargetsNumber());
-        System.out.println("Tested PlayerRequestEvent encoding");
-    }
-*/
     @Test
     public void testEncodeCardRequestEvent(){
         ArrayList<Card> testedCards = new ArrayList<>();

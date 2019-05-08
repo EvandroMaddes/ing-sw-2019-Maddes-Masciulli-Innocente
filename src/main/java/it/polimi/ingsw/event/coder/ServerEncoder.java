@@ -1,90 +1,41 @@
 package it.polimi.ingsw.event.coder;
 
-import it.polimi.ingsw.event.view_select.ActionRequestEvent;
+import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.WeaponUpdateEvent;
 import it.polimi.ingsw.event.view_select.CardRequestEvent;
-import it.polimi.ingsw.event.view_select.PlayerRequestEvent;
 import it.polimi.ingsw.event.view_select.PositionRequestEvent;
 
+import it.polimi.ingsw.model.board.BasicSquare;
+import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
-import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
+
 
 import java.util.*;
 
 /**
  * @author Francesco Masciulli
- * implements the encoding of ViewSelect and ModelView Events
+ * implements the encoding of ViewSelect and ModelView Events, whenever is needed;
  */
 public class ServerEncoder {
-    /**
-     * is the map between Character and its index in the boolean Array of PlayerRequest
-     */
-    private EnumMap<Character, Integer> characterIntegerMap = new EnumMap<>(Character.class);
+
+    private final String mapUpdate = "MAPUPDATE";
+    private int[] coordinates;
     private Iterator iterator;
 
     /**
-     * Constructor
-     * set the EnumMap
-     */
-    public ServerEncoder(){
-        characterIntegerMap.put(Character.D_STRUCT_OR,0);
-        characterIntegerMap.put(Character.BANSHEE,1);
-        characterIntegerMap.put(Character.DOZER,2);
-        characterIntegerMap.put(Character.VIOLET,3);
-        characterIntegerMap.put(Character.SPROG,4);
-    }
-
-    public EnumMap<Character, Integer> getCharacterIntegerMap() {
-        return characterIntegerMap;
-    }
-
-
-    /**
-     *
-     * @param user is the Client User
-     * @param targetPlayers is an ArrayList of the Players that could be chosen
-     * @param targetsNumber is the number of targets that the user must select
-     * @return
-     */
-    public PlayerRequestEvent encodePlayerRequestEvent(String user, ArrayList<Player> targetPlayers, int targetsNumber){
-        Character currCharacter;
-        ArrayList<Character> availablePlayers = new ArrayList<>();
-        iterator = targetPlayers.iterator();
-
-
-        while(iterator.hasNext()){
-            currCharacter=((Player)iterator.next()).getCharacter();
-            availablePlayers.add(currCharacter);
-
-        }
-        
-        return new PlayerRequestEvent(user, availablePlayers, targetsNumber);
-        
-    }
-
-    /**
-     * todo RoundManager deve passare Actions, damageContext(sempre, vd ActionRequestEvent)
      * @param user
-     * @param availableActions
-     * @param damageContext
-     * @return
-     */
-    public ActionRequestEvent encodeActionRequestEvent(String user, boolean[] availableActions, int damageContext){
-        return new ActionRequestEvent(user, availableActions, damageContext);
-    }
-
-    /**
-     *
      * @param availableCards
-     * @param user
      * @return the encoded CardRequestEvent message
      */
     public CardRequestEvent encodeCardRequestEvent(String user, ArrayList<Card> availableCards) {
         ArrayList<String> cards = new ArrayList<>();
         ArrayList<CubeColour> colours = new ArrayList<>();
-        //get(0) è una Card, dinamicamente Weapon o PowerUp, SimpleName è la classe
+        //get(0) è una Card, dinamicamente Weapon o PowerUp, SimpleName è il tipo dinamico della classe
         String type= availableCards.get(0).getClass().getSimpleName();
         iterator= availableCards.iterator();
         while(iterator.hasNext()){
@@ -113,6 +64,53 @@ public class ServerEncoder {
         return new PositionRequestEvent(user, coordinatesX, coordinatesY);
     }
 
+    /**
+     * Given the user and the updated Square, encodes it in the right message
+     *  must set the Event's UPDATEDRESOURCE = mapUpdate
+     * @param user the Client user
+     * @param updatedAmmoSquare the updated BasicSquare
+     * @return the AmmoTileUpdateEvent message
+     */
+    public AmmoTileUpdateEvent encodeAmmoTileUpdateEvent(String user, BasicSquare updatedAmmoSquare){
+        AmmoTile ammoTile = updatedAmmoSquare.getAmmo();
+        evaluateSquareIndex(updatedAmmoSquare);
+        String[] colours = new String[3];
+        colours[0]= ammoTile.getAmmoCubes()[0].getColour().toString();
+        colours[1]= ammoTile.getAmmoCubes()[1].getColour().toString();
+        if(ammoTile.isPowerUpTile()){
+            colours[2]= "PowerUp";
+        }
+        else{
+            colours[2]= ammoTile.getAmmoCubes()[2].getColour().toString();
+        }
+        return new AmmoTileUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1], colours[0], colours[1], colours[2]);
+    }
 
+    public WeaponUpdateEvent encodeWeaponUpdateEvent(String user, SpawnSquare updatedWeaponSquare){
+        evaluateSquareIndex(updatedWeaponSquare);
+        iterator = updatedWeaponSquare.getWeapons().iterator();
+        ArrayList<String> weaponsName = new ArrayList<>();
+        while(iterator.hasNext()){
+            weaponsName.add(((Weapon)iterator.next()).getName());
+        }
 
+        return new WeaponUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1], weaponsName);
+    }
+
+    public PositionUpdateEvent encodePositionUpdateEvent(String user, String updatedPlayer, Square updatedPosition){
+        evaluateSquareIndex(updatedPosition);
+        return new PositionUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1]);
+    }
+
+    /**
+     * a method that find the Square column (int[0]) and row (int[1])
+     * @param square
+     * @return a vector that indicates Square's Column and Row
+     */
+    private void evaluateSquareIndex(Square square){
+        coordinates = new int[2];
+        coordinates[0] = square.getColumn();
+        coordinates[1] = square.getRow();
+
+    }
 }

@@ -15,10 +15,18 @@ public class Map {
     public final static int DIM_X = 4;
     public final static int DIM_Y = 3;
 
+    private int mapNumber;
+    private Map map;
     private ArrayList<SpawnSquare> spawnSquares;//Non serve visto che gli spawnSquare sono 3 e sono fissi
 
+    private static Map ourInstance = new Map();
 
-    public Map(String leftMap, String rightMap) {
+    public static Map getInstance()
+    {
+        return ourInstance;
+    }
+
+    private Map() {
     }
 
 
@@ -29,13 +37,15 @@ public class Map {
         this.spawnSquares = spawnSquares;
     }
 
+
     /**
      *
      * @param selectedLeftMap choice of the first part(left)
-     * @param selectedRightMap choice of the second part(rigth)
+     * @param selectedRightMap choice of the second part(right)
      */
-    private void createGround(String selectedLeftMap , String selectedRightMap ) {
+    public Square[][]  createGround(String selectedLeftMap , String selectedRightMap ) {
 
+        Square [][] squaresMatix = new Square[2][3];
         JsonParser parser = new JsonParser();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("map.json");
         Reader reader = new InputStreamReader(inputStream);
@@ -45,22 +55,35 @@ public class Map {
 
         //creation of the left part
         ArrayList<Square> squares = new ArrayList<Square>();
+
         Square square0 = new BasicSquare(2, 0);
         squares.add(0, square0);
+        squaresMatix[2][0] = square0;
+
         Square square1 = new SpawnSquare(1, 0);
         squares.add(square1);
+        squaresMatix[1][0] = square1;
+
         Square square2;
         if (selectedLeftMap == "leftFirst") {
 
             square2 = new BasicSquare(0, 0);
         }else { square2 = null;}
         squares.add(square2);
+        squaresMatix[0][0] = square2;
+
         Square square3 = new BasicSquare(2, 1);
         squares.add(square3);
+        squaresMatix[2][1] = square3;
+
         Square square4 = new BasicSquare(1, 1);
         squares.add(square4);
+        squaresMatix[1][1] = square4;
+
         Square square5 = new BasicSquare(0, 1);
         squares.add(square5);
+        squaresMatix[0][1] = square5;
+
 
         int i = squares.size();//number of square of left part
 
@@ -68,20 +91,32 @@ public class Map {
         //creation of the right part
         Square square6 = new SpawnSquare(2, 2);
         squares.add(square6);
+        squaresMatix[2][2] = square6;
+
         Square square7 = new BasicSquare(1, 2);
         squares.add(square7);
+        squaresMatix[1][2] = square7;
+
         Square square8 = new BasicSquare(0, 2);
         squares.add(square8);
+        squaresMatix[0][2] = square8;
+
         Square square9;
         if (selectedRightMap == "rightFirst") {
 
             square9 = new BasicSquare(2, 3);
         }else{square9=null;}
         squares.add(square9);
+        squaresMatix[2][3] = square9;
+
         Square square10 = new BasicSquare(1, 3);
         squares.add(square10);
+        squaresMatix[1][3] = square10;
+
         Square square11 = new SpawnSquare(0, 3);
         squares.add(square11);
+        squaresMatix[0][3] = square11;
+
 
 
 
@@ -89,6 +124,9 @@ public class Map {
         addPropertyNearSquares(squares,left,i-1,-1);
         addPropertyReachable(squares,right,(squares.size()-1),i-1);
         addPropertyReachable(squares,left,i-1,-1);
+
+        return squaresMatix;
+
 
     }
 
@@ -184,4 +222,5 @@ public class Map {
             }
         }
     }
+
 }

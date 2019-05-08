@@ -1,6 +1,8 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
+import it.polimi.ingsw.event.EventType;
+
 /**
  * @author Francesco Masciulli
  * represent the updatePlayer updated Position
@@ -21,6 +23,7 @@ public class PositionUpdateEvent extends AbstractUpdateEvent {
         super(user, updatedPlayer);
         this.positionX=positionX;
         this.positionY=positionY;
+        type= EventType.PositionUpdateEvent;
 
     }
 }

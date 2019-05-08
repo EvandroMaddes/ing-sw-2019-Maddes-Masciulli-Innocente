@@ -3,8 +3,6 @@ package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
-import it.polimi.ingsw.model.game_components.ammo.CubeAmmoTile;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,8 +29,8 @@ public class TestAmmoTilesDeck {
         //necessita di un parametro di tipo ArrayList<Object>
         //bisognerà fare casting dei parametri in fase di init
         ArrayList<Object> givenDeck = new ArrayList<>();
-        AmmoTile ammoTile1 = new CubeAmmoTile(new AmmoCube(Red), new AmmoCube(Red), new AmmoCube(Yellow));
-        AmmoTile ammoTile2 = new CubeAmmoTile(new AmmoCube(Blue), new AmmoCube(Blue), new AmmoCube(Yellow));
+        AmmoTile ammoTile1 = new AmmoTile(new AmmoCube(Red), new AmmoCube(Red), new AmmoCube(Yellow), false);
+        AmmoTile ammoTile2 = new AmmoTile(new AmmoCube(Blue), new AmmoCube(Blue), null, true);
         givenDeck.add(0, ammoTile1);
         givenDeck.add(1, ammoTile2);
         testedDeck = new AmmoTilesDeck();
@@ -45,13 +43,13 @@ public class TestAmmoTilesDeck {
      */
     @Test
     public void testDraw(){
-        AmmoCube starterFirstAmmoCube = ((AmmoTile)testedDeck.getDeck().get(0)).getFirstAmmo();
+        AmmoCube starterFirstAmmoCube = ((AmmoTile)testedDeck.getDeck().get(0)).getAmmoCubes()[0];
         AmmoTile drawnAmmoTile = (AmmoTile)testedDeck.draw();
         if(testedDeck.getDeck().contains(drawnAmmoTile)){
             System.out.println("Card is still in the deck");
             fail();
         }
-        AmmoCube drawnFirstAmmoCube = drawnAmmoTile.getFirstAmmo();
+        AmmoCube drawnFirstAmmoCube = drawnAmmoTile.getAmmoCubes()[0];
         assertTrue(drawnFirstAmmoCube.equals(starterFirstAmmoCube));
         System.out.println("The drawn AmmoTile's first cube was the first of the deck's AmmoTile");
 
