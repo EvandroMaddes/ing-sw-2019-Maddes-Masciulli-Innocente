@@ -60,11 +60,6 @@ public class RoundManager {
     }
 
     public void spawnDeadPlayers(){
-        Iterator iterator = (Player)model.getPlayers().iterator();
-        for (Player p: iterator) {
 
-        }
-
-        }
     }
 }

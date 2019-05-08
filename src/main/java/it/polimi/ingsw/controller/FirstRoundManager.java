@@ -15,7 +15,6 @@ public class FirstRoundManager extends RoundManager {
         for (int i = 0; i < 2; i++){
             getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
         }
-        spawn()
         super.manageRound();
     }
 }

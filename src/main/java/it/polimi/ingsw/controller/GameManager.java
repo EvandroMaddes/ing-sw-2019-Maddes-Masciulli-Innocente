@@ -67,7 +67,7 @@ public class GameManager {
                 throw new InvalidParameterException();
             }
         }
-        return new GameBoard(map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
+        return new GameBoard(new KillShotTrack(),map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
     }
 
     public void startGame(){
@@ -113,7 +113,7 @@ public class GameManager {
     }
 
     public boolean gameEnded(){
-        return ((KillShotTrack)model.getGameboard().getTrack()).checkEndTrack();
+        return ((KillShotTrack)model.getGameboard().getGameTrack()).checkEndTrack();
     }
 
     public void manageFinalFrenzy(Player lastPlayer){
@@ -128,10 +128,10 @@ public class GameManager {
         }
         for (int player = firstFenzyPlayer - 4; player <= 4; player++) {
             if (firstPlayerPassed){
-                currentRound = new FrenzyRoundManager(true);
+                currentRound = new FrenzyRoundManager(model, model.getPlayers().get(player) , true);
             }
             else{
-                currentRound = new FrenzyRoundManager(false);
+                currentRound = new FrenzyRoundManager(model,model.getPlayers().get(player) , false);
             }
             if (model.getPlayers().get(player).isFirstPlayer()){
                 firstPlayerPassed = true;

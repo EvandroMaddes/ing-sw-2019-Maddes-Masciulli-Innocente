@@ -9,18 +9,37 @@ import java.util.ArrayList;
  */
 public class KillShotTrack extends GameTrack {
 
-    private static KillShotTrack killShotTrack;
     private ArrayList<DamageToken> tokenTrack;
+    private int skullBox;
 
-    private KillShotTrack()
-    {
-
+    /**
+     *
+     * @return
+     */
+    public int getSkullBox() {
+        return skullBox;
     }
 
-    public static void instance()
+    /**
+     * Rimuove i teschi dalla Gametrack ogni volta che muore un giocatore
+     */
+    public void removeSkull()
     {
-        if (killShotTrack == null)
-            killShotTrack = new KillShotTrack();
+        skullBox--;
+    }
+
+    /**
+     * if the number of skulls is zero, it means that game is over
+     * @return
+     */
+    public boolean checkEndTrack()
+    {
+        return skullBox == 0;
+    }
+
+    public KillShotTrack()
+    {
+
     }
 
     /**
