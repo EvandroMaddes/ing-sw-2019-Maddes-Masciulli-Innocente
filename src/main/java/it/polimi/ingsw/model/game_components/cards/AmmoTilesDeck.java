@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Francesco Masciulli
@@ -52,6 +53,10 @@ public class AmmoTilesDeck extends DeckManagement {
         discardDeck.clear();
     }
 
+    /**@author Evandro Maddes
+     * this method creates the ammo tiles deck
+     * @return ammo tiles deck
+     */
     public ArrayList<Object> createAmmoTileDeck() {
         ArrayList<Object> deck = new ArrayList<Object>();
 
@@ -75,11 +80,18 @@ public class AmmoTilesDeck extends DeckManagement {
             createAmmoTile(jsonPowerUpAmmo.get(i),deck);
             createAmmoTile(jsonPowerUpAmmo.get(i),deck);
         }
-
+        Collections.shuffle(deck);
         return  deck;
 
 
     }
+
+    /**
+     * @author Evandro Maddes
+     * this method takes property of a single ammo tile from a json file and create an ammo tile
+     * @param jsonElement gruop of ammo tiles
+     * @param deck
+     */
     public void createAmmoTile(JsonElement jsonElement, ArrayList<Object> deck){
         boolean isPowerUpTile = false;
 
