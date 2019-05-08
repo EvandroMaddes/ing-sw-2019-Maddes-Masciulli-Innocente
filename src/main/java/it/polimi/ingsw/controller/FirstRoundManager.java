@@ -1,16 +1,21 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
 public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundManager(Player currentPlayer){
-        super(currentPlayer);
+    public FirstRoundManager(GameModel model, Player currentPlayer){
+        super(model, currentPlayer);
     }
 
-    public void firstSpawn()
-    {
-
+    @Override
+    public void manageRound() {
+        for (int i = 0; i < 2; i++){
+            getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
+        }
+        spawn()
+        super.manageRound();
     }
-
 }

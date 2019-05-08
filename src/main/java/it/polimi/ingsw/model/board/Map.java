@@ -15,18 +15,10 @@ public class Map {
     public final static int DIM_X = 4;
     public final static int DIM_Y = 3;
 
-    private int mapNumber;
-    private Map map;
     private ArrayList<SpawnSquare> spawnSquares;//Non serve visto che gli spawnSquare sono 3 e sono fissi
 
-    private static Map ourInstance = new Map();
 
-    public static Map getInstance()
-    {
-        return ourInstance;
-    }
-
-    private Map() {
+    public Map(String leftMap, String rightMap) {
     }
 
 
@@ -42,7 +34,7 @@ public class Map {
      * @param selectedLeftMap choice of the first part(left)
      * @param selectedRightMap choice of the second part(rigth)
      */
-    public void createGround(String selectedLeftMap , String selectedRightMap ) {
+    private void createGround(String selectedLeftMap , String selectedRightMap ) {
 
         JsonParser parser = new JsonParser();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("map.json");
@@ -97,7 +89,6 @@ public class Map {
         addPropertyNearSquares(squares,left,i-1,-1);
         addPropertyReachable(squares,right,(squares.size()-1),i-1);
         addPropertyReachable(squares,left,i-1,-1);
-
 
     }
 

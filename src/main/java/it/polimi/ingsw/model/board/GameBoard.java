@@ -6,52 +6,41 @@ import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 
 public class GameBoard {
 
-    //private ModeTrack modeTrack; if we develop a new game mode
+    private GameTrack track;
     private  Map map;
     private  WeaponDeck weaponDeck;
     private  AmmoTilesDeck ammoTilesDeck;
     private PowerUpDeck powerUpDeck;
 
-
-    private static GameBoard ourInstance = new GameBoard();
-
-    public static GameBoard getInstance()
-    {
-        return ourInstance;
-    }
-
-    private GameBoard() {
-    }
-
     /**
-     * setter method
+     * al momento è fatto per gestire solo la modalità base
      * @param map
-     */
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
-    /**
-     *setter method
+     * @param weaponDeck
      * @param ammoTilesDeck
-     */
-    public void setAmmoTilesDeck(AmmoTilesDeck ammoTilesDeck) {
-        this.ammoTilesDeck = ammoTilesDeck;
-    }
-
-    /**
-     *setter method
      * @param powerUpDeck
      */
-    public void setPowerUpDeck(PowerUpDeck powerUpDeck) {
+    public GameBoard(Map map, WeaponDeck weaponDeck, AmmoTilesDeck ammoTilesDeck, PowerUpDeck powerUpDeck) {
+        this.map = map;
+        this.weaponDeck = weaponDeck;
+        this.ammoTilesDeck = ammoTilesDeck;
         this.powerUpDeck = powerUpDeck;
+        //per gestire più modalità questo va come parametro
+        this.track = new KillShotTrack();
     }
 
-    /**
-     *setter method
-     * @param weaponDeck
-     */
-    public void setWeaponDeck(WeaponDeck weaponDeck) {
-        this.weaponDeck = weaponDeck;
+    public WeaponDeck getWeaponDeck() {
+        return weaponDeck;
+    }
+
+    public AmmoTilesDeck getAmmoTilesDeck() {
+        return ammoTilesDeck;
+    }
+
+    public PowerUpDeck getPowerUpDeck() {
+        return powerUpDeck;
+    }
+
+    public GameTrack getTrack() {
+        return track;
     }
 }
