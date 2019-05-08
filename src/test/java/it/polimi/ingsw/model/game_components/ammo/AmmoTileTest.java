@@ -17,7 +17,7 @@ public class AmmoTileTest {
 
     @Before
     public void setUp(){
-        testedPlayer = new Player("TestUser", Character.BANSHEE, "TestCry\nAHAAAAAAAH!!");
+        testedPlayer = new Player("TestUser", Character.BANSHEE);
         AmmoCube[] testedCube = new AmmoCube[3];
         testedCube[0] = new AmmoCube(CubeColour.Blue);
         testedCube[1] = new AmmoCube(CubeColour.Yellow);

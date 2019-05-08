@@ -10,7 +10,7 @@ public class PlayerBoardTest {
 
     @Before
     public  void setUp(){}{
-        testPlayer = new Player("TestUser", Character.BANSHEE, "TestCry");
+        testPlayer = new Player("TestUser", Character.BANSHEE);
         testedPlayerBoard = testPlayer.getPlayerBoard();
 
     }

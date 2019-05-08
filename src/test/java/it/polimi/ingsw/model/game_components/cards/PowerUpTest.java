@@ -19,7 +19,7 @@ public class PowerUpTest {
 
     @Before
     public void setUp(){
-        testPlayer = new Player("TestUser", Character.SPROG, "TestCry");
+        testPlayer = new Player("TestUser", Character.SPROG);
         testPlayer.setPosition(new BasicSquare(0,0));
     }
 

@@ -14,7 +14,7 @@ public class GameTrackTest {
     @Before
     public void setUp(){
         testedTrack = KillShotTrack.getInstance();
-        testPlayer = new Player("TestUser", Character.D_STRUCT_OR, "TestCry");
+        testPlayer = new Player("TestUser", Character.D_STRUCT_OR);
     }
 
     @Test

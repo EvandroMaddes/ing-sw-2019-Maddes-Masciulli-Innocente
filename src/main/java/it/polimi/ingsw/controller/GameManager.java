@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.game_components.cards.AmmoTilesDeck;
 import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
 import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
+import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 
 import java.security.InvalidParameterException;
@@ -32,8 +33,35 @@ public class GameManager {
 
     }
 
+    /**
+     *
+     * @return winner player. In case of draw, return null
+     */
     public Player calculateWinner() {
-        return null;
+        Player winner = null;
+        boolean draw = false;
+        for (Player p : model.getPlayers()) {
+            if(winner == null || p.getPoints() > winner.getPoints() ) {
+                winner = p;
+                draw = false;
+            }
+            else if (p.getPoints() == winner.getPoints()){
+                for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()){
+                    if (d.getPlayer() == winner)
+                        break;
+                    else if (d.getPlayer() == p){
+                        winner = p;
+                        draw = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!draw)
+            return winner;
+        else{
+            return null;
+        }
     }
 
     public void addPlayer (PlayerChoiceEvent message) {
