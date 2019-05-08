@@ -23,6 +23,10 @@ public class Map {
     }
 
 
+    public Square[][] getSquareMatrix() {
+        return squareMatrix;
+    }
+
     /**
      * @param spawnSquares spawnSquare belonging at the current game
      */
@@ -38,7 +42,7 @@ public class Map {
      */
     public Square[][] createGround(String selectedLeftMap , String selectedRightMap ) {
 
-        Square [][] squaresMatix = new Square[2][3];
+        Square [][] squaresMatix = new Square[3][4];
         JsonParser parser = new JsonParser();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("map.json");
         Reader reader = new InputStreamReader(inputStream);

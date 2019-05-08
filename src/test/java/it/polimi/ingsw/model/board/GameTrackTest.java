@@ -13,7 +13,7 @@ public class GameTrackTest {
 
     @Before
     public void setUp(){
-        testedTrack = KillShotTrack.getInstance();
+        testedTrack = new KillShotTrack();
         testPlayer = new Player("TestUser", Character.D_STRUCT_OR);
     }
 

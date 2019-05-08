@@ -26,7 +26,7 @@ public class Player {
     private Square position;
     private ArrayList<AmmoCube> ammo;
     private boolean firstPlayer;
-    private Weapon[] weapons;
+    private Weapon[] weapons = new Weapon[3];
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
 
@@ -34,7 +34,6 @@ public class Player {
      *
      * @param username player's username
      * @param character is the character choosen by the player
-     * @param battleCry is the battle cry
      *
      * costructor of player, set the preferences of the player (username, character, battleCry) and give him one ammoCube for each colour
      */
@@ -115,6 +114,10 @@ public class Player {
     public ArrayList<AmmoCube> getAmmo()
     {
         return ammo;
+    }
+
+    public Weapon[] getWeapons() {
+        return weapons;
     }
 
     /**

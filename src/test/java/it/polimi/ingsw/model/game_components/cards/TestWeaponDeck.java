@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +25,11 @@ public class TestWeaponDeck {
     private class TestWeapon extends Weapon{
         TestWeapon(CubeColour colour, String name, AmmoCube[] reloadCost){
             super(colour, name, reloadCost);
+        }
+
+        @Override
+        public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
+
         }
     }
     private WeaponDeck testedDeck;
