@@ -112,9 +112,10 @@ public abstract class Card implements BaseFightAction {
     }
 
     /**
-     *
+     * todo Exception da pack java.security?? non si gestisce l'eccezione
      * @param target is the player moved
      * @param direction is the direction in which the player is moved
+     *
      */
     @Override
     public void move(Player target, int direction)
@@ -122,6 +123,6 @@ public abstract class Card implements BaseFightAction {
         if (target.getPosition().checkDirection(direction))
             target.setPosition(target.getPosition().getNextSquare(direction));
         else
-            throw new InvalidParameterException("La direzione non è percorribile");
+            throw new IllegalArgumentException("Direction not valid");
     }
 }

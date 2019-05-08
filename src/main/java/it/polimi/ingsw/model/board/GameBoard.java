@@ -5,53 +5,35 @@ import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
 import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 
 public class GameBoard {
-    //todo check attributo
-    //private ModeTrack modeTrack; if we develop a new game mode
+
+    private GameTrack gameTrack;
     private  Map map;
     private  WeaponDeck weaponDeck;
     private  AmmoTilesDeck ammoTilesDeck;
     private PowerUpDeck powerUpDeck;
 
 
-    private static GameBoard ourInstance = new GameBoard();
-
-    public static GameBoard getInstance()
-    {
-        return ourInstance;
-    }
-
-    private GameBoard() {
-    }
-
-    /**
-     * setter method
-     * @param map
-     */
-    public void setMap(Map map) {
+    public GameBoard(GameTrack gameTrack, Map map, WeaponDeck weaponDeck, AmmoTilesDeck ammoTilesDeck, PowerUpDeck powerUpDeck) {
+        this.gameTrack = gameTrack;
         this.map = map;
-    }
-
-    /**
-     *setter method
-     * @param ammoTilesDeck
-     */
-    public void setAmmoTilesDeck(AmmoTilesDeck ammoTilesDeck) {
+        this.weaponDeck = weaponDeck;
         this.ammoTilesDeck = ammoTilesDeck;
-    }
-
-    /**
-     *setter method
-     * @param powerUpDeck
-     */
-    public void setPowerUpDeck(PowerUpDeck powerUpDeck) {
         this.powerUpDeck = powerUpDeck;
     }
 
-    /**
-     *setter method
-     * @param weaponDeck
-     */
-    public void setWeaponDeck(WeaponDeck weaponDeck) {
-        this.weaponDeck = weaponDeck;
+    public GameTrack getGameTrack() {
+        return gameTrack;
+    }
+
+    public WeaponDeck getWeaponDeck() {
+        return weaponDeck;
+    }
+
+    public AmmoTilesDeck getAmmoTilesDeck() {
+        return ammoTilesDeck;
+    }
+
+    public PowerUpDeck getPowerUpDeck() {
+        return powerUpDeck;
     }
 }

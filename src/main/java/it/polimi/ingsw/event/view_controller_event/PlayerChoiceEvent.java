@@ -38,4 +38,8 @@ public class PlayerChoiceEvent extends Event {
     public ArrayList<Character> getTargetPlayersOrder() {
         return targetPlayersOrder;
     }
+
+    public String getContext() {
+        return context;
+    }
 }

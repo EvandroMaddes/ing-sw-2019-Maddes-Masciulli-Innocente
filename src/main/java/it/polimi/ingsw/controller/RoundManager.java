@@ -1,21 +1,25 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.player.Player;
+
+import java.util.Iterator;
+
 
 public class RoundManager {
 
+    protected final GameModel model;
     private Player currentPlayer;
 
-
-    public RoundManager(Player currentPlayer){
+    public RoundManager(GameModel model, Player currentPlayer){
         this.currentPlayer = currentPlayer;
+        this.model = model;
     }
 
     /**
      * A round is split in 6 phase: in 1,3,5 players can use their power up, in 2,4 they can perform actions and the 6th is used to reload
      */
     public void manageRound(){
-
     }
 
     public void selectAction()
@@ -38,11 +42,6 @@ public class RoundManager {
 
     }
 
-    /**
-     * todo su currPlayer, calcola le MacroAzioni(ex puòMove, puòGrab), setta codedMacroAction[5]=true perchè indica Fineturno
-     * può essere comodo inserire String macroType in Action per trovare subito damageContext e macroAction nella view
-     * @return the boolean Array that will be incapsulated in ActionRequestEvent(la codifica è in quest'ultima classe)
-     */
     public boolean[] checkAction()
     {
         boolean codedMacroAction[] = new boolean[5];
@@ -53,6 +52,14 @@ public class RoundManager {
 
     public void endRound()
     {
+
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void spawnDeadPlayers(){
 
     }
 }

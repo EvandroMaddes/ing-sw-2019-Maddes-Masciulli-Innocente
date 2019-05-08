@@ -12,12 +12,22 @@ public class GameModel extends Observable{
     private ArrayList<Player> players;
     private GameBoard gameboard;
 
+    public GameModel(GameBoard gameboard, ArrayList<Player> players) {
+        this.players = players;
+        this.gameboard = gameboard;
+    }
 
     public void notifyObservers()
     {
 
     }
 
+    public GameBoard getGameboard() {
+        return gameboard;
+    }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 }
 

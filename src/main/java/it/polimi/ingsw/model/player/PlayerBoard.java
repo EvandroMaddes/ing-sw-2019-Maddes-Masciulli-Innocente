@@ -14,13 +14,19 @@ public class PlayerBoard implements Serializable {
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;
-    private static final int points[] = new int[]{ 8,6,4,2,1,1 };
+    private static final int[] points = new int[]{ 8,6,4,2,1,1 };
 
-    private DamageToken[] damageReceved;
-    private int damageAmount;
+    private DamageToken[] damageReceived = new DamageToken[MAX_DAMAGE];
+    private int damageAmount = 0;
     private int skullsNumber;
-    private ArrayList<DamageToken> marks;
+    private ArrayList<DamageToken> marks = new ArrayList<>();
 
+
+
+
+    public DamageToken[] getDamageReceived() {
+        return damageReceived;
+    }
 
     /**
      *
@@ -32,11 +38,13 @@ public class PlayerBoard implements Serializable {
     }
 
     /**
-     * Give a skull to a player
+     * Give a skull to a player (Max 6 for each PlayerBoard)
      */
     public void addSkull()
     {
-        skullsNumber += 1;
+        if(skullsNumber<6) {
+            skullsNumber += 1;
+        }
     }
 
     /**
@@ -47,10 +55,11 @@ public class PlayerBoard implements Serializable {
      */
     public void addDamages( Player player, int numberOfDamage )
     {
+
         while (damageAmount < MAX_DAMAGE && numberOfDamage > 0)
         {
             damageAmount++;
-            damageReceved[damageAmount] = new DamageToken(player);
+            damageReceived[damageAmount-1] = new DamageToken(player);
             numberOfDamage--;
         }
 
@@ -86,7 +95,7 @@ public class PlayerBoard implements Serializable {
                 if (damageAmount < 12)
                 {
                     damageAmount++;
-                    damageReceved[damageAmount] = mark;
+                    damageReceived[damageAmount-1] = mark;
                 }
                 iterator.remove();
             }
@@ -102,11 +111,11 @@ public class PlayerBoard implements Serializable {
      */
     public void addMarks( Player player, int numberOfMarks )
     {
-        int previousMarsk = checkNumberOfMarks(player);
+        int previousMarks = checkNumberOfMarks(player);
 
-        if (previousMarsk + numberOfMarks > MAX_MARKS)
+        if (previousMarks + numberOfMarks > MAX_MARKS)
         {
-            numberOfMarks = MAX_MARKS - previousMarsk;
+            numberOfMarks = MAX_MARKS - previousMarks;
         }
         for (int i = 0; i < numberOfMarks; i++)
         {

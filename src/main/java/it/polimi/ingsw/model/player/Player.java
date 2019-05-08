@@ -21,7 +21,6 @@ public class Player {
 
     private final String username;
     private final Character character;
-    private final String battleCry;
     private PlayerBoard playerBoard;
     private int points;
     private Square position;
@@ -39,16 +38,16 @@ public class Player {
      *
      * costructor of player, set the preferences of the player (username, character, battleCry) and give him one ammoCube for each colour
      */
-    public Player(String username, Character character, String battleCry)
+    public Player(String username, Character character)
     {
         this.username = username;
         this.character = character;
-        this.battleCry = battleCry;
         this.playerBoard = new PlayerBoard();
         this.points = 0;
         this.numberOfWeapons = 0;
         this.powerUps = new ArrayList<>();
         this.ammo = new ArrayList<>();
+        this.firstPlayer = false;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -108,15 +107,6 @@ public class Player {
         return username;
     }
 
-    /**
-     *
-     * @return battleCry
-     */
-    public String getBattleCry()
-    {
-        return battleCry;
-    }
-
 
     /**
      *
@@ -149,6 +139,10 @@ public class Player {
     public boolean isFirstPlayer()
     {
         return firstPlayer;
+    }
+
+    public void setFirstPlayer(){
+        firstPlayer = true;
     }
 
     /**
