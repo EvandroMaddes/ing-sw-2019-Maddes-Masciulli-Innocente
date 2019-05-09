@@ -1,7 +1,8 @@
 package it.polimi.ingsw.event;
 
 public enum EventType {
-
+    //
+    ErrorEvent,
     //View_Controller_EventType
     ActionChoiceEvent,
     CardChoiceEvent,

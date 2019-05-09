@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.server.socket;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.network.NetworkHandler;
 
 import java.io.ObjectInputStream;
@@ -17,13 +18,14 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     }
 
     @Override
-    public void sendMessage() {
+    public void sendMessage(Event message) {
 
     }
 
     @Override
-    public void listenMessage() {
-
+    public Event listenMessage() {
+        Event message = null;
+        return message;
     }
 
 }

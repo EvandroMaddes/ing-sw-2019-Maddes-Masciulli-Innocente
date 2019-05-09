@@ -31,6 +31,15 @@ public class TestWeaponDeck {
         public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
 
         }
+        @Override
+        public void damage(Player target, int amount){
+
+        }
+
+        @Override
+        public void mark(Player target, int amount) {
+
+        }
     }
     private WeaponDeck testedDeck;
 
