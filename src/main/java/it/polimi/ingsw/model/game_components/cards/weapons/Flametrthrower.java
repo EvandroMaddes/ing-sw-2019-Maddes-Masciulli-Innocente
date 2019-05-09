@@ -17,7 +17,7 @@ public class Flametrthrower extends AlternateFireWeapon {
     }
 
 
-    //todo tona i tutti i giocatori distanti due; ikl controller deve verificare che i giocatori scelti son nella stessa direzione
+    //todo tona i tutti i giocatori distanti due; il controller deve verificare che i giocatori scelti son nella stessa direzione
     public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
         ArrayList<Player> targets = null;

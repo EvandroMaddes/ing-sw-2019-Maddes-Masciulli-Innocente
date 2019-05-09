@@ -28,7 +28,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     public ArrayList<Player> getTargetFirstOptionalEffect() {
 
-        throw  new IllegalStateException();//this exception is managed by controller
+        throw  new IllegalStateException();//this exception is managed by controller: target is a square with distance two
     }
 
     public ArrayList<Player> getTargetSecondOptionalEffect() {
