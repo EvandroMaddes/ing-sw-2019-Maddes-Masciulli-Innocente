@@ -11,8 +11,9 @@ import java.rmi.RemoteException;
  * its methods handle the remote connection beetwen Server and Client(the latter will not implements the Broadcast)
  */
 public interface RemoteInterface extends Remote {
+    void acceptRemoteClient(RemoteInterface remoteClient) throws RemoteException;
     void remoteSendMessage(Event message) throws RemoteException;
+    void remoteSetCurrEvent(Event message) throws RemoteException;
     void remoteSendBroadcast(Event message) throws RemoteException;
-    //potrebbe returnare un Event?
-    void remoteListenMessage() throws RemoteException;
+    Event remoteListenMessage() throws RemoteException;
 }

@@ -30,4 +30,12 @@ public abstract class Event implements Serializable {
     public EventType getType() {
         return type;
     }
+
+    /**
+     * this setter method is called during the BroadcastSend of a message
+     * @param user
+     */
+    public void setUser(String user) {
+        this.user = user;
+    }
 }

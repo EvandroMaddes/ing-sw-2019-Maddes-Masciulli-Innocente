@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.weapons.Distructor;
+import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
@@ -35,7 +35,7 @@ public class SquareTest {
         testedSquare = new SpawnSquare(0,0);
         Player testPlayer = new Player("TestUser", Character.SPROG);
         AmmoCube[] cubes = testTile.getAmmoCubes();
-       Distructor distructor = new Distructor(CubeColour.Blue, "Distructor",
+       LockRifle distructor = new LockRifle(CubeColour.Blue, "Distructor",
                 cubes, null);
         ((SpawnSquare)testedSquare).replaceWeapon(distructor);
         ((SpawnSquare) testedSquare).grabWeapon(distructor,testPlayer);

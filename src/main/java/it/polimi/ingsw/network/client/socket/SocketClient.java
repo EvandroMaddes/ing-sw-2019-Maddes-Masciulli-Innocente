@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client.socket;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.client.ClientInterface;
 
@@ -23,12 +24,13 @@ public class SocketClient implements NetworkHandler, ClientInterface {
     }
 
     @Override
-    public void listenMessage() {
-
+    public Event listenMessage() {
+        Event message = null;
+        return message;
     }
 
     @Override
-    public void sendMessage() {
+    public void sendMessage(Event message) {
 
     }
 
