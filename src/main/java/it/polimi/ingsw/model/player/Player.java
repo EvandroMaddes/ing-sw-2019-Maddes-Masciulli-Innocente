@@ -26,7 +26,7 @@ public class Player {
     private Square position;
     private ArrayList<AmmoCube> ammo;
     private boolean firstPlayer;
-    private Weapon[] weapons;
+    private Weapon[] weapons = new Weapon[3];
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
 
@@ -114,6 +114,10 @@ public class Player {
     public ArrayList<AmmoCube> getAmmo()
     {
         return ammo;
+    }
+
+    public Weapon[] getWeapons() {
+        return weapons;
     }
 
     /**

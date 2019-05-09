@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.weapons.Distructor;
+import it.polimi.ingsw.model.game_components.cards.weapons.Esempio;
 import it.polimi.ingsw.model.player.Character;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,10 +34,11 @@ public class ServerEncoderTest {
     @Test
     public void testEncodeCardRequestEvent(){
         ArrayList<Card> testedCards = new ArrayList<>();
-        testedCards.add(new Weapon(CubeColour.Yellow,"TestWeapon1",null));
-        testedCards.add(new Weapon(CubeColour.Blue,"TestWeapon2",null));
-        CardRequestEvent event = testedServerEncoder.encodeCardRequestEvent(user,testedCards);
-        Assert.assertTrue( event.getType().equals("Weapon"));
+        testedCards.add(new Distructor(CubeColour.Yellow,"TestWeapon1",null, null));
+        testedCards.add(new Distructor(CubeColour.Blue,"TestWeapon2",null, null));
+        CardRequestEvent event = testedServerEncoder.encodeCardRequestEvent(user,testedCards, "Weapon");
+        Assert.assertEquals("Weapon", event.getCardType());
+        Assert.assertEquals(EventType.CardRequestEvent, event.getType());
         Assert.assertTrue(event.getCards().contains("TestWeapon1"));
         int index = event.getCards().indexOf("TestWeapon1");
         if(index!=1 && index != 0){
@@ -58,6 +61,7 @@ public class ServerEncoderTest {
         testedSquare.add(new SpawnSquare(0,2));
 
         PositionRequestEvent event = testedServerEncoder.encodePositionRequestEvent(user, testedSquare);
+        Assert.assertEquals(EventType.PositionRequestEvent, event.getType());
         Assert.assertEquals( 3,event.getPossiblePositionsY().get(0).intValue());
         Assert.assertEquals( 0,event.getPossiblePositionsX().get(0).intValue());
         Assert.assertEquals( 0,event.getPossiblePositionsY().get(1).intValue());

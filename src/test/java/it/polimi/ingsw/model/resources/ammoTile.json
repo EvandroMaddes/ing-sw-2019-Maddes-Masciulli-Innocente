@@ -1,0 +1,73 @@
+{
+  "CubeAmmoTile": [
+    {
+      "firstAmmo": "Yellow",
+      "secondAmmo": "Blue",
+      "thirdAmmo": "Blue"
+    },
+
+    {
+      "firstAmmo": "Yellow",
+      "secondAmmo": "Red",
+      "thirdAmmo": "Red"
+    },
+
+    {
+      "firstAmmo": "Red",
+      "secondAmmo": "Blue",
+      "thirdAmmo": "Blue"
+    },
+
+    {
+      "firstAmmo": "Red",
+      "secondAmmo": "Yellow",
+      "thirdAmmo": "Yellow"
+    },
+
+    {
+      "firstAmmo": "Blue",
+      "secondAmmo": "Yellow",
+      "thirdAmmo": "Yellow"
+    },
+
+    {
+      "firstAmmo": "Blue",
+      "secondAmmo": "Red",
+      "thirdAmmo": "Red"
+    }
+  ],
+
+  "PowerUpAmmoTile": [
+
+    {
+      "firstAmmo": "Yellow",
+      "secondAmmo": "Yellow"
+    },
+
+    {
+      "firstAmmo": "Red",
+      "secondAmmo": "Red"
+    },
+
+    {
+      "firstAmmo": "Blue",
+      "secondAmmo": "Blue"
+    },
+
+    {
+      "firstAmmo": "Yellow",
+      "secondAmmo": "Red"
+    },
+
+    {
+      "firstAmmo": "Yellow",
+      "secondAmmo": "Blue"
+    },
+
+    {
+      "firstAmmo": "Red",
+      "secondAmmo": "Blue"
+    }
+
+  ]
+}

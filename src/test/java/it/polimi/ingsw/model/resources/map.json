@@ -1,0 +1,331 @@
+{
+  "leftFirst": {
+    "0": {
+      "row": 2,
+      "column": 0,
+      "colour": "red",
+      "northSquare": null,
+      "northReachable": false,
+      "southSquare": 1,
+      "southReachable": true,
+      "eastSquare": 3,
+      "eastReachable": true,
+      "westSquare": null,
+      "westReachable": false,
+      "spawnSquare": false
+    },
+    "1": {
+      "row": 1,
+      "column": 0,
+      "colour": "red",
+      "northSquare": 0,
+      "northReachable": true,
+      "southSquare": 2,
+      "southReachable": true,
+      "eastSquare": 4,
+      "eastReachable": false,
+      "westSquare": null,
+      "westReachable": false,
+      "spawnSquare": true
+    },
+    "2": {
+      "row": 0,
+      "column": 0,
+      "colour": "grey",
+      "northSquare": 1,
+      "northReachable": true,
+      "southSquare": null,
+      "southReachable": false,
+      "eastSquare": 5,
+      "eastReachable": true,
+      "westSquare": null,
+      "westReachable": false,
+      "spawnSquare": false
+    },
+    "3": {
+      "row": 2,
+      "column": 1,
+      "colour": "blue",
+      "northSquare": null,
+      "northReachable": false,
+      "southSquare": 4,
+      "southReachable": true,
+      "eastSquare": 6,
+      "eastReachable": true,
+      "westSquare": 0,
+      "westReachable": true,
+      "spawnSquare": false
+    },
+    "4": {
+      "row": 1,
+      "column": 1,
+      "colour": "violet",
+      "northSquare": 3,
+      "northReachable": true,
+      "southSquare": 5,
+      "southReachable": true,
+      "eastSquare": 7,
+      "eastReachable": null,
+      "westSquare": 1,
+      "westReachable": false,
+      "spawnSquare": false
+    },
+    "5": {
+      "row": 0,
+      "column": 1,
+      "colour": "grey",
+      "northSquare": 4,
+      "northReachable": true,
+      "southSquare": null,
+      "southReachable": false,
+      "eastSquare": 8,
+      "eastReachable": true,
+      "westSquare": 2,
+      "westReachable": true,
+      "spawnSquare": false
+    }
+  },
+  "leftSecond" : {
+
+    "0":{
+      "row":2,
+      "column":0,
+      "colour":"blue",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":1,
+      "southReachable":true,
+      "eastSquare":3,
+      "eastReachable":true,
+      "westSquare":null,
+      "westReachable":false,
+      "spawnSquare":false
+    },
+
+    "1":{
+      "row":1,
+      "column":0,
+      "colour":"red",
+      "northSquare":0,
+      "northReachable":true,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":4,
+      "eastReachable":true,
+      "westSquare":null,
+      "westReachable":false,
+      "spawnSquare":true
+    },
+
+    "3":{
+      "row":2,
+      "column":1,
+      "colour":"blue",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":4,
+      "southReachable":false,
+      "eastSquare":6,
+      "eastReachable":true,
+      "westSquare":0,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "4":{
+      "row":1,
+      "column":1,
+      "colour":"red",
+      "northSquare":3,
+      "northReachable":false,
+      "southSquare":5,
+      "southReachable":true,
+      "eastSquare":7,
+      "eastReachable":null,
+      "westSquare":1,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "5":{
+      "row":0,
+      "column":1,
+      "colour":"grey",
+      "northSquare":4,
+      "northReachable":true,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":8,
+      "eastReachable":true,
+      "westSquare":null,
+      "westReachable":false,
+      "spawnSquare":false
+    }
+  },
+
+  "rightFirst" : {
+
+    "6":{
+      "row":2,
+      "column":2,
+      "colour":"blue",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":7,
+      "southReachable":true,
+      "eastSquare":9,
+      "eastReachable":true,
+      "westSquare":3,
+      "westReachable":true,
+      "spawnSquare":true
+    },
+
+    "7":{
+      "row":1,
+      "column":2,
+      "colour":"yellow",
+      "northSquare":6,
+      "northReachable":true,
+      "southSquare":8,
+      "southReachable":true,
+      "eastSquare":10,
+      "eastReachable":true,
+      "westSquare":4,
+      "westReachable":false,
+      "spawnSquare":false
+    },
+
+    "8":{
+      "row":0,
+      "column":2,
+      "colour":"yellow",
+      "northSquare":7,
+      "northReachable":true,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":11,
+      "eastReachable":true,
+      "westSquare":5,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+
+    "9":{
+      "row":2,
+      "column":3,
+      "colour":"grey",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":10,
+      "southReachable":true,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":6,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+
+    "10":{
+      "row":1,
+      "column":3,
+      "colour":"yellow",
+      "northSquare":9,
+      "northReachable":true,
+      "southSquare":11,
+      "southReachable":true,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":7,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "11":{
+      "row":2,
+      "column":3,
+      "colour":"yellow",
+      "northSquare":10,
+      "northReachable":true,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":8,
+      "westReachable":true,
+      "spawnSquare":true
+    }
+  },
+  "rightSecond" : {
+    "6":{
+      "row":2,
+      "column":2,
+      "colour":"blue",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":7,
+      "southReachable":true,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":3,
+      "westReachable":true,
+      "spawnSquare":true
+    },
+    "7":{
+      "row":1,
+      "column":2,
+      "colour":"violet",
+      "northSquare":6,
+      "northReachable":true,
+      "southSquare":8,
+      "southReachable":false,
+      "eastSquare":10,
+      "eastReachable":true,
+      "westSquare":4,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "8":{
+      "row":0,
+      "column":2,
+      "colour":"grey",
+      "northSquare":7,
+      "northReachable":false,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":11,
+      "eastReachable":true,
+      "westSquare":5,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "10":{
+      "row":1,
+      "column":3,
+      "colour":"yellow",
+      "northSquare":null,
+      "northReachable":false,
+      "southSquare":11,
+      "southReachable":true,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":7,
+      "westReachable":true,
+      "spawnSquare":false
+    },
+    "11":{
+      "row":0,
+      "column":3,
+      "colour":"yellow",
+      "northSquare":10,
+      "northReachable":true,
+      "southSquare":null,
+      "southReachable":false,
+      "eastSquare":null,
+      "eastReachable":false,
+      "westSquare":8,
+      "westReachable":true,
+      "spawnSquare":true
+    }
+  }
+}
+
+
+
+

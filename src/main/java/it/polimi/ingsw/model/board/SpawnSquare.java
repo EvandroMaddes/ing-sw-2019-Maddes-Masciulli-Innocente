@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  */
 public class SpawnSquare extends Square {
-     private ArrayList<Weapon> weapons;
+     private ArrayList<Weapon> weapons = new ArrayList<>();
 
      /**
       * Constructor of a single square
@@ -44,22 +44,22 @@ public class SpawnSquare extends Square {
      }
 
      /**
-      *it adds three weapons or
-      * After one player picks-up a weapon, this metod replaces it or leaves empty(only if there are non more weapons)
-      * @param weaponCard card that is drawed 
+      * todo check metodo:
+      * After one player picks-up a weapon, this method replaces it
+      * @param weaponCard card that is drawn, must be NOT NULL
       */
-     public void replaceWeapon(Weapon weaponCard) throws NullPointerException
+     public void replaceWeapon(Weapon weaponCard)
      {
-          int i=0;
+
           try {
-               while(i<3){
                     weapons.add(weaponCard);
 
-               }
+
           }
           catch (NullPointerException e)
           {
-               weapons.add(null);
+
+               weapons.remove(null);
           }
      }
 
@@ -73,6 +73,7 @@ public class SpawnSquare extends Square {
 
      public void grabWeapon(Weapon weaponSelected, Player player){
           player.addWeapon(weaponSelected);
+          removeWeapon(weaponSelected);
      }
 
      @Override

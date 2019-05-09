@@ -21,6 +21,6 @@ public class Furnace extends AlternateFireWeapon {
 
     }
 
-    public void fireAlternativeEffect(ArrayList<Player>, Square destination){
+    public void fireAlternativeEffect(ArrayList<Player> targets, Square destination){
     }
 }
