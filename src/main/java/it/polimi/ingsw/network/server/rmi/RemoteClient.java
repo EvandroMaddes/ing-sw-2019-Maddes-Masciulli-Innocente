@@ -16,6 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class RemoteClient extends UnicastRemoteObject implements NetworkHandler, RemoteInterface, ServerInterface {
+    private static final long serialVersionUID = 2L;
     private ArrayList<RemoteInterface> clientList;
     private Event currMessage;
 

@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 
 public class RMIClient extends UnicastRemoteObject implements ClientInterface, NetworkHandler, RemoteInterface, Runnable{
-
+    private static final long serialVersionUID = 2L;
     private RemoteInterface server;
     private String user;
     private Event currMessage;
@@ -40,8 +40,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     @Override
     public void connectClient() {
         try {
-            RemoteInterface server = (RemoteInterface) Naming.lookup("rmi://localhost/RMIServer");
-            acceptRemoteClient(server);
+            RemoteInterface remoteServer = (RemoteInterface) Naming.lookup("rmi://localhost/RMIServer");
+            acceptRemoteClient(remoteServer);
         }catch(RemoteException rmtException){
 
         }
@@ -56,8 +56,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
 
     /**
      * not implemented, must accept the Server Binding;
-     * @param remoteClient
-     * @throws RemoteException
+     * @param remoteClient is the Remote Server
+     * @throws RemoteException if it could not connect to the Server??
      */
     @Override
     public void acceptRemoteClient(RemoteInterface remoteClient) throws RemoteException {
