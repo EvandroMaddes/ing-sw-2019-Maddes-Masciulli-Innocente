@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.game_components.cards.weapons;
 
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.TwoOptionalEffectWeapon;
 import it.polimi.ingsw.model.player.Player;
 
@@ -53,6 +55,18 @@ public class Thor extends TwoOptionalEffectWeapon {
             throw new NullPointerException();
         damage(targets.get(1), 1);
         fireBaseEffect(targets, destination);
+    }
+
+    /**
+     *
+     * @param colour
+     * @param name
+     * @param reloadCost
+     * @param firstOptionalEffectCost
+     * @param secondOptionalEffectCost
+     */
+    public Thor(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
+        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
     }
 
     public void fireSecondOptionalEffect(ArrayList<Player> targets, Square destination) {

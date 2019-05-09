@@ -18,10 +18,6 @@ public class LockRifle extends OneOptionalEffectWeapon {
      *
      * @return true if the base effect can be activated
      */
-    @Override
-    public boolean canActivateAnEffect() {
-        return !getTargetsBaseEffect().isEmpty();
-    }
 
     @Override
     public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {

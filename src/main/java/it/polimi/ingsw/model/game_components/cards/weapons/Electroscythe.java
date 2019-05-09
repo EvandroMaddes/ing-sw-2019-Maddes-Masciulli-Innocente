@@ -22,11 +22,13 @@ public class Electroscythe extends AlternateFireWeapon {
     }
 
     public ArrayList<Player> getTargetsBaseEffect(){
-        return getOwner().getPosition().getSquarePlayers();
+        ArrayList<Player> giocatoriInPartita= null;
+        return getOwner().getPosition().getSquarePlayers(giocatoriInPartita);
     }
 
     public ArrayList<Player> getTargetsAlternativeEffect(){
-        return getOwner().getPosition().getSquarePlayers();
+        ArrayList<Player> giocatoriInPartita= null;
+        return getOwner().getPosition().getSquarePlayers(giocatoriInPartita);
     }
 
     public void fireBaseEffect(ArrayList<Player> targets, Square destination){

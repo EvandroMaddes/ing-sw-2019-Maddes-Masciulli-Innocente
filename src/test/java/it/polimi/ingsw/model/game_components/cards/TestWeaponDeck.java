@@ -31,6 +31,21 @@ public class TestWeaponDeck {
         public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
 
         }
+
+        @Override
+        public ArrayList<Player> getTargets(int selectedEffect) {
+            return null;
+        }
+
+        @Override
+        public ArrayList<Player> getTargetsBaseEffect() {
+            return null;
+        }
+
+        @Override
+        protected void fireBaseEffect(ArrayList<Player> targets, Square destination) {
+
+        }
     }
     private WeaponDeck testedDeck;
 

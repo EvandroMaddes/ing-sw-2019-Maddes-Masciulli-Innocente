@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
@@ -25,12 +26,39 @@ public abstract class OneOptionalEffectWeapon extends Weapon {
         this.firstOptionalEffectCost = firstOptionalEffectCost;
     }
 
-    /**
-     * overrided for every weapon that implements from this class
-     */
-    public void firstOptionalEffec()
-    {
 
+
+    public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
+        switch (selectedEffect){
+            case 1:{
+                fireBaseEffect(targets, destination);
+                break;
+            }
+            case 2:{
+                fireFirstOptionalEffect(targets, destination);
+                break;
+            }
+        }
     }
+    public ArrayList<Player> getTargets(int selectedEffect){
+        // switch
+        ArrayList<Player> targets = new ArrayList<>();
+        switch (selectedEffect){
+            case 1:{
+                getTargetsBaseEffect();
+                break;
+            }
+            case 2:{
+                getTargetsFirstOptionalEffect();
+                break;
+            }
+        }
+
+        return targets;
+    }
+
+    public abstract ArrayList<Player> getTargetsFirstOptionalEffect();
+    public abstract void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination);
+
 
 }
