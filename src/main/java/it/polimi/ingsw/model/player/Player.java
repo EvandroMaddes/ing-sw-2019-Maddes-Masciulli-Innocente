@@ -34,7 +34,6 @@ public class Player {
      *
      * @param username player's username
      * @param character is the character choosen by the player
-     * @param battleCry is the battle cry
      *
      * costructor of player, set the preferences of the player (username, character, battleCry) and give him one ammoCube for each colour
      */
@@ -248,4 +247,60 @@ public class Player {
         powerUp.setOwner(null);
     }
 
+    public int getNumberOfWeapons() {
+        return numberOfWeapons;
+    }
+
+    public Weapon[] getWeapons() {
+        return weapons;
+    }
+
+    /**
+     *
+     * @param cost is a list of AmmoCubes, that rappresents the cost of something
+     * @return true if the player can affort the cost, with both ammo and powerUp
+     */
+    public boolean canAffortCost(ArrayList<AmmoCube> cost){
+        int blueCubes = 0;
+        int yellowCubes = 0;
+        int redCubes = 0;
+
+        for (AmmoCube cube: cost) {
+            switch (cube.getColour()){
+                case Blue: {
+                    blueCubes++;
+                    break;
+                }
+                case Red: {
+                    redCubes++;
+                    break;
+                }
+                case Yellow:{
+                    yellowCubes++;
+                    break;
+                }
+            }
+        }
+        blueCubes -= getCubeColourNumber(CubeColour.Blue);
+        yellowCubes -= getCubeColourNumber(CubeColour.Yellow);
+        redCubes -= getCubeColourNumber(CubeColour.Red);
+
+        for (PowerUp p: powerUps) {
+            switch (p.getColour()){
+                case Yellow:{
+                    yellowCubes--;
+                    break;
+                }
+                case Red:{
+                    redCubes--;
+                    break;
+                }
+                case Blue:{
+                    blueCubes--;
+                    break;
+                }
+            }
+        }
+        return blueCubes <= 0 && yellowCubes <= 0 && redCubes <= 0;
+    }
 }

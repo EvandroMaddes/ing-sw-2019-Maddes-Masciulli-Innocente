@@ -11,6 +11,7 @@ public class GameBoard {
     private  WeaponDeck weaponDeck;
     private  AmmoTilesDeck ammoTilesDeck;
     private PowerUpDeck powerUpDeck;
+    private boolean finalFrenzy = false;
 
 
     public GameBoard(GameTrack gameTrack, Map map, WeaponDeck weaponDeck, AmmoTilesDeck ammoTilesDeck, PowerUpDeck powerUpDeck) {
@@ -35,5 +36,13 @@ public class GameBoard {
 
     public PowerUpDeck getPowerUpDeck() {
         return powerUpDeck;
+    }
+
+    public void setFinalFrenzy() {
+        finalFrenzy = true;
+    }
+
+    public boolean isFinalFrenzy() {
+        return finalFrenzy;
     }
 }

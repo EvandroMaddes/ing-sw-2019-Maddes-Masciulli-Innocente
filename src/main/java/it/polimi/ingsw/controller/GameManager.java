@@ -101,7 +101,8 @@ public class GameManager {
     public void startGame(){
         playersReady++;
         if (playersReady == model.getPlayers().size() && playersReady >= 3 && playersReady <= 5) {
-            manageRoundFlow();
+            currentRound = new FirstRoundManager(model, model.getPlayers().get(0));
+            currentRound.startRound();
         }
     }
 
@@ -168,4 +169,7 @@ public class GameManager {
 
     }
 
+    public RoundManager getCurrentRound() {
+        return currentRound;
+    }
 }

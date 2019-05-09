@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class FinalFrenzyValidator extends Validator{
 
+    @Override
     public ArrayList<Square> avaibleMoves(Player player) {
         /* ********** ancora non c'è un modo per capire qual'è l'ordine dei giocatori, ma sarà implemetnato nel controller ******* */
         if (/*isBeforeFirstPlayer(player)*/ true)

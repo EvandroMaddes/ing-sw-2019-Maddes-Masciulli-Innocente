@@ -38,6 +38,6 @@ public class BaseActionValidator extends Validator {
     /* da implementare */
     @Override
     public ArrayList<Player> aviableShot(Weapon weapon) {
-        return null;
+
     }
 }
