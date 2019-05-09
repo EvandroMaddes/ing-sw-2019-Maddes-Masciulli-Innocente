@@ -55,41 +55,41 @@ public class ActionManager {
     }
 
     public void sendPossibleMoves(){
-        /*notifica*/getValidator().avaibleMoves(currentPlayer);
+        /*todo notifica*/getValidator().avaibleMoves(currentPlayer);
     }
 
     public void sendPossibleGrabs(){
-        /*notifica*/getValidator().avaibleGrab(currentPlayer);
+        /*todo notifica*/getValidator().avaibleGrab(currentPlayer);
     }
 
     public void sendPossibleWeapons(){
-        /*notifica*/getValidator().aviableToFireWeapons(currentPlayer);
+        /*todo notifica*/getValidator().aviableToFireWeapons(currentPlayer);
     }
 
-    /*public void weaponChoice(Weapon weapon){
-        choosenWeapon = weapon;
+    public void weaponChoice(CardChoiceEvent msg){
+        /*choosenWeapon = weapon;
         if (choosenWeapon.canAttivateDifferentEffect()){
             sendPossibleOtherEffect();
         }
         else{
             choosenWeapon.fire();
-        }
-    }*/
+        }*/
+    }
 
     public void performMove(PositionChoiceEvent msg){
         currentPlayer.setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
-        /*notifica*/
+        /*todo notifica*/
     }
 
     public void performGrab(PositionChoiceEvent msg){
         currentPlayer.setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentPlayer.getPosition())) {
-            sendWeaponGrabRequest();
-            /*notifica*/
+            // sendWeaponGrabRequest();
+            /*todo notifica*/
         }
         else {
             ((BasicSquare) currentPlayer.getPosition()).grabAmmoTile(currentPlayer);
-            /*notifica*/
+            /*todo notifica*/
         }
     }
 
@@ -99,10 +99,12 @@ public class ActionManager {
             if (w.getName() == msg.getCard())
                 currentPlayer.addWeapon(w);
         }
-        if (currentPlayer.getNumberOfWeapons() > 3)
-            sendWeaponDiscardRequest();
-        else
-            /*notifica*/
+        if (currentPlayer.getNumberOfWeapons() > 3) {
+            // sendWeaponDiscardRequest();
+        }
+        else {
+            /*todo notifica*/
+        }
     }
 
     public void discardWeapon(CardChoiceEvent msg){
@@ -110,7 +112,7 @@ public class ActionManager {
         for (int i = 0; i < 4 && currentPlayer.getNumberOfWeapons() > 3; i++){
             if (currentPlayer.getWeapons()[i].getName() == msg.getCard())
                 currentPlayer.discardWeapon(currentPlayer.getWeapons()[i]);
-            /*notifica*/
+            /*todo notifica*/
         }
     }
 

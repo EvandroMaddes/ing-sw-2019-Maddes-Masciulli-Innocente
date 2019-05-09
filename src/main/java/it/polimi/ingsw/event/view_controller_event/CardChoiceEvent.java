@@ -11,22 +11,28 @@ public class CardChoiceEvent extends Event {
 
     private String card;
     private String cardType;
+    private String context;
 
     /**
      * Constructor
-     * @param user  the Client user
-     * @param card  the selected Card
-     * @param cardType  the selected Card's type
+     *
+     * @param user     the Client user
+     * @param card     the selected Card
+     * @param cardType the selected Card's type
      */
-    public CardChoiceEvent(String user, String card, String cardType){
+    public CardChoiceEvent(String user, String card, String cardType) {
         super(user);
-        this.card=card;
-        this.cardType=cardType;
-        type= EventType.CardChoiceEvent;
+        this.card = card;
+        this.cardType = cardType;
+        type = EventType.CardChoiceEvent;
 
     }
 
     public String getCard() {
         return card;
+    }
+
+    public String getContext() {
+        return context;
     }
 }

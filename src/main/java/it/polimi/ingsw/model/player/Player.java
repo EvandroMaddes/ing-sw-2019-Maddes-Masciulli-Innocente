@@ -304,4 +304,22 @@ public class Player {
         }
         return blueCubes <= 0 && yellowCubes <= 0 && redCubes <= 0;
     }
+
+    /**
+     * Discard a card. This method should be invocate only if the player has altready draw his 4th weapon and now need to discard one
+     * The player is supposed to stand on a SpawnSquare, because he can only discard there
+     * @param weapon is the discarded weapon
+     */
+    public void discardWeapon(Weapon weapon){
+        int i = 0;
+        while (i < MAX_WEAPONS + 1 && weapons[i] != weapon){
+            i++;
+        }
+        ((SpawnSquare)position).getWeapons().add(weapons[i]);
+        weapons[i].setOwner(null);
+        numberOfWeapons--;
+        if (i < MAX_WEAPONS){
+            weapons[i] = weapons[MAX_WEAPONS];
+        }
+    }
 }
