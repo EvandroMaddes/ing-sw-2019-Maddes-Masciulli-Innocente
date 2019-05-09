@@ -45,4 +45,8 @@ public class GameBoard {
     public boolean isFinalFrenzy() {
         return finalFrenzy;
     }
+
+    public Map getMap() {
+        return map;
+    }
 }

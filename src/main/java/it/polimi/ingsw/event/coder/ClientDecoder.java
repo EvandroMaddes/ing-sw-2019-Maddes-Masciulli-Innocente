@@ -48,7 +48,7 @@ public class ClientDecoder {
      * @param message
      * @return
      */
-    public  ArrayList<Square> decodePositionRequestEvent(PositionRequestEvent message){
+    public static ArrayList<Square> decodePositionRequestEvent(PositionRequestEvent message){
         return null;
     }
 

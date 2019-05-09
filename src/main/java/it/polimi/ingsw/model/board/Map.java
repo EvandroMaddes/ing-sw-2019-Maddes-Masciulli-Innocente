@@ -220,4 +220,7 @@ public class Map {
         }
     }
 
+    public ArrayList<SpawnSquare> getSpawnSquares() {
+        return spawnSquares;
+    }
 }
