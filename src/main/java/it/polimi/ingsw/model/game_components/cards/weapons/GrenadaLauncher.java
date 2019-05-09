@@ -41,7 +41,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
             targets.get(0).setPosition(destination);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
     }
 
     public void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination){
@@ -54,7 +54,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
             }
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
     }
 
 }

@@ -52,7 +52,7 @@ public class PowerGlove extends AlternateFireWeapon {
             mark(targets.get(0),2);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
 
 
     }
@@ -65,7 +65,7 @@ public class PowerGlove extends AlternateFireWeapon {
 
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
 
     }
 }

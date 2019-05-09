@@ -45,7 +45,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
             targets.get(0).setPosition(destination);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
     }
 
     public void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination){

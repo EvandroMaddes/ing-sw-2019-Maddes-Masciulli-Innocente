@@ -39,7 +39,7 @@ public class Zx2 extends AlternateFireWeapon {
             mark(targets.get(0),2);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
 
 
     }
@@ -53,11 +53,11 @@ public class Zx2 extends AlternateFireWeapon {
                     mark(targets.get(i), 1);
 
                 } else
-                    throw new NullPointerException();
+                    throw new NullPointerException("nobody to damage");
             }
 
         }else
-             throw new IllegalArgumentException();// lanciata se i tre bersagli non sono in tre stanze differenti
+             throw new IllegalArgumentException("targets aren?t in three different rooms");// lanciata se i tre bersagli non sono in tre stanze differenti
 
     }
 }

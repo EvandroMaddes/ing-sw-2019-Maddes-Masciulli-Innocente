@@ -55,9 +55,9 @@ public class ShockWave extends AlternateFireWeapon {
                    i++;
                }
            } else
-               throw new NullPointerException();
+               throw new NullPointerException("nobody to damage");
        }else
-           throw new IllegalArgumentException();// lanciata se i tre bersagli non sono su tre quadrati differenti
+           throw new IllegalArgumentException("Targets aren't in three different squares");// lanciata se i tre bersagli non sono su tre quadrati differenti
 
     }
 
@@ -73,6 +73,6 @@ public class ShockWave extends AlternateFireWeapon {
             }
 
         } else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
     }
 }

@@ -41,7 +41,7 @@ public class Sledgehammer extends AlternateFireWeapon {
             damage(targets.get(0), 2);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
 
 
     }
@@ -52,7 +52,7 @@ public class Sledgehammer extends AlternateFireWeapon {
             targets.get(0).setPosition(destination);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
 
 
     }

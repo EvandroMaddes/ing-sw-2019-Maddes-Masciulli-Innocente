@@ -48,7 +48,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
             damage(targets.get(0), 2);
         }
         else
-            throw new NullPointerException();
+            throw new NullPointerException("nobody to damage");
     }
 
     public void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination){
