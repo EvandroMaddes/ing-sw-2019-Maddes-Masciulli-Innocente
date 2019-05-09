@@ -26,7 +26,7 @@ public class Player {
     private Square position;
     private ArrayList<AmmoCube> ammo;
     private boolean firstPlayer;
-    private Weapon[] weapons = new Weapon[3];
+    private Weapon[] weapons = new Weapon[MAX_WEAPONS + 1];
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
 

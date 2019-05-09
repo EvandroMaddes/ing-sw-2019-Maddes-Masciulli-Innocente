@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class BaseActionValidator extends Validator {
 
-
+    @Override
     /**
      *
      * @param player is the player that move
@@ -21,6 +21,7 @@ public class BaseActionValidator extends Validator {
         return reachbleInMoves(player.getPosition(), 3);
     }
 
+    @Override
     /**
      *
      * @param player is the moving player

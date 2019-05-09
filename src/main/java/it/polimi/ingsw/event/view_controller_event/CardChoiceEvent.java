@@ -25,4 +25,8 @@ public class CardChoiceEvent extends Event {
         type= EventType.CardChoiceEvent;
 
     }
+
+    public String getCard() {
+        return card;
+    }
 }
