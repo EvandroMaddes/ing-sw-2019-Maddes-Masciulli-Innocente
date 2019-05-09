@@ -44,7 +44,9 @@ public class ShockWave extends AlternateFireWeapon {
         Iterator iterator;
         iterator = targets.iterator();
 
-       if(targets.get(0).setPosition()!= targets.get(1).getPosition() !=targets.get(2).getPosition()) {
+       if(!targets.get(0).getPosition().equals( targets.get(1).getPosition()) &&
+               !targets.get(0).getPosition().equals( targets.get(2).getPosition()) &&
+                       !targets.get(1).getPosition().equals(targets.get(2).getPosition())) {
 
            if (targets.size() != 0) {
                int i = 0;

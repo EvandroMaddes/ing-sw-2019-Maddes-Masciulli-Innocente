@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.player.Player;
 /**
  * @author federicoinnocente
  */
-public class PowerUp extends Card {
+public  class PowerUp extends Card {
 
     private Player target;
 
@@ -43,4 +43,13 @@ public class PowerUp extends Card {
         this.getOwner().discardPowerUp(this);
     }
 
+    @Override
+    public void damage(Player target, int amount) {
+
+    }
+
+    @Override
+    public void mark(Player target, int amount) {
+
+    }
 }

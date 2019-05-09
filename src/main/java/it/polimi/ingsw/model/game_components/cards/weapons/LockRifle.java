@@ -14,6 +14,10 @@ public class LockRifle extends OneOptionalEffectWeapon {
         super(colour, name, reloadCost, firstOptionalEffectCost);
     }
 
+    /**
+     *
+     * @return true if the base effect can be activated
+     */
 
     @Override
     public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {

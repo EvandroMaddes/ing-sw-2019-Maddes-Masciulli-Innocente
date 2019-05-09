@@ -58,4 +58,19 @@ public abstract class Validator {
      */
     public abstract ArrayList<Player> aviableShot (Weapon weapon);
 
+
+    /**
+     *
+     * @param player is the weapons owner
+     * @return a list of all loaded weapons that can be used in that moment for a shot action
+     */
+    public ArrayList<Weapon> aviableToFireWeapons (Player player){
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        for(int i = 0; i < player.getNumberOfWeapons(); i++){
+            if (player.getWeapons()[i].isLoaded() && player.getWeapons()[i].canActivateAnEffect())
+                weapons.add(player.getWeapons()[i]);
+        }
+        return weapons;
+    }
+
 }

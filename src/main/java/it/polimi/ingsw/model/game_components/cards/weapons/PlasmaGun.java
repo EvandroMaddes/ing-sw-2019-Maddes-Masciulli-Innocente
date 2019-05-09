@@ -32,11 +32,11 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
         damage(targets.get(0), 2);
     }
 
-    public void fireFirstBaseEffect(ArrayList<Player> targets, Square destination){
+    public void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination){
         getOwner().setPosition(destination);
     }
 
-    public void fireSecondBaseEffectEffect(ArrayList<Player> targets, Square destination){
+    public void fireSecondOptionalEffect(ArrayList<Player> targets, Square destination){
         fireBaseEffect(targets, destination);
         damage(targets.get(0), 1);
     }

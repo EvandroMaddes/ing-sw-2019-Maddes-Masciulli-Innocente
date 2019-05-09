@@ -10,8 +10,8 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.weapons.Distructor;
-import it.polimi.ingsw.model.game_components.cards.weapons.Esempio;
+
+import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,11 +31,12 @@ public class ServerEncoderTest {
     }
 
 
+
     @Test
     public void testEncodeCardRequestEvent(){
         ArrayList<Card> testedCards = new ArrayList<>();
-        testedCards.add(new Distructor(CubeColour.Yellow,"TestWeapon1",null, null));
-        testedCards.add(new Distructor(CubeColour.Blue,"TestWeapon2",null, null));
+        testedCards.add(new LockRifle(CubeColour.Yellow,"TestWeapon1",null, null));
+        testedCards.add(new LockRifle(CubeColour.Blue,"TestWeapon2",null, null));
         CardRequestEvent event = testedServerEncoder.encodeCardRequestEvent(user,testedCards, "Weapon");
         Assert.assertEquals("Weapon", event.getCardType());
         Assert.assertEquals(EventType.CardRequestEvent, event.getType());

@@ -164,6 +164,15 @@ public class PlayerBoard implements Serializable {
         return damageAmount > 5;
     }
 
+    public int getAdrenalinicState(){
+        if (checkAdrenalinicShot())
+            return 2;
+        else if (checkAdrenalinicGrab())
+            return 1;
+        else
+            return 0;
+    }
+
     /**
      * In the final frenzy phase, if the player has 0 damage, set the score board of the player at 2-1-1...
      */

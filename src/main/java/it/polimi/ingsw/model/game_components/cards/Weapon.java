@@ -51,15 +51,16 @@ public abstract class Weapon extends Card {
         loaded = !loaded;
     }
 
+    public boolean canActivateAnEffect(){return false;}
 
     public abstract void fire(ArrayList<Player> targets, Square destination , int selectedEffect);
 
-    public ArrayList<Player> getTarget(int selectedEffect){
-       // switch
-        ArrayList<Player> targets = new ArrayList<>();
+    public abstract ArrayList<Player> getTargets(int selectedEffect);
 
-        return targets;
-    }
+    public abstract ArrayList<Player> getTargetsBaseEffect();
+    protected abstract void fireBaseEffect(ArrayList<Player> targets, Square destination);
+
+
 
 
 

@@ -1,7 +1,11 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
+
+import java.util.ArrayList;
 
 
 public abstract class AlternateFireWeapon extends Weapon {
@@ -21,13 +25,37 @@ public abstract class AlternateFireWeapon extends Weapon {
         super(colour, name, reloadCost);
         this.alternativeEffectCost = alternativeEffectCost;
     }
-
-    /**
-     * overrided for every alternative effect weapon
-     */
-    public void alterativeEffect()
-    {
-
+    public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
+        switch (selectedEffect){
+            case 1:{
+                fireBaseEffect(targets, destination);
+                break;
+            }
+            case 2:{
+             fireAlternativeEffect(targets,destination);
+                break;
+            }
+        }
     }
+
+    public ArrayList<Player> getTargets(int selectedEffect){
+        // switch
+        ArrayList<Player> targets = new ArrayList<>();
+        switch (selectedEffect){
+            case 1:{
+                getTargetsBaseEffect();
+                break;
+            }
+            case 2:{
+               getTargetsAlternativeEffect();
+                break;
+            }
+        }
+
+        return targets;
+    }
+
+    public abstract ArrayList<Player> getTargetsAlternativeEffect();
+    public abstract void fireAlternativeEffect(ArrayList<Player> targets, Square destination);
 
 }

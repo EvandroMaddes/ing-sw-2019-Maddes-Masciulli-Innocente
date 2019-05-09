@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.PlayerChoiceEvent;
 
@@ -39,11 +40,33 @@ public class Controller implements Observer {
                         gameManager.addPlayer(msg);
                     }
                 }
+                break;
             }
 
             case StartGameEvent:{
                 gameManager.startGame();
+                break;
             }
+
+            case ActionChoiceEvent:{
+                ActionChoiceEvent msg = (ActionChoiceEvent) message;
+                switch (msg.getAction()){
+                    case 0: {
+                        gameManager.getCurrentRound().getActionManager().sendPossibleMove();
+                        break;
+                    }
+                    case 1: {
+                        //todo gameManager.getCurrentRound().getActionManager().sendPossibleGrab();
+                        break;
+                    }
+                    case 2: {
+                        //todo gameManager.getCurrentRound().getActionManager().sendPossibleWeapon();
+                        break;
+                    }
+                }
+            }
+
+
         }
     }
 

@@ -23,5 +23,7 @@ public class ActionChoiceEvent extends Event {
         type = EventType.ActionChoiceEvent;
     }
 
-
+    public int getAction() {
+        return action;
+    }
 }

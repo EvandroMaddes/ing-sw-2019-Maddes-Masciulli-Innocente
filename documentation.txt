@@ -3,4 +3,4 @@ Il progetto contiene due file JSON:
 -ammoTile.json
 
 Entrambi son presenti nella sotto cartella resources in:
-ing-sw-2019-Maddes-Masciulli-Innocente\src\main\java\it\polimi\ingsw\model\resources
+ing-sw-2019-Maddes-Masciulli-Innocente\src\main\resources

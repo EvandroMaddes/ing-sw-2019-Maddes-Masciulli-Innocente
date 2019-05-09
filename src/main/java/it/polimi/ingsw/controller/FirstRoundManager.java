@@ -8,13 +8,14 @@ public class FirstRoundManager extends RoundManager {
 
     public FirstRoundManager(GameModel model, Player currentPlayer){
         super(model, currentPlayer);
+        if (currentPlayer.isFirstPlayer())
+            firstRoundOfTheGame = true;
     }
 
     @Override
-    public void manageRound() {
-        for (int i = 0; i < 2; i++){
-            getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
-        }
+    public void startRound() {
+        getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
+        respawn(getCurrentPlayer());
         super.manageRound();
     }
 }
