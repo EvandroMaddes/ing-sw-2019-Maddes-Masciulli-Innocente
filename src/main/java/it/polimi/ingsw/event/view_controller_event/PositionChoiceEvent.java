@@ -7,6 +7,7 @@ public class PositionChoiceEvent extends Event {
 
     private int positionX;
     private int positionY;
+    private String context;
 
     public PositionChoiceEvent(String user, int positionX, int positionY){
         super(user);
@@ -21,5 +22,9 @@ public class PositionChoiceEvent extends Event {
 
     public int getPositionY() {
         return positionY;
+    }
+
+    public String getContext() {
+        return context;
     }
 }

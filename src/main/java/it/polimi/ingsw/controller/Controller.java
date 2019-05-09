@@ -22,6 +22,7 @@ public class Controller implements Observer {
        messageHandler((Event) message);
     }
 
+    // todo modificare le stringhe con magari classi enumeration per gli eventi con molti utilizzi
     private void messageHandler (Event message){
         switch (message.getType()) {
 
@@ -64,16 +65,10 @@ public class Controller implements Observer {
                 }
             }
 
-            case WeaponChoiceEvent: {
-                WeaponChoiceEvent msg = (WeaponChoiceEvent) message;
-                gameManager.getCurrentRound().getActionManager().weaponChoice(choosenWeapon);
-                break;
-            }
-
             case PositionChoiceEvent: {
                 PositionChoiceEvent msg = (PositionChoiceEvent) message;
-                switch (msg.getContext) {
-                    case grab: {
+                switch (msg.getContext()) {
+                    case "grab": {
                         gameManager.getCurrentRound().getActionManager().performGrab(msg);
                     }
                 }
@@ -81,13 +76,17 @@ public class Controller implements Observer {
 
             case CardChoiceEvent: {
                 CardChoiceEvent msg = (CardChoiceEvent) message;
-                switch (msg.getContext) {
-                    case weaponGrab: {
+                switch (msg.getContext()) {
+                    case "WeaponGrab": {
                         gameManager.getCurrentRound().getActionManager().grabWeapon(msg);
                         break;
                     }
-                    case weaponDiscard: {
+                    case "WeaponDiscard": {
                         gameManager.getCurrentRound().getActionManager().discardWeapon(msg);
+                        break;
+                    }
+                    case "SeectShotingWeapon":{
+                        gameManager.getCurrentRound().getActionManager().weaponChoice(msg);
                         break;
                     }
                 }
