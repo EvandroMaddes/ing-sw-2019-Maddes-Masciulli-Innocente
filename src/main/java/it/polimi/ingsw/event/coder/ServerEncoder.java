@@ -32,11 +32,10 @@ public class ServerEncoder {
      * @param availableCards
      * @return the encoded CardRequestEvent message
      */
-    public CardRequestEvent encodeCardRequestEvent(String user, ArrayList<Card> availableCards) {
+    public CardRequestEvent encodeCardRequestEvent(String user, ArrayList<Card> availableCards, String type) {
         ArrayList<String> cards = new ArrayList<>();
         ArrayList<CubeColour> colours = new ArrayList<>();
         //get(0) è una Card, dinamicamente Weapon o PowerUp, SimpleName è il tipo dinamico della classe
-        String type= availableCards.get(0).getClass().getSimpleName();
         iterator= availableCards.iterator();
         while(iterator.hasNext()){
             Card currCard = (Card)iterator.next();

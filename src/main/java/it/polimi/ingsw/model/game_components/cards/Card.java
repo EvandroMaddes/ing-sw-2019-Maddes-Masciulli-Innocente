@@ -75,16 +75,23 @@ public abstract class Card implements BaseFightAction {
 
 
     @Override
-    public void damage(Player target, int amount)
+    public void damage(ArrayList<Player> target, int amount, Player damager)
     {
-        target.getPlayerBoard().addDamages(getOwner(), amount);
+        Iterator iterator = target.iterator();
+        while(iterator.hasNext()){
+            ((Player)iterator.next()).getPlayerBoard().addDamages(damager, amount);
+        }
+
     }
 
 
     @Override
-    public void mark(Player target, int amount)
+    public void mark(ArrayList<Player> target, int amount, Player marker)
     {
-        target.getPlayerBoard().addMarks(getOwner(),amount);
+        Iterator iterator = target.iterator();
+        while(iterator.hasNext()){
+            ((Player)iterator.next()).getPlayerBoard().addMarks(marker,amount);
+        }
     }
 
     /**
