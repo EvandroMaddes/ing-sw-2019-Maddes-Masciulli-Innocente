@@ -34,10 +34,10 @@ public class Shot extends ActionDecorator {
 
             throw new InvalidParameterException("Il giocatore non possiede l'arma");
         if (weapon.isLoaded()) {
-        */
+
             weapon.fire();
             weapon.invertLoadedState();
-       /*
+
         }
         else
             throw new InvalidParameterException("Arma scarica");

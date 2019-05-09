@@ -255,9 +255,6 @@ public class Player {
         return numberOfWeapons;
     }
 
-    public Weapon[] getWeapons() {
-        return weapons;
-    }
 
     /**
      *

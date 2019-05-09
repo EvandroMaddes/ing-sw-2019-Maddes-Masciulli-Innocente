@@ -16,7 +16,7 @@ public class RailGun extends AlternateFireWeapon {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
-    public ArrayList<Player> getTargetBaseEffect() {
+    public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> targets=null;
         ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
@@ -40,9 +40,9 @@ public class RailGun extends AlternateFireWeapon {
         return targets;
     }
 
-    public ArrayList<Player> getTargetAlternativeEffect() {
+    public ArrayList<Player> getTargetsAlternativeEffect() {
 
-        return getTargetBaseEffect();
+        return getTargetsBaseEffect();
     }
 
 

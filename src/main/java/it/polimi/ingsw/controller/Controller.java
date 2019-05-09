@@ -56,11 +56,11 @@ public class Controller implements Observer {
                         break;
                     }
                     case 1: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleGrab();
+                        //todo gameManager.getCurrentRound().getActionManager().sendPossibleGrab();
                         break;
                     }
-                    case 2; {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleWeapon();
+                    case 2: {
+                        //todo gameManager.getCurrentRound().getActionManager().sendPossibleWeapon();
                         break;
                     }
                 }

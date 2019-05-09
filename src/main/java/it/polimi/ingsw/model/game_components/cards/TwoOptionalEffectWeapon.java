@@ -26,14 +26,44 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         super(colour, name, reloadCost, firstOptionalEffectCost);
         this.secondOptionalEffectCost = secondOptionalEffectCost;
     }
-
-    /**
-     * overloaded for every weapon that extends from this class
-     */
-    public void SecondOptionalEffect()
-    {
-
+    public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
+        switch (selectedEffect){
+            case 1:{
+                fireBaseEffect(targets, destination);
+                break;
+            }
+            case 2:{
+                fireFirstOptionalEffect(targets, destination);
+                break;
+            }
+            case 3:{
+                fireSecondOptionalEffect(targets,destination);
+                break;
+            }
+        }
     }
+
+    public ArrayList<Player> getTargets(int selectedEffect){
+        // switch
+        ArrayList<Player> targets = new ArrayList<>();
+        switch (selectedEffect){
+            case 1:{
+                getTargetsBaseEffect();
+                break;
+            }
+            case 2:{
+                getTargetsFirstOptionalEffect();
+                break;
+            }
+            case 3:{
+                getTargetsSecondOptionalEffect();
+                break;
+            }
+        }
+
+        return targets;
+    }
+
     public abstract ArrayList<Player> getTargetsSecondOptionalEffect();
     public abstract void fireSecondOptionalEffect(ArrayList<Player> targets, Square destination);
 }

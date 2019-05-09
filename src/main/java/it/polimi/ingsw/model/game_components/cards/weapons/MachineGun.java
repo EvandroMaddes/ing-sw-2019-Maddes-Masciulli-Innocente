@@ -18,7 +18,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
         return getOwner().getPosition().findVisiblePlayers();
     }
 
-    public ArrayList<Player> getTargetsFirstOptional(){
+    public ArrayList<Player> getTargetsFirstOptionalEffect(){
         return getOwner().getPosition().findVisiblePlayers();
     }
 

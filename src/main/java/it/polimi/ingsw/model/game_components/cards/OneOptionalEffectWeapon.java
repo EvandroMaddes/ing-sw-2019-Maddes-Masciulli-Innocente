@@ -40,6 +40,22 @@ public abstract class OneOptionalEffectWeapon extends Weapon {
             }
         }
     }
+    public ArrayList<Player> getTargets(int selectedEffect){
+        // switch
+        ArrayList<Player> targets = new ArrayList<>();
+        switch (selectedEffect){
+            case 1:{
+                getTargetsBaseEffect();
+                break;
+            }
+            case 2:{
+                getTargetsFirstOptionalEffect();
+                break;
+            }
+        }
+
+        return targets;
+    }
 
     public abstract ArrayList<Player> getTargetsFirstOptionalEffect();
     public abstract void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination);

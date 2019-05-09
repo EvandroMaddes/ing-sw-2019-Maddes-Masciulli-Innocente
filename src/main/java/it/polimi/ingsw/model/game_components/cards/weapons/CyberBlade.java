@@ -22,7 +22,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
         super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
     }
 
-    public ArrayList<Player> getTargetBaseEffect() {
+    public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> target;
         ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
@@ -31,13 +31,13 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     }
 
-    public ArrayList<Player> getTargetFirstOptionalEffect() {
+    public ArrayList<Player> getTargetsFirstOptionalEffect() {
 
         throw  new IllegalStateException();//this exception is managed by controller: target is a square with distance one
     }
 
-    public ArrayList<Player> getTargetSecondOptionalEffect() {
-        return getTargetBaseEffect();
+    public ArrayList<Player> getTargetsSecondOptionalEffect() {
+        return getTargetsBaseEffect();
 
     }
 

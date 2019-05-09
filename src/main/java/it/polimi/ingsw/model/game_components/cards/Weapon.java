@@ -51,20 +51,11 @@ public abstract class Weapon extends Card {
         loaded = !loaded;
     }
 
-    /**
-     *
-     * @return true if the weapon can be used considering the effect activation cost (using Player.canAffortCost), but not if is loaded
-     */
-    public abstract boolean canActivateAnEffect();
+    public boolean canActivateAnEffect(){return false;}
 
     public abstract void fire(ArrayList<Player> targets, Square destination , int selectedEffect);
 
-    public ArrayList<Player> getTargets(int selectedEffect){
-       // switch
-        ArrayList<Player> targets = new ArrayList<>();
-
-        return targets;
-    }
+    public abstract ArrayList<Player> getTargets(int selectedEffect);
 
     public abstract ArrayList<Player> getTargetsBaseEffect();
     protected abstract void fireBaseEffect(ArrayList<Player> targets, Square destination);

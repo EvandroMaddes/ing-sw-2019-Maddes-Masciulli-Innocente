@@ -51,8 +51,8 @@ public class RoundManager {
                 canUsePowerUp = true;
         }
         phase++;
-        if (canUsePowerUp)
-            xxxxx lancia messaggio che chiede se vuole, usare un powerup
+        //todo if (canUsePowerUp)
+         //todo   xxxxx lancia messaggio che chiede se vuole, usare un powerup
     }
 
     public void selectAction()
@@ -70,7 +70,7 @@ public class RoundManager {
 
     }
 
-    public void respawn()
+    public void respawn(Player currentPlayer)
     {
 
     }

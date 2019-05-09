@@ -21,16 +21,16 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
     }
 
 
-    public ArrayList<Player> getTargetBaseEffect() {
+    public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> target;
         target = new ArrayList<Player>();
         target = getOwner().getPosition().findVisiblePlayers();
         return target;
     }
 
-    public ArrayList<Player> getTargetFirstOptionalEffect() {
+    public ArrayList<Player> getTargetsFirstOptionalEffect() {
         ArrayList<Player> target;
-        target= getTargetBaseEffect();
+        target= getTargetsBaseEffect();
         return target;
     }
 

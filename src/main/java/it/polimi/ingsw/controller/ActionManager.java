@@ -18,7 +18,7 @@ public class ActionManager {
     }
 
     public void askForAction(){
-        xxxxx chiede quale azione usare
+       //todo  xxxxx chiede quale azione usare
     }
 
     public void sendPossibleMove(){
