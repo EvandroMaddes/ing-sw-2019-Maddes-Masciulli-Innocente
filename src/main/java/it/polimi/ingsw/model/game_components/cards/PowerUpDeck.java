@@ -49,19 +49,20 @@ public class PowerUpDeck extends DeckManagement {
     /**
      * @author Evandro Maddes
      * It creates the powerUp deck and it shuffles it
-     * @return power Up deck
      */
-    public ArrayList<Object> createPowerupDeck(){
+    public void createPowerupDeck(){
 
-        ArrayList<Object> powerUpDeck = new ArrayList<Object>();
+        DeckManagement powerUpDeck = new AmmoTilesDeck();
 
-        addPowerupColour(powerUpDeck,CubeColour.Blue);
-        addPowerupColour(powerUpDeck,CubeColour.Yellow);
-        addPowerupColour(powerUpDeck,CubeColour.Red);
+        ArrayList<Object> deck = new ArrayList<Object>();
+
+        addPowerupColour(deck,CubeColour.Blue);
+        addPowerupColour(deck,CubeColour.Yellow);
+        addPowerupColour(deck,CubeColour.Red);
 
 
-         Collections.shuffle(powerUpDeck);
-         return powerUpDeck;
+         Collections.shuffle(deck);
+        powerUpDeck.setDeck(deck);
 
     }
 
