@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RailGun extends AlternateFireWeapon {
+public class  RailGun extends AlternateFireWeapon {
 
 
     public RailGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
