@@ -9,10 +9,10 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Flametrthrower extends AlternateFireWeapon {
+public class Flamethrower extends AlternateFireWeapon {
 
 
-    public Flametrthrower(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public Flamethrower(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 

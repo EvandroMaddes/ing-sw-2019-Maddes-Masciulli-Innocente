@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ShockWave extends AlternateFireWeapon {
+public class Shockwave extends AlternateFireWeapon {
     /**
      *
      * @param colour
@@ -17,7 +17,7 @@ public class ShockWave extends AlternateFireWeapon {
      * @param reloadCost
      * @param alternativeEffectCost
      */
-    public ShockWave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public Shockwave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
