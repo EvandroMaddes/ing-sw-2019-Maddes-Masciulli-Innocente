@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class  RailGun extends AlternateFireWeapon {
 
 
-    public RailGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public  RailGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
