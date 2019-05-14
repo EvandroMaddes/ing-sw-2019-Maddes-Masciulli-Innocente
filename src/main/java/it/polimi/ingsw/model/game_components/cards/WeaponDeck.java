@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.weapons.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Francesco Masciulli
@@ -19,9 +20,8 @@ public class WeaponDeck extends DeckManagement {
     /**@author Evamdro Maddes
      * this method creates deck of all 21 weapons
      */
-    public void createWeaponDeck() {
+    public WeaponDeck() {
 
-        DeckManagement weaponDeck = new WeaponDeck();
 
         ArrayList<Object> deck = new ArrayList<Object>();
         /*
@@ -225,16 +225,9 @@ public class WeaponDeck extends DeckManagement {
         Sledgehammer sledgehammer = new Sledgehammer(colour,"SLEDGEHAMMER",reloadCost,alternativeEffectCost);
         deck.add(sledgehammer);
 
+        Collections.shuffle(deck);
+        this.setDeck(deck);
 
-        weaponDeck.setDeck(deck);
-        for (int i=0; i<weaponDeck.getDeck().size(); i++) {
-            System.out.println(((Weapon) weaponDeck.getDeck().get(i)).getName());
-            for (int j = 0; j < weaponDeck.getDeck().size(); j++)
-                if(((Weapon) weaponDeck.getDeck().get(i)).getName().equals(((Weapon) weaponDeck.getDeck().get(j)).getName())){
-                    System.out.println("unica\n");
-                }
-
-        }
 
     }
 

@@ -144,8 +144,28 @@ public class TestWeaponDeck {
     }
 
 
+    /**
+     * checks the correct size of weapon deck
+     */
+    @Test
+    public void testCreateDeck(){
+        WeaponDeck deck = new WeaponDeck();
+        assertEquals(21,deck.getDeck().size());
+    }
+
+    @Test
+    /**@author Evandro Maddes
+     * checks if every name od weapon is different from others
+     */
+    public void testDifferentWeapon(){
+        WeaponDeck deck = new WeaponDeck();
+        for (int i=0; i< deck.getDeck().size(); i++) {
+            for (int j = 0; j < deck.getDeck().size() && i!=j; j++)
+                assertFalse((((Weapon) deck.getDeck().get(i)).getName().equals(((Weapon) deck.getDeck().get(j)).getName())));
 
 
+        }
+    }
 
 
 }

@@ -56,9 +56,8 @@ public class AmmoTilesDeck extends DeckManagement {
     /**@author Evandro Maddes
      * this method creates the ammo tiles deck
      */
-    public void createAmmoTileDeck() {
+    public  AmmoTilesDeck() {
 
-        DeckManagement ammoTileDeck = new AmmoTilesDeck();
 
         ArrayList<Object> deck = new ArrayList<Object>();
         JsonParser parser = new JsonParser();
@@ -82,8 +81,7 @@ public class AmmoTilesDeck extends DeckManagement {
             createAmmoTile(jsonPowerUpAmmo.get(i),deck);
         }
         Collections.shuffle(deck);
-
-            ammoTileDeck.setDeck(deck);
+        this.setDeck( deck);
 
     }
 
@@ -93,7 +91,7 @@ public class AmmoTilesDeck extends DeckManagement {
      * @param jsonElement gruop of ammo tiles
      * @param deck
      */
-    public void createAmmoTile(JsonElement jsonElement, ArrayList<Object> deck){
+    private void createAmmoTile(JsonElement jsonElement, ArrayList<Object> deck){
         boolean isPowerUpTile = false;
 
 
@@ -106,7 +104,6 @@ public class AmmoTilesDeck extends DeckManagement {
         }catch (NullPointerException e){
             third = null;
             isPowerUpTile = true;
-            System.out.println();
 
         }
 

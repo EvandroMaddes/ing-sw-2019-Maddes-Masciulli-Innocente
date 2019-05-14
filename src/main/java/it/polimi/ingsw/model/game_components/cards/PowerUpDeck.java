@@ -50,9 +50,8 @@ public class PowerUpDeck extends DeckManagement {
      * @author Evandro Maddes
      * It creates the powerUp deck and it shuffles it
      */
-    public void createPowerupDeck(){
+    public PowerUpDeck(){
 
-        DeckManagement powerUpDeck = new AmmoTilesDeck();
 
         ArrayList<Object> deck = new ArrayList<Object>();
 
@@ -62,7 +61,7 @@ public class PowerUpDeck extends DeckManagement {
 
 
          Collections.shuffle(deck);
-        powerUpDeck.setDeck(deck);
+        this.setDeck(deck);
 
     }
 

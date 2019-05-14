@@ -23,9 +23,10 @@ public class TestAmmoTilesDeck {
      * method that set up the Test Class;
      *simulates, with a restricted number of elements, the initializing of the deck.
      */
-    @Before
+   @Before
     public void setUp(){
-        //il metodo setDeck è della classe astratta DeckManagement;
+
+       //il metodo setDeck è della classe astratta DeckManagement;
         //necessita di un parametro di tipo ArrayList<Object>
         //bisognerà fare casting dei parametri in fase di init
         ArrayList<Object> givenDeck = new ArrayList<>();
@@ -35,6 +36,7 @@ public class TestAmmoTilesDeck {
         givenDeck.add(1, ammoTile2);
         testedDeck = new AmmoTilesDeck();
         testedDeck.setDeck(givenDeck);
+
     }
 
     /**
@@ -95,6 +97,16 @@ public class TestAmmoTilesDeck {
         assertTrue(!testedDeck.getDeck().isEmpty());
         System.out.println("The empty deck is reshuffled after the last draw");
     }
+
+    /**@author Evandro Maddes
+     * checks the correct size of ammotile deck
+     */
+    @Test
+    public void testCreateDeck(){
+        AmmoTilesDeck deck = new AmmoTilesDeck();
+        assertEquals(36,deck.getDeck().size());
+    }
+
 
 
 }
