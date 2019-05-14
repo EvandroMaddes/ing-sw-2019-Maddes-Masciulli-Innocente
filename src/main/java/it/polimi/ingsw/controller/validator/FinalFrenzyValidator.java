@@ -10,7 +10,7 @@ public class FinalFrenzyValidator extends Validator{
 
     @Override
     public ArrayList<Square> avaibleMoves(Player player) {
-        /* ********** ancora non c'è un modo per capire qual'è l'ordine dei giocatori, ma sarà implemetnato nel controller ******* */
+        /* todo ********** ancora non c'è un modo per capire qual'è l'ordine dei giocatori, ma sarà implemetnato nel controller ******* */
         if (/*isBeforeFirstPlayer(player)*/ true)
             return reachbleInMoves(player.getPosition(), 4);
         else throw new IllegalArgumentException("I giocatori dopo il primo non possono fare azioni di movimento in questa fase");
@@ -19,7 +19,7 @@ public class FinalFrenzyValidator extends Validator{
     @Override
     public ArrayList<Square> avaibleGrab(Player player) {
         int numberOfMoves;
-        if (/*isBeforeFirstPlayer(player)*/ true)
+        if (/*todo isBeforeFirstPlayer(player)*/ true)
             numberOfMoves = 2;
         else
             numberOfMoves = 3;
@@ -33,7 +33,7 @@ public class FinalFrenzyValidator extends Validator{
     }
 
     @Override
-    /* da implementare */
+    /* todo da implementare */
     public ArrayList<Player> aviableShot(Weapon weapon) {
         return null;
     }

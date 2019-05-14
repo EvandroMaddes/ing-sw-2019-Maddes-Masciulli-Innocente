@@ -42,14 +42,4 @@ public  class PowerUp extends Card {
     {
         this.getOwner().discardPowerUp(this);
     }
-
-    @Override
-    public void damage(Player target, int amount) {
-
-    }
-
-    @Override
-    public void mark(Player target, int amount) {
-
-    }
 }

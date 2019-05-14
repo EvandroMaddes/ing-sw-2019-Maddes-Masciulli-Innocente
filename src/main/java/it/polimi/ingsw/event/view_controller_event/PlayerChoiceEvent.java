@@ -20,7 +20,6 @@ public class PlayerChoiceEvent extends Event {
      *      2) "Targets choice"
      */
     private ArrayList<Character> targetPlayersOrder;
-    private String context;
 
 
     /**
@@ -28,18 +27,14 @@ public class PlayerChoiceEvent extends Event {
      * @param user the Client user
      * @param targetPlayersOrder the chosen Players,
      */
-    public PlayerChoiceEvent(String user, String context, ArrayList<Character> targetPlayersOrder){
+    public PlayerChoiceEvent(String user, ArrayList<Character> targetPlayersOrder){
         super(user);
-        this.context=context;
         this.targetPlayersOrder=targetPlayersOrder;
-        type= EventType.PlayerChoiceEvent;
     }
 
     public ArrayList<Character> getTargetPlayersOrder() {
         return targetPlayersOrder;
     }
 
-    public String getContext() {
-        return context;
-    }
+
 }

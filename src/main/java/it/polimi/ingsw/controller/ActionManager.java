@@ -6,25 +6,30 @@ import it.polimi.ingsw.event.view_controller_event.PositionChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.player.Player;
 
 public class ActionManager {
 
     private GameModel model;
-    private Player currentPlayer;
+    private RoundManager currentRoundManager;
     private boolean actionUsed;
+    private PowerUp choosenPowerUp;
     private Weapon choosenWeapon;
     private boolean[] activatedEffects;
 
-    public ActionManager(GameModel model, Player currentPlayer) {
+    public ActionManager(GameModel model, RoundManager currentRoundManager) {
         this.model = model;
-        this.currentPlayer = currentPlayer;
+        this.currentRoundManager = currentRoundManager;
         actionUsed = false;
     }
 
     public void askForAction(){
-       // xxxxx chiede quale azione usare
+       // todo chiede quale azione usare
+    }
+
+    public void askForReload(){
+        //todo chiede la ricarica
     }
 
     public Validator getValidator(){
@@ -33,7 +38,7 @@ public class ActionManager {
            actionValidator = new FinalFrenzyValidator();
         }
         else {
-            switch (currentPlayer.getPlayerBoard().getAdrenalinicState()) {
+            switch (currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState()) {
                 case 0: {
                     actionValidator = new BaseActionValidator();
                     break;
@@ -55,19 +60,20 @@ public class ActionManager {
     }
 
     public void sendPossibleMoves(){
-        /*todo notifica*/getValidator().avaibleMoves(currentPlayer);
+        /*todo notifica*/
+        getValidator().avaibleMoves(currentRoundManager.getCurrentPlayer());
     }
 
     public void sendPossibleGrabs(){
-        /*todo notifica*/getValidator().avaibleGrab(currentPlayer);
+        /*todo notifica*/getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
     }
 
     public void sendPossibleWeapons(){
-        /*todo notifica*/getValidator().aviableToFireWeapons(currentPlayer);
+        /*todo notifica*/getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer());
     }
 
     public void weaponChoice(CardChoiceEvent msg){
-        /*choosenWeapon = weapon;
+        /* choosenWeapon = weapon;
         if (choosenWeapon.canAttivateDifferentEffect()){
             sendPossibleOtherEffect();
         }
@@ -77,30 +83,32 @@ public class ActionManager {
     }
 
     public void performMove(PositionChoiceEvent msg){
-        currentPlayer.setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
+        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
         /*todo notifica*/
+        currentRoundManager.nextPhase();
+
     }
 
     public void performGrab(PositionChoiceEvent msg){
-        currentPlayer.setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
-        if (model.getGameboard().getMap().getSpawnSquares().contains(currentPlayer.getPosition())) {
+        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
+        if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
             // sendWeaponGrabRequest();
             /*todo notifica*/
         }
         else {
-            ((BasicSquare) currentPlayer.getPosition()).grabAmmoTile(currentPlayer);
+            ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
             /*todo notifica*/
         }
     }
 
     public void grabWeapon(CardChoiceEvent msg){
-        SpawnSquare grabSquare = (SpawnSquare) currentPlayer.getPosition();
+        SpawnSquare grabSquare = (SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition();
         for (Weapon w: grabSquare.getWeapons()) {
             if (w.getName() == msg.getCard())
-                currentPlayer.addWeapon(w);
+                currentRoundManager.getCurrentPlayer().addWeapon(w);
         }
-        if (currentPlayer.getNumberOfWeapons() > 3) {
-            // sendWeaponDiscardRequest();
+        if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
+            // todo sendWeaponDiscardRequest();
         }
         else {
             /*todo notifica*/
@@ -108,10 +116,9 @@ public class ActionManager {
     }
 
     public void discardWeapon(CardChoiceEvent msg){
-        SpawnSquare discardSquare = (SpawnSquare) currentPlayer.getPosition();
-        for (int i = 0; i < 4 && currentPlayer.getNumberOfWeapons() > 3; i++){
-            if (currentPlayer.getWeapons()[i].getName() == msg.getCard())
-                currentPlayer.discardWeapon(currentPlayer.getWeapons()[i]);
+        for (int i = 0; i < 4 && currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3; i++){
+            if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName() == msg.getCard())
+                currentRoundManager.getCurrentPlayer().discardWeapon(currentRoundManager.getCurrentPlayer().getWeapons()[i]);
             /*todo notifica*/
         }
     }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.event;
 
+import it.polimi.ingsw.controller.Controller;
+
 import java.io.Serializable;
 
 /**@author Francesco Masciulli
@@ -8,7 +10,6 @@ import java.io.Serializable;
  */
 public abstract class Event implements Serializable {
     private String user;
-    protected EventType type;
 
     /**
      *
@@ -27,10 +28,6 @@ public abstract class Event implements Serializable {
         return user;
     }
 
-    public EventType getType() {
-        return type;
-    }
-
     /**
      * this setter method is called during the BroadcastSend of a message
      * @param user
@@ -38,4 +35,6 @@ public abstract class Event implements Serializable {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public abstract void performAction(Controller controller);
 }

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.cards.Newton;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Teleporter;
@@ -13,7 +15,6 @@ public class RoundManager {
     protected final GameModel model;
     private Player currentPlayer;
     private int phase;
-    private boolean actionUsed;
     protected boolean firstRoundOfTheGame = false;
     private ActionManager actionManager;
 
@@ -23,24 +24,35 @@ public class RoundManager {
         phase = 1;
     }
 
-    public void startRound(){
-    }
-
     /**
      * A round is split in 6 phase: in 1,3,5 players can use their power up, in 2,4 they can perform actions and the 6th is used to reload
      */
     public void manageRound(){
         switch (phase){
-            case 1: {
+            case 1:
+            case 3:
+            case 5:{
+                phase++;
                 askForPowerUp();
                 break;
             }
             case 2:
             case 4:{
                 phase++;
-                actionManager = new ActionManager(model, currentPlayer);
+                actionManager = new ActionManager(model, this);
+                actionManager.askForAction();
+            }
+            case 6:{
+                phase++;
+                actionManager = new ActionManager(model, this);
+                actionManager.askForReload();
             }
         }
+    }
+
+    public void nextPhase(){
+        phase++;
+        manageRound();
     }
 
 
@@ -65,14 +77,37 @@ public class RoundManager {
 
     }
 
-    public void manageKill()
-    {
-
+    public void manageKills() {
+        
     }
 
-    public void respawn(Player currentPlayer)
-    {
+    public void respawnPlayer(Player deadPlayer) {
+        deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
+        //todo notifica richista per il powerUp di respawn
+    }
 
+    public void spawn(CardChoiceEvent msg){
+        Player deadPlayer = null;
+        for (Player p: model.getPlayers()) {
+            if (p.getUsername().equals(msg.getUser())){
+                deadPlayer = p;
+            }
+        }
+
+        PowerUp choosenPowerUp = null;
+        for (PowerUp p: deadPlayer.getPowerUps()) {
+            if (msg.getCard().equals(p.getName()) && msg.getCardColour().equals(p.getColour().toString()) ){
+                choosenPowerUp = p;
+                break;
+            }
+        }
+        for (SpawnSquare possibleSpawnSquare: model.getGameboard().getMap().getSpawnSquares()) {
+            if (possibleSpawnSquare.getSquareColour().equals(choosenPowerUp.getColour().toString() ) ){
+                deadPlayer.setPosition(possibleSpawnSquare);
+                deadPlayer.discardPowerUp(choosenPowerUp);
+            }
+        }
+        //todo notifica lo spown
     }
 
     public boolean[] checkAction()
@@ -83,9 +118,7 @@ public class RoundManager {
         return codedMacroAction;
     }
 
-    public void endRound()
-    {
-
+    public void endRound(){
     }
 
     public Player getCurrentPlayer() {

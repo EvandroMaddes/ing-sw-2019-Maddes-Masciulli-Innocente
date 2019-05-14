@@ -11,6 +11,7 @@ public class CardChoiceEvent extends Event {
 
     private String card;
     private String cardType;
+    private String cardColour;
     private String context;
 
     /**
@@ -20,10 +21,11 @@ public class CardChoiceEvent extends Event {
      * @param card     the selected Card
      * @param cardType the selected Card's type
      */
-    public CardChoiceEvent(String user, String card, String cardType) {
+    public CardChoiceEvent(String user, String card, String cardType, String cardColour) {
         super(user);
         this.card = card;
         this.cardType = cardType;
+        this.cardColour = cardColour;
         type = EventType.CardChoiceEvent;
 
     }
@@ -34,5 +36,9 @@ public class CardChoiceEvent extends Event {
 
     public String getContext() {
         return context;
+    }
+
+    public String getCardColour() {
+        return cardColour;
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.server.socket;
 
+import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.ServerInterface;
 
 import java.net.ServerSocket;
@@ -16,12 +18,12 @@ public class SocketServer implements ServerInterface {
 
 
     @Override
-    public void acceptClient() {
+    public void acceptClient(ClientInterface currentClient) {
 
     }
 
     @Override
-    public void sendBroadcast() {
+    public void sendBroadcast(Event message) {
 
     }
 

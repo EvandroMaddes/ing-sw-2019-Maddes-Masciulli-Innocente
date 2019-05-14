@@ -40,6 +40,20 @@ public class TestWeaponDeck {
         public void mark(Player target, int amount) {
 
         }
+
+        //aggiunto da fede perche senno non partiva sonar, non ho toccato altro
+        @Override
+        public ArrayList<Player> getTargets(int selectedEffect) {
+            return null;
+        }
+        @Override
+        public ArrayList<Player> getTargetsBaseEffect() {
+            return null;
+        }
+        @Override
+        protected void fireBaseEffect(ArrayList<Player> targets, Square destination) {
+        }
+        //fino a qui
     }
     private WeaponDeck testedDeck;
 
@@ -123,8 +137,5 @@ public class TestWeaponDeck {
         }
 
     }
-
-
-
 
 }

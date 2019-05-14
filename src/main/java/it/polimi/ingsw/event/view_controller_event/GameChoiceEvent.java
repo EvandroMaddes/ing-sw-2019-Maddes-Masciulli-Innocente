@@ -1,5 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.EventType;
 
@@ -32,7 +34,6 @@ public class GameChoiceEvent extends Event {
         super(user);
         this.map=map;
         this.mod=mod;
-        type= EventType.GameChoiceEvent;
     }
 
     public int getMap() {
@@ -41,5 +42,10 @@ public class GameChoiceEvent extends Event {
 
     public int getMod() {
         return mod;
+    }
+
+    @Override
+    public void performAction(Controller controller) {
+        controller.createGameManager(map);
     }
 }
