@@ -58,9 +58,9 @@ public class AmmoTile {
             player.addAmmo(ammoCubes[0]);
         if (player.getCubeColourNumber(ammoCubes[1].getColour()) <3 )
             player.addAmmo(ammoCubes[1]);
-        if ((!isPowerUpTile)&&player.getCubeColourNumber(ammoCubes[2].getColour()) <3){
+        if ((!isPowerUpTile)&&player.getCubeColourNumber(ammoCubes[2].getColour()) <3)
                 player.addAmmo(ammoCubes[2]);
-        }
+
     }
 
 }

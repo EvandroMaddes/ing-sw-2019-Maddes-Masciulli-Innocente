@@ -1,7 +1,5 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.event.EventType;
-
 /**
  * @author Francesco Masciulli
  * it represent an Ammo Tile replacement on the Map
@@ -26,6 +24,5 @@ public class AmmoTileUpdateEvent extends PositionUpdateEvent {
         this.firstColour=firstColour;
         this.secondColour=secondColour;
         this.thirdColour=thirdColour;
-        type= EventType.AmmoTileUpdateEvent;
     }
 }

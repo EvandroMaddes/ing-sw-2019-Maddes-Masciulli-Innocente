@@ -1,13 +1,13 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.event.EventType;
+import it.polimi.ingsw.event.Event;
 
 /**
  * @author Francesco Masciulli
  * represent a GameTrack Update, when a player is killed
  *  or  (DominationMod) when a SpawnSquare is damaged
  */
-public class GameTrackUpdateEvent extends AbstractUpdateEvent {
+public class GameTrackUpdateEvent extends Event {
     private int damageTokenNumber;
 
     /**

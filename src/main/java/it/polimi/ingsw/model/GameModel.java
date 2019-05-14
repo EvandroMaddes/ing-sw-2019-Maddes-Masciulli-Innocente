@@ -26,13 +26,9 @@ public class GameModel extends Observable{
         return players;
     }
 
-    public static void createModel(GameBoard gameBoard){
-
-    }
-
     public void addPlayer(Player newPlayer){
         players.add(newPlayer);
-        NewPlayerJoinedEvent message = new NewPlayerJoinedEvent(newPlayer);
+        NewPlayerJoinedEvent message = new NewPlayerJoinedEvent(newPlayer.getUsername());
         notifyObservers(message);
     }
 }

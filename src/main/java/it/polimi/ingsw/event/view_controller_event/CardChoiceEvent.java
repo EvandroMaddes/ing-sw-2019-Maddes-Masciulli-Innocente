@@ -1,7 +1,6 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.EventType;
 
 /**
  * @author Francesco Masciulli
@@ -12,7 +11,6 @@ public class CardChoiceEvent extends Event {
     private String card;
     private String cardType;
     private String cardColour;
-    private String context;
 
     /**
      * Constructor
@@ -26,16 +24,11 @@ public class CardChoiceEvent extends Event {
         this.card = card;
         this.cardType = cardType;
         this.cardColour = cardColour;
-        type = EventType.CardChoiceEvent;
 
     }
 
     public String getCard() {
         return card;
-    }
-
-    public String getContext() {
-        return context;
     }
 
     public String getCardColour() {

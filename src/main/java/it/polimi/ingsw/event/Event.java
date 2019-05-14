@@ -1,7 +1,5 @@
 package it.polimi.ingsw.event;
 
-import it.polimi.ingsw.controller.Controller;
-
 import java.io.Serializable;
 
 /**@author Francesco Masciulli
@@ -20,10 +18,6 @@ public abstract class Event implements Serializable {
        this.user=user;
    }
 
-    /**
-     * Getter method
-     * @return the User indicated in the Event;
-     */
     public String getUser() {
         return user;
     }
@@ -35,6 +29,4 @@ public abstract class Event implements Serializable {
     public void setUser(String user) {
         this.user = user;
     }
-
-    public abstract void performAction(Controller controller);
 }

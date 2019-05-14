@@ -1,8 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
-import it.polimi.ingsw.event.EventType;
-
 import java.util.ArrayList;
 
 /**

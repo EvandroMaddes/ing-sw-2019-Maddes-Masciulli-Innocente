@@ -1,7 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.PlayerChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.GameBoard;
 import it.polimi.ingsw.model.board.KillShotTrack;
@@ -84,6 +82,7 @@ public class GameManager {
         }
     }
 
+    //todo rivedere
     public void newRound(){
         if (firstRoundPhase){
             currentRound = new FirstRoundManager(model, model.getPlayers().get(0));
@@ -97,6 +96,7 @@ public class GameManager {
         currentRound.manageRound();
     }
 
+    //todo rivedere
     public boolean afterFirstPlayer(int currentPlayer){
         for (Player p: model.getPlayers()) {
             if (p.isFirstPlayer())

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.EventType;
 
 /**
  * @author Francesco Masciulli
@@ -19,7 +17,7 @@ import it.polimi.ingsw.event.EventType;
  *  1: Domination mod
  *
  */
-public class GameChoiceEvent extends Event {
+public class GameChoiceEvent extends ViewControllerEvent {
 
     private int map;
     private int mod;

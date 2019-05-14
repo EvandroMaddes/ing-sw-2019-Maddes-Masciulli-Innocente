@@ -1,19 +1,14 @@
 package it.polimi.ingsw.event.view_controller_event;
 
-import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.EventType;
-
-public class PositionChoiceEvent extends Event {
+public abstract class PositionChoiceEvent extends ViewControllerEvent {
 
     private int positionX;
     private int positionY;
-    private String context;
 
     public PositionChoiceEvent(String user, int positionX, int positionY){
         super(user);
         this.positionX=positionX;
         this.positionY=positionY;
-        type= EventType.PositionChoiceEvent;
     }
 
     public int getPositionX() {
@@ -22,9 +17,5 @@ public class PositionChoiceEvent extends Event {
 
     public int getPositionY() {
         return positionY;
-    }
-
-    public String getContext() {
-        return context;
     }
 }

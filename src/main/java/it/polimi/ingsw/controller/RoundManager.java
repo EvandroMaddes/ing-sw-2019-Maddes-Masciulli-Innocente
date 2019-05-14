@@ -32,18 +32,16 @@ public class RoundManager {
             case 1:
             case 3:
             case 5:{
-                phase++;
                 askForPowerUp();
                 break;
             }
             case 2:
             case 4:{
-                phase++;
                 actionManager = new ActionManager(model, this);
                 actionManager.askForAction();
+                break;
             }
             case 6:{
-                phase++;
                 actionManager = new ActionManager(model, this);
                 actionManager.askForReload();
             }
@@ -69,16 +67,16 @@ public class RoundManager {
 
     public void selectAction()
     {
-
+        //todo
     }
 
     public void managePoints()
     {
-
+        //todo
     }
 
     public void manageKills() {
-        
+        //todo
     }
 
     public void respawnPlayer(Player deadPlayer) {
@@ -86,6 +84,7 @@ public class RoundManager {
         //todo notifica richista per il powerUp di respawn
     }
 
+    //todo rivedere
     public void spawn(CardChoiceEvent msg){
         Player deadPlayer = null;
         for (Player p: model.getPlayers()) {
@@ -110,15 +109,8 @@ public class RoundManager {
         //todo notifica lo spown
     }
 
-    public boolean[] checkAction()
-    {
-        boolean codedMacroAction[] = new boolean[5];
-        codedMacroAction[5]=true;
-
-        return codedMacroAction;
-    }
-
     public void endRound(){
+        //todo
     }
 
     public Player getCurrentPlayer() {
@@ -126,7 +118,7 @@ public class RoundManager {
     }
 
     public void spawnDeadPlayers(){
-
+        //todo
     }
 
     public ActionManager getActionManager() {

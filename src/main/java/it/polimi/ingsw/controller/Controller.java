@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -15,8 +16,8 @@ public class Controller implements Observer {
      *
      * @param message is the message that arrives from view with the map and mode choice
      */
-    public void update(Observable o, Object message){
-       ((Event)message).performAction(this);
+    public void update(Observable virtualView, Object message){
+       ((ViewControllerEvent)message).performAction(this);
     }
 
     public void createGameManager(int mapChoice){
@@ -28,17 +29,16 @@ public class Controller implements Observer {
     }
 
     /*
-    // todo modificare le stringhe con magari classi enumeration per gli eventi con molti utilizzi
     private void messageHandler (Event message){
         switch (message.getType()) {
 
-            case GameChoiceEvent: {
+    x        case GameChoiceEvent: {
                 gameManager = new GameManager((GameChoiceEvent) message);
                 gameManager.buildGameBoard((GameChoiceEvent) message);
                 break;
             }
 
-            case PlayerChoiceEvent: {
+    x        case PlayerChoiceEvent: {
                 PlayerChoiceEvent msg = (PlayerChoiceEvent) message;
                 switch (msg.getContext()) {
                     case "Character choice": {
@@ -49,12 +49,13 @@ public class Controller implements Observer {
                 }
             } // a qui sono stati modificati gli eventi
 
+           ?? implementare con un timer
             case StartGameEvent: {
                 gameManager.startGame();
                 break;
             }
 
-            case ActionChoiceEvent: {
+       x     case ActionChoiceEvent: {
                 ActionChoiceEvent msg = (ActionChoiceEvent) message;
                 switch (msg.getAction()) {
                     case 0: {

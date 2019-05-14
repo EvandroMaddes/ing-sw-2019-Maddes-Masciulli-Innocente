@@ -1,13 +1,13 @@
 package it.polimi.ingsw.event.view_controller_event;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.EventType;
 
 /**
  * @author Francesco Masciulli
  * represent the selected Action after a request
  */
-public class ActionChoiceEvent extends Event {
+public class ActionChoiceEvent extends ViewControllerEvent {
 
     private int action;
 
@@ -19,11 +19,28 @@ public class ActionChoiceEvent extends Event {
      */
     public ActionChoiceEvent(String user, int action){
         super(user);
-        this.action=action;
-        type = EventType.ActionChoiceEvent;
+        this.action = action;
     }
 
-    public int getAction() {
-        return action;
+    @Override
+    public void performAction(Controller controller) {
+        switch (action){
+            case 1:{
+                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleMoves();
+                break;
+            }
+            case 2:{
+                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleGrabs();
+                break;
+            }
+            case 3:{
+                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleWeapons();
+                break;
+            }
+            default:{
+                //todo se da un opzione non valida passa il turno, sarebbe buono richiedere
+                controller.getGameManager().getCurrentRound().nextPhase();
+            }
+        }
     }
 }

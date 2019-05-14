@@ -2,7 +2,6 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
 import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.PositionChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
@@ -65,13 +64,17 @@ public class ActionManager {
     }
 
     public void sendPossibleGrabs(){
-        /*todo notifica*/getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
+        //todo notifica
+        getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
     }
 
     public void sendPossibleWeapons(){
-        /*todo notifica*/getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer());
+        //todo notifica
+        getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer());
+
     }
 
+    //todo
     public void weaponChoice(CardChoiceEvent msg){
         /* choosenWeapon = weapon;
         if (choosenWeapon.canAttivateDifferentEffect()){
@@ -82,22 +85,19 @@ public class ActionManager {
         }*/
     }
 
-    public void performMove(PositionChoiceEvent msg){
-        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
-        /*todo notifica*/
+    public void performMove(int positionX, int positionY){
+        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         currentRoundManager.nextPhase();
-
     }
 
-    public void performGrab(PositionChoiceEvent msg){
-        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[msg.getPositionX()][msg.getPositionY()] );
+    public void performGrab(int positionX, int positionY){
+        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
             // sendWeaponGrabRequest();
             /*todo notifica*/
         }
         else {
             ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
-            /*todo notifica*/
         }
     }
 
@@ -122,8 +122,6 @@ public class ActionManager {
             /*todo notifica*/
         }
     }
-
-
 
     public boolean isActionUsed() {
         return actionUsed;

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -9,13 +12,14 @@ import it.polimi.ingsw.model.board.Square;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
 /**
  * @author Federico Innocente
  *
  * class to manage the players
  */
-public class Player {
+public class Player extends Observable {
 
     private static final int MAX_WEAPONS = 3;
 
@@ -155,6 +159,8 @@ public class Player {
     public void setPosition(Square position)
     {
         this.position = position;
+        PositionUpdateEvent message = new PositionUpdateEvent("BROADCAST", username, position.getRow(), position.getColumn());
+        notifyObservers(message);
     }
 
     /**
@@ -166,6 +172,8 @@ public class Player {
     public void addAmmo(AmmoCube ammo)
     {
         this.ammo.add(ammo);
+        AmmoUpdateEvent message = new AmmoUpdateEvent(username, ammo );
+        notifyObservers();
     }
 
     /**
