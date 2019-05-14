@@ -12,19 +12,22 @@ public abstract class AlternateFireWeapon extends Weapon {
 
     private AmmoCube[] alternativeEffectCost;
 
-
     /**
-     *
-     * @param colour
-     * @param name
-     * @param reloadCost
-     * @param alternativeEffectCost is the alternative effect cost
+     * Constructor
+     * @param alternativeEffectCost
      */
-    public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost)
-    {
+
+    public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost);
         this.alternativeEffectCost = alternativeEffectCost;
     }
+
+    /**
+     *
+     * @param targets
+     * @param destination
+     * @param selectedEffect
+     */
     public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
         switch (selectedEffect){
             case 1:{
@@ -38,6 +41,11 @@ public abstract class AlternateFireWeapon extends Weapon {
         }
     }
 
+    /**
+     *
+     * @param selectedEffect
+     * @return
+     */
     public ArrayList<Player> getTargets(int selectedEffect){
         // switch
         ArrayList<Player> targets = new ArrayList<>();
@@ -55,7 +63,17 @@ public abstract class AlternateFireWeapon extends Weapon {
         return targets;
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract ArrayList<Player> getTargetsAlternativeEffect();
+
+    /**
+     *
+     * @param targets
+     * @param destination
+     */
     public abstract void fireAlternativeEffect(ArrayList<Player> targets, Square destination);
 
 }

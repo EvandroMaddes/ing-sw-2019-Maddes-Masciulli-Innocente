@@ -12,17 +12,12 @@ public abstract class Weapon extends Card {
     private AmmoCube[] reloadCost;
     private boolean loaded;
 
-    /**
-     *
-     * @param colour is the weapon colour
-     * @param name is the weapon name
-     * @param reloadCost is an array of the ammo cube needed to reload the weapon
-     */
-    public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost)
-    {
+
+
+    public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
         super(colour, name);
         this.reloadCost = reloadCost;
-        loaded = true;
+        loaded =true;
     }
 
     /**

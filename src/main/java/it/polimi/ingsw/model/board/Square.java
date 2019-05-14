@@ -13,6 +13,8 @@ public abstract class Square {
     private final Square[] nearSquares = new Square[4];//north,south, east,west
     private final boolean[] reachable = new boolean[4];//north,south, east,west
     private  String squareColour;
+    private ArrayList<Player> squarePlayers;
+
 
     /**
      * constructor
@@ -93,6 +95,33 @@ public abstract class Square {
      *
      * @return
      */
+    public ArrayList<Player> getSquarePlayers() {
+        return squarePlayers;
+    }
+
+    /**
+     *
+     * @param currentPlayer  Player on this square
+     */
+    public void addCurrentPlayer(Player currentPlayer){
+
+        squarePlayers.add(currentPlayer);
+
+    }
+
+    /**
+     * @param currentPlayer player moves from this square
+     */
+    public void removeCurrentPlayer(Player currentPlayer){
+
+        squarePlayers.remove(currentPlayer);
+
+    }
+
+    /**
+     *
+     * @return
+     */
     public Square[] getNearSquares() {
         return nearSquares;
     }
@@ -110,27 +139,7 @@ public abstract class Square {
      */
     public abstract boolean isGrabbable();
 
-    /**SAREBBE OTTIMALE NON PASSARE NESSUN PARAMETRO
-     * this method checks which players are on this square
-     * @param playersGame  who are playing
-     * @return players on the square
-     */
-    public ArrayList<Player> getSquarePlayers(ArrayList<Player> playersGame)
-    {
-        ArrayList<Player> playersSquare = null;
-        int i=0;
 
-        while (i < playersGame.size()) {
-
-            if(playersGame.get(i).getPosition()==this)
-            {
-                playersSquare.add(playersGame.get(i));
-            }
-
-            i++;
-        }
-        return playersSquare;
-    }
 
     /**
      *It calls checkDirection and it sees the square in passed direction
@@ -152,9 +161,53 @@ public abstract class Square {
         return reachable[direction];
     }
 
-    public ArrayList<Player> findVisiblePlayers(){
-        return null;
+
+    /**
+     *
+     * @return plyers visible by this square
+     */
+    public ArrayList<Player>  findVisiblePlayers(){
+     ArrayList<Player> visiblePlayers = new ArrayList<Player>();
+
+     findRoomPlayers(this,this.getSquareColour()); // player in the same room of current square
+
+     for(int i =0; i<4; i++){
+         if(checkDirection(i) && getNextSquare(i).getSquareColour()!= this.getSquareColour())
+         visiblePlayers.addAll(findRoomPlayers(getNextSquare(i),getNextSquare(i).getSquareColour()));//player in room near current square
+     }
+
+      return visiblePlayers;
     }
+    /**
+     *
+     * @param square one square of the room
+     * @param colourSquare colour of the room
+     * @return players of one room
+     */
+    private ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
+        ArrayList<Square> squareRoom = new ArrayList<Square>();
+        squareRoom.add(square);
+
+        ArrayList<Player> playerRoom = new ArrayList<Player>();
+        playerRoom.addAll(getSquarePlayers());
+
+        for (Square currentSquare : squareRoom) {
+            for(int i=0; i<4; i++) {
+                if (checkDirection(i)) {
+                    currentSquare = getNextSquare(i);
+                    if (currentSquare.getSquareColour() == colourSquare && !squareRoom.contains(currentSquare)) {
+
+                        squareRoom.add(currentSquare);
+                        playerRoom.addAll(currentSquare.getSquarePlayers());
+                    }
+                }
+            }
+        }
+        return playerRoom;
+    }
+
+
+
 
 
 }

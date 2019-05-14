@@ -23,18 +23,10 @@ public class TestAmmoTilesDeck {
      * method that set up the Test Class;
      *simulates, with a restricted number of elements, the initializing of the deck.
      */
-    @Before
+   @Before
     public void setUp(){
-        //il metodo setDeck è della classe astratta DeckManagement;
-        //necessita di un parametro di tipo ArrayList<Object>
-        //bisognerà fare casting dei parametri in fase di init
-        ArrayList<Object> givenDeck = new ArrayList<>();
-        AmmoTile ammoTile1 = new AmmoTile(new AmmoCube(Red), new AmmoCube(Red), new AmmoCube(Yellow), false);
-        AmmoTile ammoTile2 = new AmmoTile(new AmmoCube(Blue), new AmmoCube(Blue), null, true);
-        givenDeck.add(0, ammoTile1);
-        givenDeck.add(1, ammoTile2);
         testedDeck = new AmmoTilesDeck();
-        testedDeck.setDeck(givenDeck);
+
     }
 
     /**
@@ -43,14 +35,8 @@ public class TestAmmoTilesDeck {
      */
     @Test
     public void testDraw(){
-        AmmoCube starterFirstAmmoCube = ((AmmoTile)testedDeck.getDeck().get(0)).getAmmoCubes()[0];
-        AmmoTile drawnAmmoTile = (AmmoTile)testedDeck.draw();
-        if(testedDeck.getDeck().contains(drawnAmmoTile)){
-            System.out.println("Card is still in the deck");
-            fail();
-        }
-        AmmoCube drawnFirstAmmoCube = drawnAmmoTile.getAmmoCubes()[0];
-        assertTrue(drawnFirstAmmoCube.equals(starterFirstAmmoCube));
+        AmmoTile firstCard = (AmmoTile) testedDeck.getDeck().get(0);
+        assertTrue(testedDeck.draw()==firstCard);
         System.out.println("The drawn AmmoTile's first cube was the first of the deck's AmmoTile");
 
     }
@@ -89,12 +75,42 @@ public class TestAmmoTilesDeck {
      */
     @Test
     public void testReshuffle(){
-        testedDeck.discardCard((AmmoTile)testedDeck.getDeck().remove(0));
-        testedDeck.discardCard((AmmoTile)testedDeck.getDeck().get(0));
-        testedDeck.draw();
-        assertTrue(!testedDeck.getDeck().isEmpty());
-        System.out.println("The empty deck is reshuffled after the last draw");
+        for (Object ammoTile:testedDeck.getDeck()
+             ) {
+            testedDeck.discardCard((AmmoTile)ammoTile);
+        }
+        AmmoTile drawedCard = (AmmoTile) testedDeck.draw();
+
+        assertFalse(testedDeck.getDeck().contains(drawedCard));
+        assertTrue(testedDeck.getDiscardDeck().contains(drawedCard));
+        assertEquals(35,testedDeck.getDeck().size());
     }
+
+    /**
+     * checks if one card is drawed, this one is added on discard deck and removed from deck
+     */
+    @Test
+    public void testDiscardDeck() {
+        AmmoTile discardCard = (AmmoTile) testedDeck.getDeck().remove(testedDeck.getDeck().size()-1);
+        testedDeck.discardCard(discardCard);
+        assertTrue(testedDeck.getDiscardDeck().contains(discardCard));
+        assertTrue(!testedDeck.getDeck().contains(discardCard));
+        assertEquals(1, testedDeck.getDiscardDeck().size());
+        assertEquals(35, testedDeck.getDeck().size());
+    }
+
+        /**@author Evandro Maddes
+         * checks the correct size of ammotile deck
+         */
+    @Test
+    public void testNumberOfCard(){
+        AmmoTilesDeck deck = new AmmoTilesDeck();
+
+        assertEquals(36,deck.getDeck().size());
+
+
+    }
+
 
 
 }

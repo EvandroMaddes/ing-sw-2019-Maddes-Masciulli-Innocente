@@ -34,21 +34,19 @@ public class Hellion extends AlternateFireWeapon {
     }
 
     public void fireBaseEffect(ArrayList<Player> targets, Square destination){
-        ArrayList<Player> giocatoriInPartita= null;
         if (targets.isEmpty())
             throw new NullPointerException();
         damage( targets.get(0), 1);
-        for (Player p: targets.get(0).getPosition().getSquarePlayers(giocatoriInPartita) ) {
+        for (Player p: targets.get(0).getPosition().getSquarePlayers() ) {
             mark(p,1);
         }
     }
 
     public void fireAlternativeEffect(ArrayList<Player> targets, Square destination){
-        ArrayList<Player> giocatoriInPartita= null;
         if (targets.isEmpty())
             throw new NullPointerException();
         damage( targets.get(0), 1);
-        for (Player p: targets.get(0).getPosition().getSquarePlayers(giocatoriInPartita) ) {
+        for (Player p: targets.get(0).getPosition().getSquarePlayers() ) {
             mark(p,2);
         }
     }

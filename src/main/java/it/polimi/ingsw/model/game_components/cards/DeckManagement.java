@@ -10,7 +10,8 @@ import java.util.Collections;
  *
  */
 public abstract class DeckManagement {
-    private ArrayList<Object> deck;
+
+    private ArrayList<Object> deck ;
 
     /**
      * Setter method

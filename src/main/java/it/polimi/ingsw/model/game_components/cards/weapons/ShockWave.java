@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ShockWave extends AlternateFireWeapon {
+public class Shockwave extends AlternateFireWeapon {
     /**
      *
      * @param colour
@@ -17,7 +17,7 @@ public class ShockWave extends AlternateFireWeapon {
      * @param reloadCost
      * @param alternativeEffectCost
      */
-    public ShockWave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public Shockwave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
@@ -25,11 +25,10 @@ public class ShockWave extends AlternateFireWeapon {
 
     public ArrayList<Player> getTargetsBaseEffect(){
         ArrayList<Player> targets = null;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         for (int i = 0; i < 4; i++) {
             if (getOwner().getPosition().checkDirection(i))
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
         }
         return targets;
     }

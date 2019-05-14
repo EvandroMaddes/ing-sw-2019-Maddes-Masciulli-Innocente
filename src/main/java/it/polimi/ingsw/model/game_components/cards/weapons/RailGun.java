@@ -9,34 +9,33 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RailGun extends AlternateFireWeapon {
+public class  RailGun extends AlternateFireWeapon {
 
 
-    public RailGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public  RailGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
     public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> targets=null;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         for (int i = 0; i < 4; i++){
             if (getOwner().getPosition().checkDirection(i)) {
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
 
                 if (getOwner().getPosition().getNextSquare(i).checkDirection(i))
-                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers());
 
                 if (getOwner().getPosition().getNextSquare(i).getNextSquare(i).checkDirection(i))
-                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getNextSquare(i).getSquarePlayers());
 
                 if (getOwner().getPosition().getNextSquare(i).getNextSquare(i).getNextSquare(i).checkDirection(i))
-                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getNextSquare(i).getSquarePlayers());
 
             }
         }
 
-        targets.addAll(getOwner().getPosition().getSquarePlayers(giocatoriNellaPartita));
+        targets.addAll(getOwner().getPosition().getSquarePlayers());
         return targets;
     }
 

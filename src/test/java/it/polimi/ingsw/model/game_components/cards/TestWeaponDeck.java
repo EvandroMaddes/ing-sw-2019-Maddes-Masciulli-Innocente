@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
@@ -31,6 +32,22 @@ public class TestWeaponDeck {
         public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
 
         }
+
+        @Override
+        public ArrayList<Player> getTargets(int selectedEffect) {
+            return null;
+        }
+
+        @Override
+        public ArrayList<Player> getTargetsBaseEffect() {
+            return null;
+        }
+
+        @Override
+        protected void fireBaseEffect(ArrayList<Player> targets, Square destination) {
+
+        }
+
         @Override
         public void damage(Player target, int amount){
 
@@ -41,19 +58,7 @@ public class TestWeaponDeck {
 
         }
 
-        //aggiunto da fede perche senno non partiva sonar, non ho toccato altro
-        @Override
-        public ArrayList<Player> getTargets(int selectedEffect) {
-            return null;
-        }
-        @Override
-        public ArrayList<Player> getTargetsBaseEffect() {
-            return null;
-        }
-        @Override
-        protected void fireBaseEffect(ArrayList<Player> targets, Square destination) {
-        }
-        //fino a qui
+
     }
     private WeaponDeck testedDeck;
 
@@ -137,5 +142,30 @@ public class TestWeaponDeck {
         }
 
     }
+
+
+    /**
+     * checks the correct size of weapon deck
+     */
+    @Test
+    public void testCreateDeck(){
+        WeaponDeck deck = new WeaponDeck();
+        assertEquals(21,deck.getDeck().size());
+    }
+
+    @Test
+    /**@author Evandro Maddes
+     * checks if every name od weapon is different from others
+     */
+    public void testDifferentWeapon(){
+        WeaponDeck deck = new WeaponDeck();
+        for (int i=0; i< deck.getDeck().size(); i++) {
+            for (int j = 0; j < deck.getDeck().size() && i!=j; j++)
+                assertFalse((((Weapon) deck.getDeck().get(i)).getName().equals(((Weapon) deck.getDeck().get(j)).getName())));
+
+
+        }
+    }
+
 
 }

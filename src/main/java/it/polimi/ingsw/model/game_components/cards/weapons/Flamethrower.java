@@ -9,24 +9,23 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Flametrthrower extends AlternateFireWeapon {
+public class Flamethrower extends AlternateFireWeapon {
 
 
-    public Flametrthrower(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
+    public Flamethrower(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
         super(colour, name, reloadCost, alternativeEffectCost);
     }
 
 
     //todo tona i tutti i giocatori distanti due; il controller deve verificare che i giocatori scelti son nella stessa direzione
     public ArrayList<Player> getTargetsBaseEffect() {
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
         ArrayList<Player> targets = null;
         for (int i = 0; i < 4; i++){
             if (getOwner().getPosition().checkDirection(i)) {
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
 
              if (getOwner().getPosition().getNextSquare(i).checkDirection(i))
-                 targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                 targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers());
             }
         }
         return targets;

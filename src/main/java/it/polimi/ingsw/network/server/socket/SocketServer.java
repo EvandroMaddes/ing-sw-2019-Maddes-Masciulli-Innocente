@@ -18,7 +18,7 @@ public class SocketServer implements ServerInterface {
 
 
     @Override
-    public void acceptClient(ClientInterface currentClient) {
+    public void acceptClient(ClientInterface currClient) {
 
     }
 

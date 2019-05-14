@@ -94,4 +94,12 @@ public class TestPowerUpDeck {
         System.out.println("The empty deck is reshuffled after the last draw");
     }
 
+    /**@author Evandro Maddes
+     * checks the correct size of PowerUp deck
+     */
+    @Test
+    public void testCreateDeck(){
+        PowerUpDeck deck = new PowerUpDeck();
+        assertEquals(24,deck.getDeck().size());
+    }
 }
