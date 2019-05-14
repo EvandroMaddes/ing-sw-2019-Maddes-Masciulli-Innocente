@@ -18,11 +18,10 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> target;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         target = new ArrayList<Player>();
         target = getOwner().getPosition().findVisiblePlayers();
-        target.removeAll(getOwner().getPosition().getSquarePlayers(giocatoriNellaPartita));
+        target.removeAll(getOwner().getPosition().getSquarePlayers());
         return target;
     }
 

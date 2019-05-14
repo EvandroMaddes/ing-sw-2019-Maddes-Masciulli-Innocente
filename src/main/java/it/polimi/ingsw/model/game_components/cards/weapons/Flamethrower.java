@@ -19,14 +19,13 @@ public class Flamethrower extends AlternateFireWeapon {
 
     //todo tona i tutti i giocatori distanti due; il controller deve verificare che i giocatori scelti son nella stessa direzione
     public ArrayList<Player> getTargetsBaseEffect() {
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
         ArrayList<Player> targets = null;
         for (int i = 0; i < 4; i++){
             if (getOwner().getPosition().checkDirection(i)) {
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
 
              if (getOwner().getPosition().getNextSquare(i).checkDirection(i))
-                 targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                 targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers());
             }
         }
         return targets;

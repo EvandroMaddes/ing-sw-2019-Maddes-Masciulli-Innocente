@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Cyberblade extends TwoOptionalEffectWeapon {
+public class  Cyberblade extends TwoOptionalEffectWeapon {
     /**
      *
      * @param colour
@@ -26,7 +26,7 @@ public class Cyberblade extends TwoOptionalEffectWeapon {
         ArrayList<Player> target;
         ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
-        target = getOwner().getPosition().getSquarePlayers(giocatoriNellaPartita);
+        target = getOwner().getPosition().getSquarePlayers();
         return target;
 
     }

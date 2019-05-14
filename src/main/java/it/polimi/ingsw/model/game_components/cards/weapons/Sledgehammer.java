@@ -23,9 +23,8 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     public ArrayList<Player> getTargetsBaseEffect(){
         ArrayList<Player> targets;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
-        targets = getOwner().getPosition().getSquarePlayers(giocatoriNellaPartita);
+        targets = getOwner().getPosition().getSquarePlayers();
         return targets;
     }
 
