@@ -1,18 +1,15 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.*;
 import it.polimi.ingsw.model.board.Square;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * @author Federico Innocente
@@ -159,7 +156,7 @@ public class Player extends Observable {
     public void setPosition(Square position)
     {
         this.position = position;
-        PositionUpdateEvent message = new PositionUpdateEvent("BROADCAST", username, position.getRow(), position.getColumn());
+        PositionUpdateEvent message = new PositionUpdateEvent( username, position.getRow(), position.getColumn());
         notifyObservers(message);
     }
 
@@ -172,8 +169,8 @@ public class Player extends Observable {
     public void addAmmo(AmmoCube ammo)
     {
         this.ammo.add(ammo);
-        AmmoUpdateEvent message = new AmmoUpdateEvent(username, ammo );
-        notifyObservers();
+        AmmoUpdateEvent message = new AmmoUpdateEvent(username, this.ammo );
+        notifyObservers(message);
     }
 
     /**
@@ -185,8 +182,8 @@ public class Player extends Observable {
     public void addPowerUp(PowerUp powerUp)
     {
         this.powerUps.add(powerUp);
+        notifyPowerUpChange();
     }
-
 
     /**
      *
@@ -197,6 +194,23 @@ public class Player extends Observable {
         weapons[numberOfWeapons] = weapon;
         weapon.setOwner(this);
         numberOfWeapons++;
+    }
+
+    private void notifyPowerUpChange(){
+        Map<String, CubeColour> messagePowerUps = new HashMap<>();
+        for (PowerUp p: this.powerUps) {
+            if (p instanceof Newton)
+                messagePowerUps.put("Newton", p.getColour());
+            else if (p instanceof Teleporter)
+                messagePowerUps.put("Teleporter", p.getColour());
+            else if (p instanceof TargetingScope)
+                messagePowerUps.put("TargetingScope", p.getColour());
+            else
+                messagePowerUps.put("TagbackGranade", p.getColour());
+        }
+
+        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(username,messagePowerUps);
+        notifyObservers(message);
     }
 
 
@@ -257,6 +271,7 @@ public class Player extends Observable {
     {
         powerUps.remove(powerUp);
         powerUp.setOwner(null);
+        notifyPowerUpChange();
     }
 
     public int getNumberOfWeapons() {

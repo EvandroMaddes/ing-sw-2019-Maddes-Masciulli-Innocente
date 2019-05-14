@@ -93,7 +93,7 @@ public class ActionManager {
     public void performGrab(int positionX, int positionY){
         currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
-            // sendWeaponGrabRequest();
+            //sendWeaponGrabRequest();
             /*todo notifica*/
         }
         else {

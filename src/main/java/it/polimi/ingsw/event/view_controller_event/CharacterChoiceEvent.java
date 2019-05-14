@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.player.Character;
 /**
  * event used to notify the character choice by the player
  */
-public class CharacterChoiceEvent extends Event {
+public class CharacterChoiceEvent extends ViewControllerEvent {
     private Character choosenCharacter;
 
     public CharacterChoiceEvent(String user, Character choosenCharacter) {

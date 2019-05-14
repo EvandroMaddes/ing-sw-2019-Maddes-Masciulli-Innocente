@@ -9,7 +9,6 @@ public class StartGameEvent extends Event {
     StartGameEvent(String user, boolean canStart){
         super(user);
         this.gameCanStart=canStart;
-        type= EventType.StartGameEvent;
     }
 
 }

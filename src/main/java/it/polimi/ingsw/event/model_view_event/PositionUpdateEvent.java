@@ -7,7 +7,7 @@ import it.polimi.ingsw.event.Event;
  * @author Francesco Masciulli
  * represent the updatePlayer updated Position
  */
-public class PositionUpdateEvent extends Event {
+public class PositionUpdateEvent extends ModelViewEvent {
 
     private int positionX;
     private int positionY;

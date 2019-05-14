@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.cards.Newton;
@@ -79,23 +78,28 @@ public class RoundManager {
         //todo
     }
 
+    /**
+     *
+     * @param deadPlayer is the dead player that need to respawn
+     *                   when the player send the square choice, controller call spawn()
+     */
     public void respawnPlayer(Player deadPlayer) {
         deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
-        //todo notifica richista per il powerUp di respawn
+        //todo richiedi powerUp
     }
 
-    //todo rivedere
-    public void spawn(CardChoiceEvent msg){
+    public void spawn(String playerUsername, String powerUp, String cardColour){
         Player deadPlayer = null;
         for (Player p: model.getPlayers()) {
-            if (p.getUsername().equals(msg.getUser())){
+            if (p.getUsername().equals(playerUsername)){
                 deadPlayer = p;
+                break;
             }
         }
 
         PowerUp choosenPowerUp = null;
         for (PowerUp p: deadPlayer.getPowerUps()) {
-            if (msg.getCard().equals(p.getName()) && msg.getCardColour().equals(p.getColour().toString()) ){
+            if (powerUp.equals(p.getName()) && cardColour.equals(p.getColour().toString()) ){
                 choosenPowerUp = p;
                 break;
             }
@@ -106,7 +110,6 @@ public class RoundManager {
                 deadPlayer.discardPowerUp(choosenPowerUp);
             }
         }
-        //todo notifica lo spown
     }
 
     public void endRound(){
