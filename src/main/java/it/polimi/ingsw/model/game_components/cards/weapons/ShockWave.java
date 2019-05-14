@@ -25,11 +25,10 @@ public class Shockwave extends AlternateFireWeapon {
 
     public ArrayList<Player> getTargetsBaseEffect(){
         ArrayList<Player> targets = null;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         for (int i = 0; i < 4; i++) {
             if (getOwner().getPosition().checkDirection(i))
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers(giocatoriNellaPartita));
+                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
         }
         return targets;
     }

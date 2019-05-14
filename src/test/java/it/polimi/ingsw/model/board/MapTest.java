@@ -9,9 +9,7 @@ import org.junit.Test;
 public class MapTest {
     private Square[][] testedMapMatrix;
 
-    /**
-     * Non trova il json in fase di inzializzazione
-     */
+
     @Before
     public void setUp(){
         Map testedMap = new Map("leftFirst", "rightFirst");
