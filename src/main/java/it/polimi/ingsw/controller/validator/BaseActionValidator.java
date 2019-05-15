@@ -33,6 +33,7 @@ public class BaseActionValidator extends Validator {
             if (!currentSquare.isGrabbable())
                 grabbableSquare.remove(currentSquare);
         }
+        // todo non controlla che il giocatore possa pagare le eventuali armi
         return grabbableSquare;
     }
 

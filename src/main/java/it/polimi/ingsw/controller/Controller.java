@@ -41,26 +41,11 @@ public class Controller implements Observer {
             case CardChoiceEvent: {
                 CardChoiceEvent msg = (CardChoiceEvent) message;
                 switch (msg.getContext()) {
-                    case "WeaponGrab": {
-                        gameManager.getCurrentRound().getActionManager().grabWeapon(msg);
-                        break;
-                    }
-                    case "WeaponDiscard": {
-                        gameManager.getCurrentRound().getActionManager().discardWeapon(msg);
-                        break;
-                    }
+
                     case "SelectShotingWeapon":{
                         gameManager.getCurrentRound().getActionManager().weaponChoice(msg);
                         break;
                     }
-                    case "PowerUpToRespawn":{
-                        gameManager.getCurrentRound().spawn(msg);
-                        break;
-                    }
-                    case "SelectPowerUpToUse":{
-
-                    }
-                    case "SelectPowerUpAsCube":{
 
                     }
                 }

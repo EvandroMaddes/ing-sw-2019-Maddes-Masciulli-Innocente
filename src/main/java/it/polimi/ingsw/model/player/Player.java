@@ -31,6 +31,7 @@ public class Player extends Observable {
     private Weapon[] weapons = new Weapon[MAX_WEAPONS + 1];
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
+    private boolean dead;
 
     /**
      *
@@ -49,6 +50,7 @@ public class Player extends Observable {
         this.powerUps = new ArrayList<>();
         this.ammo = new ArrayList<>();
         this.firstPlayer = false;
+        this.dead = true;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -360,5 +362,17 @@ public class Player extends Observable {
         if (i < MAX_WEAPONS){
             weapons[i] = weapons[MAX_WEAPONS];
         }
+    }
+
+    public void addPoints(int pointsToAdd){
+        points += pointsToAdd;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void invertDeathState(){
+        dead = !dead;
     }
 }
