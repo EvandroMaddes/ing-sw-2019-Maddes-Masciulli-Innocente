@@ -204,7 +204,7 @@ public class WeaponDeck extends DeckManagement {
         reloadCost[0] = new AmmoCube(colour);
         alternativeEffectCost = new AmmoCube[1];
         alternativeEffectCost[0] = new AmmoCube(CubeColour.Yellow);
-        Shockwave shockwave = new Shockwave(colour,"SHOCKWAVE",reloadCost,alternativeEffectCost);
+        ShockWave shockwave = new ShockWave(colour,"SHOCKWAVE",reloadCost,alternativeEffectCost);
         deck.add(shockwave);
 
         colour = CubeColour.Yellow;
@@ -214,7 +214,7 @@ public class WeaponDeck extends DeckManagement {
         firstOptionalEffectCost = null;
         secondOptionalEffectCost = new AmmoCube[1];
         secondOptionalEffectCost[0] = new AmmoCube(CubeColour.Yellow);
-        Cyberblade cyberblade = new Cyberblade(colour,"CYBERBLADE",reloadCost,firstOptionalEffectCost,secondOptionalEffectCost);
+        CyberBlade cyberblade = new CyberBlade(colour,"CYBERBLADE",reloadCost,firstOptionalEffectCost,secondOptionalEffectCost);
         deck.add(cyberblade);
 
         colour = CubeColour.Yellow;
