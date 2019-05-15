@@ -10,6 +10,6 @@ public class SpownChoiceEvent extends CardChoiceEvent {
 
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().spawn();
+        controller.getGameManager().getCurrentRound().getDeathManager().spawn(getCard(), getCardColour());
     }
 }

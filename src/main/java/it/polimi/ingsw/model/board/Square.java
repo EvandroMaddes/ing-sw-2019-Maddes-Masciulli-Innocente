@@ -3,11 +3,12 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * @author Evandro Maddes
  */
-public abstract class Square {
+public abstract class Square extends Observable {
     private final int row;
     private final int column;
     private final Square[] nearSquares = new Square[4];//north,south, east,west

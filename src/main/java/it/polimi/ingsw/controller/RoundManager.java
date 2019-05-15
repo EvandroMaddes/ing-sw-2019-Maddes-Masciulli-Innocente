@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.cards.Newton;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Teleporter;
@@ -16,6 +15,7 @@ public class RoundManager {
     private int phase;
     protected boolean firstRoundOfTheGame = false;
     private ActionManager actionManager;
+    private DeathManager deathManager;
 
     public RoundManager(GameModel model, Player currentPlayer){
         this.currentPlayer = currentPlayer;
@@ -43,6 +43,10 @@ public class RoundManager {
             case 6:{
                 actionManager = new ActionManager(model, this);
                 actionManager.askForReload();
+                break;
+            }
+            case 7:{
+                spownDeadPlayers();
             }
         }
     }
@@ -78,39 +82,6 @@ public class RoundManager {
         //todo
     }
 
-    /**
-     *
-     * @param deadPlayer is the dead player that need to respawn
-     *                   when the player send the square choice, controller call spawn()
-     */
-    public void respawnPlayer(Player deadPlayer) {
-        deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
-        //todo richiedi powerUp
-    }
-
-    public void spawn(String playerUsername, String powerUp, String cardColour){
-        Player deadPlayer = null;
-        for (Player p: model.getPlayers()) {
-            if (p.getUsername().equals(playerUsername)){
-                deadPlayer = p;
-                break;
-            }
-        }
-
-        PowerUp choosenPowerUp = null;
-        for (PowerUp p: deadPlayer.getPowerUps()) {
-            if (powerUp.equals(p.getName()) && cardColour.equals(p.getColour().toString()) ){
-                choosenPowerUp = p;
-                break;
-            }
-        }
-        for (SpawnSquare possibleSpawnSquare: model.getGameboard().getMap().getSpawnSquares()) {
-            if (possibleSpawnSquare.getSquareColour().equals(choosenPowerUp.getColour().toString() ) ){
-                deadPlayer.setPosition(possibleSpawnSquare);
-                deadPlayer.discardPowerUp(choosenPowerUp);
-            }
-        }
-    }
 
     public void endRound(){
         //todo
@@ -120,11 +91,24 @@ public class RoundManager {
         return currentPlayer;
     }
 
-    public void spawnDeadPlayers(){
-        //todo
+    public void spownDeadPlayers(){
+        for (Player p: model.getPlayers()) {
+            if (p.getPlayerBoard().getDamageReceived().length >= 11){
+                createDeathManager(model, p);
+                deathManager.manageKill();
+            }
+        }
     }
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public DeathManager getDeathManager() {
+        return deathManager;
+    }
+
+    public void createDeathManager(GameModel model, Player deadPlayer){
+        deathManager = new DeathManager(model, deadPlayer);
     }
 }
