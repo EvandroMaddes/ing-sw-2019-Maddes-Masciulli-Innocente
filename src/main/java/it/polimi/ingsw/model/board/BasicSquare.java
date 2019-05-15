@@ -60,6 +60,14 @@ public class BasicSquare extends Square {
     }
 
     /**
+     * 
+     * @param ammo
+     */
+    public void setAmmo(AmmoTile ammo) {
+        this.ammo = ammo;
+    }
+
+    /**
      * if one square(excepted spawn square) do not have a ammo,it adds one.
      * when replace ammo tiles. notify observers
      *
