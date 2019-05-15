@@ -46,8 +46,10 @@ public class RoundManager {
                 break;
             }
             case 7:{
-                spownDeadPlayers();
+                manageDeadPlayers();
+                break;
             }
+            default:endRound();
         }
     }
 
@@ -68,20 +70,6 @@ public class RoundManager {
          //todo   xxxxx lancia messaggio che chiede se vuole, usare un powerup
     }
 
-    public void selectAction()
-    {
-        //todo
-    }
-
-    public void managePoints()
-    {
-        //todo
-    }
-
-    public void manageKills() {
-        //todo
-    }
-
 
     public void endRound(){
         //todo
@@ -91,9 +79,9 @@ public class RoundManager {
         return currentPlayer;
     }
 
-    public void spownDeadPlayers(){
+    public void manageDeadPlayers(){
         for (Player p: model.getPlayers()) {
-            if (p.getPlayerBoard().getDamageReceived().length >= 11){
+            if (p.isDead()){
                 createDeathManager(model, p);
                 deathManager.manageKill();
             }

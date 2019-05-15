@@ -19,6 +19,7 @@ public class AdrenalinicGrabValidator extends BaseActionValidator {
             if (!currentSquare.isGrabbable())
                 grabbableSquare.remove(currentSquare);
         }
+        // todo controllare che le armi siano evenualmente pagabili (almeno 1)
         return grabbableSquare;
     }
 

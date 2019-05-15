@@ -14,15 +14,20 @@ public class PlayerBoard implements Serializable {
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;
-    private static final int[] points = new int[]{ 8,6,4,2,1,1 };
+    public static final int[] points = new int[]{ 8,6,4,2,1,1 };
 
-    private DamageToken[] damageReceived = new DamageToken[MAX_DAMAGE];
-    private int damageAmount = 0;
+    private DamageToken[] damageReceived;
+    private int damageAmount;
     private int skullsNumber;
-    private ArrayList<DamageToken> marks = new ArrayList<>();
+    private ArrayList<DamageToken> marks;
 
 
-
+    public PlayerBoard() {
+        damageReceived = new DamageToken[12];
+        damageAmount = 0;
+        skullsNumber = 0;
+        marks = new ArrayList<>();
+    }
 
     public DamageToken[] getDamageReceived() {
         return damageReceived;
@@ -182,5 +187,9 @@ public class PlayerBoard implements Serializable {
         {
             skullsNumber = 3;
         }
+    }
+
+    public int getDamageAmount() {
+        return damageAmount;
     }
 }
