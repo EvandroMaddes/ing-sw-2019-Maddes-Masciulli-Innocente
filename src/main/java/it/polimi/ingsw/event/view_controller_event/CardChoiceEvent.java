@@ -14,7 +14,6 @@ public abstract class CardChoiceEvent extends ViewControllerEvent {
      *
      * @param user     the Client user
      * @param card     the selected Card
-     * @param cardType the selected Card's type
      */
     public CardChoiceEvent(String user, String card, String cardColour) {
         super(user);

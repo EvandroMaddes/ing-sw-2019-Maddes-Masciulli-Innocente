@@ -1,0 +1,12 @@
+package it.polimi.ingsw.event.model_view_event;
+
+public class PlayerWeaponUpdateEvent extends ModelViewEvent {
+    private String[] playerWeapon;
+
+    public PlayerWeaponUpdateEvent(String user, String[] playerWeapon) {
+        super(user);
+        this.playerWeapon = playerWeapon;
+    }
+
+
+}

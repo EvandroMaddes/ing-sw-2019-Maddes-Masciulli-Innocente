@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.player;
 
 import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PlayerWeaponUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -194,8 +195,11 @@ public class Player extends Observable {
         weapons[numberOfWeapons] = weapon;
         weapon.setOwner(this);
         numberOfWeapons++;
+
+        notifyWeaponsChange();
     }
 
+    //todo instanceof :'C
     private void notifyPowerUpChange(){
         Map<String, CubeColour> messagePowerUps = new HashMap<>();
         for (PowerUp p: this.powerUps) {
@@ -210,6 +214,16 @@ public class Player extends Observable {
         }
 
         PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(username,messagePowerUps);
+        notifyObservers(message);
+    }
+
+    private void notifyWeaponsChange(){
+        String[] messageWeapons = new String[numberOfWeapons];
+        for (int i = 0; i < numberOfWeapons; i++){
+            messageWeapons[i] = weapons[i].getName();
+        }
+
+        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(username, messageWeapons);
         notifyObservers(message);
     }
 
@@ -234,6 +248,8 @@ public class Player extends Observable {
         {
             weapon.invertLoadedState();
         }
+
+        notifyWeaponsChange();
     }
 
 

@@ -12,6 +12,11 @@ public class ActionChoiceEvent extends ViewControllerEvent {
     private int action;
 
     /**
+     * action:
+     * 1 = move
+     * 2 = grab
+     * 3 = shot
+     *
      * Constructor
      * @param user the Client user
      * @param action the chosen action encoding

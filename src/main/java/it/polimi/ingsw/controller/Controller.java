@@ -30,24 +30,6 @@ public class Controller implements Observer {
 
     /*
     private void messageHandler (Event message){
-        switch (message.getType()) {
-
-    x        case GameChoiceEvent: {
-                gameManager = new GameManager((GameChoiceEvent) message);
-                gameManager.buildGameBoard((GameChoiceEvent) message);
-                break;
-            }
-
-    x        case PlayerChoiceEvent: {
-                PlayerChoiceEvent msg = (PlayerChoiceEvent) message;
-                switch (msg.getContext()) {
-                    case "Character choice": {
-                        gameManager.addPlayer(msg);
-                        break;
-                    }
-
-                }
-            } // a qui sono stati modificati gli eventi
 
            ?? implementare con un timer
             case StartGameEvent: {
@@ -55,37 +37,6 @@ public class Controller implements Observer {
                 break;
             }
 
-       x     case ActionChoiceEvent: {
-                ActionChoiceEvent msg = (ActionChoiceEvent) message;
-                switch (msg.getAction()) {
-                    case 0: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleMoves();
-                        break;
-                    }
-                    case 1: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleGrabs();
-                        break;
-                    }
-                    case 2: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleWeapons();
-                        break;
-                    }
-                }
-            }
-
-            case PositionChoiceEvent: {
-                PositionChoiceEvent msg = (PositionChoiceEvent) message;
-                switch (msg.getContext()) {
-                    case "grab": {
-                        gameManager.getCurrentRound().getActionManager().performGrab(msg);
-                        break;
-                    }
-                    case "move":{
-                        gameManager.getCurrentRound().getActionManager().performMove(msg);
-                        break;
-                    }
-                }
-            }
 
             case CardChoiceEvent: {
                 CardChoiceEvent msg = (CardChoiceEvent) message;

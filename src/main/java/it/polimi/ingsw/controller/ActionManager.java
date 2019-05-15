@@ -101,18 +101,16 @@ public class ActionManager {
         }
     }
 
-    public void grabWeapon(CardChoiceEvent msg){
+    public void grabWeapon(String weaponChoice){
         SpawnSquare grabSquare = (SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition();
         for (Weapon w: grabSquare.getWeapons()) {
-            if (w.getName() == msg.getCard())
+            if (w.getName().equals(weaponChoice))
                 currentRoundManager.getCurrentPlayer().addWeapon(w);
         }
         if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
             // todo sendWeaponDiscardRequest();
         }
-        else {
-            /*todo notifica*/
-        }
+        //todo notifica
     }
 
     public void discardWeapon(CardChoiceEvent msg){
