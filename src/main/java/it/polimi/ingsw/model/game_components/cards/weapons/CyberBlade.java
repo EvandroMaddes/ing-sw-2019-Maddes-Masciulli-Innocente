@@ -24,9 +24,9 @@ public class  Cyberblade extends TwoOptionalEffectWeapon {
 
     public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> target;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         target = getOwner().getPosition().getSquarePlayers();
+        target.remove(getOwner());
         return target;
 
     }
