@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * @author Francesco Masciulli
  * Test Class for the PowerUpDeck methods
  */
-public class TestAmmoTilesDeck {
+public class AmmoTilesDeckTest {
 
     private AmmoTilesDeck testedDeck;
 
@@ -69,6 +69,7 @@ public class TestAmmoTilesDeck {
     }
 
     /**
+     * @author Evandro Maddes
      * This method test that, if is called the draw on the last card of a deck,
      * the reshuffle method refill the deck with the cards from discardDeck;
      * is not handled by this class the discarding of a player's card
@@ -87,6 +88,7 @@ public class TestAmmoTilesDeck {
     }
 
     /**
+     * @author Evandro Maddes
      * checks if one card is drawed, this one is added on discard deck and removed from deck
      */
     @Test
@@ -99,14 +101,14 @@ public class TestAmmoTilesDeck {
         assertEquals(35, testedDeck.getDeck().size());
     }
 
-        /**@author Evandro Maddes
+        /**
+         * @author Evandro Maddes
          * checks the correct size of ammotile deck
          */
     @Test
     public void testNumberOfCard(){
-        AmmoTilesDeck deck = new AmmoTilesDeck();
 
-        assertEquals(36,deck.getDeck().size());
+        assertEquals(36,testedDeck.getDeck().size());
 
 
     }

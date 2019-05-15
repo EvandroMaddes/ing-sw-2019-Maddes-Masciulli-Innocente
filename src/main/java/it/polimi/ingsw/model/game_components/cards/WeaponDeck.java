@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class WeaponDeck extends DeckManagement {
 
-    /**@author Evamdro Maddes
+    /**@author Evandro Maddes
      * this method creates deck of all 21 weapons
      */
     public WeaponDeck() {
@@ -50,7 +50,7 @@ public class WeaponDeck extends DeckManagement {
         alternativeEffectCost = new AmmoCube[2];
         alternativeEffectCost[0] = new AmmoCube(CubeColour.Blue);
         alternativeEffectCost[1] = new AmmoCube(CubeColour.Red);
-        Electroscythe electroscythe = new Electroscythe(colour,"ELETROSCYTHE",reloadCost,alternativeEffectCost);
+        Electroscythe electroscythe = new Electroscythe(colour,"ELECTROSCYTHE",reloadCost,alternativeEffectCost);
         deck.add(electroscythe);
 
         colour = CubeColour.Blue;

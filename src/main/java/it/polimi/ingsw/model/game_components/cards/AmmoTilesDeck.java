@@ -117,5 +117,11 @@ public class AmmoTilesDeck extends DeckManagement {
 
     }
 
-
+    /**
+     *
+     * @return
+     */
+    public ArrayList<AmmoTile> getDiscardDeck() {
+        return discardDeck;
+    }
 }

@@ -59,6 +59,7 @@ public class BasicSquare extends Square {
     public void grabAmmoTile( Player player){
 
            ammo.pickAmmo(player);
+           ammo = null;
 
     }
 
@@ -70,7 +71,7 @@ public class BasicSquare extends Square {
     public void replaceAmmoTile(AmmoTile ammoTileCard){
         if(checkAmmo()==false)
         {
-           ammo = ammoTileCard;
+           setAmmo(ammoTileCard);
         }
 
     }

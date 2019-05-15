@@ -13,7 +13,7 @@ public abstract class Square {
     private final Square[] nearSquares = new Square[4];//north,south, east,west
     private final boolean[] reachable = new boolean[4];//north,south, east,west
     private  String squareColour;
-    private ArrayList<Player> squarePlayers;
+    private ArrayList<Player> squarePlayers = new ArrayList<Player>();
 
 
     /**
