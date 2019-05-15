@@ -31,9 +31,11 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     }
 
-    public ArrayList<Player> getTargetsFirstOptionalEffect() {
+    public ArrayList<Player> getTargetsFirstOptionalEffect(){
 
-        throw  new IllegalStateException();//this exception is managed by controller: target is a square with distance one
+        throw new IllegalStateException("target is a square with distance one");//this exception is managed by controller: target is a square with distance one
+
+
     }
 
     public ArrayList<Player> getTargetsSecondOptionalEffect() {

@@ -51,11 +51,11 @@ public abstract class AlternateFireWeapon extends Weapon {
         ArrayList<Player> targets = new ArrayList<>();
         switch (selectedEffect){
             case 1:{
-                getTargetsBaseEffect();
+               targets = getTargetsBaseEffect();
                 break;
             }
             case 2:{
-               getTargetsAlternativeEffect();
+               targets = getTargetsAlternativeEffect();
                 break;
             }
         }

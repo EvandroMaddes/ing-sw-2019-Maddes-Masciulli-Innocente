@@ -32,11 +32,17 @@ public class Whisper extends Weapon {
 
     public ArrayList<Player> getTargetsBaseEffect(){
         ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
-        for (Player p: possibleTargets) {
+        ArrayList<Player> removeTargets = new ArrayList<Player>();
+
+        int size = possibleTargets.size();
+        Player p;
+        for (int i=0; i<size;i++) {
+            p=possibleTargets.get(i);
             if ( Math.abs(p.getPosition().getRow() - getOwner().getPosition().getRow()) + Math.abs(p.getPosition().getColumn() - getOwner().getPosition().getColumn() ) < 2){
-                possibleTargets.remove(p);
+                removeTargets.add(p);
             }
         }
+        possibleTargets.removeAll(removeTargets);
         return possibleTargets;
     }
 
