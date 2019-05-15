@@ -8,7 +8,6 @@ import java.io.Serializable;
  */
 public abstract class Event implements Serializable {
     private String user;
-    protected EventType type;
 
     /**
      *
@@ -19,16 +18,8 @@ public abstract class Event implements Serializable {
        this.user=user;
    }
 
-    /**
-     * Getter method
-     * @return the User indicated in the Event;
-     */
     public String getUser() {
         return user;
-    }
-
-    public EventType getType() {
-        return type;
     }
 
     /**

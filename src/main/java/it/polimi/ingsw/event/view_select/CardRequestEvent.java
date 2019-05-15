@@ -1,7 +1,6 @@
 package it.polimi.ingsw.event.view_select;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.EventType;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 import java.util.ArrayList;

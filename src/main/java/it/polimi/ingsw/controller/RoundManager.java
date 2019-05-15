@@ -13,9 +13,9 @@ public class RoundManager {
     protected final GameModel model;
     private Player currentPlayer;
     private int phase;
-    private boolean actionUsed;
     protected boolean firstRoundOfTheGame = false;
     private ActionManager actionManager;
+    private DeathManager deathManager;
 
     public RoundManager(GameModel model, Player currentPlayer){
         this.currentPlayer = currentPlayer;
@@ -23,24 +23,37 @@ public class RoundManager {
         phase = 1;
     }
 
-    public void startRound(){
-    }
-
     /**
      * A round is split in 6 phase: in 1,3,5 players can use their power up, in 2,4 they can perform actions and the 6th is used to reload
      */
     public void manageRound(){
         switch (phase){
-            case 1: {
+            case 1:
+            case 3:
+            case 5:{
                 askForPowerUp();
                 break;
             }
             case 2:
             case 4:{
-                phase++;
-                actionManager = new ActionManager(model, currentPlayer);
+                actionManager = new ActionManager(model, this);
+                actionManager.askForAction();
+                break;
+            }
+            case 6:{
+                actionManager = new ActionManager(model, this);
+                actionManager.askForReload();
+                break;
+            }
+            case 7:{
+                spownDeadPlayers();
             }
         }
+    }
+
+    public void nextPhase(){
+        phase++;
+        manageRound();
     }
 
 
@@ -57,46 +70,45 @@ public class RoundManager {
 
     public void selectAction()
     {
-
+        //todo
     }
 
     public void managePoints()
     {
-
+        //todo
     }
 
-    public void manageKill()
-    {
-
+    public void manageKills() {
+        //todo
     }
 
-    public void respawn(Player currentPlayer)
-    {
 
-    }
-
-    public boolean[] checkAction()
-    {
-        boolean codedMacroAction[] = new boolean[5];
-        codedMacroAction[5]=true;
-
-        return codedMacroAction;
-    }
-
-    public void endRound()
-    {
-
+    public void endRound(){
+        //todo
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void spawnDeadPlayers(){
-
+    public void spownDeadPlayers(){
+        for (Player p: model.getPlayers()) {
+            if (p.getPlayerBoard().getDamageReceived().length >= 11){
+                createDeathManager(model, p);
+                deathManager.manageKill();
+            }
+        }
     }
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public DeathManager getDeathManager() {
+        return deathManager;
+    }
+
+    public void createDeathManager(GameModel model, Player deadPlayer){
+        deathManager = new DeathManager(model, deadPlayer);
     }
 }

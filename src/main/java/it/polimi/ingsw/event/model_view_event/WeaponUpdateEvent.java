@@ -1,8 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
-import it.polimi.ingsw.event.EventType;
-
 import java.util.ArrayList;
 
 /**
@@ -23,6 +21,5 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
     public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY, ArrayList<String> weapon){
         super(user, mapUpdate, squareX, squareY);
         this.weapon=weapon;
-        type= EventType.WeaponUpdateEvent;
     }
 }

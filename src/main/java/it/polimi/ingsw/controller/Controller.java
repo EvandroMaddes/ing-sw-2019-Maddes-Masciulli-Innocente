@@ -1,9 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 
-import java.security.InvalidParameterException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,63 +15,28 @@ public class Controller implements Observer {
     /**
      *
      * @param message is the message that arrives from view with the map and mode choice
-     * @throws InvalidParameterException if the choice are not allowed
      */
-    public void update(Observable o, Object message /*qui Object sarebbe Event e Observable non so come usarlo*/ ){
-       messageHandler((Event) message);
+    public void update(Observable virtualView, Object message){
+       ((ViewControllerEvent)message).performAction(this);
     }
 
-    // todo modificare le stringhe con magari classi enumeration per gli eventi con molti utilizzi
+    public void createGameManager(int mapChoice){
+        gameManager = new GameManager(mapChoice);
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    /*
     private void messageHandler (Event message){
-        switch (message.getType()) {
 
-            case GameChoiceEvent: {
-                gameManager = new GameManager((GameChoiceEvent) message);
-                gameManager.buildGameBoard((GameChoiceEvent) message);
-                break;
-            }
-
-            case PlayerChoiceEvent: {
-                PlayerChoiceEvent msg = (PlayerChoiceEvent) message;
-                switch (msg.getContext()) {
-                    case "Character choice": {
-                        gameManager.addPlayer(msg);
-                        break;
-                    }
-                }
-            }
-
+           ?? implementare con un timer
             case StartGameEvent: {
                 gameManager.startGame();
                 break;
             }
 
-            case ActionChoiceEvent: {
-                ActionChoiceEvent msg = (ActionChoiceEvent) message;
-                switch (msg.getAction()) {
-                    case 0: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleMoves();
-                        break;
-                    }
-                    case 1: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleGrabs();
-                        break;
-                    }
-                    case 2: {
-                        gameManager.getCurrentRound().getActionManager().sendPossibleWeapons();
-                        break;
-                    }
-                }
-            }
-
-            case PositionChoiceEvent: {
-                PositionChoiceEvent msg = (PositionChoiceEvent) message;
-                switch (msg.getContext()) {
-                    case "grab": {
-                        gameManager.getCurrentRound().getActionManager().performGrab(msg);
-                    }
-                }
-            }
 
             case CardChoiceEvent: {
                 CardChoiceEvent msg = (CardChoiceEvent) message;
@@ -85,13 +49,24 @@ public class Controller implements Observer {
                         gameManager.getCurrentRound().getActionManager().discardWeapon(msg);
                         break;
                     }
-                    case "SeectShotingWeapon":{
+                    case "SelectShotingWeapon":{
                         gameManager.getCurrentRound().getActionManager().weaponChoice(msg);
                         break;
+                    }
+                    case "PowerUpToRespawn":{
+                        gameManager.getCurrentRound().spawn(msg);
+                        break;
+                    }
+                    case "SelectPowerUpToUse":{
+
+                    }
+                    case "SelectPowerUpAsCube":{
+
                     }
                 }
             }
         }
     }
+    */
 }
 

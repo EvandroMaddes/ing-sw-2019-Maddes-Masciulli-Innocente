@@ -13,9 +13,10 @@ public class FirstRoundManager extends RoundManager {
     }
 
     @Override
-    public void startRound() {
+    public void manageRound() {
         getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
-        respawn(getCurrentPlayer());
+        createDeathManager(model, getCurrentPlayer());
+        getDeathManager().respawnPlayer();
         super.manageRound();
     }
 }
