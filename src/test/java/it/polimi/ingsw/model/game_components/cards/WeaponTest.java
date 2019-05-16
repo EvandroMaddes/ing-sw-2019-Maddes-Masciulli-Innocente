@@ -60,7 +60,8 @@ public class WeaponTest {
             if (((Weapon)weapon).getName().equals("ELECTROSCYTHE"))
                 currentWeapon = (Electroscythe)weapon;
         }
-        currentWeapon.setOwner(player1);
+        ((Electroscythe)currentWeapon).setOwner(player1);
+
 
          assertTrue(currentWeapon.isLoaded());
          target.addAll(currentWeapon.getTargets(1));
@@ -88,7 +89,7 @@ public class WeaponTest {
             if (((Weapon)weapon).getName().equals("CYBERBLADE"))
                 currentWeapon = (CyberBlade)weapon;
         }
-        currentWeapon.setOwner(player1);
+        ((CyberBlade)currentWeapon).setOwner(player1);
         assertTrue(currentWeapon.isLoaded());
         target.addAll(currentWeapon.getTargets(1));
         assertTrue(player1==currentWeapon.getOwner());
@@ -101,6 +102,8 @@ public class WeaponTest {
         ((CyberBlade)currentWeapon).fire(target,square1,1);
         ((CyberBlade)currentWeapon).fire(target,square1,2);
         ((CyberBlade)currentWeapon).fire(target,square1,3);
+
+
 
 
         assertEquals(1, target.size());
@@ -119,7 +122,8 @@ public class WeaponTest {
             if (((Weapon)weapon).getName().equals("GRENADA LAUNCHER"))
                 currentWeapon = (GrenadaLauncher)weapon;
         }
-        currentWeapon.setOwner(player1);
+        ((GrenadaLauncher)currentWeapon).setOwner(player1);
+
         assertTrue(currentWeapon.isLoaded());
         target.addAll(currentWeapon.getTargets(1));
         assertTrue(player1==currentWeapon.getOwner());
@@ -146,7 +150,7 @@ public class WeaponTest {
             if (((Weapon)weapon).getName().equals("WHISPER"))
                 currentWeapon = (Whisper)weapon;
         }
-        currentWeapon.setOwner(player1);
+        ((Whisper)currentWeapon).setOwner(player1);
         assertTrue(currentWeapon.isLoaded());
         target.addAll(currentWeapon.getTargets(1));
         assertTrue(player1==currentWeapon.getOwner());
