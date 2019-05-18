@@ -164,7 +164,9 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      */
     @Override
     public Event remoteListenMessage() throws RemoteException{
-        return currMessage;
+        Event listenedMessage = currMessage;
+        currMessage= null;
+        return listenedMessage;
     }
 
     /**

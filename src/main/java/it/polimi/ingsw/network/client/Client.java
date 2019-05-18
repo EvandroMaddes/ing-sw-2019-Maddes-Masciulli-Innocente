@@ -74,7 +74,7 @@ public class Client {
                     log.info("Listened message for:\t" + currentMessage.getUser());
                     waiting = false;
                 } catch (NullPointerException e) {
-                    CustomLogger.logException(e);
+
                     waiting = true;
                 }
                 catch (Exception e){

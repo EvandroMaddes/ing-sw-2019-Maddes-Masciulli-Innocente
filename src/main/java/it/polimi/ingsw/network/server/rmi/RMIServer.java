@@ -19,9 +19,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteInterface, ServerInterface {
-    private ArrayList<RemoteInterface> clientList;
+    private CopyOnWriteArrayList<RemoteInterface> clientList;
     private ArrayList<Registry> clientRegistries;
     private Event currMessage;
     private transient Registry registry;
@@ -35,7 +36,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     public RMIServer() throws RemoteException{
         super(NetConfiguration.RMISERVERPORTNUMBER);
-        clientList = new ArrayList<>();
+        clientList = new CopyOnWriteArrayList<>();
         clientRegistries = new ArrayList<>();
         try{
             ipAddress = InetAddress.getLocalHost().getHostAddress();
@@ -218,7 +219,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     @Override
     public synchronized Event remoteListenMessage() throws RemoteException {
-        return currMessage;
+        Event listenedMessage = currMessage;
+        currMessage= null;
+        return listenedMessage;
     }
 
     /**
