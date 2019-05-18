@@ -1,114 +1,74 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.model.GameModel;
 
+import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
 
-public class VirtualView extends Observable implements ViewInterface {
+/**
+ * todo O eventi girati al controller oppure girati alla remote view
+ *
+ * E' observer del model e observable del controller:
+ * 1) Inoltra gli eventi ricevuti dal model attraverso la rete ( alla view del client);
+ *
+ * 2) Riceve eventi dalla view del client attraverso la rete e li inoltra al controller.
+ *
+ */
 
-    private GameModel gameModel;
-    private Event currentEvent;
+public class VirtualView  extends View{
 
-    //Implementing the ViewInterface methods
+    private Event toRemoteView;
 
-    /**
-     * Set the Game's Map and Mod after the First Connected Player Choice
-     * @param event is the Player choice of the Game's Map and Mod
-     */
-    @Override
-    public void setGame(Event event){
-
-    }
-
-    /**
-     * Give, to the asking user, the list of the avaiable (Not yet chosen) character
-     * @param event contain an ArrayList of Player
-     */
-    @Override
-    public void getPlayer(Event event) {
-
-    }
-
-    /**
-     *Set the Character chosen by the user
-     * @param event contain the Player chosen
-     */
-    @Override
-    public void setPlayer(Event event) {
-
-    }
-
-    /**
-     *Give the last update GameBoard
-     * @param event contains the Updated GameBoard
-     */
-    @Override
-    public void updateGameBoard(Event event) {
-
-    }
-
-    /**
-     * Give , with a Signal (boolean), the intention of starting the game
-     * @param event contains the boolean signal
-     */
-    @Override
-    public void startGame(Event event) {
-
-    }
-
-    /**
-     *Ask to the user a choice on his possible Action or Weapon that could fire or Square where he could move
-     * @param event contains ArrayList of Action, Weapon or Square
-     */
-    @Override
-    public void askActionChoice(Event event) {
-
-    }
-
-    /**
-     * Communicates the chosen Action, Weapon or Square
-     * @param event is an Action, Weapon or Square
-     */
-    @Override
-    public void getActionChoice(Event event) {
-
-    }
-
-    /**
-     *it give, at the end of the match, the Players and their ranking
-     * @param event is an ArrayList of Player
-     */
-    @Override
-    public void showResult(Event event) {
-
+    public void setToRemoteView(Event toRemoteView) {
+        this.toRemoteView = toRemoteView;
     }
 
 
-    //Implementing Observer method update() (for each EVENT??
-    // oppure for a single event, analyzing the concrete class name and Switch??)
-
-    @Override
-    public void update(Observable observable, Object arg )
+    /**
+     * Every player has a his own view
+     * @param user
+     */
+    public VirtualView(String user)
     {
+       super(user);
+    }
+
+    /**
+     * send  a message to remote view
+     */
+    public void toRemoteView(){
+
+        //todo metodi che dal server inviano al client;
+        // essendo interna al server ritorna toRemoteView
+        // che è stato girato dal model
 
     }
 
-    //Overriding the Observable methods
-    //stesso ragionamento di sopra
+    /**
+     * this method is called when a message arrives from Remote view;
+     * this means that message should be send to controller.
+     * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
+     */
+    public void toController(){
+        //todo metodi che dal client ricevono il messaggio;
+        //setToController();
+        notifyObservers(this.getToController());
+    }
+
+    /**
+     * this method is called from the model through notifyObservers() defined in the model.
+     * this method set event that should be send to RemoteView.
+     * Remember: VIRTUAL_VIEW IS AN OBSERVER OF THE MODEL
+     * @param o
+     * @param arg message
+     */
     @Override
-    public void notifyObservers() {
-        super.notifyObservers();
+    public void update(Observable o, Object arg) {
+
+        setToRemoteView((Event)arg);
+
     }
 
-    @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-    @Override
-    public void notifyObservers(Object arg) {
 
-        super.notifyObservers(arg);
-    }
 }
