@@ -39,7 +39,6 @@ public class ServerEncoderTest {
         testedCards.add(new LockRifle(CubeColour.Blue,"TestWeapon2",null, null));
         CardRequestEvent event = testedServerEncoder.encodeCardRequestEvent(user,testedCards, "Weapon");
         Assert.assertEquals("Weapon", event.getCardType());
-        Assert.assertEquals(EventType.CardRequestEvent, event.getType());
         Assert.assertTrue(event.getCards().contains("TestWeapon1"));
         int index = event.getCards().indexOf("TestWeapon1");
         if(index!=1 && index != 0){
@@ -62,7 +61,6 @@ public class ServerEncoderTest {
         testedSquare.add(new SpawnSquare(0,2));
 
         PositionRequestEvent event = testedServerEncoder.encodePositionRequestEvent(user, testedSquare);
-        Assert.assertEquals(EventType.PositionRequestEvent, event.getType());
         Assert.assertEquals( 3,event.getPossiblePositionsY().get(0).intValue());
         Assert.assertEquals( 0,event.getPossiblePositionsX().get(0).intValue());
         Assert.assertEquals( 0,event.getPossiblePositionsY().get(1).intValue());

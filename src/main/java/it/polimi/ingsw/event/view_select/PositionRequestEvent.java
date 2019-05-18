@@ -24,7 +24,7 @@ public class PositionRequestEvent extends Event {
         super(user);
         this.possiblePositionsX=possiblePositionsX;
         this.possiblePositionsY=possiblePositionsY;
-        type= EventType.PositionRequestEvent;
+ //       type= EventType.PositionRequestEvent;
     }
 
     public ArrayList<Integer> getPossiblePositionsX() {

@@ -29,7 +29,7 @@ public class ActionRequestEvent extends Event {
         availableActions[0] = true;
         availableActions[1] = true;
         availableActions[2] = couldShot;
-        type= EventType.ActionRequestEvent;
+//        type= EventType.ActionRequestEvent;
 
     }
 

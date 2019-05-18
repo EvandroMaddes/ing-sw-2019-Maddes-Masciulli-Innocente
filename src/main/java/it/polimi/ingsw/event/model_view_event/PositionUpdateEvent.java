@@ -2,6 +2,7 @@ package it.polimi.ingsw.event.model_view_event;
 
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.view.RemoteView;
 
 /**
  * @author Francesco Masciulli
@@ -22,6 +23,11 @@ public class PositionUpdateEvent extends ModelViewEvent {
         super(user);
         this.positionX=positionX;
         this.positionY=positionY;
+
+    }
+
+    @Override
+    public void performAction(RemoteView remoteView) {
 
     }
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.event.view_controller_event;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.view.RemoteView;
 
 
 import java.util.ArrayList;
@@ -29,6 +31,10 @@ public class PlayerChoiceEvent extends ViewControllerEvent {
     public PlayerChoiceEvent(String user, ArrayList<Character> targetPlayersOrder){
         super(user);
         this.targetPlayersOrder=targetPlayersOrder;
+    }
+    @Override
+    public void performAction(Controller controller) {
+
     }
 
     public ArrayList<Character> getTargetPlayersOrder() {
