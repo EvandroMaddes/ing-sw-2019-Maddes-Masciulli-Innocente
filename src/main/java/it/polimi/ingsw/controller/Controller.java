@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 
 import java.util.Observable;
@@ -28,30 +28,8 @@ public class Controller implements Observer {
         return gameManager;
     }
 
-    /*
-    private void messageHandler (Event message){
-
-           ?? implementare con un timer
-            case StartGameEvent: {
-                gameManager.startGame();
-                break;
-            }
-
-
-            case CardChoiceEvent: {
-                CardChoiceEvent msg = (CardChoiceEvent) message;
-                switch (msg.getContext()) {
-
-                    case "SelectShotingWeapon":{
-                        gameManager.getCurrentRound().getActionManager().weaponChoice(msg);
-                        break;
-                    }
-
-                    }
-                }
-            }
-        }
+    public static void callView(ControllerViewEvent message){
+        // TODO: 2019-05-18   
     }
-    */
 }
 

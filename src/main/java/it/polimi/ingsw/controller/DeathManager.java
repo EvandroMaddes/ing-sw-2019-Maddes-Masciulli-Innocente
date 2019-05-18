@@ -7,21 +7,19 @@ import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.player.PlayerBoard;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class DeathManager {
     private GameModel model;
     private Player deadPlayer;
+    private RoundManager roundManager;
 
-    public DeathManager(GameModel model, Player deadPlayer) {
+    public DeathManager(GameModel model, Player deadPlayer, RoundManager roundManager) {
         this.model = model;
         this.deadPlayer = deadPlayer;
+        this.roundManager = roundManager;
     }
 
     /**
      *
-     * @param deadPlayer is the dead player that need to respawn
      *                   when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
@@ -52,8 +50,11 @@ public class DeathManager {
             }
         }
 
-        deadPlayer.invertDeathState();
-        //todo bisogna fare in modo che quando un giocatore arriva a >10 danni si inverta lo stato di morte a true
+        if (deadPlayer.isDead()) {
+            deadPlayer.invertDeathState();
+            //todo bisogna fare in modo che quando un giocatore arriva a >10 danni si inverta lo stato di morte a true
+            roundManager.manageDeadPlayers();
+        }
     }
 
     public void manageKill(){
@@ -64,8 +65,11 @@ public class DeathManager {
     }
 
     private void givePoints(){
-        int[] damageDealed = {0,0,0,0,0};
-        Player[] damageDealer = new Player[5];
+        int[] damageDealed = new int[model.getPlayers().size()];
+        Player[] damageDealer = new Player[model.getPlayers().size()];
+
+        for (int i = 0; i < damageDealed.length; i++)
+            damageDealed[i] = 0;
 
         if (deadPlayer.getPlayerBoard().getDamageAmount() == 0)
             return;
