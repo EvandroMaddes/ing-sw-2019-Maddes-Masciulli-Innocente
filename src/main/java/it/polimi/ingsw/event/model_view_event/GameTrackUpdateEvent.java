@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.model_view_event;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.view.RemoteView;
 
 /**
  * @author Francesco Masciulli
@@ -17,8 +18,9 @@ public class GameTrackUpdateEvent extends Event {
      * @param damageTokenNumber the number of token that will be placed
      */
     public GameTrackUpdateEvent(String user, String mapUpdate, int damageTokenNumber){
-        super(user,mapUpdate);
+        super(user);
         this.damageTokenNumber=damageTokenNumber;
-        type= EventType.GameTrackUpdateEvent;
+       // type= EventType.GameTrackUpdateEvent;
     }
+
 }

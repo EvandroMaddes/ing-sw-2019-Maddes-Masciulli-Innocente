@@ -1,6 +1,8 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
+import it.polimi.ingsw.view.RemoteView;
+
 import java.util.ArrayList;
 
 /**
@@ -19,7 +21,12 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
      * @param weapon the new weapon based on the ground
      */
     public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY, ArrayList<String> weapon){
-        super(user, mapUpdate, squareX, squareY);
+        super(user, squareX, squareY);
         this.weapon=weapon;
+    }
+
+    @Override
+    public void performAction(RemoteView remoteView) {
+
     }
 }

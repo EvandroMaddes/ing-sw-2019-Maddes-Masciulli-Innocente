@@ -25,6 +25,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
         ArrayList<Player> target;
         target = new ArrayList<Player>();
         target = getOwner().getPosition().findVisiblePlayers();
+        target.remove(getOwner());
         return target;
     }
 

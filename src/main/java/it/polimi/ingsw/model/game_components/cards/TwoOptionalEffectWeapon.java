@@ -48,15 +48,15 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         ArrayList<Player> targets = new ArrayList<>();
         switch (selectedEffect){
             case 1:{
-                getTargetsBaseEffect();
+                targets = getTargetsBaseEffect();
                 break;
             }
             case 2:{
-                getTargetsFirstOptionalEffect();
+                targets = getTargetsFirstOptionalEffect();
                 break;
             }
             case 3:{
-                getTargetsSecondOptionalEffect();
+               targets = getTargetsSecondOptionalEffect();
                 break;
             }
         }

@@ -14,7 +14,7 @@ public abstract class Square extends Observable {
     private final Square[] nearSquares = new Square[4];//north,south, east,west
     private final boolean[] reachable = new boolean[4];//north,south, east,west
     private  String squareColour;
-    private ArrayList<Player> squarePlayers;
+    private ArrayList<Player> squarePlayers = new ArrayList<Player>();
 
 
     /**
@@ -170,7 +170,8 @@ public abstract class Square extends Observable {
     public ArrayList<Player>  findVisiblePlayers(){
      ArrayList<Player> visiblePlayers = new ArrayList<Player>();
 
-     findRoomPlayers(this,this.getSquareColour()); // player in the same room of current square
+
+    visiblePlayers.addAll(findRoomPlayers(this,this.getSquareColour())); // player in the same room of current square);
 
      for(int i =0; i<4; i++){
          if(checkDirection(i) && getNextSquare(i).getSquareColour()!= this.getSquareColour())
@@ -190,19 +191,23 @@ public abstract class Square extends Observable {
         squareRoom.add(square);
 
         ArrayList<Player> playerRoom = new ArrayList<Player>();
-        playerRoom.addAll(getSquarePlayers());
 
         for (Square currentSquare : squareRoom) {
             for(int i=0; i<4; i++) {
-                if (checkDirection(i)) {
-                    currentSquare = getNextSquare(i);
-                    if (currentSquare.getSquareColour() == colourSquare && !squareRoom.contains(currentSquare)) {
+                if (currentSquare.checkDirection(i)) {
+                  //  currentSquare = getNextSquare(i);
+                    if (currentSquare.getNextSquare(i).getSquareColour() == colourSquare && !squareRoom.contains(currentSquare)) {
 
-                        squareRoom.add(currentSquare);
-                        playerRoom.addAll(currentSquare.getSquarePlayers());
+                        squareRoom.add(currentSquare.getNextSquare(i));
+
                     }
                 }
             }
+        }
+        for (Square currentSquare:squareRoom
+             ) {
+            playerRoom.addAll(currentSquare.getSquarePlayers());
+
         }
         return playerRoom;
     }

@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class WeaponDeck extends DeckManagement {
 
-    /**@author Evamdro Maddes
+    /**@author Evandro Maddes
      * this method creates deck of all 21 weapons
      */
     public WeaponDeck() {
@@ -50,7 +50,7 @@ public class WeaponDeck extends DeckManagement {
         alternativeEffectCost = new AmmoCube[2];
         alternativeEffectCost[0] = new AmmoCube(CubeColour.Blue);
         alternativeEffectCost[1] = new AmmoCube(CubeColour.Red);
-        Electroscythe electroscythe = new Electroscythe(colour,"ELETROSCYTHE",reloadCost,alternativeEffectCost);
+        Electroscythe electroscythe = new Electroscythe(colour,"ELECTROSCYTHE",reloadCost,alternativeEffectCost);
         deck.add(electroscythe);
 
         colour = CubeColour.Blue;
@@ -204,7 +204,7 @@ public class WeaponDeck extends DeckManagement {
         reloadCost[0] = new AmmoCube(colour);
         alternativeEffectCost = new AmmoCube[1];
         alternativeEffectCost[0] = new AmmoCube(CubeColour.Yellow);
-        Shockwave shockwave = new Shockwave(colour,"SHOCKWAVE",reloadCost,alternativeEffectCost);
+        ShockWave shockwave = new ShockWave(colour,"SHOCKWAVE",reloadCost,alternativeEffectCost);
         deck.add(shockwave);
 
         colour = CubeColour.Yellow;
@@ -214,7 +214,7 @@ public class WeaponDeck extends DeckManagement {
         firstOptionalEffectCost = null;
         secondOptionalEffectCost = new AmmoCube[1];
         secondOptionalEffectCost[0] = new AmmoCube(CubeColour.Yellow);
-        Cyberblade cyberblade = new Cyberblade(colour,"CYBERBLADE",reloadCost,firstOptionalEffectCost,secondOptionalEffectCost);
+        CyberBlade cyberblade = new CyberBlade(colour,"CYBERBLADE",reloadCost,firstOptionalEffectCost,secondOptionalEffectCost);
         deck.add(cyberblade);
 
         colour = CubeColour.Yellow;

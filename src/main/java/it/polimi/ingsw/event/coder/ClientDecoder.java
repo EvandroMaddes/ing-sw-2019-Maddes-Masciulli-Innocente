@@ -23,7 +23,7 @@ public class ClientDecoder {
      * @return
      */
     public ArrayList<Card> decodeCardRequestEvent(CardRequestEvent message){
-        boolean isWeapon = message.getType().equals("Weapon");
+        boolean isWeapon = message.getCardType().equals("Weapon");
         ArrayList<Card> cards = new ArrayList<>();
         Iterator cardsIterator = message.getCards().iterator();
         Iterator coloursIterator = message.getColour().iterator();

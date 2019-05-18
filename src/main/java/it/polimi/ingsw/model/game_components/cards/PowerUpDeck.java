@@ -72,7 +72,7 @@ public class PowerUpDeck extends DeckManagement {
      * @param colour colour of power up
      * @return power up deck within power up of spicified colour
      */
-    public ArrayList<Object> addPowerupColour(ArrayList<Object> currentDeck, CubeColour colour){
+    private ArrayList<Object> addPowerupColour(ArrayList<Object> currentDeck, CubeColour colour){
 
         for(int i=0; i<2; i++){
             PowerUp currentTagbackGranade = new TagbackGrenade(colour);
@@ -85,5 +85,9 @@ public class PowerUpDeck extends DeckManagement {
             currentDeck.add(currentNewton);
         }
         return currentDeck;
+    }
+
+    public ArrayList<PowerUp> getDiscardDeck() {
+        return discardDeck;
     }
 }

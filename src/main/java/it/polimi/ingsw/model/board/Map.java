@@ -135,7 +135,7 @@ public class Map {
      * @param i ending point of the cycle
      * @throws UnsupportedOperationException
      */
-    public void addPropertyNearSquares(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i)
+    private void addPropertyNearSquares(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i)
     {
 
         for (int h=j; h > i; h--)//quadrati parte sinistra della mappa
@@ -188,7 +188,7 @@ public class Map {
      * @param j starting point of the cycle
      * @param i ending point of the cycle
      */
-    public void addPropertyReachable(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i) {
+    private void addPropertyReachable(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i) {
 
         for ( int h=j; h>i ;h--) {
             if ( squares.get(h)!=null) {

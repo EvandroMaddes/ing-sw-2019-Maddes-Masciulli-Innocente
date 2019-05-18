@@ -35,7 +35,6 @@ public class ServerEncoder {
     public CardRequestEvent encodeCardRequestEvent(String user, ArrayList<Card> availableCards, String type) {
         ArrayList<String> cards = new ArrayList<>();
         ArrayList<CubeColour> colours = new ArrayList<>();
-        //get(0) è una Card, dinamicamente Weapon o PowerUp, SimpleName è il tipo dinamico della classe
         iterator= availableCards.iterator();
         while(iterator.hasNext()){
             Card currCard = (Card)iterator.next();
@@ -82,7 +81,7 @@ public class ServerEncoder {
         else{
             colours[2]= ammoTile.getAmmoCubes()[2].getColour().toString();
         }
-        return new AmmoTileUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1], colours[0], colours[1], colours[2]);
+        return new AmmoTileUpdateEvent(user, true, coordinates[0],coordinates[1], colours[0], colours[1], colours[2]);
     }
 
     public WeaponUpdateEvent encodeWeaponUpdateEvent(String user, SpawnSquare updatedWeaponSquare){
@@ -98,7 +97,7 @@ public class ServerEncoder {
 
     public PositionUpdateEvent encodePositionUpdateEvent(String user, String updatedPlayer, Square updatedPosition){
         evaluateSquareIndex(updatedPosition);
-        return new PositionUpdateEvent(user, mapUpdate, coordinates[0],coordinates[1]);
+        return new PositionUpdateEvent(user, coordinates[0],coordinates[1]);
     }
 
     /**

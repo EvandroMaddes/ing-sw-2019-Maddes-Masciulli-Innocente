@@ -33,6 +33,6 @@ public class PlayerRequestEvent extends Event {
         super(user);
         this.targetPlayers=targetPlayers;
         this.targetsNumber= targetsNumber;
-        type= EventType.PlayerRequestEvent;
+//        type= EventType.PlayerRequestEvent;
     }
 }

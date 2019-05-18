@@ -29,7 +29,7 @@ public class CardRequestEvent extends Event {
         this.cards=cards;
         this.cardType=cardType;
         this.colour=colour;
-        type= EventType.CardRequestEvent;
+//        type= EventType.CardRequestEvent;
     }
 
     public ArrayList<String> getCards() {

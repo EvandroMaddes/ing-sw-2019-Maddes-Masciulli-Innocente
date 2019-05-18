@@ -13,13 +13,13 @@ import org.junit.Test;
 public class SquareTest {
     private Square testedSquare;
     private  AmmoTile testTile;
+    private Player Player1;
 
     @Before
 
     public void setUp(){
-        testTile = new AmmoTile(new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue),
-                new AmmoCube(CubeColour.Yellow), false);
-
+        testTile = new AmmoTile(new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue),new AmmoCube(CubeColour.Yellow), false);
+        Player1 = new Player("Evandro",Character.BANSHEE);
     }
     @Test
     public void testBasicSquare(){
@@ -27,22 +27,24 @@ public class SquareTest {
         Assert.assertFalse(((BasicSquare)testedSquare).checkAmmo());
         ((BasicSquare) testedSquare).replaceAmmoTile(testTile);
         Assert.assertEquals(testTile,((BasicSquare) testedSquare).getAmmo());
-        System.out.println("Tested BasicSquare methods");
+        ((BasicSquare) testedSquare).grabAmmoTile(Player1);
+        Assert.assertFalse(((BasicSquare)testedSquare).checkAmmo());
+
     }
 
     @Test
     public void testSpawnSquare(){
         testedSquare = new SpawnSquare(0,0);
-        Player testPlayer = new Player("TestUser", Character.SPROG);
         AmmoCube[] cubes = testTile.getAmmoCubes();
        LockRifle distructor = new LockRifle(CubeColour.Blue, "Distructor",
                 cubes, null);
         ((SpawnSquare)testedSquare).replaceWeapon(distructor);
-        ((SpawnSquare) testedSquare).grabWeapon(distructor,testPlayer);
-        Assert.assertNotEquals(-1, testPlayer.getWeaponIndex(distructor));
+        ((SpawnSquare) testedSquare).grabWeapon(distructor,Player1);
+        Assert.assertNotEquals(-1, Player1.getWeaponIndex(distructor));
         Assert.assertFalse(((SpawnSquare) testedSquare) .getWeapons().contains(distructor));
-        //((SpawnSquare) testedSquare).replaceWeapon(null);
-        Assert.assertFalse(testedSquare.isGrabbable());
+        ((SpawnSquare) testedSquare).replaceWeapon(distructor);
+        System.out.println(((SpawnSquare) testedSquare).getWeapons().size());
+        Assert.assertTrue(((SpawnSquare) testedSquare) .getWeapons().contains(distructor));
 
     }
 

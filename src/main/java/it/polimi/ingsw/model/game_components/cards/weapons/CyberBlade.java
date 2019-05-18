@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class  Cyberblade extends TwoOptionalEffectWeapon {
+public class CyberBlade extends TwoOptionalEffectWeapon {
     /**
      *
      * @param colour
@@ -18,22 +18,24 @@ public class  Cyberblade extends TwoOptionalEffectWeapon {
      * @param firstOptionalEffectCost
      * @param secondOptionalEffectCost
      */
-    public Cyberblade(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
+    public CyberBlade(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
         super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
     }
 
     public ArrayList<Player> getTargetsBaseEffect() {
         ArrayList<Player> target;
-        ArrayList<Player> giocatoriNellaPartita = null;//Todo NB metodo getSquarePlayer deve ricevere i players in game
 
         target = getOwner().getPosition().getSquarePlayers();
+        target.remove(getOwner());
         return target;
 
     }
 
-    public ArrayList<Player> getTargetsFirstOptionalEffect() {
+    public ArrayList<Player> getTargetsFirstOptionalEffect(){
 
-        throw  new IllegalStateException();//this exception is managed by controller: target is a square with distance one
+        throw new IllegalStateException("target is a square with distance one");//this exception is managed by controller: target is a square with distance one
+
+
     }
 
     public ArrayList<Player> getTargetsSecondOptionalEffect() {

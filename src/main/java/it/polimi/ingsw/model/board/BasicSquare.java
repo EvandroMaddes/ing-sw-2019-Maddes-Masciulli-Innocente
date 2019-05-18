@@ -54,9 +54,18 @@ public class BasicSquare extends Square {
     public void grabAmmoTile( Player player){
 
            ammo.pickAmmo(player);
+           ammo= null;//remove ammo after it is grabbed
 
            AmmoTileUpdateEvent message = new AmmoTileUpdateEvent("MapUpdate", false, getColumn(), getRow(), null, null, null);
            notifyObservers(message);
+    }
+
+    /**
+     * 
+     * @param ammo
+     */
+    public void setAmmo(AmmoTile ammo) {
+        this.ammo = ammo;
     }
 
     /**
