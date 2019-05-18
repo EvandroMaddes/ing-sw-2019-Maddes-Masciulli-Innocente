@@ -1,17 +1,21 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
+import it.polimi.ingsw.event.controller_view_event.PositionGrabRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.PositionMoveRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.PowerUpRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.WeaponGrabRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.WeaponDiscardChoice;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.Newton;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Teleporter;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +77,14 @@ public class ActionManager {
     public void performGrab(int positionX, int positionY){
         currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
-            //sendWeaponGrabRequest();
+            ArrayList<String> possibleGrabWeapons = new ArrayList<>();
+            for (Weapon w:((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).getWeapons()) {
+                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getGrabCost())){
+                    possibleGrabWeapons.add(w.getName());
+                }
+            }
+            WeaponGrabRequestEvent message = new WeaponGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleGrabWeapons);
+            Controller.callView(message);
         }
         else {
             ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
@@ -98,14 +109,38 @@ public class ActionManager {
         }
     }
 
+    /**
+     * send a message with all possible destination
+     */
     public void sendPossibleMoves(){
-        /*todo notifica*/
-        getValidator().avaibleMoves(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().avaibleMoves(currentRoundManager.getCurrentPlayer());
+        int[] possibleSquareX = new int[possibleSquare.size()];
+        int[] possibleSquareY = new int[possibleSquare.size()];
+        int i = 0;
+        for (Square s:possibleSquare){
+            possibleSquareX[i] = s.getColumn();
+            possibleSquareY[i] = s.getRow();
+            i++;
+        }
+        PositionMoveRequestEvent message = new PositionMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
+        Controller.callView(message);
     }
 
+    /**
+     * send a message with possible grab square
+     */
     public void sendPossibleGrabs(){
-        //todo notifica
-        getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
+        int[] possibleSquareX = new int[possibleSquare.size()];
+        int[] possibleSquareY = new int[possibleSquare.size()];
+        int i = 0;
+        for (Square s:possibleSquare){
+            possibleSquareX[i] = s.getColumn();
+            possibleSquareY[i] = s.getRow();
+            i++;
+        }
+        PositionGrabRequestEvent message = new PositionGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
+        Controller.callView(message);
     }
 
     public void sendPossibleWeapons(){
@@ -127,7 +162,7 @@ public class ActionManager {
     public void askForPowerUp(){
         Map<String, CubeColour> usablePowerUps = new HashMap<>();
         for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p instanceof Newton || p instanceof Teleporter)
+            if (p.getName().equals("Newton") || p.getName().equals("Teleporter"))
                 usablePowerUps.put(p.getName(),p.getColour());
         }
         if (!usablePowerUps.isEmpty()) {

@@ -16,6 +16,7 @@ public class ActionChoiceEvent extends ViewControllerEvent {
      * 1 = move
      * 2 = grab
      * 3 = shot
+     * everithing else: skip action
      *
      * Constructor
      * @param user the Client user
