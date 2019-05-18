@@ -40,6 +40,6 @@ public  class PowerUp extends Card {
      */
     public void useEffect()
     {
-        this.getOwner().discardPowerUp(this);
+        getOwner().discardPowerUp(this);
     }
 }

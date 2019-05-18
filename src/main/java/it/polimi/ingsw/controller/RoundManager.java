@@ -31,7 +31,8 @@ public class RoundManager {
             case 1:
             case 3:
             case 5:{
-                askForPowerUp();
+                actionManager = new ActionManager(model, this);
+                actionManager.askForPowerUp();
                 break;
             }
             case 2:
@@ -49,7 +50,8 @@ public class RoundManager {
                 manageDeadPlayers();
                 break;
             }
-            default:endRound();
+            default:
+                endRound();
         }
     }
 
@@ -59,31 +61,20 @@ public class RoundManager {
     }
 
 
-    public void askForPowerUp(){
-        boolean canUsePowerUp = false;
-        for (PowerUp p: currentPlayer.getPowerUps()) {
-            if (p instanceof Newton || p instanceof Teleporter)
-                canUsePowerUp = true;
-        }
-        phase++;
-        //todo if (canUsePowerUp)
-         //todo   xxxxx lancia messaggio che chiede se vuole, usare un powerup
-    }
-
 
     public void endRound(){
         //todo
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
+    /**
+     * scroll every player and respown the first dead that he find
+     */
     public void manageDeadPlayers(){
         for (Player p: model.getPlayers()) {
             if (p.isDead()){
-                createDeathManager(model, p);
+                createDeathManager(model, p, this);
                 deathManager.manageKill();
+                break;
             }
         }
     }
@@ -96,7 +87,11 @@ public class RoundManager {
         return deathManager;
     }
 
-    public void createDeathManager(GameModel model, Player deadPlayer){
-        deathManager = new DeathManager(model, deadPlayer);
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void createDeathManager(GameModel model, Player deadPlayer, RoundManager roundManager){
+        deathManager = new DeathManager(model, deadPlayer, this);
     }
 }

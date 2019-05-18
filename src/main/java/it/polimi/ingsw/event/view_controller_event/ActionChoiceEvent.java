@@ -43,7 +43,6 @@ public class ActionChoiceEvent extends ViewControllerEvent {
                 break;
             }
             default:{
-                //todo se da un opzione non valida passa il turno, sarebbe buono richiedere
                 controller.getGameManager().getCurrentRound().nextPhase();
             }
         }
