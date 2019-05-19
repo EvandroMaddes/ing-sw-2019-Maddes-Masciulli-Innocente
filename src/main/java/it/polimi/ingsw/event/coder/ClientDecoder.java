@@ -66,8 +66,8 @@ public class ClientDecoder {
 
         for (int i = 0; i< message.getPossiblePositionsY().size(); i++) {
 
-            row = message.getPossiblePositionsX().get(i);
-            column = message.getPossiblePositionsY().get(i);
+            row = message.getPossiblePositionsY().get(i);
+            column = message.getPossiblePositionsX().get(i);
 
             if ((row == 2 && column == 2) || (row ==1 && column ==0) || (row == 0 && column==3))
             {
