@@ -28,7 +28,7 @@ public class GameModel extends Observable{
     }
 
     /**
-     * when a plyer is added, this method notify View
+     * when a plyer is added, this method notify VirtualView
      * @param newPlayer
      */
     public void addPlayer(Player newPlayer){
@@ -39,7 +39,7 @@ public class GameModel extends Observable{
 
     /**
      *
-     * @param arg message to send to View
+     * @param arg message to send to VirtualView
      */
     @Override
     public void notifyObservers(Object arg) {

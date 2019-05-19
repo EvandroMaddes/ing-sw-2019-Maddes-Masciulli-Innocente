@@ -5,7 +5,6 @@ import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
-import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 
 
@@ -23,21 +22,21 @@ import java.util.logging.Logger;
 public class Server {
     private static Logger log = Logger.getLogger("ServerLogger");
 
-    private static ArrayList<View> virtualViewList = new ArrayList<>();
+    private static ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private static RMIServer serverRMI;
     private static SocketServer serverSocket;
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
-    private static Map<String, View> mapUserView = new HashMap<>();
+    private static Map<String, VirtualView> mapUserView = new HashMap<>();
     private static Event message;
 
 
     public static void main(String[] args){
-        /*ArrayList<View> virtualViewList = new ArrayList<>();
+        ArrayList<VirtualView> virtualViewList = new ArrayList<VirtualView>();
         RMIServer serverRMI;
         SocketServer serverSocket;
         Map<String,ServerInterface> mapUserServer = new HashMap<>();
         Event message;
-        */
+
         try{
             serverRMI = new RMIServer();
             serverSocket = new SocketServer();
@@ -74,7 +73,7 @@ public class Server {
                                 connectedUser = currUser;
                             }
                         }
-                        View userView = new VirtualView(connectedUser);
+                        VirtualView userView = new VirtualView(connectedUser);
                         virtualViewList.add(userView);
                         mapUserView.put(connectedUser,userView);
                     }

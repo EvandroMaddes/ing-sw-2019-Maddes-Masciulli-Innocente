@@ -5,11 +5,8 @@ import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
 import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.MoveChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.PlayerChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.StartGameEvent;
+
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 import org.junit.Assert;
 import org.junit.Before;
