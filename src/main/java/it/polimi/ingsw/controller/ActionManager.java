@@ -79,7 +79,7 @@ public class ActionManager {
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
             ArrayList<String> possibleGrabWeapons = new ArrayList<>();
             for (Weapon w:((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).getWeapons()) {
-                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getGrabCost())){
+                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getReloadCost())){
                     possibleGrabWeapons.add(w.getName());
                 }
             }
