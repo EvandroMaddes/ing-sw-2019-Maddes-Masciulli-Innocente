@@ -2,38 +2,42 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
-import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.NetConfiguration;
-import it.polimi.ingsw.network.NetworkHandler;
-import it.polimi.ingsw.network.RemoteInterface;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
-import it.polimi.ingsw.view.ViewInterface;
+import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.VirtualView;
 
 
-import java.io.BufferedInputStream;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.rmi.RemoteException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 
 public class Server {
-    public static Logger log = Logger.getLogger("ServerLogger");
+    private static Logger log = Logger.getLogger("ServerLogger");
+
+    private static ArrayList<View> virtualViewList = new ArrayList<>();
+    private static RMIServer serverRMI;
+    private static SocketServer serverSocket;
+    private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
+    private static Map<String, View> mapUserView = new HashMap<>();
+    private static Event message;
+
 
     public static void main(String[] args){
-        ViewInterface virtualView;
+        /*ArrayList<View> virtualViewList = new ArrayList<>();
         RMIServer serverRMI;
         SocketServer serverSocket;
         Map<String,ServerInterface> mapUserServer = new HashMap<>();
         Event message;
+        */
         try{
             serverRMI = new RMIServer();
             serverSocket = new SocketServer();
@@ -49,14 +53,16 @@ public class Server {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 boolean setUpComplete = false;
 
-                //Aggiorna il numero di client connessi e li mappa verso il server giusto
+                //Aggiorna il numero di client connessi e li mappa verso il server giusto, allocando una VirtualView
                 while(!gameCouldStart){
                     if(clientList.size() != serverSocket.getClientList().size() +
                             (serverRMI.getClientList()).size() ){
+                        String connectedUser ="";
                         for (String currUser: serverSocket.getClientList()
                              ) { if(!clientList.contains(currUser)){
                                     clientList.add(currUser);
                                     mapUserServer.put(currUser,serverSocket);
+                                    connectedUser = currUser;
                                 }
 
                         }
@@ -65,8 +71,12 @@ public class Server {
                             if(!clientList.contains(currUser)){
                                 clientList.add(currUser);
                                 mapUserServer.put(currUser,serverRMI);
+                                connectedUser = currUser;
                             }
                         }
+                        View userView = new VirtualView(connectedUser);
+                        virtualViewList.add(userView);
+                        mapUserView.put(connectedUser,userView);
                     }
                     if(clientList.size()==1&&!setUpComplete){
                         String firstUser = clientList.get(0);

@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
-import it.polimi.ingsw.view.ViewInterface;
+
 
 import java.io.EOFException;
 import java.rmi.RemoteException;
@@ -24,10 +24,10 @@ import java.util.logging.Logger;
  */
 public class Client {
 
-    public static Logger log = Logger.getLogger("ClientLogger");
+    private static Logger log = Logger.getLogger("ClientLogger");
     public static void main(String[] args) {
 
-        ViewInterface viewImplementation;
+        RemoteView remoteViewImplementation;
         ClientInterface clientImplementation = null;
         String gameInterface = "";
         String user = "";

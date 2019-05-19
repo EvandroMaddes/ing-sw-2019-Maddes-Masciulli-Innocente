@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.server.socket;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.utils.CustomLogger;
-import sun.jvm.hotspot.utilities.ObjectReader;
+
 
 import java.io.*;
 import java.net.Socket;
