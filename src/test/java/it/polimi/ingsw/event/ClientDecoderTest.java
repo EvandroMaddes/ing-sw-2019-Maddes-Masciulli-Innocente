@@ -67,7 +67,7 @@ public class ClientDecoderTest {
         rows.add(2); //spawnSquare
         columns.add(2);
 
-        Event messageTest = new PositionRequestEvent("Evandro",rows,columns);
+        Event messageTest = new PositionRequestEvent("Evandro",columns,rows);
 
         ArrayList<Square> possibleSquare = testedClientDecoder.decodePositionRequestEvent((PositionRequestEvent) messageTest);
 
