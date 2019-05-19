@@ -302,7 +302,8 @@ public class Player extends Observable {
      * @param cost is a list of AmmoCubes, that rappresents the cost of something
      * @return true if the player can affort the cost, with both ammo and powerUp
      */
-    public boolean canAffortCost(ArrayList<AmmoCube> cost){
+    public boolean canAffortCost(AmmoCube[] cost){
+        // TODO: 2019-05-19 modificare arraylist in array  (il corpo del metodo non è stato modificato)
         int blueCubes = 0;
         int yellowCubes = 0;
         int redCubes = 0;
