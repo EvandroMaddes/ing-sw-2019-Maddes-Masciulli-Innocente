@@ -83,8 +83,7 @@ public class BasicSquare extends Square {
             message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP" );
         else
             message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString() );
-        notifyObservers(message);
-
+        notifyObservers(message);//send to View
     }
 
     @Override
