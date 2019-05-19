@@ -24,6 +24,9 @@ public class VirtualView  extends View{
         this.toRemoteView = toRemoteView;
     }
 
+    public Event getToRemoteView() {
+        return toRemoteView;
+    }
 
     /**
      * Every player has a his own view
@@ -50,9 +53,10 @@ public class VirtualView  extends View{
      * this means that message should be send to controller.
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
      */
-    public void toController(){
+    public void toController(Event message){
         //todo metodi che dal client ricevono il messaggio;
-        //setToController();
+        setToController(message);
+        setChanged();
         notifyObservers(this.getToController());
     }
 
