@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game_components.cards.weapons.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @author Francesco Masciulli
@@ -228,7 +229,20 @@ public class WeaponDeck extends DeckManagement {
         Collections.shuffle(deck);
         this.setDeck(deck);
 
+    }
 
+    public Weapon findWeapon(String weapon){
+        Weapon weaponFind = null;
+
+        for (Object currWeapon:getDeck()
+             ) {
+            if (((Weapon)currWeapon).getName().equals(weapon)){
+
+                weaponFind = ((Weapon)currWeapon);
+            }
+
+        }
+        return weaponFind;
     }
 
 }
