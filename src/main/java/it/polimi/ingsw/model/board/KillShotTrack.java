@@ -11,11 +11,12 @@ public class KillShotTrack extends GameTrack {
 
     private ArrayList<DamageToken> tokenTrack = new ArrayList<>();
 
-    public KillShotTrack()
-    {
 
-    }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<DamageToken> getTokenTrack() {
         return tokenTrack;
     }

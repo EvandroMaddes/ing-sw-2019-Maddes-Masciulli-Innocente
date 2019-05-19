@@ -145,4 +145,12 @@ public class GameManager {
     public RoundManager getCurrentRound() {
         return currentRound;
     }
+
+    /**
+     * Aggiunto a fini di test
+     * @return
+     */
+    public GameModel getModel() {
+        return model;
+    }
 }

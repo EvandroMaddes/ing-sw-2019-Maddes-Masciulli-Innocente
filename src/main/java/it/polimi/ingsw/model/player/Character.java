@@ -12,5 +12,5 @@ public enum Character implements Serializable {
     BANSHEE,
     DOZER,
     VIOLET,
-    SPROG;
+    SPROG
 }
