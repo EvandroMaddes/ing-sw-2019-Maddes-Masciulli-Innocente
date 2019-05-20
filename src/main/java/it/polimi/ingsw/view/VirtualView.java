@@ -33,7 +33,7 @@ public class VirtualView  extends Observable implements Observer{
     }
 
     /**
-     * 
+     *
      * @param toRemoteView
      */
     public void setToRemoteView(Event toRemoteView) {
@@ -67,7 +67,7 @@ public class VirtualView  extends Observable implements Observer{
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
      */
     public void toController(Event message){
-        //todo metodi che dal client ricevono il messaggio;
+        //todo metodi che dal server ricevono il messaggio;
         setToController(message);
         setChanged();
         notifyObservers(this.getToController());

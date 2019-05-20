@@ -8,6 +8,8 @@ import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
+import it.polimi.ingsw.view.cli.CLI;
+import it.polimi.ingsw.view.gui.GUI;
 
 
 import java.io.EOFException;
@@ -29,26 +31,43 @@ public class Client {
 
         RemoteView remoteViewImplementation;
         ClientInterface clientImplementation = null;
-        String gameInterface = "";
-        String user = "";
-        String connectionType = "";
-        String serverIPAddress = "";
+        String gameInterface;
+        String user;
+        String connectionType;
+        String serverIPAddress;
         Event  currentMessage;
-       //todo aggiustare i parametri, ora tutti da main, dopo solo gameInterface;
         try {
-        //    gameInterface = args[0];
-            user = args[2];
-            connectionType = args[0];
-            serverIPAddress = args[1];
+            gameInterface = args[0];
         }catch(IndexOutOfBoundsException e){
+            //Default: CLI, if no arguments are passed to main()
             CustomLogger.logException(e);
+            gameInterface = "CLI";
         }
 
-        /*  if(gameInterface.equalsIgnoreCase("GUI")){
-            viewImplementation = new GUI();
+          if(gameInterface.equalsIgnoreCase("GUI")){
+            remoteViewImplementation = new GUI();
 
-        }
-        */
+          }
+          else{
+              remoteViewImplementation = new CLI();
+          }
+        /**
+         * PROVA
+         */
+        remoteViewImplementation.printScreen();
+        System.out.println();
+
+        /**
+         * FINE PROVA
+         */
+
+        String[] userInput = remoteViewImplementation.gameInit();
+          user = userInput[0];
+          connectionType = userInput[1];
+          serverIPAddress = userInput[2];
+
+
+
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
             try {
                 clientImplementation = new RMIClient(user,
@@ -58,10 +77,10 @@ public class Client {
                 CustomLogger.logException(e);
             }
         }
-        else if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.SOCKET.name())) {
+        else {
             clientImplementation = new SocketClient(user, serverIPAddress);
         }
-        else return;
+
 
         boolean connected = true;
 

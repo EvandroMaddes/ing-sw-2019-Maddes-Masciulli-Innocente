@@ -67,7 +67,8 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     @Override
     public void sendMessage(Event message) {
         try {
-            //currMessage = message;
+            //todo se invia, deve aspettare risposta-> setta a null per avere concordanza con il SocketServer
+            currMessage = null;
             outputStream.writeObject(message);
             outputStream.flush();
         }catch(Exception e){
