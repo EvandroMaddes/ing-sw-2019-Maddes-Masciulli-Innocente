@@ -15,7 +15,6 @@ import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 /**
  * @author Francesco Masciulli
  * it implements the method that decode a ModelView or ViewSelect Event
@@ -23,7 +22,6 @@ import java.util.Iterator;
 public class ClientDecoder {
 
     /**
-     * todo richiamare ricostruzione armi con json
      * @param message
      * @return
      */

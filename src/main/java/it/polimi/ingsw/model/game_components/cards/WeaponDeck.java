@@ -167,7 +167,6 @@ public class WeaponDeck extends DeckManagement {
         reloadCost = new AmmoCube[2];
         reloadCost[0] = new AmmoCube(colour);
         reloadCost[1] = new AmmoCube(CubeColour.Yellow);
-        alternativeEffectCost =null;
         Shotgun shotgun= new Shotgun(colour,"SHOTGUN",reloadCost,alternativeEffectCost);
         deck.add(shotgun);
 
