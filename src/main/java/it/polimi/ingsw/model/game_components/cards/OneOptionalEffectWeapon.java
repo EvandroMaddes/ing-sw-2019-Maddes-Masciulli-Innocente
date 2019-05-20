@@ -12,7 +12,6 @@ public abstract class OneOptionalEffectWeapon extends Weapon {
 
     private AmmoCube[] firstOptionalEffectCost;
 
-
     /**
      *
      * @param colour

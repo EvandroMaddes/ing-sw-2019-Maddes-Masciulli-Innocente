@@ -60,6 +60,6 @@ public class Reload extends ActionDecorator{
 
         }
 
-        weapon.invertLoadedState();
+        weapon.setLoaded();
     }
 }

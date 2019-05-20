@@ -247,7 +247,7 @@ public class Player extends Observable {
         weapon.setOwner(null);
         if ( !weapon.isLoaded() )
         {
-            weapon.invertLoadedState();
+            weapon.setLoaded();
         }
 
         notifyWeaponsChange();

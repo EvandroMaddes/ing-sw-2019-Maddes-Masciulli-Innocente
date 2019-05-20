@@ -202,7 +202,7 @@ public class ActionManager {
     public void reloadWepon(String weapon){
         for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
             if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
-                currentRoundManager.getCurrentPlayer().getWeapons()[i].invertLoadedState();
+                currentRoundManager.getCurrentPlayer().getWeapons()[i].setLoaded();
         }
         askForReload();
     }
