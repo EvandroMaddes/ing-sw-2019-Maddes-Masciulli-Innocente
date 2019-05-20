@@ -1,11 +1,16 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.controller_view_event.RespownRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.SpawnSquare;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.player.PlayerBoard;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DeathManager {
     private GameModel model;
@@ -18,27 +23,29 @@ public class DeathManager {
         this.roundManager = roundManager;
     }
 
+    public void manageKill(){
+        givePoints();
+        deadPlayer.getPlayerBoard().addSkull();
+        deadPlayer.getPlayerBoard().resetDamages();
+        respawnPlayer();
+    }
+
     /**
      *
      *                   when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
         deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
-        //todo richiedi powerUp
+        Map<String, CubeColour> powerUpsLite = new HashMap<>();
+        for (PowerUp p: deadPlayer.getPowerUps())
+            powerUpsLite.put(p.getName(), p.getColour());
+        Controller.callView(new RespownRequestEvent(deadPlayer.getUsername(), powerUpsLite));
     }
 
-    public void spawn(String powerUp, String cardColour){
-        Player deadPlayer = null;
-        for (Player p: model.getPlayers()) {
-            if (p.getUsername().equals(deadPlayer.getUsername())){
-                deadPlayer = p;
-                break;
-            }
-        }
-
+    public void spawn(String powerUp, CubeColour cardColour){
         PowerUp choosenPowerUp = null;
         for (PowerUp p: deadPlayer.getPowerUps()) {
-            if (powerUp.equals(p.getName()) && cardColour.equals(p.getColour().toString()) ){
+            if (powerUp.equals(p.getName()) && cardColour == p.getColour() ){
                 choosenPowerUp = p;
                 break;
             }
@@ -55,13 +62,6 @@ public class DeathManager {
             //todo bisogna fare in modo che quando un giocatore arriva a >10 danni si inverta lo stato di morte a true
             roundManager.manageDeadPlayers();
         }
-    }
-
-    public void manageKill(){
-        givePoints();
-        deadPlayer.getPlayerBoard().addSkull();
-        deadPlayer.getPlayerBoard().resetDamages();
-        respawnPlayer();
     }
 
     private void givePoints(){

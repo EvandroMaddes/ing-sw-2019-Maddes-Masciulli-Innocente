@@ -88,7 +88,7 @@ public class BasicSquare extends Square {
     }
 
     @Override
-    public boolean isGrabbable() {
+    public boolean isGrabbable(Player grabber) {
         return ammo != null;
     }
 }

@@ -56,6 +56,14 @@ public abstract class Weapon extends Card {
 
     protected abstract void fireBaseEffect(ArrayList<Player> targets, Square destination);
 
+    public AmmoCube[] getGrabCost(){
+        AmmoCube[] grabCost = new AmmoCube[getReloadCost().length - 1];
+
+        for (int i = 0; i < grabCost.length; i++)
+            grabCost[i] = getReloadCost()[i+1];
+        return grabCost;
+    }
+
 
 
 

@@ -78,9 +78,15 @@ public class SpawnSquare extends Square {
 
      @Override
      /**
-      * return true if there is at leat 1 weapon in the square
+      * return true if there is at least 1 weapon that the player can buy
       */
-     public boolean isGrabbable() {
-          return !weapons.isEmpty();
+     public boolean isGrabbable(Player grabber) {
+          if (!weapons.isEmpty())
+               return false;
+          for (Weapon w: weapons){
+               if (grabber.canAffortCost(w.getGrabCost()))
+                    return true;
+          }
+          return false;
      }
 }

@@ -18,24 +18,28 @@ public class GameManager {
     private RoundManager currentRound;
     private int playersReady;
     private final GameModel model;
+    private int playerTurn;
+    private boolean finalFrenzyPhase;
     private boolean firstRoundPhase;
-    private int finalFrenzyPhase;
+    private boolean firsPlayerPlayed;
+    private int lastPlayer;
 
     /**
      *
-     * @param msg is the message from the client with the map preferences
      */
     public GameManager(int mapChoice){
         playersReady = 0;
+        playerTurn = -1;
         firstRoundPhase = true;
-        finalFrenzyPhase = 0;
+        finalFrenzyPhase = false;
+        firsPlayerPlayed = false;
+        lastPlayer = -2;
         //todo notificare la creazione della map?
         model = new GameModel (buildGameBoard(mapChoice));
     }
 
     /**
      *
-     * @param msg is the message from the client with the map preferences
      * @return the builded map
      */
     private GameBoard buildGameBoard(int mapChoice){
@@ -77,38 +81,51 @@ public class GameManager {
     public void startGame(){
         playersReady++;
         if (playersReady == model.getPlayers().size() && playersReady >= 3 && playersReady <= 5) {
-            currentRound = new FirstRoundManager(model, model.getPlayers().get(0));
-            currentRound.manageRound();
+            newRound();
         }
     }
 
-    //todo rivedere
+    /**
+     * If the gameTrack is ended, set the final frenzy phase
+     * Generate a new RoundManager and run it. The RoundManager type depends on three flags:
+     * firstRoundPhase - enable only fo one round for player
+     * finalFrenzyPhase - is enabled when the GameTrack end
+     * firstPlayerPlayed - set to true only in the final frenzy, in the first player round
+     */
     public void newRound(){
-        if (firstRoundPhase){
-            currentRound = new FirstRoundManager(model, model.getPlayers().get(0));
+        if(gameEnded())
+            setFinalFrenzyPhase();
+
+        playerTurn++;
+        if (playerTurn == model.getPlayers().size()) {
+            firstRoundPhase = false;
+            playerTurn = 0;
+            if (finalFrenzyPhase)
+                firsPlayerPlayed = true;
         }
-        else if (finalFrenzyPhase != 0){
-            currentRound = new FrenzyRoundManager(model, model.getPlayers().get(finalFrenzyPhase), afterFirstPlayer(finalFrenzyPhase));
+
+        if (firstRoundPhase){
+            currentRound = new FirstRoundManager(model,this, model.getPlayers().get(playerTurn));
+        }
+        else if (finalFrenzyPhase){
+            currentRound = new FrenzyRoundManager(model, this, model.getPlayers().get(playerTurn), firsPlayerPlayed);
         }
         else
-            currentRound = new RoundManager(model, model.getPlayers().get(0));
+            currentRound = new RoundManager(model, this, model.getPlayers().get(playerTurn));
 
         currentRound.manageRound();
     }
 
-    //todo rivedere
-    public boolean afterFirstPlayer(int currentPlayer){
-        for (Player p: model.getPlayers()) {
-            if (p.isFirstPlayer())
-                return model.getPlayers().indexOf(p) <= currentPlayer;
-        }
-        throw new RuntimeException();
-    }
-
     public boolean gameEnded(){
-        return ((KillShotTrack)model.getGameboard().getGameTrack()).checkEndTrack();
+        return (model.getGameboard().getGameTrack()).checkEndTrack();
     }
 
+    public void setFinalFrenzyPhase() {
+        if (!finalFrenzyPhase){
+            finalFrenzyPhase = true;
+            lastPlayer = playerTurn;
+        }
+    }
 
     /**
      *
@@ -141,8 +158,19 @@ public class GameManager {
         }
     }
 
-
     public RoundManager getCurrentRound() {
         return currentRound;
+    }
+
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public boolean isFinalFrenzyPhase() {
+        return finalFrenzyPhase;
+    }
+
+    public int getLastPlayer() {
+        return lastPlayer;
     }
 }

@@ -6,10 +6,8 @@ import it.polimi.ingsw.model.player.Player;
 
 public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundManager(GameModel model, Player currentPlayer){
-        super(model, currentPlayer);
-        if (currentPlayer.isFirstPlayer())
-            firstRoundOfTheGame = true;
+    public FirstRoundManager(GameModel model, GameManager gameManager, Player currentPlayer){
+        super(model, gameManager, currentPlayer);
     }
 
     @Override

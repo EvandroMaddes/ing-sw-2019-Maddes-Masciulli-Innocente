@@ -30,16 +30,15 @@ public class BaseActionValidator extends Validator {
     public ArrayList<Square> avaibleGrab(Player player){
         ArrayList<Square> grabbableSquare = reachbleInMoves(player.getPosition(), 1);
         for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable())
+            if (!currentSquare.isGrabbable(player))
                 grabbableSquare.remove(currentSquare);
         }
-        // todo non controlla che il giocatore possa pagare le eventuali armi
         return grabbableSquare;
     }
 
-    /* da implementare */
     @Override
     public ArrayList<Player> aviableShot(Weapon weapon) {
+        // TODO: 2019-05-20
         return null;
     }
 }
