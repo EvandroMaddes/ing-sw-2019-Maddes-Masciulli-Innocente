@@ -16,10 +16,9 @@ public class AdrenalinicGrabValidator extends BaseActionValidator {
     public ArrayList<Square> avaibleGrab(Player player){
         ArrayList<Square> grabbableSquare = reachbleInMoves(player.getPosition(), 2);
         for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable())
+            if (!currentSquare.isGrabbable(player))
                 grabbableSquare.remove(currentSquare);
         }
-        // todo controllare che le armi siano evenualmente pagabili (almeno 1)
         return grabbableSquare;
     }
 

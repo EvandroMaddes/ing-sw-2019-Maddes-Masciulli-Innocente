@@ -16,17 +16,12 @@ import java.util.Observable;
  *
  */
 
-public class VirtualView  extends View{
+public class VirtualView  extends Observable implements Observer{
 
+
+    private String user;
+    private Event toController;
     private Event toRemoteView;
-
-    public void setToRemoteView(Event toRemoteView) {
-        this.toRemoteView = toRemoteView;
-    }
-
-    public Event getToRemoteView() {
-        return toRemoteView;
-    }
 
     /**
      * Every player has a his own view
@@ -34,8 +29,26 @@ public class VirtualView  extends View{
      */
     public VirtualView(String user)
     {
-       super(user);
+        this.user = user;
     }
+
+    /**
+     *
+     * @param toRemoteView
+     */
+    public void setToRemoteView(Event toRemoteView) {
+        this.toRemoteView = toRemoteView;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Event getToRemoteView() {
+        return toRemoteView;
+    }
+
+
 
     /**
      * send  a message to remote view
@@ -54,7 +67,7 @@ public class VirtualView  extends View{
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
      */
     public void toController(Event message){
-        //todo metodi che dal client ricevono il messaggio;
+        //todo metodi che dal server ricevono il messaggio;
         setToController(message);
         setChanged();
         notifyObservers(this.getToController());
@@ -73,6 +86,25 @@ public class VirtualView  extends View{
         setToRemoteView((Event)arg);
 
     }
+
+
+
+    /**
+     *
+     * @param toController
+     */
+    public void setToController(Event toController) {
+        this.toController = toController;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Event getToController() {
+        return toController;
+    }
+
 
 
 }

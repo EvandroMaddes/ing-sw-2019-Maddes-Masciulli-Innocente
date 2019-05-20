@@ -83,11 +83,11 @@ public class BasicSquare extends Square {
             message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP" );
         else
             message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString() );
-        notifyObservers(message);//send to View
+        notifyObservers(message);//send to VirtualView
     }
 
     @Override
-    public boolean isGrabbable() {
+    public boolean isGrabbable(Player grabber) {
         return ammo != null;
     }
 }

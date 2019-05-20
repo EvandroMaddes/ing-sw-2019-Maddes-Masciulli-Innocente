@@ -1,5 +1,7 @@
 package it.polimi.ingsw.event.view_controller_event;
 
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+
 /**
  * @author Francesco Masciulli
  * represent the card selected by the user after a Request
@@ -7,7 +9,7 @@ package it.polimi.ingsw.event.view_controller_event;
 public abstract class CardChoiceEvent extends ViewControllerEvent {
 
     private String card;
-    private String cardColour;
+    private CubeColour cardColour;
 
     /**
      * Constructor
@@ -15,7 +17,7 @@ public abstract class CardChoiceEvent extends ViewControllerEvent {
      * @param user     the Client user
      * @param card     the selected Card
      */
-    public CardChoiceEvent(String user, String card, String cardColour) {
+    public CardChoiceEvent(String user, String card, CubeColour cardColour) {
         super(user);
         this.card = card;
         this.cardColour = cardColour;
@@ -25,7 +27,7 @@ public abstract class CardChoiceEvent extends ViewControllerEvent {
         return card;
     }
 
-    public String getCardColour() {
+    public CubeColour getCardColour() {
         return cardColour;
     }
 }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game_components.cards.weapons.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @author Francesco Masciulli
@@ -166,7 +167,6 @@ public class WeaponDeck extends DeckManagement {
         reloadCost = new AmmoCube[2];
         reloadCost[0] = new AmmoCube(colour);
         reloadCost[1] = new AmmoCube(CubeColour.Yellow);
-        alternativeEffectCost =null;
         Shotgun shotgun= new Shotgun(colour,"SHOTGUN",reloadCost,alternativeEffectCost);
         deck.add(shotgun);
 
@@ -228,7 +228,20 @@ public class WeaponDeck extends DeckManagement {
         Collections.shuffle(deck);
         this.setDeck(deck);
 
+    }
 
+    public Weapon findWeapon(String weapon){
+        Weapon weaponFind = null;
+
+        for (Object currWeapon:getDeck()
+             ) {
+            if (((Weapon)currWeapon).getName().equals(weapon)){
+
+                weaponFind = ((Weapon)currWeapon);
+            }
+
+        }
+        return weaponFind;
     }
 
 }

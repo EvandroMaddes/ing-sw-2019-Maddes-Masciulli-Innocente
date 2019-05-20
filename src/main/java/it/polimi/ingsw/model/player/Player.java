@@ -201,15 +201,14 @@ public class Player extends Observable {
         notifyWeaponsChange();
     }
 
-    //todo instanceof :'C
     private void notifyPowerUpChange(){
         Map<String, CubeColour> messagePowerUps = new HashMap<>();
         for (PowerUp p: this.powerUps) {
-            if (p instanceof Newton)
+            if (p.getName().equals("Newton"))
                 messagePowerUps.put("Newton", p.getColour());
-            else if (p instanceof Teleporter)
+            else if (p.getName().equals("Teleporter"))
                 messagePowerUps.put("Teleporter", p.getColour());
-            else if (p instanceof TargetingScope)
+            else if (p.getName().equals("TargetingScope"))
                 messagePowerUps.put("TargetingScope", p.getColour());
             else
                 messagePowerUps.put("TagbackGranade", p.getColour());
@@ -303,7 +302,6 @@ public class Player extends Observable {
      * @return true if the player can affort the cost, with both ammo and powerUp
      */
     public boolean canAffortCost(AmmoCube[] cost){
-        // TODO: 2019-05-19 modificare arraylist in array  (il corpo del metodo non è stato modificato)
         int blueCubes = 0;
         int yellowCubes = 0;
         int redCubes = 0;

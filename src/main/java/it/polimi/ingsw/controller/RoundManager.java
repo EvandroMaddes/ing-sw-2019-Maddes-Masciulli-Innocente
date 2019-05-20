@@ -1,9 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.game_components.cards.Newton;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Teleporter;
 import it.polimi.ingsw.model.player.Player;
 
 
@@ -11,14 +9,15 @@ import it.polimi.ingsw.model.player.Player;
 public class RoundManager {
 
     protected final GameModel model;
-    private Player currentPlayer;
-    private int phase;
-    protected boolean firstRoundOfTheGame = false;
+    private final GameManager gameManager;
+    private final Player currentPlayer;
     private ActionManager actionManager;
     private DeathManager deathManager;
+    private int phase;
 
-    public RoundManager(GameModel model, Player currentPlayer){
+    public RoundManager(GameModel model, GameManager gameManager, Player currentPlayer){
         this.currentPlayer = currentPlayer;
+        this.gameManager = gameManager;
         this.model = model;
         phase = 1;
     }
@@ -61,9 +60,11 @@ public class RoundManager {
     }
 
 
-
     public void endRound(){
-        //todo
+        if (gameManager.isFinalFrenzyPhase() && gameManager.getPlayerTurn() == gameManager.getLastPlayer())
+            Controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
+        else
+            gameManager.newRound();
     }
 
     /**

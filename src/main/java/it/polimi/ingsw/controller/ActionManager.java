@@ -1,12 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
-import it.polimi.ingsw.event.controller_view_event.PositionGrabRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PositionMoveRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PowerUpRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WeaponGrabRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.*;
 import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.WeaponDiscardChoice;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
@@ -74,6 +70,12 @@ public class ActionManager {
         currentRoundManager.nextPhase();
     }
 
+    /**
+     * move the player on target location. If it is a SpownSquare, send the possible grab weapon to let player choose one
+     *
+     * @param positionX column destination
+     * @param positionY row destination
+     */
     public void performGrab(int positionX, int positionY){
         currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
@@ -88,6 +90,7 @@ public class ActionManager {
         }
         else {
             ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
+            currentRoundManager.nextPhase();
         }
     }
 
@@ -98,8 +101,14 @@ public class ActionManager {
                 currentRoundManager.getCurrentPlayer().addWeapon(w);
         }
         if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
-            // todo sendWeaponDiscardRequest();
+            ArrayList<String> playerWeapons = new ArrayList<>();
+            for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+                playerWeapons.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
+                Controller.callView(new WeaponDiscardRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), playerWeapons));
+            }
         }
+        else
+            currentRoundManager.nextPhase();
     }
 
     public void discardWeapon(String weapon){
@@ -107,6 +116,7 @@ public class ActionManager {
             if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
                 currentRoundManager.getCurrentPlayer().discardWeapon(currentRoundManager.getCurrentPlayer().getWeapons()[i]);
         }
+        currentRoundManager.nextPhase();
     }
 
     /**
@@ -143,7 +153,7 @@ public class ActionManager {
         Controller.callView(message);
     }
 
-    public void sendPossibleWeapons(){
+    public void sendPossibleWeapon(){
         //todo notifica
         getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer());
     }
@@ -152,8 +162,20 @@ public class ActionManager {
         // todo chiede quale azione usare
     }
 
+    /**
+     * reload phase: if the player has weapon unloaded which cost can be payed, pass them to the player. If the player can't do it, go to the next phase
+     */
     public void askForReload(){
-        //todo chiede la ricarica
+        ArrayList<String> possibleReload = new ArrayList<>();
+        for (int i = 0 ; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+            Weapon currentWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
+            if ( currentWeapon.isLoaded() && currentRoundManager.getCurrentPlayer().canAffortCost(currentWeapon.getReloadCost()) )
+                possibleReload.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
+        }
+        if ( !possibleReload.isEmpty() )
+            Controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleReload));
+        else
+            currentRoundManager.nextPhase();
     }
 
     /**
@@ -171,6 +193,18 @@ public class ActionManager {
         }
         else
             currentRoundManager.nextPhase();
+    }
+
+    /**
+     *
+     * @param weapon is the weapon that the player want to reload. After the reload, call again askFotReload().
+     */
+    public void reloadWepon(String weapon){
+        for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+            if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
+                currentRoundManager.getCurrentPlayer().getWeapons()[i].invertLoadedState();
+        }
+        askForReload();
     }
 
     public void usePowerUp(String powerUpChoice, String powerUpColour) {

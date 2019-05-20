@@ -138,7 +138,7 @@ public abstract class Square extends Observable {
     /**
      * @return true if the square have ammo or at least a weapon to grab
      */
-    public abstract boolean isGrabbable();
+    public abstract boolean isGrabbable(Player grabber);
 
 
 
