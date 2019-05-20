@@ -8,5 +8,6 @@ public interface RemoteViewInterface {
     public void setToVirtualView(Event toServer);
     public void toVirtualView();
     public void fromVirtualView();
+    public String[] gameInit();
 
 }

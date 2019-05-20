@@ -16,10 +16,19 @@ public abstract class RemoteView implements RemoteViewInterface{
      *
      * @param user
      */
-    public RemoteView(String user) {
+/*    public RemoteView(String user) {
         this.user = user;
     }
+*/
 
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     /**
      *
@@ -41,7 +50,6 @@ public abstract class RemoteView implements RemoteViewInterface{
      * send a messaage to virtual view
      */
     public void toVirtualView(){
-
        //todo metodi che dal client inviano al server passando il messaggio toVirtualView
    }
 
@@ -51,4 +59,5 @@ public abstract class RemoteView implements RemoteViewInterface{
    public void fromVirtualView(){
         //todo riceve un messagio dalla virtual view e chiama metodi coder(?)
    }
+
 }
