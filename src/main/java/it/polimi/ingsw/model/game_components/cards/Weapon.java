@@ -11,12 +11,15 @@ public abstract class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
     private boolean loaded;
+    private final boolean[] effectsEnable;
+    private boolean[] usableEffect;
 
 
 
-    public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
+    public Weapon(CubeColour colour, String name, boolean[] effectsEnable, AmmoCube[] reloadCost) {
         super(colour, name);
         this.reloadCost = reloadCost;
+        this.effectsEnable = effectsEnable;
         loaded =true;
     }
 
@@ -29,6 +32,14 @@ public abstract class Weapon extends Card {
         return reloadCost;
     }
 
+    public AmmoCube[] getGrabCost(){
+        AmmoCube[] grabCost = new AmmoCube[getReloadCost().length - 1];
+
+        for (int i = 0; i < grabCost.length; i++)
+            grabCost[i] = getReloadCost()[i+1];
+        return grabCost;
+    }
+
     /**
      *
      * @return loaded
@@ -37,13 +48,13 @@ public abstract class Weapon extends Card {
     {
         return loaded;
     }
+    
+    public void setUnloaded(){
+        this.loaded = false;
+    }
 
-    /**
-     * invert the loaded state of the weapon
-     */
-    public void invertLoadedState()
-    {
-        loaded = !loaded;
+    public void setLoaded(){
+        this.loaded = true;
     }
 
     public boolean canActivateAnEffect(){return false;}
@@ -56,13 +67,7 @@ public abstract class Weapon extends Card {
 
     protected abstract void fireBaseEffect(ArrayList<Player> targets, Square destination);
 
-    public AmmoCube[] getGrabCost(){
-        AmmoCube[] grabCost = new AmmoCube[getReloadCost().length - 1];
 
-        for (int i = 0; i < grabCost.length; i++)
-            grabCost[i] = getReloadCost()[i+1];
-        return grabCost;
-    }
 
 
 
