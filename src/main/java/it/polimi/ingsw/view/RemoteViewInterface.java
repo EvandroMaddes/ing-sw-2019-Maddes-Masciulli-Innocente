@@ -10,4 +10,5 @@ public interface RemoteViewInterface {
     public void fromVirtualView();
     public String[] gameInit();
 
+
 }

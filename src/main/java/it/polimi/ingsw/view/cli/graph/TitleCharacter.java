@@ -1,9 +1,11 @@
-package it.polimi.ingsw.view.cli.title;
+package it.polimi.ingsw.view.cli.graph;
+
+import it.polimi.ingsw.view.cli.graph.Color;
 
 public abstract class TitleCharacter {
-   protected static final int LENGHT = 10;
-   protected static final int HEIGHT = 9;
-   protected static final Color color = Color.ANSI_WHITE;
+   public static final int LENGHT = 10;
+   public static final int HEIGHT = 9;
+   public static final Color color = Color.ANSI_WHITE;
    protected int startRow;
    protected String[] string=new String[HEIGHT];
 

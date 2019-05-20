@@ -1,6 +1,6 @@
-package it.polimi.ingsw.view.cli.title;
+package it.polimi.ingsw.view.cli.graph;
 
-public  enum Color {
+public enum Color {
      ANSI_RESET("\u001B[0m"),
      ANSI_BLACK("\u001B[30m"),
      ANSI_RED("\u001B[31m"),
@@ -17,9 +17,8 @@ public  enum Color {
      ANSI_BLUE_BACKGROUND("\u001B[44m"),
      ANSI_PURPLE_BACKGROUND("\u001B[45m"),
      ANSI_CYAN_BACKGROUND("\u001B[46m"),
-     ANSI_WHITE_BACKGROUND("\u001B[47m");
-
-    static final String RESET = "\u001B[0m";
+     ANSI_WHITE_BACKGROUND("\u001B[47m"),
+     RESET("\u001B[0m");
 
     private String escape;
 

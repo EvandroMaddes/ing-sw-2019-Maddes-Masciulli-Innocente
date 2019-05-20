@@ -1,12 +1,15 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.view.RemoteView;
-import it.polimi.ingsw.view.cli.title.Title;
+import it.polimi.ingsw.view.cli.graph.Title;
 
 import java.util.Scanner;
-
+//todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
+
     private Scanner inputScanner = new Scanner(System.in);
+
+
 /*    public CLI(String user) {
         super(user);
     }
@@ -23,5 +26,7 @@ public class CLI extends RemoteView {
 
         return userInput;
     }
+
+
 
 }

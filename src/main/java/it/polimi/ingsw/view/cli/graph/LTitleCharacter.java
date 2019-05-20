@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.cli.title;
+package it.polimi.ingsw.view.cli.graph;
 
 public class LTitleCharacter extends TitleCharacter {
     public LTitleCharacter(){
