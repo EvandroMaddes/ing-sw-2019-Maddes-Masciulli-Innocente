@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.CLIMap;
+import it.polimi.ingsw.view.cli.graph.Color;
 import it.polimi.ingsw.view.cli.graph.Title;
 
 import java.util.Scanner;
