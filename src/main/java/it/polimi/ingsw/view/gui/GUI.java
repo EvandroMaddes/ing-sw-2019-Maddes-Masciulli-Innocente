@@ -14,4 +14,9 @@ public class GUI extends RemoteView {
     public String[] gameInit() {
         return new String[0];
     }
+
+    @Override
+    public void printScreen() {
+
+    }
 }

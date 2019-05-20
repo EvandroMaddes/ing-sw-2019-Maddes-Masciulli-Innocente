@@ -29,19 +29,15 @@ public class Client {
     private static Logger log = Logger.getLogger("ClientLogger");
     public static void main(String[] args) {
 
-        RemoteView remoteViewImplementation = null;
+        RemoteView remoteViewImplementation;
         ClientInterface clientImplementation = null;
-        String gameInterface = "";
-        String user = "";
-        String connectionType = "";
-        String serverIPAddress = "";
+        String gameInterface;
+        String user;
+        String connectionType;
+        String serverIPAddress;
         Event  currentMessage;
-       //todo aggiustare i parametri, ora tutti da main, dopo solo gameInterface;
         try {
             gameInterface = args[0];
-            /*user = args[1];
-            connectionType = args[2];
-            serverIPAddress = args[3];*/
         }catch(IndexOutOfBoundsException e){
             //Default: CLI, if no arguments are passed to main()
             CustomLogger.logException(e);
@@ -55,10 +51,22 @@ public class Client {
           else{
               remoteViewImplementation = new CLI();
           }
-          String[] userInput = remoteViewImplementation.gameInit();
+        /**
+         * PROVA
+         */
+        remoteViewImplementation.printScreen();
+        System.out.println();
+
+        /**
+         * FINE PROVA
+         */
+
+        String[] userInput = remoteViewImplementation.gameInit();
           user = userInput[0];
           connectionType = userInput[1];
           serverIPAddress = userInput[2];
+
+
 
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
             try {
@@ -69,10 +77,10 @@ public class Client {
                 CustomLogger.logException(e);
             }
         }
-        else if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.SOCKET.name())) {
+        else {
             clientImplementation = new SocketClient(user, serverIPAddress);
         }
-        else return;
+
 
         boolean connected = true;
 

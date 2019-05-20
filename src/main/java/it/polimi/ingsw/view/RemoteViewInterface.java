@@ -9,6 +9,6 @@ public interface RemoteViewInterface {
     public void toVirtualView();
     public void fromVirtualView();
     public String[] gameInit();
-
+    public void printScreen();
 
 }
