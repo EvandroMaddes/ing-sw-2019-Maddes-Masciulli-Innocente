@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.controller_view_event;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.view.RemoteView;
 
 import java.util.Map;
 
@@ -12,5 +13,8 @@ public class PowerUpRequestEvent extends ControllerViewEvent {
         this.powerUp = powerUp;
     }
 
+    @Override
+    public void performAction(RemoteView remoteView) {
 
+    }
 }

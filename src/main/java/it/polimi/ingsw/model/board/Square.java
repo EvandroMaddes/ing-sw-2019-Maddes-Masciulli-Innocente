@@ -212,8 +212,9 @@ public abstract class Square extends Observable {
         return playerRoom;
     }
 
-
-
-
-
+    @Override
+    public void notifyObservers(Object arg) {
+        setChanged();
+        super.notifyObservers(arg);
+    }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedEvent;
 import it.polimi.ingsw.model.board.GameBoard;
 import it.polimi.ingsw.model.player.Player;
@@ -26,10 +27,24 @@ public class GameModel extends Observable{
         return players;
     }
 
+    /**
+     * when a plyer is added, this method notify VirtualView
+     * @param newPlayer
+     */
     public void addPlayer(Player newPlayer){
         players.add(newPlayer);
         NewPlayerJoinedEvent message = new NewPlayerJoinedEvent(newPlayer.getUsername());
         notifyObservers(message);
+    }
+
+    /**
+     *
+     * @param arg message to send to VirtualView
+     */
+    @Override
+    public void notifyObservers(Object arg) {
+        setChanged();
+        super.notifyObservers(arg);
     }
 }
 

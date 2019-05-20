@@ -1,14 +1,10 @@
 package it.polimi.ingsw.network.server.rmi;
 
-import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.network.NetConfiguration;
-import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.RemoteInterface;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.server.ServerInterface;
-import it.polimi.ingsw.network.server.socket.SocketServerThread;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.net.InetAddress;

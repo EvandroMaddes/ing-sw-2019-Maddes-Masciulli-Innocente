@@ -6,7 +6,7 @@ import it.polimi.ingsw.event.model_view_event.ModelViewEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RemoteView{
+public abstract class RemoteView implements RemoteViewInterface{
 
     private String user;
     private Event toVirtualView;
