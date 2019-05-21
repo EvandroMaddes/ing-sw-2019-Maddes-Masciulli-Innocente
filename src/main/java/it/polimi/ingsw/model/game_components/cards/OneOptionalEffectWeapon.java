@@ -21,7 +21,7 @@ public abstract class OneOptionalEffectWeapon extends Weapon {
      */
     public OneOptionalEffectWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost)
     {
-        super(colour, name, reloadCost);
+        super(colour, name, new boolean[1], reloadCost);
         this.firstOptionalEffectCost = firstOptionalEffectCost;
     }
 

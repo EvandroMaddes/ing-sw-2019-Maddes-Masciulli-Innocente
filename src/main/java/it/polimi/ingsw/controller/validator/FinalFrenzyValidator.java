@@ -26,7 +26,7 @@ public class FinalFrenzyValidator extends Validator{
 
         ArrayList<Square> grabbableSquare = reachbleInMoves(player.getPosition(), numberOfMoves);
         for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable())
+            if (!currentSquare.isGrabbable(player))
                 grabbableSquare.remove(currentSquare);
         }
         return grabbableSquare;

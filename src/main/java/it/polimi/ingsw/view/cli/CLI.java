@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.CLIMap;
@@ -45,6 +46,7 @@ public class CLI extends RemoteView {
         return userInput;
     }
 
+
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
 
@@ -55,6 +57,71 @@ public class CLI extends RemoteView {
         String chosenStringCharacter = CLIHandler.arrayPrintAndRead(cliCharacters);
         Character chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
         return new CharacterChoiceEvent(getUser(),chosenCharacter);
+    }
+
+    @Override
+    public Event gameChoice() {
+        return null;
+    }
+
+    @Override
+    public Event actionChoice(boolean fireEnable) {
+        return null;
+    }
+
+    @Override
+    public Event reloadChoice(ArrayList<String> reloadableWeapons) {
+        return null;
+    }
+
+    @Override
+    public Event respawnChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+        return null;
+    }
+
+    @Override
+    public Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+    @Override
+    public Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+    @Override
+    public Event weaponChoice(ArrayList<String> availableWeapons) {
+        return null;
+    }
+
+    @Override
+    public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
+        return null;
+    }
+
+    @Override
+    public Event weaponTargetChoice(ArrayList<Character> availableTargets) {
+        return null;
+    }
+
+    @Override
+    public Event effectPaymentChoice() {
+        return null;
+    }
+
+    @Override
+    public Event targetPowerUpChoice() {
+        return null;
+    }
+
+    @Override
+    public Event powerUpChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+        return null;
+    }
+
+    @Override
+    public void positionChoice() {
+
     }
 
     @Override

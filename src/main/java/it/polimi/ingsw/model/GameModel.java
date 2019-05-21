@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedEvent;
+import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
 import it.polimi.ingsw.model.board.GameBoard;
 import it.polimi.ingsw.model.player.Player;
 
@@ -33,7 +32,7 @@ public class GameModel extends Observable{
      */
     public void addPlayer(Player newPlayer){
         players.add(newPlayer);
-        NewPlayerJoinedEvent message = new NewPlayerJoinedEvent(newPlayer.getUsername());
+        NewPlayerJoinedUpdateEvent message = new NewPlayerJoinedUpdateEvent(newPlayer.getUsername());
         notifyObservers(message);
     }
 

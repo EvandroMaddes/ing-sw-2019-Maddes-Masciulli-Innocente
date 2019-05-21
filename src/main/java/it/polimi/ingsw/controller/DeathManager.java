@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.RespownRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.RespawnRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -39,7 +39,7 @@ public class DeathManager {
         Map<String, CubeColour> powerUpsLite = new HashMap<>();
         for (PowerUp p: deadPlayer.getPowerUps())
             powerUpsLite.put(p.getName(), p.getColour());
-        Controller.callView(new RespownRequestEvent(deadPlayer.getUsername(), powerUpsLite));
+       // Controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), powerUpsLite));
     }
 
     public void spawn(String powerUp, CubeColour cardColour){
