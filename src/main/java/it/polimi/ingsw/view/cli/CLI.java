@@ -54,8 +54,16 @@ public class CLI extends RemoteView {
         for (Character currCharacter:availableCharacters) {
             cliCharacters.add(mapCharacterNameColors.get(currCharacter)+currCharacter.name());
         }
-        String chosenStringCharacter = CLIHandler.arrayPrintAndRead(cliCharacters);
-        Character chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+        Character chosenCharacter = null;
+        while(chosenCharacter==null) {
+            try{
+                String chosenStringCharacter = CLIHandler.arrayPrintAndRead(cliCharacters);
+                chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+            }catch(IllegalArgumentException e){
+                chosenCharacter = null;
+            }
+
+        }
         return new CharacterChoiceEvent(getUser(),chosenCharacter);
     }
 

@@ -81,19 +81,20 @@ public class Client {
 
 
 
+    try {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
-            try {
-                clientImplementation = new RMIClient(user,
-                        NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1,
-                                        serverIPAddress);
-            } catch (RemoteException e) {
-                CustomLogger.logException(e);
-            }
-        }
-        else {
+
+            clientImplementation = new RMIClient(user,
+                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1, serverIPAddress);
+
+        } else {
             clientImplementation = new SocketClient(user, serverIPAddress);
         }
-
+    }
+    catch(Exception e){
+        log.warning("Can't reach the Server!!\n\nClosing the app..");
+        CustomLogger.logException(e);
+    }
 
         boolean connected = true;
 
