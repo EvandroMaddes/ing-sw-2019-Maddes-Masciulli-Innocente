@@ -1,6 +1,7 @@
 package it.polimi.ingsw.event.model_view_event;
 
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
     }
 
     @Override
-    public void performAction(RemoteView remoteView) {
+    public Event performAction(RemoteView remoteView) {
+        //todo aggiorna la risorsa sul client
 
+        return null;
     }
 }

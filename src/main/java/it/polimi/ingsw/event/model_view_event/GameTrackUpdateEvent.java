@@ -1,5 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
+import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -8,7 +9,7 @@ import it.polimi.ingsw.view.RemoteView;
  * represent a GameTrack Update, when a player is killed
  *  or  (DominationMod) when a SpawnSquare is damaged
  */
-public class GameTrackUpdateEvent extends Event {
+public class GameTrackUpdateEvent extends ModelViewEvent {
     private int damageTokenNumber;
 
     /**
@@ -23,4 +24,10 @@ public class GameTrackUpdateEvent extends Event {
        // type= EventType.GameTrackUpdateEvent;
     }
 
+    @Override
+    public Event performAction(RemoteView remoteView) {
+        //todo aggiorna la risorsa sul client
+
+        return null;
+    }
 }

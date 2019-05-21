@@ -3,14 +3,12 @@ package it.polimi.ingsw.event.controller_view_event;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
-import java.util.ArrayList;
+public class ActionRequestEvent extends ControllerViewEvent {
+    private boolean fireEnable;
 
-public class WeaponRequestEvent extends ControllerViewEvent {
-    private ArrayList<String> weapons;
-
-    public WeaponRequestEvent(String user, ArrayList<String> weapons) {
+    public ActionRequestEvent(String user, boolean couldFire) {
         super(user);
-        this.weapons = weapons;
+        fireEnable=couldFire;
     }
 
     @Override

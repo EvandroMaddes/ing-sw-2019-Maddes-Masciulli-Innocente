@@ -60,4 +60,6 @@ public abstract class RemoteView implements RemoteViewInterface{
         //todo riceve un messagio dalla virtual view e chiama metodi coder(?)
    }
 
+
+
 }
