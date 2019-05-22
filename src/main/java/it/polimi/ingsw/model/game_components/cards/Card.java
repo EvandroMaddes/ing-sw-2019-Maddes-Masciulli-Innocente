@@ -71,15 +71,6 @@ public abstract class Card implements BaseFightAction {
     }
 
 
-    public void damage(ArrayList<Player> target, int amount, Player damager)
-    {
-        Iterator iterator = target.iterator();
-        while(iterator.hasNext()){
-            ((Player)iterator.next()).getPlayerBoard().addDamages(damager, amount);
-        }
-
-    }
-
     @Override
     public void mark(Player target, int amount) {
         target.getPlayerBoard().addMarks(getOwner(),amount);
@@ -91,13 +82,6 @@ public abstract class Card implements BaseFightAction {
         target.getPlayerBoard().addDamages(getOwner(),amount);
     }
 
-    public void mark(ArrayList<Player> target, int amount, Player marker)
-    {
-        Iterator iterator = target.iterator();
-        while(iterator.hasNext()){
-            ((Player)iterator.next()).getPlayerBoard().addMarks(marker,amount);
-        }
-    }
 
     /**
      * todo Exception da pack java.security?? non si gestisce l'eccezione

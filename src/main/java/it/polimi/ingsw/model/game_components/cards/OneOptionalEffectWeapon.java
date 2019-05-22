@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.game_components.cards;
 
-import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
@@ -8,56 +7,32 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.ArrayList;
 
 
-public abstract class OneOptionalEffectWeapon extends Weapon {
+public abstract class OneOptionalEffectWeapon extends TwoEffectWeapon {
 
-    private AmmoCube[] firstOptionalEffectCost;
+    ArrayList<Player> firstEffectTarget;
 
-    /**
-     *
-     * @param colour
-     * @param name
-     * @param reloadCost
-     * @param firstOptionalEffectCost cost of the firsts (and maybe only) optional effect
-     */
-    public OneOptionalEffectWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost)
-    {
-        super(colour, name, new boolean[1], reloadCost);
-        this.firstOptionalEffectCost = firstOptionalEffectCost;
+    public OneOptionalEffectWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
+        super(colour, name, reloadCost, secondEffectCost);
+        firstEffectTarget = new ArrayList<>();
     }
 
-
-
-    public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
-        switch (selectedEffect){
-            case 1:{
-                fireBaseEffect(targets, destination);
-                break;
-            }
-            case 2:{
-                fireFirstOptionalEffect(targets, destination);
-                break;
-            }
-        }
-    }
-    public ArrayList<Player> getTargets(int selectedEffect){
-        // switch
-        ArrayList<Player> targets = new ArrayList<>();
-        switch (selectedEffect){
-            case 1:{
-               targets = getTargetsBaseEffect();
-                break;
-            }
-            case 2:{
-               targets = getTargetsFirstOptionalEffect();
-                break;
-            }
-        }
-
-        return targets;
+    @Override
+    public void setLoaded() {
+        super.setLoaded();
+        firstEffectTarget.clear();
     }
 
-    public abstract ArrayList<Player> getTargetsFirstOptionalEffect();
-    public abstract void fireFirstOptionalEffect(ArrayList<Player> targets, Square destination);
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if (effectUsed != 2 && getUsableEffect()[effectUsed])
+            getUsableEffect()[effectUsed] = false;
+        else
+            throw new IllegalArgumentException();
+    }
 
+    public ArrayList<Player> getFirstEffectTarget() {
+        return firstEffectTarget;
+    }
 
 }

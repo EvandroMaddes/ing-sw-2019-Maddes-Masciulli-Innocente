@@ -1,79 +1,30 @@
 package it.polimi.ingsw.model.game_components.cards;
 
-import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.player.Player;
 
-import java.util.ArrayList;
+public abstract class AlternateFireWeapon extends TwoEffectWeapon {
 
-
-public abstract class AlternateFireWeapon extends Weapon {
-
-    private AmmoCube[] alternativeEffectCost;
-
-    /**
-     * Constructor
-     * @param alternativeEffectCost
-     */
-
-    public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
-        super(colour, name, new boolean[1], reloadCost);
-        this.alternativeEffectCost = alternativeEffectCost;
+    public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
+        super(colour, name, reloadCost, secondEffectCost);
     }
 
     /**
-     *
-     * @param targets
-     * @param destination
-     * @param selectedEffect
+     * for the alternative effect weapon, by default if one effect is used all usable are setted to false
+     * @param effectUsed
      */
-    public void fire(ArrayList<Player> targets, Square destination, int selectedEffect) {
-        switch (selectedEffect){
-            case 1:{
-                fireBaseEffect(targets, destination);
-                break;
-            }
-            case 2:{
-             fireAlternativeEffect(targets,destination);
-                break;
-            }
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if ( (effectUsed == 0 || effectUsed == 1) && getUsableEffect()[effectUsed] ){
+            updateUsableEffect(new boolean[]{false, false, false});
         }
+        else
+            throw new IllegalArgumentException("EffectControlFlow error");
     }
 
-    /**
-     *
-     * @param selectedEffect
-     * @return
-     */
-    public ArrayList<Player> getTargets(int selectedEffect){
-        // switch
-        ArrayList<Player> targets = new ArrayList<>();
-        switch (selectedEffect){
-            case 1:{
-               targets = getTargetsBaseEffect();
-                break;
-            }
-            case 2:{
-               targets = getTargetsAlternativeEffect();
-                break;
-            }
-        }
-
-        return targets;
+    @Override
+    public boolean isUsable() {
+        return isLoaded() && ( (isUsableEffectOne() && getUsableEffect()[0] ) || ( isUsableEffectTwo() && getUsableEffect()[1] ) );
     }
-
-    /**
-     *
-     * @return
-     */
-    public abstract ArrayList<Player> getTargetsAlternativeEffect();
-
-    /**
-     *
-     * @param targets
-     * @param destination
-     */
-    public abstract void fireAlternativeEffect(ArrayList<Player> targets, Square destination);
-
 }

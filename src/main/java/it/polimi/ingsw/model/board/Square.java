@@ -171,11 +171,11 @@ public abstract class Square extends Observable {
      ArrayList<Player> visiblePlayers = new ArrayList<Player>();
 
 
-    visiblePlayers.addAll(findRoomPlayers(this,this.getSquareColour())); // player in the same room of current square);
+     visiblePlayers.addAll(findRoomPlayers(this,this.getSquareColour())); // player in the same room of current square);
 
      for(int i =0; i<4; i++){
          if(checkDirection(i) && getNextSquare(i).getSquareColour()!= this.getSquareColour())
-         visiblePlayers.addAll(findRoomPlayers(getNextSquare(i),getNextSquare(i).getSquareColour()));//player in room near current square
+            visiblePlayers.addAll(findRoomPlayers(getNextSquare(i),getNextSquare(i).getSquareColour()));//player in room near current square
      }
 
       return visiblePlayers;
