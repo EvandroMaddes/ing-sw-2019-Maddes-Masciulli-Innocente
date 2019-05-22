@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 public abstract class CardChoiceEvent extends ViewControllerEvent {
 
     private String card;
-    private CubeColour cardColour;
+
 
     /**
      * Constructor
@@ -17,17 +17,13 @@ public abstract class CardChoiceEvent extends ViewControllerEvent {
      * @param user     the Client user
      * @param card     the selected Card
      */
-    public CardChoiceEvent(String user, String card, CubeColour cardColour) {
+    public CardChoiceEvent(String user, String card) {
         super(user);
-        this.card = card;
-        this.cardColour = cardColour;
     }
 
     public String getCard() {
         return card;
     }
 
-    public CubeColour getCardColour() {
-        return cardColour;
-    }
+
 }

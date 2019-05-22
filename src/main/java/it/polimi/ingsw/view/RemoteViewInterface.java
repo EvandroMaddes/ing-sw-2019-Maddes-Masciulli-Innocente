@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public interface RemoteViewInterface {
    Event weaponChoice(ArrayList<String> availableWeapons);
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
    Event weaponTargetChoice(ArrayList<Character> availableTargets);
+   Event weaponDiscardChoice(ArrayList<Weapon> yourWeapon);
 
    //todo fare per ultimi
    Event effectPaymentChoice();

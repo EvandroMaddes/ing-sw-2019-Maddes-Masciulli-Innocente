@@ -11,6 +11,8 @@ public class GameRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+
+        return  remoteView.gameChoice();
+
     }
 }

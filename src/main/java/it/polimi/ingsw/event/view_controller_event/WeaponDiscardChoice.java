@@ -5,8 +5,8 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 public class WeaponDiscardChoice extends CardChoiceEvent {
 
-    public WeaponDiscardChoice(String user, String card, CubeColour cardColour) {
-        super(user, card, cardColour);
+    public WeaponDiscardChoice(String user, String card ) {
+        super(user, card );
     }
 
     @Override

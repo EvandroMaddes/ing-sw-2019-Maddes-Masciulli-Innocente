@@ -5,8 +5,8 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 public class WeaponReloadChoiceEvent extends CardChoiceEvent {
 
-    public WeaponReloadChoiceEvent(String user, String card, CubeColour cardColour) {
-        super(user, card, cardColour);
+    public WeaponReloadChoiceEvent(String user, String card ) {
+        super(user, card);
     }
 
     @Override

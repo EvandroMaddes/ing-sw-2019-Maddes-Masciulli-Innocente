@@ -11,4 +11,11 @@ public abstract class PositionRequestEvent extends ControllerViewEvent {
     }
 
 
+    public int[] getPossibleSquareY() {
+        return possibleSquareY;
+    }
+
+    public int[] getPossibleSquareX() {
+        return possibleSquareX;
+    }
 }

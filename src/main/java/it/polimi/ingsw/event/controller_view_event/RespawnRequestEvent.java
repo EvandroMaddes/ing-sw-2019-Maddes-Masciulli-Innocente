@@ -16,6 +16,8 @@ public class RespawnRequestEvent extends PowerUpRequestEvent {
     //TODO Anche per primo spawn,il metodo deve essere diverso dalla classe che estende
     @Override
     public Event performAction(RemoteView remoteView) {
-        return super.performAction(remoteView);
+
+        return remoteView.respawnChoice(getPowerUpNames(),getPowerUpColours());
+        //todo oppure verificare che vada bene return super.performAction(remoteView);
     }
 }

@@ -11,8 +11,12 @@ public class ActionRequestEvent extends ControllerViewEvent {
         fireEnable=couldFire;
     }
 
+    public boolean isFireEnable() {
+        return fireEnable;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.actionChoice(isFireEnable());
     }
 }

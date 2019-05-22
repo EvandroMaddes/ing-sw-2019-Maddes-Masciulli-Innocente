@@ -14,6 +14,6 @@ public class WeaponTargetRequestEvent extends CharacterRequestEvent {
     //todo occhio va reimplementato?
     @Override
     public Event performAction(RemoteView remoteView) {
-        return super.performAction(remoteView);
+        return remoteView.weaponTargetChoice(getAvailableCharacter());
     }
 }

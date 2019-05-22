@@ -4,9 +4,15 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 public class SpownChoiceEvent extends CardChoiceEvent {
+    private CubeColour cardColour;
+
+    public CubeColour getCardColour() {
+        return cardColour;
+    }
 
     public SpownChoiceEvent(String user, String card, CubeColour cardColour) {
-        super(user, card, cardColour);
+        super(user, card);
+        this.cardColour = cardColour;
     }
 
     @Override
