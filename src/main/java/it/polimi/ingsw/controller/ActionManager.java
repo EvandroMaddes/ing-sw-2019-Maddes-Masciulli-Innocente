@@ -123,7 +123,7 @@ public class ActionManager {
      * send a message with all possible destination
      */
     public void sendPossibleMoves(){
-        ArrayList<Square> possibleSquare = getValidator().avaibleMoves(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().aviableMoves(currentRoundManager.getCurrentPlayer());
         int[] possibleSquareX = new int[possibleSquare.size()];
         int[] possibleSquareY = new int[possibleSquare.size()];
         int i = 0;
@@ -140,7 +140,7 @@ public class ActionManager {
      * send a message with possible grab square
      */
     public void sendPossibleGrabs(){
-        ArrayList<Square> possibleSquare = getValidator().avaibleGrab(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().aviableGrab(currentRoundManager.getCurrentPlayer());
         int[] possibleSquareX = new int[possibleSquare.size()];
         int[] possibleSquareY = new int[possibleSquare.size()];
         int i = 0;
@@ -188,8 +188,9 @@ public class ActionManager {
                 usablePowerUps.put(p.getName(),p.getColour());
         }
         if (!usablePowerUps.isEmpty()) {
-            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), usablePowerUps);
-            Controller.callView(message);
+            // TODO: 2019-05-22 aggiornare il metodo qua sotto che era stato sminchiato dalla map
+            //PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), usablePowerUps);
+            //Controller.callView(message);
         }
         else
             currentRoundManager.nextPhase();

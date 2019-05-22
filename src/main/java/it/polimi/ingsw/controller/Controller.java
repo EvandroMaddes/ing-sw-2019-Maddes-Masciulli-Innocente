@@ -32,4 +32,3 @@ public class Controller implements Observer {
         // TODO: 2019-05-18   
     }
 }
-

@@ -17,8 +17,8 @@ public class BaseActionValidator extends Validator {
      * @param player is the player that move
      * @return all possible destination
      */
-    public ArrayList<Square> avaibleMoves(Player player){
-        return reachbleInMoves(player.getPosition(), 3);
+    public ArrayList<Square> aviableMoves(Player player){
+        return reachableInMoves(player.getPosition(), 3);
     }
 
     @Override
@@ -27,8 +27,8 @@ public class BaseActionValidator extends Validator {
      * @param player is the moving player
      * @return all possible grabbable square
      */
-    public ArrayList<Square> avaibleGrab(Player player){
-        ArrayList<Square> grabbableSquare = reachbleInMoves(player.getPosition(), 1);
+    public ArrayList<Square> aviableGrab(Player player){
+        ArrayList<Square> grabbableSquare = reachableInMoves(player.getPosition(), 1);
         for (Square currentSquare: grabbableSquare) {
             if (!currentSquare.isGrabbable(player))
                 grabbableSquare.remove(currentSquare);

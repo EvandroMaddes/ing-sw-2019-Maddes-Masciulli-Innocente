@@ -22,6 +22,6 @@ public class TargetSquareRequestEvent extends ControllerViewEvent {
 
     @Override
     public void performAction(RemoteView remoteView) {
-        // TODO: 2019-05-22  
+        // TODO: 2019-05-22
     }
 }
