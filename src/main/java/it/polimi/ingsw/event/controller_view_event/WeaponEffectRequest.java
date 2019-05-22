@@ -11,8 +11,12 @@ public class WeaponEffectRequest extends ControllerViewEvent {
         this.availableEffect=availableEffect;
     }
 
+    public boolean[] getAvailableEffect() {
+        return availableEffect;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.weaponEffectChoice(getAvailableEffect());
     }
 }

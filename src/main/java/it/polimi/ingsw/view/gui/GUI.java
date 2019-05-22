@@ -27,7 +27,17 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event weaponDiscardChoice(ArrayList<Weapon> yourWeapon) {
+    public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
+        return null;
+    }
+
+    @Override
+    public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+    @Override
+    public Event weaponDiscardChoice(ArrayList<String> yourWeapon) {
         return null;
     }
 
@@ -71,10 +81,6 @@ public class GUI extends RemoteView {
         return null;
     }
 
-    @Override
-    public Event weaponTargetChoice(ArrayList<Character> availableTargets) {
-        return null;
-    }
 
     @Override
     public Event effectPaymentChoice() {

@@ -61,7 +61,8 @@ public class CLI extends RemoteView {
         Character chosenCharacter = null;
         while(chosenCharacter==null) {
             try{
-                String chosenStringCharacter = CLIHandler.arrayPrintAndRead(cliCharacters);
+                CLIHandler.arrayPrint(cliCharacters);
+                String chosenStringCharacter = CLIHandler.stringRead();
                 chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
             }catch(IllegalArgumentException e){
                 chosenCharacter = null;
@@ -142,13 +143,19 @@ public class CLI extends RemoteView {
         while (weaponSelected==null) {
             try {
                 System.out.println("You choose to reload ");
-                weaponSelected = CLIHandler.arrayPrintAndRead(reloadableWeapons);
+                CLIHandler.arrayPrint(reloadableWeapons);
+                weaponSelected = CLIHandler.stringRead();
             } catch (IllegalArgumentException e) {
                 weaponSelected = null;
 
             }
         }
         return new WeaponReloadChoiceEvent(getUser(),weaponSelected);
+    }
+
+    @Override
+    public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
     }
 
     /**
@@ -164,7 +171,8 @@ public class CLI extends RemoteView {
         while (chosenPowerUp == null) {
             try {
                 System.out.println("You should respwan");
-                chosenPowerUp = CLIHandler.arrayPrintAndRead(powerUpNames).toUpperCase();
+                CLIHandler.arrayPrint(powerUpNames);
+                chosenPowerUp =CLIHandler.stringRead().toUpperCase();
             } catch (IllegalArgumentException e) {
                 chosenPowerUp = null;
             }
@@ -220,8 +228,19 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event weaponDiscardChoice(ArrayList<Weapon> yourWeapon) {
-        return null;
+    public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
+        String weaponSelected = null;
+        while (weaponSelected==null) {
+            try {
+                System.out.println("You choose to reload ");
+                CLIHandler.arrayPrint(yourWeapons);
+                weaponSelected = CLIHandler.stringRead();
+            } catch (IllegalArgumentException e) {
+                weaponSelected = null;
+
+            }
+        }
+        return new WeaponDiscardChoice(getUser(),weaponSelected);
     }
 
     /**
@@ -235,7 +254,8 @@ public class CLI extends RemoteView {
         while (weaponSelected==null) {
             try {
                 System.out.println("You choose to fire ");
-                weaponSelected = CLIHandler.arrayPrintAndRead(availableWeapons);
+                CLIHandler.arrayPrint(availableWeapons);
+                weaponSelected = CLIHandler.stringRead();
             } catch (IllegalArgumentException e) {
                 weaponSelected = null;
 
@@ -246,7 +266,24 @@ public class CLI extends RemoteView {
 
     @Override
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
-        return null;
+        int effectChoice = 404;
+
+        for (int i =0; i<= availableWeaponEffects.length;i++)
+        {
+            System.out.println("effetto "+i);
+        }
+        while (effectChoice == 404){
+            try {
+
+                System.out.flush();
+
+                effectChoice = CLIHandler.intRead();
+            }catch (IllegalArgumentException e){
+                effectChoice = 404;
+            }
+        }
+
+        return new WeaponEffectChioceEvent(getUser(),effectChoice);
     }
 
     /**
@@ -255,8 +292,28 @@ public class CLI extends RemoteView {
      * @return
      */
     @Override
-    public Event weaponTargetChoice(ArrayList<Character> availableTargets) {
-        return null;
+    public Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget) {
+        ArrayList<String> cliCharacters = new ArrayList<>();
+        ArrayList<Character> targetCharacter = new ArrayList<>();
+        for (Character currCharacter:availableTargets) {
+            cliCharacters.add(mapCharacterNameColors.get(currCharacter)+currCharacter.name());
+        }
+        CLIHandler.arrayPrint(cliCharacters);
+        Character chosenCharacter = null;
+        for (int i=0; i<=numTarget; i++){
+            while(chosenCharacter==null) {
+                try {
+                 String chosenStringCharacter = CLIHandler.stringRead();
+                 chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+
+             } catch (IllegalArgumentException e) {
+                    chosenCharacter = null;
+                }
+                targetCharacter.add(chosenCharacter);
+            }
+        }
+
+        return new WeaponTargetChoiceEvent(getUser(),targetCharacter );
     }
 
     @Override

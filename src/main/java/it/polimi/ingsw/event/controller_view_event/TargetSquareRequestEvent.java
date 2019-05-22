@@ -1,5 +1,6 @@
 package it.polimi.ingsw.event.controller_view_event;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
 public class TargetSquareRequestEvent extends ControllerViewEvent {
@@ -21,7 +22,7 @@ public class TargetSquareRequestEvent extends ControllerViewEvent {
     }
 
     @Override
-    public void performAction(RemoteView remoteView) {
-        // TODO: 2019-05-22
+    public Event performAction(RemoteView remoteView) {
+       return remoteView.weaponEffectSquareChoice(getPossibleTargetsX(),getPossibleTargetsY());
     }
 }

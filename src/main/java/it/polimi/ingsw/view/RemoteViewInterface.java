@@ -31,8 +31,9 @@ public interface RemoteViewInterface {
    Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event weaponChoice(ArrayList<String> availableWeapons);
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
-   Event weaponTargetChoice(ArrayList<Character> availableTargets);
-   Event weaponDiscardChoice(ArrayList<Weapon> yourWeapon);
+   Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
+   Event weaponDiscardChoice(ArrayList<String> yourWeapon);
+   Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
 
    //todo fare per ultimi
    Event effectPaymentChoice();
