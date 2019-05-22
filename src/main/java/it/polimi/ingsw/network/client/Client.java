@@ -1,7 +1,10 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.NetConfiguration;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
@@ -35,7 +38,7 @@ public class Client {
         String user;
         String connectionType;
         String serverIPAddress;
-        Event  currentMessage;
+        Event  currentMessage = null;
         try {
             gameInterface = args[0];
         }catch(IndexOutOfBoundsException e){
@@ -51,11 +54,21 @@ public class Client {
           else{
               remoteViewImplementation = new CLI();
           }
+
+
         /**
          * PROVA
          */
         remoteViewImplementation.printScreen();
         System.out.println();
+        ArrayList<Character> availableTestedCharacter = new ArrayList<>();
+        availableTestedCharacter.add(Character.SPROG);
+        availableTestedCharacter.add(Character.BANSHEE);
+        availableTestedCharacter.add(Character.D_STRUCT_OR);
+        availableTestedCharacter.add(Character.DOZER);
+        availableTestedCharacter.add(Character.VIOLET);
+        ClientEvent testEvent = new CharacterRequestEvent(remoteViewImplementation.getUser(), availableTestedCharacter);
+        Event returnedEvent = testEvent.performAction(remoteViewImplementation);
 
         /**
          * FINE PROVA
@@ -68,19 +81,20 @@ public class Client {
 
 
 
+    try {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
-            try {
-                clientImplementation = new RMIClient(user,
-                        NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1,
-                                        serverIPAddress);
-            } catch (RemoteException e) {
-                CustomLogger.logException(e);
-            }
-        }
-        else {
+
+            clientImplementation = new RMIClient(user,
+                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1, serverIPAddress);
+
+        } else {
             clientImplementation = new SocketClient(user, serverIPAddress);
         }
-
+    }
+    catch(Exception e){
+        log.warning("Can't reach the Server!!\n\nClosing the app..");
+        CustomLogger.logException(e);
+    }
 
         boolean connected = true;
 
@@ -103,6 +117,20 @@ public class Client {
                     log.info("Server was disconnected!");
                 }
             }
+            //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
+
+            try{
+                currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
+
+
+            }catch(NullPointerException e){
+                CustomLogger.logException(e);
+            }
+            //todo if currentMessage != null invia al server
+
+
+
+            //todo è una prova di connessione;
             clientImplementation.sendMessage(new GameChoiceEvent(user, 1, 1));
             log.info("Message sent to Server");
         }

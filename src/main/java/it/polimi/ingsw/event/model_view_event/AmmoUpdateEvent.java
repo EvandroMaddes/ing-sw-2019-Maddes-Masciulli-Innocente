@@ -1,5 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -15,7 +16,9 @@ public class AmmoUpdateEvent extends ModelViewEvent {
     }
 
     @Override
-    public void performAction(RemoteView remoteView) {
+    public Event performAction(RemoteView remoteView) {
+        //todo aggiorna la risorsa sul client, il Event tornato dalla view è null, da cambiare return
 
+        return null;
     }
 }

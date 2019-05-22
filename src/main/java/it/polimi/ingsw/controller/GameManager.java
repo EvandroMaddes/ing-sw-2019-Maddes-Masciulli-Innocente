@@ -38,6 +38,10 @@ public class GameManager {
         model = new GameModel (buildGameBoard(mapChoice));
     }
 
+    public GameModel getModel() {
+        return model;
+    }
+
     /**
      *
      * @return the builded map

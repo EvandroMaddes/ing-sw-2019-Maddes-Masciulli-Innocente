@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
@@ -16,12 +17,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 
 public class Server {
     private static Logger log = Logger.getLogger("ServerLogger");
 
+
+    //forse copyonwriteArraylist
     private static ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private static RMIServer serverRMI;
     private static SocketServer serverSocket;
@@ -80,13 +84,16 @@ public class Server {
                     if(clientList.size()==1&&!setUpComplete){
                         String firstUser = clientList.get(0);
                         ServerInterface currServer = mapUserServer.get(firstUser);
-                        currServer.sendMessage(new GameChoiceEvent(firstUser,0,0));
+                        currServer.sendMessage(new GameRequestEvent(firstUser));
                         message = currServer.listenMessage();
+                        VirtualView currentView = mapUserView.get(message.getUser());
+                        //todo controlla se message è null
+                        currentView.toController(message);
                         setUpComplete = true;
                         log.info( "Listened message from:\t" + message.getUser());
 
                     }
-                    //todo parte subito dopo la terza connessione
+                    //todo aggiungere timer parte 60 secondi dopo la terza connessione
                     if(clientList.size() > 2) {
                         serverRMI.gameCouldStart();
                         serverSocket.gameCouldStart();
@@ -97,10 +104,10 @@ public class Server {
                 }
                 //todo ora si richiederanno personaggi ecc, legge da input se richiesto QUIT però non terminano i client
                 String inputCommand = reader.readLine();
-                if(inputCommand.equalsIgnoreCase("QUIT"))
-                {
+                if(inputCommand.equalsIgnoreCase("QUIT")) {
                     shutDown=true;
                 }
+
             }
 
 

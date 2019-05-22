@@ -18,7 +18,7 @@ public abstract class AlternateFireWeapon extends Weapon {
      */
 
     public AlternateFireWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
-        super(colour, name, reloadCost);
+        super(colour, name, new boolean[1], reloadCost);
         this.alternativeEffectCost = alternativeEffectCost;
     }
 
