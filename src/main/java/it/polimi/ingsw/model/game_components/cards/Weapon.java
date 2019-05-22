@@ -1,26 +1,25 @@
 package it.polimi.ingsw.model.game_components.cards;
 
-import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
+import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.player.Player;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
     private boolean loaded;
-    private final boolean[] effectsEnable;
+    private boolean[] effectsEnable;
     private boolean[] usableEffect;
 
 
-
-    public Weapon(CubeColour colour, String name, boolean[] effectsEnable, AmmoCube[] reloadCost) {
+    public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
         super(colour, name);
         this.reloadCost = reloadCost;
-        this.effectsEnable = effectsEnable;
-        loaded =true;
+        setEffectsEnable(new boolean[]{true, false, false});
+        setLoaded();
     }
 
     /**
@@ -40,38 +39,69 @@ public abstract class Weapon extends Card {
         return grabCost;
     }
 
-    /**
-     *
-     * @return loaded
-     */
     public boolean isLoaded()
     {
         return loaded;
     }
-    
+
     public void setUnloaded(){
         this.loaded = false;
     }
 
+    /**
+     * Set the weapon as loaded. The method can be overrided to set the usable effects
+     */
     public void setLoaded(){
         this.loaded = true;
+        setUsableEffect();
     }
 
-    public boolean canActivateAnEffect(){return false;}
+    public void updateUsableEffect(boolean[] newUsableEffect){
+        usableEffect = newUsableEffect;
+    }
 
-    public abstract void fire(ArrayList<Player> targets, Square destination , int selectedEffect);
+    public boolean[] getUsableEffect() {
+        return usableEffect;
+    }
 
-    public abstract ArrayList<Player> getTargets(int selectedEffect);
+    public boolean[] getEffectsEnable() {
+        return effectsEnable;
+    }
 
-    public abstract ArrayList<Player> getTargetsBaseEffect();
-
-    protected abstract void fireBaseEffect(ArrayList<Player> targets, Square destination);
-
-
-
-
+    public void setEffectsEnable(boolean[] effectsEnable) {
+        this.effectsEnable = effectsEnable;
+    }
 
 
 
+
+
+
+
+
+
+    protected void setUsableEffect(){
+        updateUsableEffect(new boolean[]{true, true, true});
+    }
+
+    public boolean isUsable(){
+        return isLoaded() && getUsableEffect()[0] && isUsableEffectOne();
+    }
+
+    public void effectControlFlow(int effectUsed){
+        effectUsed--;
+        if (effectUsed == 0 && getUsableEffect()[0] )
+            updateUsableEffect(new boolean[]{false, false, false});
+        else
+            throw new IllegalArgumentException("Effect control flow error");
+    }
+
+    public abstract void performEffectOne(List<Object> targets);
+
+    public abstract ControllerViewEvent getTargetEffectOne();
+
+    public boolean isUsableEffectOne(){
+        return effectsEnable[0] && usableEffect[0] && !((TargetPlayerRequestEvent)getTargetEffectOne()).getPossibleTargets().isEmpty();
+    }
 
 }

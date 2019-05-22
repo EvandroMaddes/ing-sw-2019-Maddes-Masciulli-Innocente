@@ -13,8 +13,8 @@ public class AdrenalinicGrabValidator extends BaseActionValidator {
      * @param player is the moving player
      * @return all possible grabbable square
      */
-    public ArrayList<Square> avaibleGrab(Player player){
-        ArrayList<Square> grabbableSquare = reachbleInMoves(player.getPosition(), 2);
+    public ArrayList<Square> aviableGrab(Player player){
+        ArrayList<Square> grabbableSquare = reachableInMoves(player.getPosition(), 2);
         for (Square currentSquare: grabbableSquare) {
             if (!currentSquare.isGrabbable(player))
                 grabbableSquare.remove(currentSquare);

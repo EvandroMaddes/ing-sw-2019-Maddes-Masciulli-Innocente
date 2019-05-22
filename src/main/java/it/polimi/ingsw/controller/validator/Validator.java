@@ -16,40 +16,44 @@ public abstract class Validator {
     /**
      * @param start         is the starting position
      * @param numberOfMoves is the numder of single move action between two squares
-     * @return an arreyList of all the square reachable from the start, start included
+     * @return an arrayList of all the square reachable from the start, start included
      */
-    public ArrayList<Square> reachbleInMoves(Square start, int numberOfMoves) {
-        ArrayList<Square> reachableSquare = new ArrayList<>();
-        ArrayList<Square> checkedSquare = new ArrayList<>();
-        reachableSquare.add(start);
-
-        for (int i = 1; i < numberOfMoves; i++) {
-            for (Square currentSquare : reachableSquare) {
-                for (int direction = 0; direction < currentSquare.getNearSquares().length && !checkedSquare.contains(currentSquare.getNearSquares()[direction]); direction++) {
-                    if (currentSquare.getReachable()[i]) {
-                        reachableSquare.add(currentSquare.getNearSquares()[i]);
+    public ArrayList<Square> reachableInMoves(Square start, int numberOfMoves) {
+        ArrayList<Square> reachAtPreviousStep = new ArrayList<>();
+        ArrayList<Square> reachInThatStep = new ArrayList<>();
+        ArrayList<Square> reachableSquares = new ArrayList<>();
+        reachAtPreviousStep.add(start);
+        reachableSquares.add(start);
+        for (int i = 0; i < numberOfMoves; i ++){
+            for (Square currentSquare: reachAtPreviousStep) {
+                for (int direction = 0; direction < 4; direction++){
+                    if(currentSquare.checkDirection(direction) && !reachAtPreviousStep.contains(currentSquare) && !reachInThatStep.contains(currentSquare)){
+                        reachInThatStep.add(currentSquare.getNextSquare(direction));
                     }
                 }
-                checkedSquare.add(currentSquare);
             }
+            reachableSquares.addAll(reachInThatStep);
+            reachAtPreviousStep.clear();
+            reachAtPreviousStep.addAll(reachInThatStep);
+            reachInThatStep.clear();
         }
-
-        return reachableSquare;
+        return reachableSquares;
     }
+
 
     /**
      *
      * @param player is the player who move
      * @return all possible destination square
      */
-    public abstract ArrayList<Square> avaibleMoves (Player player);
+    public abstract ArrayList<Square> aviableMoves(Player player);
 
     /**
      *
      * @param player is the player who grab
      * @return all the square in which the player can grab
      */
-    public abstract ArrayList<Square> avaibleGrab (Player player);
+    public abstract ArrayList<Square> aviableGrab(Player player);
 
     /**
      *
@@ -65,12 +69,8 @@ public abstract class Validator {
      * @return a list of all loaded weapons that can be used in that moment for a shot action
      */
     public ArrayList<Weapon> aviableToFireWeapons (Player player){
-        ArrayList<Weapon> weapons = new ArrayList<>();
-        for(int i = 0; i < player.getNumberOfWeapons(); i++){
-            if (player.getWeapons()[i].isLoaded() && player.getWeapons()[i].canActivateAnEffect())
-                weapons.add(player.getWeapons()[i]);
-        }
-        return weapons;
+        // TODO: 2019-05-22
+        return null;
     }
 
 }
