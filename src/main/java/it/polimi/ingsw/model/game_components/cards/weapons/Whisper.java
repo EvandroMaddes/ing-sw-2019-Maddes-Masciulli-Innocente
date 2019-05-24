@@ -23,7 +23,7 @@ public class Whisper extends Weapon {
      * @param reloadCost
      */
     public Whisper(CubeColour colour, String name, AmmoCube[] reloadCost) {
-        super(colour, name, new boolean[1], reloadCost);
+        super(colour, name, reloadCost);
     }
 
     @Override

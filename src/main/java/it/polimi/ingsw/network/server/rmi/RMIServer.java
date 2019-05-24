@@ -155,7 +155,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     }
 
 
-
     /**
      * RemoteInterface's methods implementations
      */

@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -35,12 +37,12 @@ public class Server {
 
 
     public static void main(String[] args){
-        ArrayList<VirtualView> virtualViewList = new ArrayList<VirtualView>();
+/*        ArrayList<VirtualView> virtualViewList = new ArrayList<VirtualView>();
         RMIServer serverRMI;
         SocketServer serverSocket;
         Map<String,ServerInterface> mapUserServer = new HashMap<>();
         Event message;
-
+*/
         try{
             serverRMI = new RMIServer();
             serverSocket = new SocketServer();
@@ -60,21 +62,35 @@ public class Server {
                 while(!gameCouldStart){
                     if(clientList.size() != serverSocket.getClientList().size() +
                             (serverRMI.getClientList()).size() ){
+                        int usernameNumber=0;
                         String connectedUser ="";
-                        for (String currUser: serverSocket.getClientList()
-                             ) { if(!clientList.contains(currUser)){
-                                    clientList.add(currUser);
-                                    mapUserServer.put(currUser,serverSocket);
-                                    connectedUser = currUser;
-                                }
+                        ArrayList<String> connectedList = serverSocket.getClientList();
+                        for (String currUser: connectedList) {
+                            usernameNumber = Collections.frequency(connectedList,currUser);
+                            if(!clientList.contains(currUser)){
+                                userAddAndMap(clientList,currUser+usernameNumber,serverRMI);
+                                connectedUser = currUser;
+                            }
+                            else if(usernameNumber>1){
+                                userAddAndMap(clientList,currUser+usernameNumber,serverSocket);
+                                connectedUser = currUser;
+                                //todo deve cambiare l'user in serverImplementation
+
+                            }
+
 
                         }
-                        for (String currUser: serverRMI.getClientList()
-                             ) {
+                        connectedList = serverRMI.getClientList();
+                        for (String currUser: connectedList) {
+                            usernameNumber = Collections.frequency(connectedList,currUser);
                             if(!clientList.contains(currUser)){
-                                clientList.add(currUser);
-                                mapUserServer.put(currUser,serverRMI);
+                                userAddAndMap(clientList,currUser,serverRMI);
                                 connectedUser = currUser;
+                            }
+                            else if(usernameNumber>1){
+                                userAddAndMap(clientList,currUser+usernameNumber,serverRMI);
+                                connectedUser = currUser;
+                                //todo deve cambiare l'user in serverImplementation
                             }
                         }
                         VirtualView userView = new VirtualView(connectedUser);
@@ -119,7 +135,10 @@ public class Server {
         }
     }
 
-
+    private static void userAddAndMap(ArrayList<String> clientList, String currUser, ServerInterface serverImplementation){
+        clientList.add(currUser);
+        mapUserServer.put(currUser,serverImplementation);
+    }
 
 
 }

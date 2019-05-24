@@ -43,7 +43,6 @@ public class Client {
             gameInterface = args[0];
         }catch(IndexOutOfBoundsException e){
             //Default: CLI, if no arguments are passed to main()
-            CustomLogger.logException(e);
             gameInterface = "CLI";
         }
 

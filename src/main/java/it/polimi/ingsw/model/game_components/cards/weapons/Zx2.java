@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game_components.cards.weapons;
 
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.model.game_components.cards.AlternateFireWeapon;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Zx2 extends AlternateFireWeapon {
     /**
@@ -60,4 +62,26 @@ public class Zx2 extends AlternateFireWeapon {
              throw new IllegalArgumentException("targets aren?t in three different rooms");// lanciata se i tre bersagli non sono in tre stanze differenti
 
     }
+
+    @Override
+    public ControllerViewEvent getTargetEffectOne() {
+        return null;
+    }
+
+    @Override
+    public ControllerViewEvent getTargetEffectTwo() {
+        return null;
+    }
+
+
+    @Override
+    public void performEffectOne(List<Object> targets) {
+
+    }
+
+    @Override
+    public void performEffectTwo(List<Object> targets) {
+
+    }
+
 }

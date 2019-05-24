@@ -49,10 +49,13 @@ public class WeaponTest {
 
     }
 
+
+
     /**
      * @author evandro Maddes
      * checks the metods of alternative weapon
      */
+   /*
     @Test
     public void alternativeWeaponTest(){
         for (Object weapon: weaponDeck.getDeck()
@@ -77,12 +80,12 @@ public class WeaponTest {
         assertEquals(1, target.size());
 
     }
-
+*/
     /**
      * @author evandro Maddes
      * checks the metods of two optional weapon
      */
-    @Test
+/*    @Test
     public void twoOptionalWeaponTest(){
         for (Object weapon: weaponDeck.getDeck()
         ) {
@@ -109,12 +112,12 @@ public class WeaponTest {
         assertEquals(1, target.size());
 
     }
-
+*/
     /**
      * @author evandro Maddes
      * checks the metods of one optional weapon
      */
-    @Test
+/*    @Test
     public void oneOptionalWeaponTest(){
 
         for (Object weapon: weaponDeck.getDeck()
@@ -142,8 +145,8 @@ public class WeaponTest {
 
 
     }
-
-    @Test
+*/
+/*    @Test
     public void onlyOneEffectWeaponTest(){
         for (Object weapon: weaponDeck.getDeck()
         ) {
@@ -159,6 +162,6 @@ public class WeaponTest {
         ((Whisper)currentWeapon).fire(target,square2,1);
 
     }
-
+*/
 
 }
