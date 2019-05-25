@@ -340,4 +340,19 @@ public class CLI extends RemoteView {
     public void printScreen() {
         map.plot();
     }
+
+    /**
+     * Every tima one player joins the game it's notified to other player
+     * @param newPlayer
+     * @return
+     */
+    @Override
+    public Event newPlayerJoinedUpdate(String newPlayer) {
+
+
+        System.out.println("New player joined the game:"+newPlayer);
+             //TODO   "character choice:"+mapCharacterNameColors.get(newPlayer));
+
+        return new UpdateChoiceEvent(getUser());
+    }
 }

@@ -106,4 +106,8 @@ public class GUI extends RemoteView {
 
     }
 
+    @Override
+    public Event newPlayerJoinedUpdate(String newPlayer) {
+        return null;
+    }
 }
