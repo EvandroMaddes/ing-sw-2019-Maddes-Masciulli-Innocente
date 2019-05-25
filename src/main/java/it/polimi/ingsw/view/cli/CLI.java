@@ -18,7 +18,7 @@ import java.util.Map;
 public class CLI extends RemoteView {
 
 
-    private CLIMap map = new CLIMap();
+    private CLIMap map;
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character,String>(Character.class);
     //todo map tra colore arma e nome arma
     // todo map tra powerUp e relativo colore
@@ -33,6 +33,7 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
     }
+
 
 
 
@@ -78,7 +79,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event gameChoice() {
-        int map = 5;
+        int map = 404;
         while (map == 404) {
             try {
 
@@ -91,6 +92,7 @@ public class CLI extends RemoteView {
                         System.out.flush();
 
                 map = CLIHandler.intRead();
+                this.map = new CLIMap(map);
             } catch (IllegalArgumentException e) {
 
                 map = 404;

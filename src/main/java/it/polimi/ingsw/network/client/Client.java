@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.client;
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.NetConfiguration;
@@ -56,11 +57,15 @@ public class Client {
 
 
         /**
-         * PROVA
+         *!!!!
+         * !!!!!PROVA
+         * !!!
          */
+        remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
-        ArrayList<Character> availableTestedCharacter = new ArrayList<>();
+        System.out.flush();
+    /*    ArrayList<Character> availableTestedCharacter = new ArrayList<>();
         availableTestedCharacter.add(Character.SPROG);
         availableTestedCharacter.add(Character.BANSHEE);
         availableTestedCharacter.add(Character.D_STRUCT_OR);
@@ -69,14 +74,17 @@ public class Client {
         ClientEvent testEvent = new CharacterRequestEvent(remoteViewImplementation.getUser(), availableTestedCharacter);
         Event returnedEvent = testEvent.performAction(remoteViewImplementation);
 
+     */
         /**
-         * FINE PROVA
+         * !!!
+         * !!!FINE PROVA
+         * !!!
          */
 
         String[] userInput = remoteViewImplementation.gameInit();
-          user = userInput[0];
-          connectionType = userInput[1];
-          serverIPAddress = userInput[2];
+        user = userInput[0];
+        connectionType = userInput[1];
+        serverIPAddress = userInput[2];
 
 
 

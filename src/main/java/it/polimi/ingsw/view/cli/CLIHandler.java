@@ -11,7 +11,8 @@ public class CLIHandler {
 
     public static String stringPrintAndRead(String printedString){
         String returnedString = "";
-        System.out.print(Color.RESET.escape());
+        //System.out.print(Color.RESET.escape());
+        System.out.flush();
         while(returnedString.isEmpty()) {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+printedString+"\t");
             System.out.flush();
