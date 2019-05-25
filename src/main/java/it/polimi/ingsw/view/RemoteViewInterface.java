@@ -35,6 +35,9 @@ public interface RemoteViewInterface {
    Event weaponDiscardChoice(ArrayList<String> yourWeapon);
    Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
 
+   //following methods manage UpdateEvent
+   Event newPlayerJoinedUpdate(String newPlayer);
+
    //todo fare per ultimi
    Event effectPaymentChoice();
    Event targetPowerUpChoice();
