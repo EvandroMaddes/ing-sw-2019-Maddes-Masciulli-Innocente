@@ -154,6 +154,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         gameCouldStart=true;
     }
 
+    @Override
+    public void updateUsername(String username, String newUser) {
+
+    }
 
     /**
      * RemoteInterface's methods implementations
@@ -188,11 +192,12 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public synchronized void remoteSendMessage(Event message) throws RemoteException {
-        for(int i=0; i<clientList.size();i++){
+        for(int i=clientList.size()-1; i>=0;i--){
             RemoteInterface currentClient =  clientList.get(i);
 
             if(currentClient.getUser().equals(message.getUser())){
                 (clientList.get(i)).remoteSetCurrEvent(message);
+                return;
                 //clientList.get(i).remoteListenMessage();
             }
         }

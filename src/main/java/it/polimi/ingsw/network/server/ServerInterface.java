@@ -13,4 +13,5 @@ public interface ServerInterface extends NetworkHandler {
     void sendBroadcast(Event message);
     void shutDown();
     void gameCouldStart();
+    void updateUsername(String username, String newUser);
 }

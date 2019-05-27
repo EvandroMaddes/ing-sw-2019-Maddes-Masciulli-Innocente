@@ -63,6 +63,7 @@ public class CLIHandler {
 
     /**
      * this method reads an input number
+     * todo check su maxInt ammissibile, se fuori, richiedo.. MESSAGGIO TORNA 1 non 0 ??
      * @return
      */
     public static int intRead(){

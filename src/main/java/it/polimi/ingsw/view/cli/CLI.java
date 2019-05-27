@@ -89,7 +89,7 @@ public class CLI extends RemoteView {
                         "\noption 2 for eleven squares" +
                         "\noption 3 for ten squares(recommended for three players)");
                 System.out.println("Choose a map from the following(select number):");
-                        System.out.flush();
+                System.out.flush();
 
                 map = CLIHandler.intRead();
                 this.map = new CLIMap(map);
