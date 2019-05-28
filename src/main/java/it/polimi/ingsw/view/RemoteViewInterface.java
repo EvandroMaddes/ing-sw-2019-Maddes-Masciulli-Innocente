@@ -29,7 +29,8 @@ public interface RemoteViewInterface {
    Event respawnChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours);
    Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY);
-   Event weaponChoice(ArrayList<String> availableWeapons);
+   Event weaponChoice(ArrayList<String> availableWeapons);//to fire
+   Event weaponGrabChoice(ArrayList<String> availableWeapon);
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
    Event weaponDiscardChoice(ArrayList<String> yourWeapon);
@@ -37,6 +38,8 @@ public interface RemoteViewInterface {
 
    //following methods manage UpdateEvent
    Event newPlayerJoinedUpdate(String newPlayer);
+   Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
+   Event removeAmmoTileUpdate(int x, int y);
 
    //todo fare per ultimi
    Event effectPaymentChoice();

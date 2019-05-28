@@ -19,6 +19,6 @@ public class WeaponRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.weaponChoice(getWeapons());
     }
 }
