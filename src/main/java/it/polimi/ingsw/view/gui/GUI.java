@@ -10,11 +10,14 @@ import java.util.ArrayList;
 
 public class GUI extends RemoteView {
 
-/*    public GUI(String user) {
-        super(user);
+    @Override
+    public Event positionUpdate(Character currCharacter, int x, int y) {
+        return null;
     }
 
- */
+
+
+
 
     @Override
     public String[] gameInit() {
@@ -33,6 +36,21 @@ public class GUI extends RemoteView {
 
     @Override
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+    @Override
+    public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
+        return null;
+    }
+
+    @Override
+    public Event removeAmmoTileUpdate(int x, int y) {
+        return null;
+    }
+
+    @Override
+    public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
         return null;
     }
 

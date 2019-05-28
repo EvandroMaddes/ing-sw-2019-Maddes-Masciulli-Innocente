@@ -40,6 +40,7 @@ public interface RemoteViewInterface {
    Event newPlayerJoinedUpdate(String newPlayer);
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
    Event removeAmmoTileUpdate(int x, int y);
+   Event positionUpdate(Character currCharacter, int x, int y);
 
    //todo fare per ultimi
    Event effectPaymentChoice();

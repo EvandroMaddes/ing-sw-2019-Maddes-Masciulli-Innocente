@@ -12,14 +12,7 @@ public abstract class RemoteView implements RemoteViewInterface{
     private Event toVirtualView;
 
 
-    /**
-     *
-     * @param user
-     */
-/*    public RemoteView(String user) {
-        this.user = user;
-    }
-*/
+
 
 
     public String getUser() {

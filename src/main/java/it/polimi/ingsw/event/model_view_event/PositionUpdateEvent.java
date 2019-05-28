@@ -2,6 +2,7 @@ package it.polimi.ingsw.event.model_view_event;
 
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
 /**
@@ -10,6 +11,7 @@ import it.polimi.ingsw.view.RemoteView;
  */
 public class PositionUpdateEvent extends ModelViewEvent {
 
+    private Character currCharacter;
     private int positionX;
     private int positionY;
 
@@ -26,6 +28,18 @@ public class PositionUpdateEvent extends ModelViewEvent {
 
     }
 
+    /**
+     * serve ikl set altrimenti l'attributo character è ereditato anche dalle altre classi
+     * @param currCharacter
+     */
+    public void setCurrCharacter(Character currCharacter) {
+        this.currCharacter = currCharacter;
+    }
+
+    public Character getCurrCharacter() {
+        return currCharacter;
+    }
+
     public int getPositionY() {
         return positionY;
     }
@@ -38,6 +52,6 @@ public class PositionUpdateEvent extends ModelViewEvent {
     public Event performAction(RemoteView remoteView) {
         //todo aggiorna la risorsa sul client
 
-        return null;
+        return remoteView.positionUpdate(getCurrCharacter(),getPositionX(),getPositionY());
     }
 }

@@ -449,7 +449,9 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
+        
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter,mapCharacterNameColors.get(currCharacter));
+        map.updateResource(currElement,x,y);
         return new UpdateChoiceEvent(getUser());
     }
 }
