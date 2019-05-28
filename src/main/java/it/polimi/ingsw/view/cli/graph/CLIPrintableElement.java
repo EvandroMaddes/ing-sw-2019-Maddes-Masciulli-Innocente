@@ -9,23 +9,35 @@ import java.util.ArrayList;
  */
 public class CLIPrintableElement {
     private String resource;
+    private boolean isPlayer;
+
 
     public CLIPrintableElement(Character player, Color color){
-        resource =  player.name()+color.escape();
+        char firstChar = player.name().charAt(0);
+        resource =  color.escape()+firstChar;
+        isPlayer = true;
     }
 
     public CLIPrintableElement(boolean isPowerUp, Color[] colors){
-        resource = colors[0].escape()+"A"+colors[1].escape() + "A";
+        resource = colors[0].escape()+"█"+colors[1].escape() + "█";
         if(isPowerUp) {
                     resource = resource + Color.ANSI_WHITE.escape()+"P";
         }
         else{
-            resource = resource + colors[2].escape() + "A";
+            resource = resource + colors[2].escape() + "█";
         }
         resource = resource + Color.RESET.escape();
+        isPlayer = false;
+    }
+    public CLIPrintableElement(String currentWeapon, String currentSpawnSquare){
+
     }
 
     public String getResource() {
         return resource;
+    }
+
+    public boolean isPlayer() {
+        return isPlayer;
     }
 }

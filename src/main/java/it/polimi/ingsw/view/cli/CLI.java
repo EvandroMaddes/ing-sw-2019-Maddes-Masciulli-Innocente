@@ -83,15 +83,17 @@ public class CLI extends RemoteView {
         while (map == 404) {
             try {
 
+                while(map<0||map>3) {
 
-                System.out.println("option 0 for twelve squares" +
-                        "\noption 1 for eleven squares" +
-                        "\noption 2 for eleven squares" +
-                        "\noption 3 for ten squares(recommended for three players)");
-                System.out.println("Choose a map from the following(select number):");
-                System.out.flush();
+                    System.out.println("option 0 for twelve squares" +
+                            "\noption 1 for eleven squares" +
+                            "\noption 2 for eleven squares" +
+                            "\noption 3 for ten squares(recommended for three players)");
+                    System.out.println("Choose a map from the following(select number):");
+                    System.out.flush();
 
-                map = CLIHandler.intRead();
+                    map = CLIHandler.intRead();
+                }
                 this.map = new CLIMap(map);
             } catch (IllegalArgumentException e) {
 
@@ -272,7 +274,7 @@ public class CLI extends RemoteView {
 
         for (int i =0; i<= availableWeaponEffects.length;i++)
         {
-            System.out.println("effetto "+i);
+            System.out.println("effect "+i);
         }
         while (effectChoice == 404){
             try {
