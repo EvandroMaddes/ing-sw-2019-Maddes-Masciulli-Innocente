@@ -205,6 +205,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         }
     }
 
+    //todo NON SERVE THREAD??
     @Override
     public void run() {
 

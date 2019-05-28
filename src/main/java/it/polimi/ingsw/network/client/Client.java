@@ -93,7 +93,7 @@ public class Client {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
 
             clientImplementation = new RMIClient(user,
-                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1, serverIPAddress);
+                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000), serverIPAddress);
 
         } else {
             clientImplementation = new SocketClient(user, serverIPAddress);

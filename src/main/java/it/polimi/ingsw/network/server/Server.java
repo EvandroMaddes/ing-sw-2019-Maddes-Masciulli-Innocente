@@ -26,7 +26,6 @@ public class Server {
     private static Logger log = Logger.getLogger("ServerLogger");
 
 
-    //forse copyonwriteArraylist
     private static ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private static ArrayList<String> clientList = new ArrayList<>();
     private static RMIServer serverRMI;
