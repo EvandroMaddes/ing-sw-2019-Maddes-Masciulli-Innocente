@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -186,7 +187,7 @@ public abstract class Square extends Observable {
      * @param colourSquare colour of the room
      * @return players of one room
      */
-    private ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
+    public ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
         ArrayList<Square> squareRoom = new ArrayList<Square>();
         squareRoom.add(square);
 
@@ -212,9 +213,62 @@ public abstract class Square extends Observable {
         return playerRoom;
     }
 
+    /**
+     *
+     * @return all current room players
+     */
+    public ArrayList<Player> findRoomPlayers(){
+        ArrayList<Square> squareRoom = new ArrayList<Square>();
+        squareRoom.add(this);
+
+        ArrayList<Player> playerRoom = new ArrayList<Player>();
+
+        for (Square currentSquare : squareRoom) {
+            for(int i=0; i<4; i++) {
+                if (currentSquare.checkDirection(i)) {
+                    //  currentSquare = getNextSquare(i);
+                    if (currentSquare.getNextSquare(i).getSquareColour() == getSquareColour() && !squareRoom.contains(currentSquare)) {
+
+                        squareRoom.add(currentSquare.getNextSquare(i));
+
+                    }
+                }
+            }
+        }
+        for (Square currentSquare:squareRoom
+        ) {
+            playerRoom.addAll(currentSquare.getSquarePlayers());
+
+        }
+        return playerRoom;
+    }
+
     @Override
     public void notifyObservers(Object arg) {
         setChanged();
         super.notifyObservers(arg);
+    }
+
+    public ArrayList<Square> reachalbeInMoves(int numberOfMoves){
+        ArrayList<Square> possibleDestination = new ArrayList<>();
+
+        ArrayList<Square> reachAtPreviousStep = new ArrayList<>();
+        ArrayList<Square> reachInThatStep = new ArrayList<>();
+        reachAtPreviousStep.add(this);
+        possibleDestination.add(this);
+        for (int i = 0; i < numberOfMoves; i ++){
+            for (Square currentSquare: reachAtPreviousStep) {
+                for (int direction = 0; direction < 4; direction++){
+                    if(currentSquare.checkDirection(direction) && !reachAtPreviousStep.contains(currentSquare) && !reachInThatStep.contains(currentSquare)){
+                        reachInThatStep.add(currentSquare.getNextSquare(direction));
+                    }
+                }
+            }
+            possibleDestination.addAll(reachInThatStep);
+            reachAtPreviousStep.clear();
+            reachAtPreviousStep.addAll(reachInThatStep);
+            reachInThatStep.clear();
+        }
+        return possibleDestination;
     }
 }
