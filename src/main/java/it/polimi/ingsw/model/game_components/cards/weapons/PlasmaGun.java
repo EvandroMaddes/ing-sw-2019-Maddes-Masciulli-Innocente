@@ -72,24 +72,8 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = new ArrayList<>();
-
-        ArrayList<Square> reachAtPreviousStep = new ArrayList<>();
-        ArrayList<Square> reachInThatStep = new ArrayList<>();
-        reachAtPreviousStep.add(getOwner().getPosition());
-        for (int i = 0; i < 2 - numberOfMoves; i ++){
-            for (Square currentSquare: reachAtPreviousStep) {
-                for (int direction = 0; direction < 4; direction++){
-                    if(currentSquare.checkDirection(direction) && !reachAtPreviousStep.contains(currentSquare) && !reachInThatStep.contains(currentSquare)){
-                        reachInThatStep.add(currentSquare.getNextSquare(direction));
-                    }
-                }
-            }
-            possibleDestination.addAll(reachInThatStep);
-            reachAtPreviousStep.clear();
-            reachAtPreviousStep.addAll(reachInThatStep);
-            reachInThatStep.clear();
-        }
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2 - numberOfMoves);
+        possibleDestination.remove(getOwner().getPosition());
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
 
