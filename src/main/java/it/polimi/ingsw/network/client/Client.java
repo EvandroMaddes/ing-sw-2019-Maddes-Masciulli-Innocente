@@ -62,11 +62,11 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-    /*    remoteViewImplementation.gameChoice();
+        remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
         System.out.flush();
-        ArrayList<Character> availableTestedCharacter = new ArrayList<>();
+    /*    ArrayList<Character> availableTestedCharacter = new ArrayList<>();
         availableTestedCharacter.add(Character.SPROG);
         availableTestedCharacter.add(Character.BANSHEE);
         availableTestedCharacter.add(Character.D_STRUCT_OR);

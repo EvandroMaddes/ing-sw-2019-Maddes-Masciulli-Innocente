@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.CLIMap;
+import it.polimi.ingsw.view.cli.graph.CLIPrintableElement;
 import it.polimi.ingsw.view.cli.graph.Color;
 import it.polimi.ingsw.view.cli.graph.Title;
 
@@ -35,8 +36,10 @@ public class CLI extends RemoteView {
     }
 
 
-
-
+    /**
+     *
+     * @return
+     */
     @Override
     public String[] gameInit() {
         Title.printTitle();
@@ -51,7 +54,11 @@ public class CLI extends RemoteView {
         return userInput;
     }
 
-
+    /**
+     *
+     * @param availableCharacters
+     * @return
+     */
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
 
@@ -83,15 +90,17 @@ public class CLI extends RemoteView {
         while (map == 404) {
             try {
 
+                while(map<0||map>3) {
 
-                System.out.println("option 0 for twelve squares" +
-                        "\noption 1 for eleven squares" +
-                        "\noption 2 for eleven squares" +
-                        "\noption 3 for ten squares(recommended for three players)");
-                System.out.println("Choose a map from the following(select number):");
-                System.out.flush();
+                    System.out.println("option 0 for twelve squares" +
+                            "\noption 1 for eleven squares" +
+                            "\noption 2 for eleven squares" +
+                            "\noption 3 for ten squares(recommended for three players)");
+                    System.out.println("Choose a map from the following(select number):");
+                    System.out.flush();
 
-                map = CLIHandler.intRead();
+                    map = CLIHandler.intRead();
+                }
                 this.map = new CLIMap(map);
             } catch (IllegalArgumentException e) {
 
@@ -139,6 +148,11 @@ public class CLI extends RemoteView {
         return message;
     }
 
+    /**
+     *
+     * @param reloadableWeapons
+     * @return
+     */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
         String weaponSelected = null;
@@ -229,6 +243,11 @@ public class CLI extends RemoteView {
         return new GrabChoiceEvent(getUser(),chosenSquare[0],chosenSquare[1]);
     }
 
+    /**
+     *
+     * @param yourWeapons
+     * @return
+     */
     @Override
     public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
         String weaponSelected = null;
@@ -263,16 +282,42 @@ public class CLI extends RemoteView {
 
             }
         }
+        return new WeaponChoiceEvent(getUser(),weaponSelected);
+    }
+
+    /**
+     *
+     * @param availableWeapon
+     * @return
+     */
+    @Override
+    public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
+        String weaponSelected = null;
+        while (weaponSelected==null) {
+            try {
+                System.out.println("You choose to grab");
+                CLIHandler.arrayPrint(availableWeapon);
+                weaponSelected = CLIHandler.stringRead();
+            } catch (IllegalArgumentException e) {
+                weaponSelected = null;
+
+            }
+        }
         return new WeaponGrabChoiceEvent(getUser(),weaponSelected);
     }
 
+    /**
+     *
+     * @param availableWeaponEffects
+     * @return
+     */
     @Override
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
         int effectChoice = 404;
 
         for (int i =0; i<= availableWeaponEffects.length;i++)
         {
-            System.out.println("effetto "+i);
+            System.out.println("effect "+i);
         }
         while (effectChoice == 404){
             try {
@@ -355,6 +400,27 @@ public class CLI extends RemoteView {
         System.out.println("New player joined the game:"+newPlayer);
              //TODO   "character choice:"+mapCharacterNameColors.get(newPlayer));
 
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
+        String[] color = {fistColour, secondColour};
+        CLIPrintableElement currElement;
+        if(thirdColour.equals("POWERUP")) {
+
+             currElement = new CLIPrintableElement(true, color);
+        }else {
+            color[2] = thirdColour;
+            currElement = new CLIPrintableElement(false,color);
+        }
+        map.updateResource(currElement ,x ,y);
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event removeAmmoTileUpdate(int x, int y) {
+        CLIPrintableElement currElement= new CLIPrintableElement(false);
         return new UpdateChoiceEvent(getUser());
     }
 }

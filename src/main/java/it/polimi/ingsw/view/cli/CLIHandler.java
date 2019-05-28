@@ -62,15 +62,17 @@ public class CLIHandler {
     }
 
     /**
-     * this method reads an input number
-     * todo check su maxInt ammissibile, se fuori, richiedo.. MESSAGGIO TORNA 1 non 0 ??
+     * this method reads an input number, the
+     *
      * @return
      */
     public static int intRead(){
-        int chosenInt;
-
-       return chosenInt = inputScanner.nextInt();
-
+        try {
+            return inputScanner.nextInt();
+        } catch (Exception e){
+            inputScanner.nextLine();
+            return 404;
+        }
 
     }
 
