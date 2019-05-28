@@ -2,7 +2,9 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.UsernameModificationEvent;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.NetConfiguration;
@@ -43,7 +45,6 @@ public class Client {
             gameInterface = args[0];
         }catch(IndexOutOfBoundsException e){
             //Default: CLI, if no arguments are passed to main()
-            CustomLogger.logException(e);
             gameInterface = "CLI";
         }
 
@@ -57,10 +58,14 @@ public class Client {
 
 
         /**
-         * PROVA
+         *!!!!
+         * !!!!!PROVA
+         * !!!
          */
+    /*    remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
+        System.out.flush();
         ArrayList<Character> availableTestedCharacter = new ArrayList<>();
         availableTestedCharacter.add(Character.SPROG);
         availableTestedCharacter.add(Character.BANSHEE);
@@ -70,14 +75,17 @@ public class Client {
         ClientEvent testEvent = new CharacterRequestEvent(remoteViewImplementation.getUser(), availableTestedCharacter);
         Event returnedEvent = testEvent.performAction(remoteViewImplementation);
 
+     */
         /**
-         * FINE PROVA
+         * !!!
+         * !!!FINE PROVA
+         * !!!
          */
 
         String[] userInput = remoteViewImplementation.gameInit();
-          user = userInput[0];
-          connectionType = userInput[1];
-          serverIPAddress = userInput[2];
+        user = userInput[0];
+        connectionType = userInput[1];
+        serverIPAddress = userInput[2];
 
 
 
@@ -85,7 +93,7 @@ public class Client {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
 
             clientImplementation = new RMIClient(user,
-                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000) + 1, serverIPAddress);
+                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000), serverIPAddress);
 
         } else {
             clientImplementation = new SocketClient(user, serverIPAddress);
@@ -105,9 +113,19 @@ public class Client {
                 try {
                     currentMessage = clientImplementation.listenMessage();
                     log.info("Listened message for:\t" + currentMessage.getUser());
+                    //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
+                    currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
+                    //todo if currentMessage != null invia al server, dopo deve tornare in questol ciclo??
+                    clientImplementation.sendMessage(currentMessage);
                     waiting = false;
                 } catch (NullPointerException e) {
 
+                    waiting = true;
+                }
+                catch (ClassCastException e){
+                    ((UsernameModificationEvent)currentMessage).performAction(clientImplementation);
+                    user = ((UsernameModificationEvent)currentMessage).getNewUser();
+                    System.out.println("Username already connected, yours is now:\t"+user);
                     waiting = true;
                 }
                 catch (Exception e){
@@ -117,21 +135,7 @@ public class Client {
                     log.info("Server was disconnected!");
                 }
             }
-            //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
 
-            try{
-                currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
-
-
-            }catch(NullPointerException e){
-                CustomLogger.logException(e);
-            }
-            //todo if currentMessage != null invia al server
-
-
-
-            //todo è una prova di connessione;
-            clientImplementation.sendMessage(new GameChoiceEvent(user, 1, 1));
             log.info("Message sent to Server");
         }
 

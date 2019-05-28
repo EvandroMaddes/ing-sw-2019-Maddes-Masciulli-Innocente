@@ -47,6 +47,13 @@ public class SocketClient implements NetworkHandler, ClientInterface {
     }
 
     @Override
+    public void changeUsername(String user, String newUsername) {
+        if(!user.equalsIgnoreCase(newUsername)){
+           this.user=newUsername;
+        }
+    }
+
+    @Override
     public Event listenMessage() {
         Event message = null;
         while(message == null) {

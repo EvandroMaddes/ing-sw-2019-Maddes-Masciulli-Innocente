@@ -31,8 +31,9 @@ public class Title {
                 }
         }
 
-
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
         for (int i = 0; i < HEIGHT; i++) {
+
             for (int j = 0; j < i; j++) {
 
                 System.out.print(" ");

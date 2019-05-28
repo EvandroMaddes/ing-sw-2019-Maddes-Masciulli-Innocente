@@ -119,6 +119,14 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
             clientRegistry.unbind(bindName);
     }
 
+
+    @Override
+    public void changeUsername(String user, String newUsername) {
+        if(!user.equalsIgnoreCase(newUsername)){
+            this.user=newUsername;
+        }
+    }
+
     /**
      * RemoteInterface's methods Implementations
      */
@@ -197,6 +205,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         }
     }
 
+    //todo NON SERVE THREAD??
     @Override
     public void run() {
 

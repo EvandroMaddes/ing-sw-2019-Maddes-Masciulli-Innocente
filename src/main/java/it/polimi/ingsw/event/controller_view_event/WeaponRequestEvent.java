@@ -13,6 +13,10 @@ public class WeaponRequestEvent extends ControllerViewEvent {
         this.weapons = weapons;
     }
 
+    public ArrayList<String> getWeapons() {
+        return weapons;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
         return null;

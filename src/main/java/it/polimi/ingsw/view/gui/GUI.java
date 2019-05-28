@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -24,6 +25,22 @@ public class GUI extends RemoteView {
     public Event characterChoice(ArrayList<Character> availableCharacters) {
         return null;
     }
+
+    @Override
+    public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
+        return null;
+    }
+
+    @Override
+    public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+    @Override
+    public Event weaponDiscardChoice(ArrayList<String> yourWeapon) {
+        return null;
+    }
+
     @Override
     public Event gameChoice() {
         return null;
@@ -64,10 +81,6 @@ public class GUI extends RemoteView {
         return null;
     }
 
-    @Override
-    public Event weaponTargetChoice(ArrayList<Character> availableTargets) {
-        return null;
-    }
 
     @Override
     public Event effectPaymentChoice() {
@@ -93,4 +106,8 @@ public class GUI extends RemoteView {
 
     }
 
+    @Override
+    public Event newPlayerJoinedUpdate(String newPlayer) {
+        return null;
+    }
 }

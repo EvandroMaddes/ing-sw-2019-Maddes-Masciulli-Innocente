@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -20,7 +21,7 @@ import java.util.concurrent.SynchronousQueue;
 public class SocketServer extends Thread implements ServerInterface {
     private ServerSocket serverSocket;
     private CopyOnWriteArrayList<SocketServerThread> socketList = new CopyOnWriteArrayList<>();
-    private BlockingQueue<Event> messageQueue = new ArrayBlockingQueue<>(5);
+    private Queue<Event> messageQueue = new SynchronousQueue<>();
     private boolean gameCouldStart = false;
 
 
@@ -50,6 +51,18 @@ public class SocketServer extends Thread implements ServerInterface {
     }
 
     @Override
+    public void updateUsername(String username, String newUser) {
+        boolean isFirstOccurence = true;
+        for (int i = socketList.size()-1; i >=0 ; i--) {
+            SocketServerThread currSocketThread = socketList.get(i);
+            if(currSocketThread.getClientUser().equalsIgnoreCase(username)){
+                currSocketThread.setClientUser(newUser);
+                return;
+            }
+        }
+    }
+
+    @Override
     public void runServer() {
 
         try{
@@ -62,12 +75,12 @@ public class SocketServer extends Thread implements ServerInterface {
 
     }
 
-    //todo accetta un solo client
     @Override
     public void acceptClient() {
         if (socketList.size()==5) {
             gameCouldStart = true;
-        } else {
+        }
+        else {
             try {
                 Socket clientSocket = serverSocket.accept();
                 SocketServerThread clientSocketThread = new SocketServerThread(clientSocket);
@@ -87,7 +100,7 @@ public class SocketServer extends Thread implements ServerInterface {
             currThread.sendMessage(message);
         }
     }
-    //todo non si arresta run() prima che si chiudano i socket
+    //todo non si arresta run() prima che si chiudano i socket a seguito di Server.disconnect();
     @Override
     public void shutDown() {
         for (SocketServerThread currThread: socketList) {
@@ -105,37 +118,38 @@ public class SocketServer extends Thread implements ServerInterface {
 
     @Override
     public void sendMessage(Event message) {
-        for (SocketServerThread currentThread :socketList)
-        {
-            if(currentThread.getClientUser().equals(message.getUser())){
 
-                currentThread.sendMessage(message);
+        for (int i = socketList.size()-1; i >= 0 ; i--) {
+            if(socketList.get(i).getClientUser().equals(message.getUser())){
+
+                socketList.get(i).sendMessage(message);
+                return;
             }
         }
+
     }
 
     @Override
     public Event listenMessage() {
-        Event currMessage = null;
-        for (SocketServerThread currSocket: socketList) {
-            while (currMessage == null) {
+        Event currMessage;
+        for (int i = 0; i < socketList.size() ; i++) {
+            SocketServerThread currSocket = socketList.get(i);
+            if(currSocket.getCurrMessage()!=null) {
                 currMessage = currSocket.getCurrMessage();
-                if (!messageQueue.contains(currMessage)) {
+                currSocket.resetMessage();
+                return currMessage;
+//                messageQueue.offer(currMessage);
+//                currSocket.resetMessage();
 
-                    try {
-                        messageQueue.put(currMessage);
-                    } catch (Exception e) {
-                        CustomLogger.logException(e);
-                    }
-                }
+            }
+            //todo inoltre farà partire timer??
+            else if (i == socketList.size()-1){
+                i = -1;
             }
         }
-        try {
-            return messageQueue.take();
-        }catch(InterruptedException e){
-            CustomLogger.logException(e);
-            return null;
-        }
+        return null;
+
+
 
 
     }

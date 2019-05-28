@@ -1,5 +1,6 @@
 package it.polimi.ingsw.event.controller_view_event;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -21,8 +22,16 @@ public class TargetPlayerRequestEvent extends ControllerViewEvent {
         return possibleTargets;
     }
 
+    public void setPossibleTargets(ArrayList<Character> possibleTargets) {
+        this.possibleTargets = possibleTargets;
+    }
+
+    public int getMaxTarget() {
+        return maxTarget;
+    }
+
     @Override
-    public void performAction(RemoteView remoteView) {
-        // TODO: 2019-05-22  
+    public Event performAction(RemoteView remoteView) {
+        return remoteView.weaponTargetChoice(getPossibleTargets(),getMaxTarget());
     }
 }

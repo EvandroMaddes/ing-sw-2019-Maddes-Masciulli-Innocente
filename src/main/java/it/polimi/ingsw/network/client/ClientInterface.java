@@ -9,4 +9,5 @@ import it.polimi.ingsw.network.NetworkHandler;
 public interface ClientInterface extends NetworkHandler {
     void connectClient();
     void disconnectClient() throws Exception;
+    void changeUsername(String user, String newUsername);
 }

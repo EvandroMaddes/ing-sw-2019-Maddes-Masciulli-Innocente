@@ -8,10 +8,10 @@ import it.polimi.ingsw.event.Event;
  * represent the User preferences about map and mod before a new game initialization
  *
  * map coding is:
- *  0: smaller map
- *  1: first medium map
- *  2: second medium map
- *  3: bigger map
+ *  0: FirstLeft,FirstRight (bigger)
+ *  1: FirstLeft, SecondRight (medium1)
+ *  2: SecondLeft, FirstRight (medium2)
+ *  3: SecondLeft, SeconfRIght (smaller)
  * mod coding is:
  *  0: KillShot mod
  *  1: Domination mod

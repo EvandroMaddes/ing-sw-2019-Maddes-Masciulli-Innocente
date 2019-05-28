@@ -26,4 +26,12 @@ public class PowerUpRequestEvent extends ControllerViewEvent {
         //todo sarà return remoteView.metodoGiusto();
         return null;
     }
+
+    public ArrayList<String> getPowerUpNames() {
+        return powerUpNames;
+    }
+
+    public ArrayList<CubeColour> getPowerUpColours() {
+        return powerUpColours;
+    }
 }

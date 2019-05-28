@@ -33,6 +33,10 @@ public class SocketServerThread extends Thread implements NetworkHandler {
         }
     }
 
+    public void setClientUser(String clientUser) {
+        this.clientUser = clientUser;
+    }
+
     public void disconnect(){
         connected=false;
     }
@@ -51,7 +55,6 @@ public class SocketServerThread extends Thread implements NetworkHandler {
 
     @Override
     public void run() {
-        currMessage = null;
         while(connected){
             currMessage = listenMessage();
 
@@ -67,8 +70,6 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     @Override
     public void sendMessage(Event message) {
         try {
-            //todo se invia, deve aspettare risposta-> setta a null per avere concordanza con il SocketServer
-            currMessage = null;
             outputStream.writeObject(message);
             outputStream.flush();
         }catch(Exception e){
@@ -79,20 +80,19 @@ public class SocketServerThread extends Thread implements NetworkHandler {
 
     @Override
     public Event listenMessage() {
-        Event actualMessage;
-        try {
-            actualMessage = (Event) inputStream.readObject();
-            if(!actualMessage.equals(currMessage)){
-                currMessage = actualMessage;
-            }
+        try{
+            Event actualMessage =(Event) inputStream.readObject();
+            return actualMessage;
         }
         catch (SocketException|EOFException socketClosed){
             disconnect();
         }
-        catch(Exception e){CustomLogger.logException(e);}
-
-
+        catch (Exception e){CustomLogger.logException(e);}
         return currMessage;
+    }
+
+    public void resetMessage(){
+        currMessage = null;
     }
 
 }
