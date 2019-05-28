@@ -14,6 +14,7 @@ import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
+import it.polimi.ingsw.view.cli.graph.CLIMap;
 import it.polimi.ingsw.view.gui.GUI;
 
 
@@ -66,6 +67,13 @@ public class Client {
         remoteViewImplementation.printScreen();
         System.out.println();
         System.out.flush();
+        remoteViewImplementation.positionUpdate(Character.BANSHEE,3,2);
+        remoteViewImplementation.positionUpdate(Character.SPROG,3,2);
+        remoteViewImplementation.positionUpdate(Character.D_STRUCT_OR,3,2);
+        remoteViewImplementation.positionUpdate(Character.DOZER,3,2);
+        remoteViewImplementation.positionUpdate(Character.VIOLET,0,0);
+        remoteViewImplementation.positionUpdate(Character.VIOLET,2,2);
+        remoteViewImplementation.printScreen();
     /*    ArrayList<Character> availableTestedCharacter = new ArrayList<>();
         availableTestedCharacter.add(Character.SPROG);
         availableTestedCharacter.add(Character.BANSHEE);

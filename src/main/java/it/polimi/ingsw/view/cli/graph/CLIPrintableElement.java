@@ -9,13 +9,13 @@ import java.util.Map;
  * Its constructors allocate an AmmoTile or a Player representation by a string, depending on the arguments given
  */
 public class CLIPrintableElement {
-    private String resource;
+    private String resource = Color.ANSI_BLACK_BACKGROUND.escape();
     private boolean isPlayer;
 
 
     public CLIPrintableElement(Character player, String color){
         char firstChar = player.name().charAt(0);
-        resource =  color+firstChar;
+        resource =  resource+ color+firstChar;
         isPlayer = true;
     }
 
@@ -25,7 +25,7 @@ public class CLIPrintableElement {
      */
     public CLIPrintableElement(boolean isWeapon){
         if(!isWeapon){
-            resource = "  " + "  " + "  ";
+            resource = resource + "  " + "  " + "  ";
         }
         else{
             resource = " ";
@@ -42,7 +42,7 @@ public class CLIPrintableElement {
                 colorPrint[i] = Color.ANSI_YELLOW;
             else colorPrint[i]= Color.ANSI_BLUE;
         }
-        resource = colorPrint[0].escape()+"█"+colorPrint[1].escape() + "█";
+        resource = resource + colorPrint[0].escape()+"█"+colorPrint[1].escape() + "█";
         if(isPowerUp) {
                     resource = resource + Color.ANSI_WHITE.escape()+"P";
         }

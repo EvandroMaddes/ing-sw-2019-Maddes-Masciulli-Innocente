@@ -277,27 +277,23 @@ public class CLIMap {
     }
 
     public void updateResource(CLIPrintableElement element,int coordX, int coordY){
-        coordX = coordX * MAXSQUARECOLUMN + 1;
+        coordX = coordX * MAXSQUARECOLUMN + 2;
         coordY = coordY * MAXSQUAREROW + 2;
         int tempCoordX, tempCoordY;
         removePlayer(element.getResource());
         if (element.isPlayer()) {
             tempCoordX = coordX;
             tempCoordY = coordY + 1;
-            while (tempCoordY < MAXSQUAREROW) {
-                while (tempCoordX < MAXSQUARECOLUMN) {
+            while (tempCoordY < coordY + MAXSQUAREROW) {
+
+                while (tempCoordX< coordX+ MAXSQUARECOLUMN - 1) {
                     if (map[tempCoordX][tempCoordY].contains(" ")) {
                         map[tempCoordX][tempCoordY] = element.getResource();
                         return;
                     }
-                    if (tempCoordY == 2) {
-                        tempCoordX = tempCoordX + 3;
-
-                    }
-                    if (tempCoordY == 3) {
-                        tempCoordX = tempCoordX + 3;
-                    }
+                    else{tempCoordX = tempCoordX + 3;}
                 }
+
                 tempCoordX = coordX + 2;
                 tempCoordY = tempCoordY + 1;
             }
