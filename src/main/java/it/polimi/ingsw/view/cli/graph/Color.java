@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.cli.graph;
 
 public enum Color {
-     ANSI_RESET("\u001B[0m"),
      ANSI_BLACK("\u001B[30m"),
      ANSI_RED("\u001B[31m"),
      ANSI_GREEN("\u001B[32m"),

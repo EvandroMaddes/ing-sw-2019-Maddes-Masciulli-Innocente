@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.cli.graph;
 import it.polimi.ingsw.model.player.Character;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Its constructors allocate an AmmoTile or a Player representation by a string, depending on the arguments given
@@ -12,12 +13,23 @@ public class CLIPrintableElement {
     private boolean isPlayer;
 
 
-    public CLIPrintableElement(Character player, Color color){
+    public CLIPrintableElement(Character player, String color){
         char firstChar = player.name().charAt(0);
-        resource =  color.escape()+firstChar;
+        resource =  color+firstChar;
         isPlayer = true;
     }
-    public CLIPrintableElement(Boolean isWeapon){
+
+    /**
+     * is called when an update require removing an ammotile or a weapon on the CLIMap
+     * @param isWeapon is true if the replaced resource is a weapon, false if is an ammotile
+     */
+    public CLIPrintableElement(boolean isWeapon){
+        if(!isWeapon){
+            resource = "  " + "  " + "  ";
+        }
+        else{
+            resource = " ";
+        }
 
     }
 
