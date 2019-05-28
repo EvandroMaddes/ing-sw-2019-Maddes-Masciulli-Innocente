@@ -374,4 +374,12 @@ public class Player extends Observable {
     public void invertDeathState(){
         dead = !dead;
     }
+
+    public boolean canShot(){
+        for (int i = 0; i < numberOfWeapons; i++) {
+            if (weapons[i].isUsable())
+                return true;
+        }
+        return false;
+    }
 }

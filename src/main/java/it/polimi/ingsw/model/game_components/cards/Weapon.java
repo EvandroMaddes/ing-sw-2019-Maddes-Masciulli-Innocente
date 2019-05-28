@@ -13,6 +13,7 @@ public abstract class Weapon extends Card {
     private boolean loaded;
     private boolean[] effectsEnable;
     private boolean[] usableEffect;
+    private boolean intermediateEffect;
 
 
     public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
@@ -20,6 +21,7 @@ public abstract class Weapon extends Card {
         this.reloadCost = reloadCost;
         setEffectsEnable(new boolean[]{true, false, false});
         setLoaded();
+        intermediateEffect = false;
     }
 
     /**

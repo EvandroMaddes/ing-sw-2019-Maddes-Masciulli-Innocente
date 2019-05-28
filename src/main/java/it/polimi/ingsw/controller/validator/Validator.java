@@ -69,8 +69,12 @@ public abstract class Validator {
      * @return a list of all loaded weapons that can be used in that moment for a shot action
      */
     public ArrayList<Weapon> aviableToFireWeapons (Player player){
-        // TODO: 2019-05-22
-        return null;
+        ArrayList<Weapon> possibleWeapons = new ArrayList<>();
+        for (int i = 0; i < player.getNumberOfWeapons(); i++){
+            if (player.getWeapons()[i].isUsable())
+                possibleWeapons.add(player.getWeapons()[i]);
+        }
+        return possibleWeapons;
     }
 
 }

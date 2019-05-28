@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 
@@ -31,5 +32,13 @@ public class Encoder {
             targetsY[i] = targets.get(i).getRow();
         }
         return targetsY;
+    }
+
+    public static ArrayList<String> encodeWeaponsList(List<Weapon> weapons) {
+        ArrayList<String> weaponsLite = new ArrayList<>();
+        for (Weapon w:weapons){
+            weaponsLite.add(w.getName());
+        }
+        return weaponsLite;
     }
 }

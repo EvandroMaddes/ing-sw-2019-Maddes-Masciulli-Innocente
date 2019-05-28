@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,13 +154,13 @@ public class ActionManager {
         Controller.callView(message);
     }
 
-    public void sendPossibleWeapon(){
-        //todo notifica
-        getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer());
+    public void sendPossibleWeapons(){
+        Controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
     }
 
     public void askForAction(){
-        // todo chiede quale azione usare
+        boolean ableToFire = currentRoundManager.getCurrentPlayer().canShot();
+        Controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), ableToFire));
     }
 
     /**
@@ -200,7 +201,7 @@ public class ActionManager {
      *
      * @param weapon is the weapon that the player want to reload. After the reload, call again askFotReload().
      */
-    public void reloadWepon(String weapon){
+    public void reloadWeapon(String weapon){
         for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
             if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
                 currentRoundManager.getCurrentPlayer().getWeapons()[i].setLoaded();
