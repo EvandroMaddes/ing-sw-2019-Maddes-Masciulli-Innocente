@@ -17,14 +17,25 @@ public class CLIPrintableElement {
         resource =  color.escape()+firstChar;
         isPlayer = true;
     }
+    public CLIPrintableElement(Boolean isWeapon){
 
-    public CLIPrintableElement(boolean isPowerUp, Color[] colors){
-        resource = colors[0].escape()+"█"+colors[1].escape() + "█";
+    }
+
+    public CLIPrintableElement(boolean isPowerUp, String[] colors){
+        Color[] colorPrint = new Color[3];
+        for(int i=0; i<colors.length; i++) {
+            if (Color.ANSI_RED.name().contains("RED"))
+                colorPrint[i] = Color.ANSI_RED;
+            else if (Color.ANSI_YELLOW.name().contains("YELLOW"))
+                colorPrint[i] = Color.ANSI_YELLOW;
+            else colorPrint[i]= Color.ANSI_BLUE;
+        }
+        resource = colorPrint[0].escape()+"█"+colorPrint[1].escape() + "█";
         if(isPowerUp) {
                     resource = resource + Color.ANSI_WHITE.escape()+"P";
         }
         else{
-            resource = resource + colors[2].escape() + "█";
+            resource = resource + colorPrint[2].escape() + "█";
         }
         resource = resource + Color.RESET.escape();
         isPlayer = false;

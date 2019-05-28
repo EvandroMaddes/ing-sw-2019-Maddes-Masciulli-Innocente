@@ -26,6 +26,14 @@ public class PositionUpdateEvent extends ModelViewEvent {
 
     }
 
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public int getPositionX() {
+        return positionX;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
         //todo aggiorna la risorsa sul client

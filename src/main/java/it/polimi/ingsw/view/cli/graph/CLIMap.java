@@ -275,5 +275,9 @@ public class CLIMap {
         }
 
     }
+
+    public void updateResource(CLIPrintableElement element,int x, int y){
+
+    }
 }
 
