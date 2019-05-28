@@ -278,8 +278,9 @@ public class CLIMap {
 
     public void updateResource(CLIPrintableElement element,int coordX, int coordY){
         coordX = coordX * MAXSQUARECOLUMN + 1;
-        coordY = coordY * MAXSQUAREROW + 1;
+        coordY = coordY * MAXSQUAREROW + 2;
         int tempCoordX, tempCoordY;
+        removePlayer(element.getResource());
         if (element.isPlayer()) {
             tempCoordX = coordX;
             tempCoordY = coordY + 1;
@@ -303,6 +304,15 @@ public class CLIMap {
         }
     }
 
+    public void removePlayer(String player){
+        for (int i = 0; i < MAXCOLUMN; i++) {
+            for (int j = 0; j < MAXROW; j++) {
+                if(map[i][j].contains(player)){
+                    map[i][j] = Color.ANSI_BLACK_BACKGROUND.escape()+" ";
+                }
+            }
+        }
+    }
 
 }
 
