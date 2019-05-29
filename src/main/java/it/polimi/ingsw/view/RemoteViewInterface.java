@@ -1,11 +1,14 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 
+import javax.xml.stream.XMLEventWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface RemoteViewInterface {
 
@@ -41,6 +44,10 @@ public interface RemoteViewInterface {
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
    Event removeAmmoTileUpdate(int x, int y);
    Event positionUpdate(Character currCharacter, int x, int y);
+   Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber);
+   Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps);
+   Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
+   Event playerWeaponUpdate(Character currCharacter, String[] weapons);
 
    //todo fare per ultimi
    Event effectPaymentChoice();

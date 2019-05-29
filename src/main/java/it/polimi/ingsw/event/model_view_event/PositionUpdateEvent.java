@@ -29,7 +29,7 @@ public class PositionUpdateEvent extends ModelViewEvent {
     }
 
     /**
-     * serve ikl set altrimenti l'attributo character è ereditato anche dalle altre classi
+     * serve il setter altrimenti l'attributo character è ereditato anche dalle altre classi
      * @param currCharacter
      */
     public void setCurrCharacter(Character currCharacter) {

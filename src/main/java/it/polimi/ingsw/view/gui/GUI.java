@@ -1,14 +1,17 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GUI extends RemoteView {
+
 
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
@@ -126,6 +129,26 @@ public class GUI extends RemoteView {
 
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer) {
+        return null;
+    }
+
+    @Override
+    public Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber) {
+        return null;
+    }
+
+    @Override
+    public Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps) {
+        return null;
+    }
+
+    @Override
+    public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
+        return null;
+    }
+
+    @Override
+    public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
         return null;
     }
 }

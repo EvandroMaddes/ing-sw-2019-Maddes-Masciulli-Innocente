@@ -2,14 +2,11 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
-import it.polimi.ingsw.view.cli.graph.CLIMap;
-import it.polimi.ingsw.view.cli.graph.CLIPrintableElement;
-import it.polimi.ingsw.view.cli.graph.Color;
-import it.polimi.ingsw.view.cli.graph.Title;
+import it.polimi.ingsw.view.cli.graph.*;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -20,6 +17,7 @@ public class CLI extends RemoteView {
 
 
     private CLIMap map;
+    private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character,String>(Character.class);
     //todo map tra colore arma e nome arma
     // todo map tra powerUp e relativo colore
@@ -112,6 +110,10 @@ public class CLI extends RemoteView {
         //todo modalità selezionata
         GameChoiceEvent message = new GameChoiceEvent(getUser(), map,0);
         return message;
+    }
+
+    public CLIMap getMap() {
+        return map;
     }
 
     /**
@@ -449,9 +451,68 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
-        
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter,mapCharacterNameColors.get(currCharacter));
         map.updateResource(currElement,x,y);
         return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber) {
+        for (CLIPlayerBoard currentPlayerBoard:playerBoards
+        ) {
+            if(currentPlayerBoard.getCharacter() == currCharacter) {
+                currentPlayerBoard.updatePlayerBoard(damageToken,markNumber);//deve essere quella del payer corretto
+                return new UpdateChoiceEvent(getUser());
+            }
+        }
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps) {
+        for (CLIPlayerBoard currentPlayerBoard:playerBoards
+        ) {
+            if(currentPlayerBoard.getCharacter() == currCharacter) {
+
+                //playerBoard.yourPowerUpAdd('P',powerUps); todo come gestire la map tra colore e power up
+                return new UpdateChoiceEvent(getUser());
+            }
+        }
+
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
+        for (CLIPlayerBoard currentPlayerBoard:playerBoards
+             ) {
+           if(currentPlayerBoard.getCharacter() == currCharacter) {
+
+               currentPlayerBoard.yourWeaponsUpdate('W', weapons);
+               return new UpdateChoiceEvent(getUser());
+           }
+        }
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
+        String[] ammoString = null;
+        int i=0;
+        for (AmmoCube ammoCube:ammo
+             ) {
+
+            ammoString[i] = ammoCube.getColour().name();
+            i++;
+        }
+        for (CLIPlayerBoard currentPlayerBoard:playerBoards
+        ) {
+            if(currentPlayerBoard.getCharacter() == currCharacter) {
+
+                currentPlayerBoard.yourWeaponsUpdate('A',ammoString );
+                return new UpdateChoiceEvent(getUser());
+            }
+        }
+        return null;
     }
 }

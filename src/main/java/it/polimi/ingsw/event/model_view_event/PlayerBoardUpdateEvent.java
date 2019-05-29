@@ -1,7 +1,7 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -13,20 +13,44 @@ public class PlayerBoardUpdateEvent extends ModelViewEvent {
 
     private PlayerBoard playerBoard;
 
+    private int damageTokenNumber;
+    private Character hitCharacter;
+    private int markNumber;
+
     /**
      * Constructor
-     * @param user the Updated resource
-     * @param playerBoard the Updated Board
+     * @param user the Client user
+     * @param damageTokenNumber the number of token that will be placed
      */
-    public PlayerBoardUpdateEvent(String user, PlayerBoard playerBoard){
+    public PlayerBoardUpdateEvent(String user, Character hitCharacter, int damageTokenNumber, int markNumber){
         super(user);
-        this.playerBoard=playerBoard;
+        this.damageTokenNumber=damageTokenNumber;
+        this.hitCharacter = hitCharacter;
+        this.damageTokenNumber = damageTokenNumber;
+        this.markNumber = markNumber;
+    }
+
+    public int getDamageTokenNumber() {
+        return damageTokenNumber;
+    }
+
+    public Character getHitCharacter() {
+        return hitCharacter;
     }
 
     @Override
-    public Event performAction(RemoteView remoteView) {
-        //todo aggiorna la risorsa sul client
+    public String getUser() {
+        return super.getUser();
+    }
 
-        return null;
+    public int getMarkNumber() {
+        return markNumber;
+    }
+
+
+    @Override
+    public Event performAction(RemoteView remoteView) {
+
+        return remoteView.PlayerBoardUpdate(getHitCharacter(),getDamageTokenNumber(),getMarkNumber());
     }
 }
