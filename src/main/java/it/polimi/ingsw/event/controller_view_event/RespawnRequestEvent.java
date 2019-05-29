@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class RespawnRequestEvent extends PowerUpRequestEvent {
 

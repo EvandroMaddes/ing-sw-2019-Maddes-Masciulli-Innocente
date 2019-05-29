@@ -39,4 +39,37 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         return thirdEffectCost;
     }
 
+    @Override
+    public void performEffect(int selectedEffect, List<Object> targets){
+        if (selectedEffect == 1)
+            performEffectOne(targets);
+        else if (selectedEffect == 2)
+            performEffectTwo(targets);
+        else if (selectedEffect == 3)
+            performEffectThree(targets);
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
+
+    public ControllerViewEvent getTargetEffect(int selectedEffect){
+        if (selectedEffect == 1)
+            return getTargetEffectOne();
+        else if (selectedEffect == 2)
+            return getTargetEffectTwo();
+        else if (selectedEffect == 3)
+            return getTargetEffectThree();
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
+
+    public boolean isUsableEffect (int selectedEffect){
+        if (selectedEffect == 1)
+            return isUsableEffectOne();
+        else if (selectedEffect == 2)
+            return isUsableEffectTwo();
+        else if (selectedEffect == 3)
+            return  isUsableEffectThree();
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
 }

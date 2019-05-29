@@ -72,7 +72,26 @@ public abstract class Weapon extends Card {
         this.effectsEnable = effectsEnable;
     }
 
+    public void performEffect(int selectedEffect, List<Object> targets){
+        if (selectedEffect == 1)
+            performEffectOne(targets);
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
 
+    public ControllerViewEvent getTargetEffect(int selectedEffect){
+        if (selectedEffect == 1)
+            return getTargetEffectOne();
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
+
+    public boolean isUsableEffect (int selectedEffect){
+        if (selectedEffect == 1)
+            return isUsableEffectOne();
+        else
+            return false;
+    }
 
 
 

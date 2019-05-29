@@ -9,15 +9,16 @@ import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.player.PlayerBoard;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class DeathManager {
+    private Controller controller;
     private GameModel model;
     private Player deadPlayer;
     private RoundManager roundManager;
 
-    public DeathManager(GameModel model, Player deadPlayer, RoundManager roundManager) {
+    public DeathManager(Controller controller, GameModel model, Player deadPlayer, RoundManager roundManager) {
+        this.controller = controller;
         this.model = model;
         this.deadPlayer = deadPlayer;
         this.roundManager = roundManager;
@@ -35,11 +36,14 @@ public class DeathManager {
      *                   when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
+        ArrayList<String> powerUps = new ArrayList<>();
+        ArrayList<CubeColour> colours = new ArrayList<>();
         deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
-        Map<String, CubeColour> powerUpsLite = new HashMap<>();
-        for (PowerUp p: deadPlayer.getPowerUps())
-            powerUpsLite.put(p.getName(), p.getColour());
-       // Controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), powerUpsLite));
+        for (PowerUp p: deadPlayer.getPowerUps()){
+            powerUps.add(p.getName());
+            colours.add(p.getColour());
+        }
+        controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), powerUps, colours));
     }
 
     public void spawn(String powerUp, CubeColour cardColour){

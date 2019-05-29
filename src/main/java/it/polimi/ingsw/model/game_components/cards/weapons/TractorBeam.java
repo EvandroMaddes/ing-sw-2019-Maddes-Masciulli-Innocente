@@ -21,6 +21,7 @@ public class TractorBeam extends AlternateFireWeapon {
         Player target = (Player)targets.get(0);
         move(target, getOwner().getPosition());
         damage(target, 3);
+        effectControlFlow(2);
     }
 
     @Override

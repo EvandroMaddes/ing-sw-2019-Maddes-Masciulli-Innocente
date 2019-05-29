@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.player.Player;
 
 public class RoundManager {
 
+    private final Controller controller;
     protected final GameModel model;
     private final GameManager gameManager;
     private final Player currentPlayer;
@@ -15,7 +16,8 @@ public class RoundManager {
     private DeathManager deathManager;
     private int phase;
 
-    public RoundManager(GameModel model, GameManager gameManager, Player currentPlayer){
+    public RoundManager(Controller controller, GameModel model, GameManager gameManager, Player currentPlayer){
+        this.controller = controller;
         this.currentPlayer = currentPlayer;
         this.gameManager = gameManager;
         this.model = model;
@@ -30,18 +32,18 @@ public class RoundManager {
             case 1:
             case 3:
             case 5:{
-                actionManager = new ActionManager(model, this);
+                actionManager = new ActionManager(controller, model, this);
                 actionManager.askForPowerUp();
                 break;
             }
             case 2:
             case 4:{
-                actionManager = new ActionManager(model, this);
+                actionManager = new ActionManager(controller, model, this);
                 actionManager.askForAction();
                 break;
             }
             case 6:{
-                actionManager = new ActionManager(model, this);
+                actionManager = new ActionManager(controller, model, this);
                 actionManager.askForReload();
                 break;
             }
@@ -62,7 +64,7 @@ public class RoundManager {
 
     public void endRound(){
         if (gameManager.isFinalFrenzyPhase() && gameManager.getPlayerTurn() == gameManager.getLastPlayer())
-            Controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
+            controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
         else
             gameManager.newRound();
     }
@@ -93,6 +95,6 @@ public class RoundManager {
     }
 
     public void createDeathManager(GameModel model, Player deadPlayer, RoundManager roundManager){
-        deathManager = new DeathManager(model, deadPlayer, this);
+        deathManager = new DeathManager(controller, model, deadPlayer, this);
     }
 }
