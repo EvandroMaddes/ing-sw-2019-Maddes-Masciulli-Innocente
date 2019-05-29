@@ -100,6 +100,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
             if (p != getOwner())
                 damage(p, 1);
         }
+        effectControlFlow(2);
     }
 
     @Override
