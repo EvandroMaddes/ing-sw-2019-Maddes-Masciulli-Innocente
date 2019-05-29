@@ -11,20 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class GUI extends RemoteView {
-    @Override
-    public Event playerPowerUpUpdate(Map<String, CubeColour> powerUps) {
-        return null;
-    }
 
-    @Override
-    public Event playerAmmoUpDate() {
-        return null;
-    }
-
-    @Override
-    public Event playerWeaponUpdate(String[] weapons) {
-        return null;
-    }
 
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
