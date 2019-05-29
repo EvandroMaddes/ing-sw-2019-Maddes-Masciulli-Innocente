@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 
 import java.util.ArrayList;
 import java.util.Observer;
@@ -104,7 +106,9 @@ public class VirtualView  extends Observable implements Observer{
     public Event getToController() {
         return toController;
     }
-
-
+    
+    public void callRemoteView(ControllerViewEvent message){
+        // TODO: 2019-05-28  
+    }
 
 }

@@ -5,12 +5,8 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class PowerUpRequestEvent extends ControllerViewEvent {
-    //todo va tolto, si usano gli altri attributi
-    Map<String, CubeColour> powerUp;
-
     private ArrayList<String> powerUpNames;
     private ArrayList<CubeColour> powerUpColours;
 

@@ -48,7 +48,7 @@ public class Newton extends PowerUp {
     {
         for (int i = 0; i < times; i++)
         {
-            move(getTarget(), direction);
+            //move(getTarget(), direction);
         }
         super.useEffect();
     }

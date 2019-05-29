@@ -158,7 +158,10 @@ public class Player extends Observable {
      */
     public void setPosition(Square position)
     {
+        if (this.position != null)
+            this.position.removeCurrentPlayer(this);
         this.position = position;
+        position.addCurrentPlayer(this);
         PositionUpdateEvent message = new PositionUpdateEvent( username, position.getRow(), position.getColumn());
         notifyObservers(message);
     }

@@ -15,6 +15,7 @@ import java.security.InvalidParameterException;
 
 public class GameManager {
 
+    private Controller controller;
     private RoundManager currentRound;
     private int playersReady;
     private final GameModel model;
@@ -27,7 +28,8 @@ public class GameManager {
     /**
      *
      */
-    public GameManager(int mapChoice){
+    public GameManager(Controller controller, int mapChoice){
+        this.controller = controller;
         playersReady = 0;
         playerTurn = -1;
         firstRoundPhase = true;
@@ -109,13 +111,13 @@ public class GameManager {
         }
 
         if (firstRoundPhase){
-            currentRound = new FirstRoundManager(model,this, model.getPlayers().get(playerTurn));
+            currentRound = new FirstRoundManager(controller, model,this, model.getPlayers().get(playerTurn));
         }
         else if (finalFrenzyPhase){
-            currentRound = new FrenzyRoundManager(model, this, model.getPlayers().get(playerTurn), firsPlayerPlayed);
+            currentRound = new FrenzyRoundManager(controller, model, this, model.getPlayers().get(playerTurn), firsPlayerPlayed);
         }
         else
-            currentRound = new RoundManager(model, this, model.getPlayers().get(playerTurn));
+            currentRound = new RoundManager(controller, model, this, model.getPlayers().get(playerTurn));
 
         currentRound.manageRound();
     }

@@ -6,8 +6,8 @@ import it.polimi.ingsw.model.player.Player;
 
 public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundManager(GameModel model, GameManager gameManager, Player currentPlayer){
-        super(model, gameManager, currentPlayer);
+    public FirstRoundManager(Controller controller, GameModel model, GameManager gameManager, Player currentPlayer){
+        super(controller, model, gameManager, currentPlayer);
     }
 
     @Override

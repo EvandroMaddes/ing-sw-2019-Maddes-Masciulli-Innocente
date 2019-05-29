@@ -28,4 +28,32 @@ public abstract class TwoEffectWeapon extends Weapon {
     public AmmoCube[] getSecondEffectCost() {
         return secondEffectCost;
     }
+
+    @Override
+    public void performEffect(int selectedEffect, List<Object> targets){
+        if (selectedEffect == 1)
+            performEffectOne(targets);
+        else if (selectedEffect == 2)
+            performEffectTwo(targets);
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
+
+    public ControllerViewEvent getTargetEffect(int selectedEffect){
+        if (selectedEffect == 1)
+            return getTargetEffectOne();
+        else if (selectedEffect == 2)
+            return getTargetEffectTwo();
+        else
+            throw new IllegalAccessError("The effect doesn't exist");
+    }
+
+    public boolean isUsableEffect (int selectedEffect){
+        if (selectedEffect == 1)
+            return isUsableEffectOne();
+        else if (selectedEffect == 2)
+            return isUsableEffectTwo();
+        else
+            return false;
+    }
 }

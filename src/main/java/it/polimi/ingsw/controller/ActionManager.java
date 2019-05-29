@@ -2,28 +2,30 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
 import it.polimi.ingsw.event.controller_view_event.*;
-import it.polimi.ingsw.event.view_controller_event.CardChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.game_components.cards.TwoEffectWeapon;
+import it.polimi.ingsw.model.game_components.cards.TwoOptionalEffectWeapon;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 public class ActionManager {
 
+    private Controller controller;
     private GameModel model;
     private RoundManager currentRoundManager;
     private PowerUp choosenPowerUp;
     private Weapon choosenWeapon;
 
-    public ActionManager(GameModel model, RoundManager currentRoundManager) {
+    public ActionManager(Controller controller, GameModel model, RoundManager currentRoundManager) {
+        this.controller = controller;
         this.model = model;
         this.currentRoundManager = currentRoundManager;
     }
@@ -55,17 +57,6 @@ public class ActionManager {
         return actionValidator;
     }
 
-    //todo
-    public void weaponChoice(CardChoiceEvent msg){
-        /* choosenWeapon = weapon;
-        if (choosenWeapon.canAttivateDifferentEffect()){
-            sendPossibleOtherEffect();
-        }
-        else{
-            choosenWeapon.fire();
-        }*/
-    }
-
     public void performMove(int positionX, int positionY){
         currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
         currentRoundManager.nextPhase();
@@ -87,7 +78,7 @@ public class ActionManager {
                 }
             }
             WeaponGrabRequestEvent message = new WeaponGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleGrabWeapons);
-            Controller.callView(message);
+            controller.callView(message);
         }
         else {
             ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
@@ -105,7 +96,7 @@ public class ActionManager {
             ArrayList<String> playerWeapons = new ArrayList<>();
             for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
                 playerWeapons.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
-                Controller.callView(new WeaponDiscardRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), playerWeapons));
+                controller.callView(new WeaponDiscardRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), playerWeapons));
             }
         }
         else
@@ -134,7 +125,7 @@ public class ActionManager {
             i++;
         }
         PositionMoveRequestEvent message = new PositionMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
-        Controller.callView(message);
+        controller.callView(message);
     }
 
     /**
@@ -151,16 +142,31 @@ public class ActionManager {
             i++;
         }
         PositionGrabRequestEvent message = new PositionGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
-        Controller.callView(message);
+        controller.callView(message);
     }
 
     public void sendPossibleWeapons(){
-        Controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
+        controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
+    }
+
+    public void sendPossibleEffects() {
+        boolean[] usableEffects = new boolean[3];
+        for (int i = 0; i < 3; i++)
+            usableEffects[i] = choosenWeapon.isUsableEffect(i);
+        controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
+    }
+
+    public void saveWeapon(String weapon){
+        for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+            if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
+                choosenWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
+        }
+        sendPossibleEffects();
     }
 
     public void askForAction(){
         boolean ableToFire = currentRoundManager.getCurrentPlayer().canShot();
-        Controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), ableToFire));
+        controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), ableToFire));
     }
 
     /**
@@ -174,7 +180,7 @@ public class ActionManager {
                 possibleReload.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
         }
         if ( !possibleReload.isEmpty() )
-            Controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleReload));
+            controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleReload));
         else
             currentRoundManager.nextPhase();
     }
@@ -183,18 +189,28 @@ public class ActionManager {
      * if the player has at least one Newton or Teleporter, send a PowerUpRequest message to ask if the player want to use it
      */
     public void askForPowerUp(){
-        Map<String, CubeColour> usablePowerUps = new HashMap<>();
+        ArrayList<String> powerUps = new ArrayList<>();
+        ArrayList<CubeColour> colours = new ArrayList<>();
         for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p.getName().equals("Newton") || p.getName().equals("Teleporter"))
-                usablePowerUps.put(p.getName(),p.getColour());
+            if (p.getName().equals("Newton") || p.getName().equals("Teleporter")){
+                powerUps.add(p.getName());
+                colours.add(p.getColour());
+            }
         }
-        if (!usablePowerUps.isEmpty()) {
-            // TODO: 2019-05-22 aggiornare il metodo qua sotto che era stato sminchiato dalla map
-            //PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), usablePowerUps);
-            //Controller.callView(message);
+        if (!powerUps.isEmpty()) {
+            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), powerUps, colours);
+            controller.callView(message);
         }
         else
             currentRoundManager.nextPhase();
+    }
+
+    public void askForEffectPay(int chosenEffect) {
+        // TODO: 2019-05-29
+    }
+    
+    public void askForTargets(){
+        // TODO: 2019-05-29  
     }
 
     /**

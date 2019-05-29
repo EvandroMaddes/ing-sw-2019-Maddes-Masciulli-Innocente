@@ -11,8 +11,7 @@ public class WeaponEffectChioceEvent extends ViewControllerEvent {
 }
     @Override
     public void performAction(Controller controller) {
-
-
+        controller.getGameManager().getCurrentRound().getActionManager().askForEffectPay(effectChoice);
     }
 
 
