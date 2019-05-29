@@ -164,18 +164,17 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
 
     /**
-     *
-     * @param remoteClient
+     *  is called by a client during the connection
+     * @param remotePort is the client port
+     * @param remoteIPAddress is the client IP address
      */
     @Override
-    public void acceptRemoteClient(RemoteInterface remoteClient) {
+    public void acceptRemoteClient( int remotePort, String remoteIPAddress) {
         if(clientList.size()<5) {
             try{
-                int clientPort = remoteClient.getPort();
                 int clientNumber = getClientListNumber()+1;
-                String clientIPAddress = remoteClient.getIPAddress();
-                clientRegistries.add(LocateRegistry.getRegistry(clientIPAddress, clientPort));
-                remoteClient = (RemoteInterface) clientRegistries.get(getClientListNumber()).lookup("RMIClient"+clientNumber);
+                clientRegistries.add(LocateRegistry.getRegistry(remoteIPAddress, remotePort));
+                RemoteInterface remoteClient = (RemoteInterface) clientRegistries.get(getClientListNumber()).lookup("RMIClient"+clientNumber);
                 clientList.add(remoteClient);
             }catch(RemoteException|NotBoundException e){
                 CustomLogger.logException(e);

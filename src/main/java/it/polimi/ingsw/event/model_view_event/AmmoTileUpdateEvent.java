@@ -1,5 +1,8 @@
 package it.polimi.ingsw.event.model_view_event;
 
+import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.view.RemoteView;
+
 /**
  * @author Francesco Masciulli
  * it represent an Ammo Tile replacement on the Map
@@ -25,5 +28,28 @@ public class AmmoTileUpdateEvent extends PositionUpdateEvent {
         this.secondColour=secondColour;
         this.thirdColour=thirdColour;
         this.replace = replace;
+    }
+
+    public String getSecondColour() {
+        return secondColour;
+    }
+
+    public String getThirdColour() {
+        return thirdColour;
+    }
+
+
+    public String getFirstColour() {
+        return firstColour;
+    }
+
+    @Override
+    public Event performAction(RemoteView remoteView) {
+        if (replace == true) {
+            return remoteView.addAmmoTileUpdate(getPositionX(), getPositionY(), getFirstColour(), getSecondColour(), getThirdColour());
+        }
+        else {
+            return remoteView.removeAmmoTileUpdate(getPositionX(),getPositionY());
+        }
     }
 }

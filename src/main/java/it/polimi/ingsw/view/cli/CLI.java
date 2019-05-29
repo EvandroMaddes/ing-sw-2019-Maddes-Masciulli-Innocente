@@ -403,6 +403,15 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param fistColour
+     * @param secondColour
+     * @param thirdColour
+     * @return
+     */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
         String[] color = {fistColour, secondColour};
@@ -418,9 +427,31 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
         CLIPrintableElement currElement= new CLIPrintableElement(false);
+        map.updateResource(currElement,x,y);
+        return new UpdateChoiceEvent(getUser());
+    }
+
+    /**
+     *
+     * @param currCharacter
+     * @param x
+     * @param y
+     * @return
+     */
+    @Override
+    public Event positionUpdate(Character currCharacter, int x, int y) {
+        
+        CLIPrintableElement currElement = new CLIPrintableElement(currCharacter,mapCharacterNameColors.get(currCharacter));
+        map.updateResource(currElement,x,y);
         return new UpdateChoiceEvent(getUser());
     }
 }

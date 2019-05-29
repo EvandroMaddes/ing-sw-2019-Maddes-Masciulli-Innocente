@@ -99,16 +99,15 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     public void connectClient() {
         try {
 
-            serverRegistry = LocateRegistry.getRegistry(serverIPAddress, NetConfiguration.RMISERVERPORTNUMBER);
-            RemoteInterface remoteServer = (RemoteInterface) serverRegistry.lookup("RMIServer");
-            acceptRemoteClient(remoteServer);
+
+            acceptRemoteClient(NetConfiguration.RMISERVERPORTNUMBER, serverIPAddress);
             int clientNumber = server.getClientListNumber()+1;
             clientRegistry = LocateRegistry.createRegistry(port);
             clientRegistry.rebind("RMIClient"+clientNumber,this);
             bindName = "RMIClient"+clientNumber;
-            server.acceptRemoteClient(this);
+            server.acceptRemoteClient(port,clientIPAddress);
             //run();
-        }catch(RemoteException|NotBoundException exc){
+        }catch(RemoteException exc){
             CustomLogger.logException(exc);
         }
 
@@ -132,13 +131,19 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      */
 
     /**
-     * must accept the Server Binding;
-     * @param remoteClient is the Remote Server, looked in the constructor
-     * @throws RemoteException if it could not connect to the Server
+     *
+     * @param remotePort is the server Port, from the NetConfiguration Class
+     * @param remoteIPAddress
+     * @throws RemoteException
      */
     @Override
-    public void acceptRemoteClient(RemoteInterface remoteClient) throws RemoteException {
-            server = remoteClient;
+    public void acceptRemoteClient( int remotePort, String remoteIPAddress) throws RemoteException {
+       try{
+           serverRegistry = LocateRegistry.getRegistry(serverIPAddress, remotePort);
+           server = (RemoteInterface) serverRegistry.lookup("RMIServer");
+       }catch (Exception e){
+           CustomLogger.logException(e);
+       }
     }
 
     @Override
