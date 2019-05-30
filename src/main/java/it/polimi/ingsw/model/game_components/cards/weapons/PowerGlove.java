@@ -1,95 +1,92 @@
 package it.polimi.ingsw.model.game_components.cards.weapons;
 
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
-import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.AlternateFireWeapon;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PowerGlove extends AlternateFireWeapon {
-    /**
-     *
-     * @param colour
-     * @param name
-     * @param reloadCost
-     * @param alternativeEffectCost
-     */
-    public PowerGlove(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
-        super(colour, name, reloadCost, alternativeEffectCost);
+    private boolean intermediateEffectState;
+    private int firstStepDirection;
+
+    public PowerGlove(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
+        super(colour, name, reloadCost, secondEffectCost);
     }
 
-    public ArrayList<Player> getTargetsBaseEffect(){
-        ArrayList<Player> targets = null;
-
-        for (int i = 0; i < 4; i++) {
-            if (getOwner().getPosition().checkDirection(i))
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
-        }
-        return targets;
+    @Override
+    public void setLoaded() {
+        super.setLoaded();
+        intermediateEffectState = false;
     }
 
-    public ArrayList<Player> getTargetsAlternativeEffect() {
-        ArrayList<Player> targets = null;
-        for (int i = 0; i < 4; i++){
-            if (getOwner().getPosition().checkDirection(i)) {
-                targets.addAll(getOwner().getPosition().getNextSquare(i).getSquarePlayers());
-
-                if (getOwner().getPosition().getNextSquare(i).checkDirection(i))
-                    targets.addAll(getOwner().getPosition().getNextSquare(i).getNextSquare(i).getSquarePlayers());
-            }
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if (effectUsed == 0)
+            updateUsableEffect(new boolean[]{false, false, false});
+        else if (effectUsed == 1 && !intermediateEffectState){
+            intermediateEffectState = true;
+            updateUsableEffect(new boolean[]{false, true, false});
         }
-        return targets;
+        else if (effectUsed == 1)
+            updateUsableEffect(new boolean[]{false, false, false});
     }
 
-    public void fireBaseEffect(ArrayList<Player> targets, Square destination){
-        if (targets.size() != 0) {
-            getOwner().setPosition(targets.get(0).getPosition());
-            damage(targets.get(0), 1);
-            mark(targets.get(0),2);
-        }
-        else
-            throw new NullPointerException("nobody to damage");
-
-
-    }
-
-    public void fireAlternativeEffect(ArrayList<Player> targets, Square destination){
-        if (targets.size() != 0) {
-            damage(targets.get(0), 2);
-            damage(targets.get(1), 2);
-            getOwner().setPosition(targets.get(1).getPosition());
-
-        }
-        else
-            throw new NullPointerException("nobody to damage");
-
+    @Override
+    public void performEffectOne(List<Object> targets) {
+        if (targets.isEmpty())
+            throw new IllegalArgumentException("no targets");
+        Player target = (Player)targets.get(0);
+        move(getOwner(), target.getPosition());
+        damage(target, 1);
+        mark(target, 2);
+        effectControlFlow(1);
     }
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return null;
-    }
-
-    @Override
-    public ControllerViewEvent getTargetEffectTwo() {
-        return null;
-    }
-
-
-    @Override
-    public void performEffectOne(List<Object> targets) {
-
+        ArrayList<Player> possibleTargets = getOwner().getPosition().getNextSquarePlayer();
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-
+        if (targets.isEmpty())
+            throw new IllegalArgumentException("no targets");
+        Player target = (Player)targets.get(0);
+        for (int direction = 0 ; direction < 4; direction++){
+            if (getOwner().getPosition().getNextSquare(direction) == target.getPosition())
+                firstStepDirection = direction;
+        }
+        move(getOwner(), target.getPosition());
+        damage(target, 2);
+        effectControlFlow(2);
     }
 
+    @Override
+    public ControllerViewEvent getTargetEffectTwo() {
+        if (!intermediateEffectState)
+            return getTargetEffectOne();
+        else {
+            ArrayList<Player> possibleTargets = new ArrayList<>();
+            if (getOwner().getPosition().checkDirection(firstStepDirection))
+                possibleTargets.addAll(getOwner().getPosition().getNextSquare(firstStepDirection).getSquarePlayers());
+            return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+        }
+    }
 
+    @Override
+    public boolean isUsableEffectTwo() {
+        if (!intermediateEffectState)
+            return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
+        else
+            return getUsableEffect()[1] && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
+    }
 }
 
