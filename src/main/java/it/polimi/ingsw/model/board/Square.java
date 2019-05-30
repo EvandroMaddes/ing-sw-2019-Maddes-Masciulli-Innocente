@@ -271,4 +271,13 @@ public abstract class Square extends Observable {
         }
         return possibleDestination;
     }
+
+    public ArrayList<Player> getNextSquarePlayer(){
+        ArrayList<Player> possibleTargets = new ArrayList<>();
+        for (int direction = 0; direction < 4; direction++){
+            if (this.checkDirection(direction))
+                possibleTargets.addAll(this.getNextSquare(direction).getSquarePlayers());
+        }
+        return possibleTargets;
+    }
 }

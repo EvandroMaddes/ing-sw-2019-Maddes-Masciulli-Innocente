@@ -54,18 +54,9 @@ public class ShockWave extends AlternateFireWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        ArrayList<Player> possibleTargets = getNextSquarePlayer();
+        ArrayList<Player> possibleTargets = getOwner().getPosition().getNextSquarePlayer();
         possibleTargets.removeAll(getFirstEffectTarget());
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
-    }
-
-    private ArrayList<Player> getNextSquarePlayer(){
-        ArrayList<Player> possibleTargets = new ArrayList<>();
-        for (int direction = 0; direction < 4; direction++){
-            if (getOwner().getPosition().checkDirection(direction))
-                possibleTargets.addAll(getOwner().getPosition().getNextSquare(direction).getSquarePlayers());
-        }
-        return possibleTargets;
     }
 
     @Override
@@ -82,6 +73,6 @@ public class ShockWave extends AlternateFireWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getNextSquarePlayer()), -1);
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().getNextSquarePlayer()), -1);
     }
 }
