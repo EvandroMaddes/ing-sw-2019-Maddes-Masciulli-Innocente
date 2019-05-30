@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.game_components.cards.weapons.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 /**
  * @author Francesco Masciulli
@@ -196,7 +195,7 @@ public class WeaponDeck extends DeckManagement {
         reloadCost[1] = new AmmoCube(CubeColour.Yellow);
         reloadCost[2] = new AmmoCube(CubeColour.Blue);
         alternativeEffectCost =null;
-        RailGun railGun = new RailGun(colour,"RAILGUN",reloadCost,alternativeEffectCost);
+        Railgun railGun = new Railgun(colour,"RAILGUN",reloadCost,alternativeEffectCost);
         deck.add(railGun);
 
         colour = CubeColour.Yellow;
