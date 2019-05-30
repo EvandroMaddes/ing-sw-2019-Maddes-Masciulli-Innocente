@@ -15,7 +15,6 @@ import java.util.List;
 
 public class Sledgehammer extends AlternateFireWeapon {
     boolean intermediateEffect;
-    Player targetedPlayer;
 
     public Sledgehammer(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
         super(colour, name, reloadCost, secondEffectCost);
@@ -25,7 +24,6 @@ public class Sledgehammer extends AlternateFireWeapon {
     public void setLoaded() {
         super.setLoaded();
         intermediateEffect = false;
-        targetedPlayer = null;
     }
 
     @Override
@@ -70,11 +68,11 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     private void performEffectTwoFirstStep(List<Object> targets){
         damage((Player)targets.get(0), 3);
-        targetedPlayer = (Player)targets.get(0);
+        getFirstEffectTarget().add((Player)targets.get(0));
     }
 
     private void performEffectTwoSecondStep(List<Object> targets){
-        move(targetedPlayer, (Square)targets.get(0));
+        move(getFirstEffectTarget().get(0), (Square)targets.get(0));
     }
 
     @Override
@@ -94,10 +92,10 @@ public class Sledgehammer extends AlternateFireWeapon {
     private ControllerViewEvent getTargetEffectTwoSecondStep(){
         ArrayList<Square> possibleTargets = new ArrayList<>();
         for (int direction = 0; direction < 4; direction++){
-            if (targetedPlayer.getPosition().checkDirection(direction)){
-                possibleTargets.add(targetedPlayer.getPosition().getNextSquare(direction));
-                if (targetedPlayer.getPosition().getNextSquare(direction).checkDirection(direction))
-                    possibleTargets.add(targetedPlayer.getPosition().getNextSquare(direction).getNextSquare(direction));
+            if (getFirstEffectTarget().get(0).getPosition().checkDirection(direction)){
+                possibleTargets.add(getFirstEffectTarget().get(0).getPosition().getNextSquare(direction));
+                if (getFirstEffectTarget().get(0).getPosition().getNextSquare(direction).checkDirection(direction))
+                    possibleTargets.add(getFirstEffectTarget().get(0).getPosition().getNextSquare(direction).getNextSquare(direction));
             }
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));

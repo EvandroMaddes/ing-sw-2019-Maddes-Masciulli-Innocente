@@ -4,17 +4,27 @@ import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TwoEffectWeapon extends Weapon {
 
     private AmmoCube[] secondEffectCost;
+    ArrayList<Player> firstEffectTarget;
 
     public TwoEffectWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
         super(colour, name, reloadCost);
         this.secondEffectCost = secondEffectCost;
+        firstEffectTarget = new ArrayList<>();
         setEffectsEnable(new boolean[]{true, true, false});
+    }
+
+    @Override
+    public void setLoaded() {
+        super.setLoaded();
+        firstEffectTarget.clear();
     }
 
     public boolean isUsableEffectTwo(){
@@ -55,5 +65,9 @@ public abstract class TwoEffectWeapon extends Weapon {
             return isUsableEffectTwo();
         else
             return false;
+    }
+
+    public ArrayList<Player> getFirstEffectTarget() {
+        return firstEffectTarget;
     }
 }
