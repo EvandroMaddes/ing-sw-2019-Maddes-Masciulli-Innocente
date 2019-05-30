@@ -151,4 +151,9 @@ public class GUI extends RemoteView {
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
         return null;
     }
+
+    @Override
+    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber) {
+        return null;
+    }
 }

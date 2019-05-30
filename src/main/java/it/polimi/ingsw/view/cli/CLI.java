@@ -461,7 +461,7 @@ public class CLI extends RemoteView {
         for (CLIPlayerBoard currentPlayerBoard:playerBoards
         ) {
             if(currentPlayerBoard.getCharacter() == currCharacter) {
-                currentPlayerBoard.updatePlayerBoard(damageToken,markNumber);//deve essere quella del payer corretto
+                currentPlayerBoard.markDamageUpdate(damageToken,markNumber);//deve essere quella del payer corretto
                 return new UpdateChoiceEvent(getUser());
             }
         }
@@ -488,7 +488,7 @@ public class CLI extends RemoteView {
              ) {
            if(currentPlayerBoard.getCharacter() == currCharacter) {
 
-               currentPlayerBoard.yourWeaponsUpdate('W', weapons);
+               currentPlayerBoard.gadgetsUpdate('W', weapons);
                return new UpdateChoiceEvent(getUser());
            }
         }
@@ -497,7 +497,8 @@ public class CLI extends RemoteView {
 
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
-        String[] ammoString = null;
+        int size = ammo.size();
+        String[] ammoString = new String[size];
         int i=0;
         for (AmmoCube ammoCube:ammo
              ) {
@@ -509,10 +510,35 @@ public class CLI extends RemoteView {
         ) {
             if(currentPlayerBoard.getCharacter() == currCharacter) {
 
-                currentPlayerBoard.yourWeaponsUpdate('A',ammoString );
+                currentPlayerBoard.gadgetsUpdate('A',ammoString );
                 return new UpdateChoiceEvent(getUser());
             }
         }
         return null;
+    }
+
+    @Override
+    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber) {
+        String[] skull = new String[skullNumber];
+        skull[0] = "☠";
+
+        if(skullNumber==2){
+            skull[1]= "☠";
+        }
+
+
+
+        for (CLIPlayerBoard currentPlayerBoard:playerBoards
+        ) {
+            if(currentPlayerBoard.getCharacter() == currCharacter) {
+
+                currentPlayerBoard.gadgetsUpdate('S', skull);
+                return new UpdateChoiceEvent(getUser());
+            }
+        }
+
+        //todo chiamata alla gameTrack e aggiunta segnalini del colore character
+        return new UpdateChoiceEvent(getUser());
+
     }
 }

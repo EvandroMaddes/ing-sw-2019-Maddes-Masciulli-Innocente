@@ -48,6 +48,7 @@ public interface RemoteViewInterface {
    Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps);
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
+   Event gameTrackSkullUpdate(Character currCharacter,int skullNumber);
 
    //todo fare per ultimi
    Event effectPaymentChoice();
