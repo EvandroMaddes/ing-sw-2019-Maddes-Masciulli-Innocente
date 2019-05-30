@@ -280,4 +280,29 @@ public abstract class Square extends Observable {
         }
         return possibleTargets;
     }
+
+    public ArrayList<Square> findVisibleSquare(){
+        ArrayList<Square> visibleSquare = new ArrayList<>();
+        ArrayList<Square> toCheckSquare = new ArrayList<>();
+        ArrayList<String> visibleRoomColours = new ArrayList<>();
+        visibleRoomColours.add(this.getSquareColour());
+        for (int i = 0; i < 4; i++){
+            if ( this.checkDirection(i) && !visibleRoomColours.contains(this.getNextSquare(i).getSquareColour()))
+                visibleRoomColours.add(this.getNextSquare(i).getSquareColour());
+        }
+        toCheckSquare.add(this);
+        while (!toCheckSquare.isEmpty()){
+            for (int direction = 0; direction < 4; direction++){
+                if ( toCheckSquare.get(0).checkDirection(direction) &&
+                        !visibleSquare.contains(toCheckSquare.get(0).getNextSquare(direction)) &&
+                        !toCheckSquare.contains(toCheckSquare.get(0).getNextSquare(direction)) &&
+                        visibleRoomColours.contains(toCheckSquare.get(0).getNextSquare(direction).getSquareColour())) {
+                    toCheckSquare.add(toCheckSquare.get(0).getNextSquare(direction));
+                    visibleSquare.add(toCheckSquare.get(0));
+                    toCheckSquare.remove(toCheckSquare.get(0));
+                }
+            }
+        }
+        return visibleSquare;
+    }
 }
