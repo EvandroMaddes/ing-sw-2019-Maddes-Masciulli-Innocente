@@ -4,13 +4,11 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
-import java.util.ArrayList;
-
 public class PowerUpRequestEvent extends ControllerViewEvent {
-    private ArrayList<String> powerUpNames;
-    private ArrayList<CubeColour> powerUpColours;
+    private String[] powerUpNames;
+    private CubeColour[] powerUpColours;
 
-    public PowerUpRequestEvent(String user, ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+    public PowerUpRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
         super(user);
         this.powerUpNames = powerUpNames;
         this.powerUpColours = powerUpColours;
@@ -23,11 +21,11 @@ public class PowerUpRequestEvent extends ControllerViewEvent {
         return null;
     }
 
-    public ArrayList<String> getPowerUpNames() {
+    public String[] getPowerUpNames() {
         return powerUpNames;
     }
 
-    public ArrayList<CubeColour> getPowerUpColours() {
+    public CubeColour[] getPowerUpColours() {
         return powerUpColours;
     }
 }

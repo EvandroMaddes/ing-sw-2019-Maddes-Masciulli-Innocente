@@ -4,20 +4,21 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
-import java.util.ArrayList;
-
 public class EffectPaymentRequest extends PowerUpRequestEvent {
+    /**
+     * int arrays are built like that:
+     * [0] - # Red
+     * [1] - # Yellow
+     * [2] - # Blue
+     */
+    private int[] minimumPowerUpRequest;
+    private int[] maximumPowerUpRequest;
 
-    private int[] number;
-    private ArrayList<CubeColour> playerCube;
-
-    public EffectPaymentRequest(String user, ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours,
-                                int numberOfRed, int numberOfBlue, int numberOfYellow, ArrayList<CubeColour> playerCube) {
+    public EffectPaymentRequest(String user, String[] powerUpNames, CubeColour[] powerUpColours,
+                                int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         super(user, powerUpNames, powerUpColours);
-        number[0] = numberOfRed;
-        number[1] = numberOfBlue;
-        number[2] = numberOfYellow;
-        this.playerCube = playerCube;
+        this.minimumPowerUpRequest = minimumPowerUpRequest;
+        this.maximumPowerUpRequest = maximumPowerUpRequest;
     }
 
     //todo reimplentare

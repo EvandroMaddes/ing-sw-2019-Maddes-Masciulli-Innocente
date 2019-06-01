@@ -12,11 +12,9 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.utils.Encoder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class ActionManager {
 
@@ -188,16 +186,13 @@ public class ActionManager {
      * if the player has at least one Newton or Teleporter, send a PowerUpRequest message to ask if the player want to use it
      */
     public void askForPowerUp(){
-        ArrayList<String> powerUps = new ArrayList<>();
-        ArrayList<CubeColour> colours = new ArrayList<>();
+        ArrayList<PowerUp> powerUps = new ArrayList<>();
         for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p.getName().equals("Newton") || p.getName().equals("Teleporter")){
-                powerUps.add(p.getName());
-                colours.add(p.getColour());
-            }
+            if (p.getName().equals("Newton") || p.getName().equals("Teleporter"))
+                powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
-            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), powerUps, colours);
+            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
             controller.callView(message);
         }
         else
@@ -207,9 +202,27 @@ public class ActionManager {
     public void askForEffectPay(int chosenEffect){
         this.chosenEffect = chosenEffect;
         if (choosenWeapon.hasToPay(chosenEffect)) {
-            AmmoCube[] effectCost = choosenWeapon.getEffectCost(chosenEffect);
-            // TODO: 2019-06-01
+            int[] playerAmmo = AmmoCube.getColoursByListRYB(currentRoundManager.getCurrentPlayer().getAmmo());
+            int[] effectCost = AmmoCube.getColoursByAmmoCubeArrayRYB(choosenWeapon.getEffectCost(chosenEffect));
+            CubeColour[] powerUpColoursLite = Encoder.encodePowerUpColour(currentRoundManager.getCurrentPlayer().getPowerUps());
+            int[] powerUpsColours = AmmoCube.getColoursByCubeColourArrayRYB(powerUpColoursLite);
+            int[] minimalPowerUpNumberToUse;
+            if (!Arrays.equals(playerAmmo, AmmoCube.cubeDifference(playerAmmo, powerUpsColours)))
+                payEffect(new String[]{}, new CubeColour[]{});
+            else {
+                minimalPowerUpNumberToUse = AmmoCube.cubeDifference(effectCost, playerAmmo);
+                for (int i = 0; i < 3; i++) {
+                    if (minimalPowerUpNumberToUse[i] < 0)
+                        minimalPowerUpNumberToUse[i] = 0;
+                }
+                EffectPaymentRequest message = new EffectPaymentRequest(currentRoundManager.getCurrentPlayer().getUsername(),
+                        Encoder.encodePowerUpsType(currentRoundManager.getCurrentPlayer().getPowerUps()),
+                        powerUpColoursLite, minimalPowerUpNumberToUse, effectCost);
+                controller.callView(message);
+            }
         }
+        else
+            askForTargets();
     }
 
     // TODO: 2019-06-01 !!instanceof :'(
@@ -240,5 +253,9 @@ public class ActionManager {
                 choosenPowerUp = p;
         }
         Object targetList = choosenPowerUp.getTarget();
+    }
+
+    public void payEffect(String[] powerUpsType, CubeColour[] powerUpsColour){
+
     }
 }

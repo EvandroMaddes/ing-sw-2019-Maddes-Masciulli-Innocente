@@ -5,7 +5,6 @@ import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 public abstract class Weapon extends Card {
