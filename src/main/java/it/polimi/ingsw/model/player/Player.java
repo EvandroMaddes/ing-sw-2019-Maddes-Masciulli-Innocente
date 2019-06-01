@@ -149,6 +149,11 @@ public class Player extends Observable {
         notifyObservers(message);
     }
 
+    public void discardAmmo(AmmoCube ammoCube){
+        ammo.remove(ammoCube);
+        notifyObservers(new AmmoUpdateEvent(username, character, ammo));
+    }
+
     /**
      *
      * @param powerUp, is the powerUp picked
@@ -349,10 +354,5 @@ public class Player extends Observable {
         }
         return false;
     }
-
-    public void payCost(AmmoCube[] cost){
-
-    }
-
 
 }

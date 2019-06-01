@@ -256,6 +256,35 @@ public class ActionManager {
     }
 
     public void payEffect(String[] powerUpsType, CubeColour[] powerUpsColour){
-
+        int[] effectCost = AmmoCube.getColoursByAmmoCubeArrayRYB(choosenWeapon.getEffectCost(chosenEffect));
+        for (int i = 0; i < powerUpsType.length; i++){
+            for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
+                if (p.getName() == powerUpsType[i] && p.getColour() == powerUpsColour[i]){
+                    currentRoundManager.getCurrentPlayer().discardPowerUp(p);
+                    if (powerUpsColour[i] == CubeColour.Red)
+                        effectCost[0]--;
+                    else if (powerUpsColour[i] == CubeColour.Yellow)
+                        effectCost[1]--;
+                    else
+                        effectCost[2]--;
+                    break;
+                }
+            }
+        }
+        for (AmmoCube a:currentRoundManager.getCurrentPlayer().getAmmo()){
+            if (a.getColour() == CubeColour.Red && effectCost[0] > 0){
+                currentRoundManager.getCurrentPlayer().discardAmmo(a);
+                effectCost[0]--;
+            }
+            else if (a.getColour() == CubeColour.Yellow && effectCost[1] > 0){
+                currentRoundManager.getCurrentPlayer().discardAmmo(a);
+                effectCost[1]--;
+            }
+            else if (a.getColour() == CubeColour.Blue && effectCost[2] > 0){
+                currentRoundManager.getCurrentPlayer().discardAmmo(a);
+                effectCost[2]--;
+            }
+        }
+        askForTargets();
     }
 }
