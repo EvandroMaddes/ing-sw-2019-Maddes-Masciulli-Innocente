@@ -6,15 +6,17 @@ import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.TwoEffectWeapon;
-import it.polimi.ingsw.model.game_components.cards.TwoOptionalEffectWeapon;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.utils.Encoder;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class ActionManager {
 
@@ -23,6 +25,7 @@ public class ActionManager {
     private RoundManager currentRoundManager;
     private PowerUp choosenPowerUp;
     private Weapon choosenWeapon;
+    private int chosenEffect;
 
     public ActionManager(Controller controller, GameModel model, RoundManager currentRoundManager) {
         this.controller = controller;
@@ -86,6 +89,11 @@ public class ActionManager {
         }
     }
 
+    public void performWeaponEffect(List<Object> targets){
+        choosenWeapon.performEffect(chosenEffect, targets);
+        sendPossibleEffects();
+    }
+
     public void grabWeapon(String weaponChoice){
         SpawnSquare grabSquare = (SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition();
         for (Weapon w: grabSquare.getWeapons()) {
@@ -116,14 +124,8 @@ public class ActionManager {
      */
     public void sendPossibleMoves(){
         ArrayList<Square> possibleSquare = getValidator().aviableMoves(currentRoundManager.getCurrentPlayer());
-        int[] possibleSquareX = new int[possibleSquare.size()];
-        int[] possibleSquareY = new int[possibleSquare.size()];
-        int i = 0;
-        for (Square s:possibleSquare){
-            possibleSquareX[i] = s.getColumn();
-            possibleSquareY[i] = s.getRow();
-            i++;
-        }
+        int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
+        int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionMoveRequestEvent message = new PositionMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
         controller.callView(message);
     }
@@ -133,14 +135,8 @@ public class ActionManager {
      */
     public void sendPossibleGrabs(){
         ArrayList<Square> possibleSquare = getValidator().aviableGrab(currentRoundManager.getCurrentPlayer());
-        int[] possibleSquareX = new int[possibleSquare.size()];
-        int[] possibleSquareY = new int[possibleSquare.size()];
-        int i = 0;
-        for (Square s:possibleSquare){
-            possibleSquareX[i] = s.getColumn();
-            possibleSquareY[i] = s.getRow();
-            i++;
-        }
+        int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
+        int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionGrabRequestEvent message = new PositionGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
         controller.callView(message);
     }
@@ -153,7 +149,10 @@ public class ActionManager {
         boolean[] usableEffects = new boolean[3];
         for (int i = 0; i < 3; i++)
             usableEffects[i] = choosenWeapon.isUsableEffect(i);
-        controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
+        if (Arrays.equals(usableEffects, new boolean[]{false, false, false}))
+            currentRoundManager.nextPhase();
+        else
+            controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
     }
 
     public void saveWeapon(String weapon){
@@ -205,12 +204,21 @@ public class ActionManager {
             currentRoundManager.nextPhase();
     }
 
-    public void askForEffectPay(int chosenEffect) {
-        // TODO: 2019-05-29
+    public void askForEffectPay(int chosenEffect){
+        this.chosenEffect = chosenEffect;
+        if (choosenWeapon.hasToPay(chosenEffect)) {
+            AmmoCube[] effectCost = choosenWeapon.getEffectCost(chosenEffect);
+            // TODO: 2019-06-01
+        }
     }
-    
+
+    // TODO: 2019-06-01 !!instanceof :'(
     public void askForTargets(){
-        // TODO: 2019-05-29  
+        ControllerViewEvent message = choosenWeapon.getTargetEffect(chosenEffect);
+        if (message instanceof TargetPlayerRequestEvent && ((TargetPlayerRequestEvent)message).getMaxTarget() < 0)
+            performWeaponEffect(new ArrayList<>());
+        else
+            controller.callView(message);
     }
 
     /**

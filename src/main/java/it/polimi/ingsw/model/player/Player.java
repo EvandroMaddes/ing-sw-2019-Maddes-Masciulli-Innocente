@@ -38,7 +38,7 @@ public class Player extends Observable {
      * @param username player's username
      * @param character is the character choosen by the player
      *
-     * costructor of player, set the preferences of the player (username, character, battleCry) and give him one ammoCube for each colour
+     * costructor of player, set the preferences of the player (username, character) and give him one ammoCube for each colour
      */
     public Player(String username, Character character)
     {
@@ -56,65 +56,35 @@ public class Player extends Observable {
         addAmmo(new AmmoCube(CubeColour.Yellow));
     }
 
-
-    /**
-     *
-     * @return the player board
-     */
     public PlayerBoard getPlayerBoard()
     {
         return playerBoard;
     }
 
-    /**
-     *
-     * @return the charecter that the player is using
-     */
     public Character getCharacter()
     {
         return character;
     }
 
-    /**
-     *
-     * @return player's power ups
-     */
     public ArrayList<PowerUp> getPowerUps() {
         return powerUps;
     }
 
-    /**
-     *
-     * @return position
-     */
     public Square getPosition()
     {
         return position;
     }
 
-    /**
-     *
-     * @return player's points
-     */
     public int getPoints()
     {
         return points;
     }
 
-    /**
-     *
-     * @return username
-     */
     public String getUsername()
     {
         return username;
     }
 
-
-    /**
-     *
-     * @return ammo list
-     */
     public ArrayList<AmmoCube> getAmmo()
     {
         return ammo;
@@ -175,7 +145,7 @@ public class Player extends Observable {
     public void addAmmo(AmmoCube ammo)
     {
         this.ammo.add(ammo);
-        AmmoUpdateEvent message = new AmmoUpdateEvent(username, this.ammo );
+        AmmoUpdateEvent message = new AmmoUpdateEvent(username, character, this.ammo );
         notifyObservers(message);
     }
 
@@ -205,19 +175,13 @@ public class Player extends Observable {
     }
 
     private void notifyPowerUpChange(){
-        Map<String, CubeColour> messagePowerUps = new HashMap<>();
-        for (PowerUp p: this.powerUps) {
-            if (p.getName().equals("Newton"))
-                messagePowerUps.put("Newton", p.getColour());
-            else if (p.getName().equals("Teleporter"))
-                messagePowerUps.put("Teleporter", p.getColour());
-            else if (p.getName().equals("TargetingScope"))
-                messagePowerUps.put("TargetingScope", p.getColour());
-            else
-                messagePowerUps.put("TagbackGranade", p.getColour());
+        String[] powerUps = new String[this.powerUps.size()];
+        CubeColour[] colours = new CubeColour[this.powerUps.size()];
+        for (int i = 0; i < this.powerUps.size(); i++){
+            powerUps[i] = this.powerUps.get(i).getName();
+            colours[i] = this.powerUps.get(i).getColour();
         }
-
-        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(username,messagePowerUps);
+        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(username, character, powerUps, colours);
         notifyObservers(message);
     }
 
@@ -227,7 +191,7 @@ public class Player extends Observable {
             messageWeapons[i] = weapons[i].getName();
         }
 
-        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(username, messageWeapons);
+        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(username, messageWeapons, character);
         notifyObservers(message);
     }
 
@@ -385,4 +349,10 @@ public class Player extends Observable {
         }
         return false;
     }
+
+    public void payCost(AmmoCube[] cost){
+
+    }
+
+
 }

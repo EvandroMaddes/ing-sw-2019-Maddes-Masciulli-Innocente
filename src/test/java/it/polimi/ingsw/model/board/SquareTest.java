@@ -32,7 +32,7 @@ public class SquareTest {
 
     }
 
-    @Test
+/*    @Test
     public void testSpawnSquare(){
         testedSquare = new SpawnSquare(0,0);
         AmmoCube[] cubes = testTile.getAmmoCubes();
@@ -47,5 +47,5 @@ public class SquareTest {
         Assert.assertTrue(((SpawnSquare) testedSquare) .getWeapons().contains(distructor));
 
     }
-
+*/
 }

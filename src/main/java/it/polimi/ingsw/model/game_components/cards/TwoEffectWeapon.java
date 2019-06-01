@@ -70,4 +70,24 @@ public abstract class TwoEffectWeapon extends Weapon {
     public ArrayList<Player> getFirstEffectTarget() {
         return firstEffectTarget;
     }
+
+    @Override
+    public boolean hasToPay(int effect) {
+        if (effect == 1)
+            return false;
+        else if (effect == 2)
+            return getUsableEffect()[1];
+        else
+            throw new UnsupportedOperationException("efeftto richiesto non esistente");
+    }
+
+    @Override
+    public AmmoCube[] getEffectCost(int effect) {
+        if (effect == 1)
+            return new AmmoCube[]{};
+        else if (effect == 2)
+            return secondEffectCost;
+        else
+            throw new UnsupportedOperationException("effetto richiesto non esistente");
+    }
 }

@@ -37,7 +37,7 @@ public class ViewTest {
     /**
      * Testing on view Observable quality
      */
-    @Test
+/*    @Test
     public void viewControllerTest(){
         virtualView.addObserver(controller);
 
@@ -55,7 +55,7 @@ public class ViewTest {
     /**
      * Testing on view Observer quality
      */
-    @Test
+/*    @Test
     public void modelViewTest(){
 
         controller.getGameManager().getModel().addObserver(virtualView);
@@ -64,4 +64,5 @@ public class ViewTest {
         Assert.assertEquals(virtualView.getToRemoteView(),eventTest3);
 
     }
+    */
 }
