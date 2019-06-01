@@ -11,13 +11,26 @@ import it.polimi.ingsw.view.RemoteView;
  *  or  (DominationMod) when a SpawnSquare is damaged
  */
 public class GameTrackUpdateEvent extends ModelViewEvent {
-    public GameTrackUpdateEvent(String user) {
+    private Character character;
+    private int skullNumber;
+
+    public GameTrackUpdateEvent(String user,Character character, int skullNumber) {
         super(user);
+        this.character = character;
+        this.skullNumber = skullNumber;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public int getSkullNumber() {
+        return skullNumber;
     }
 
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return null;
+        return remoteView.gameTrackSkullUpdate(getCharacter(),getSkullNumber());
     }
 }

@@ -10,7 +10,7 @@ public class CLIPlayerBoard {
     private Character character;
     private static final int MAXCOLUMN = 57;
     private static final int MAXROW = 4+1;
-    private static final int MAXROW2 = 9;
+    private static final int MAXROW2 = 10;
     private String[][] playerBoard = new String[MAXCOLUMN][MAXROW2];
 
     public CLIPlayerBoard(String user, Character character){
@@ -71,11 +71,12 @@ public class CLIPlayerBoard {
 
             for (int i=0; i<MAXCOLUMN; i++)
             {
-                playerBoard[i][8]= "*";
+                playerBoard[i][9]= "*";
             }
         playerBoard[2][5] = "︻┳═一 WEAPONS: ";
-        playerBoard[2][6] = "█ POWERUP: ";
+        playerBoard[2][6] = "♦ POWERUP: ";
         playerBoard[2][7] = "■ AMMO AVAILABLE: ";
+        playerBoard[2][8] = "SKULLS: ";
 
             for (int i = 0; i < MAXCOLUMN; i++) {
                 for (int j = 1; j < MAXROW2; j++) {
@@ -85,7 +86,7 @@ public class CLIPlayerBoard {
 
     }
 
-    public void updatePlayerBoard(int damage, int mark){
+    public void markDamageUpdate(int damage, int mark){
         int i =10;
         while (damage>0 && i<MAXCOLUMN){
             if(playerBoard[i][3].contains(" ")) {
@@ -123,7 +124,7 @@ public class CLIPlayerBoard {
     }
 
 
-    public void yourWeaponsUpdate(char type, String[] weapon){
+    public void gadgetsUpdate(char type, String[] weapon){
 
         boolean done = false;
         int h=0, i=3,j=404;
@@ -133,7 +134,8 @@ public class CLIPlayerBoard {
             j=6;
         }else if(type=='A'){
             j=7;
-        }
+        } else if(type == 'S')
+            j=8;
 
         for(int row=3;row<MAXCOLUMN;row++){
             playerBoard[row][j] = " ";
