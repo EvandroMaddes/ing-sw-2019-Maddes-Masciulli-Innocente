@@ -14,6 +14,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.cli.graph.CLIPlayerBoard;
+import it.polimi.ingsw.view.cli.graph.Color;
 import it.polimi.ingsw.view.gui.GUI;
 
 
@@ -63,8 +64,15 @@ public class Client {
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
         testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
-        String[] powerUp = {"Teleporter","Newton"};
+
+        String[] coloredPowerUp = {Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Teleporter",
+                Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Newton"};
+        testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
         CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
+        //todo manca impl display da cui passa il metodo, da modificare sopra passando da CLI
+        //remoteViewImplementation.playerPowerUpUpdate(Character.BANSHEE, powerUp,colours);
+
+
         testPlayerboard.printPlayerBoard();
     /*    remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();

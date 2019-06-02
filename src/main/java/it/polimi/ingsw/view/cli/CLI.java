@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 //todo deve resettare i colori del terminale!
