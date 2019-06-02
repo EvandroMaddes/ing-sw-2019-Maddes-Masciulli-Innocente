@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.cli.graph;
 
+import it.polimi.ingsw.model.player.Character;
+
 import java.util.ArrayList;
 
 public class CLIDisplay {
@@ -29,8 +31,16 @@ public class CLIDisplay {
         return gameTrack;
     }
 
-    public ArrayList<CLIPlayerBoard> getPlayerBoard() {
-        return playerBoard;
+    public CLIPlayerBoard getPlayerBoard(Character currCharacter) {
+        CLIPlayerBoard found = null;
+
+        for (CLIPlayerBoard currPlayerBoard: playerBoard
+             ) {
+            if (currPlayerBoard.getCharacter().equals(currCharacter)){
+                found = currPlayerBoard;
+            }
+        }
+        return found;
     }
 
 }

@@ -473,29 +473,18 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps) {
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-        ) {
-            if(currentPlayerBoard.getCharacter() == currCharacter) {
+    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] colour) {
 
-                //playerBoard.yourPowerUpAdd('P',powerUps); todo come gestire la map tra colore e power up
-                return new UpdateChoiceEvent(getUser());
-            }
-        }
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-             ) {
-           if(currentPlayerBoard.getCharacter() == currCharacter) {
 
-               currentPlayerBoard.gadgetsUpdate('W', weapons);
-               return new UpdateChoiceEvent(getUser());
-           }
-        }
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
+
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -504,21 +493,15 @@ public class CLI extends RemoteView {
         int size = ammo.size();
         String[] ammoString = new String[size];
         int i=0;
+
         for (AmmoCube ammoCube:ammo
              ) {
-
             ammoString[i] = ammoCube.getColour().name();
             i++;
         }
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-        ) {
-            if(currentPlayerBoard.getCharacter() == currCharacter) {
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
-                currentPlayerBoard.gadgetsUpdate('A',ammoString );
-                return new UpdateChoiceEvent(getUser());
-            }
-        }
-        return null;
+        return new UpdateChoiceEvent(getUser());
     }
 
     @Override
@@ -529,20 +512,8 @@ public class CLI extends RemoteView {
         if(skullNumber==2){
             skull[1]= "☠";
         }
-
-
-
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-        ) {
-            if(currentPlayerBoard.getCharacter() == currCharacter) {
-
-                currentPlayerBoard.gadgetsUpdate('S', skull);
-                return new UpdateChoiceEvent(getUser());
-            }
-        }
-
-        //todo chiamata alla gameTrack e aggiunta segnalini del colore character
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
+        display.getGameTrack().removeSkull(skullNumber);
         return new UpdateChoiceEvent(getUser());
-
     }
 }
