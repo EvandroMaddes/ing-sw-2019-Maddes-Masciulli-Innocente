@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CLIDisplay {
 
-    
+
     private static final int COLUMN = 100;
     private static final int ROW = 100;
     private CLIMap map;

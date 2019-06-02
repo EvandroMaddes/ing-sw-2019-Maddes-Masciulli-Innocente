@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 
 
@@ -92,15 +93,29 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     public void connectClient() {
         try {
 
-
             acceptRemoteClient(NetConfiguration.RMISERVERPORTNUMBER, serverIPAddress);
             int clientNumber = server.getClientListNumber()+1;
+            RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
             clientRegistry = LocateRegistry.createRegistry(port);
-            clientRegistry.rebind("RMIClient"+clientNumber,this);
+            clientRegistry.rebind("RMIClient"+clientNumber,clientStub);
             bindName = "RMIClient"+clientNumber;
             server.acceptRemoteClient(port,clientIPAddress);
             //run();
-        }catch(RemoteException exc){
+        }
+        catch (ExportException alreadyExported){
+            try {
+                UnicastRemoteObject.unexportObject(this,false);
+                int clientNumber = server.getClientListNumber()+1;
+                RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,clientNumber);
+                clientRegistry = LocateRegistry.createRegistry(port);
+                clientRegistry.rebind("RMIClient"+clientNumber,clientStub);
+                bindName = "RMIClient"+clientNumber;
+                server.acceptRemoteClient(port,clientIPAddress);
+            }catch(Exception exc){
+                CustomLogger.logException(exc);
+            }
+        }
+        catch(RemoteException exc){
             CustomLogger.logException(exc);
         }
 

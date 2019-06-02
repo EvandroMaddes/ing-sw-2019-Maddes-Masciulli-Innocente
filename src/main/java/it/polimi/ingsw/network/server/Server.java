@@ -72,7 +72,7 @@ public class Server {
                         virtualViewList.add(userView);
                         mapUserView.put(connectedUser,userView);
                     }
-                    if(clientList.size()==1&&!setUpComplete){
+                    if(!clientList.isEmpty()&&!setUpComplete){
                         String firstUser = clientList.get(0);
                         ServerInterface currServer = mapUserServer.get(firstUser);
                         currServer.sendMessage(new GameRequestEvent(firstUser));
@@ -106,7 +106,7 @@ public class Server {
                     //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
-                    if(clientList.size() > 2) {
+ /*                   if(clientList.size() > 2) {
                         if(gameTimer==null){
                             gameTimer = new CustomTimer(NetConfiguration.STARTGAMETIMER);
                             gameTimer.start();
@@ -120,6 +120,8 @@ public class Server {
                             log.info("Game could start; There are " + clientList.size() + " players");
                         }
                     }
+
+  */
                 }
 
 
