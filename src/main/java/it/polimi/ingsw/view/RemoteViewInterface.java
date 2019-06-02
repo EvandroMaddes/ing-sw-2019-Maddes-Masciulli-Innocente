@@ -45,7 +45,7 @@ public interface RemoteViewInterface {
    Event removeAmmoTileUpdate(int x, int y);
    Event positionUpdate(Character currCharacter, int x, int y);
    Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber);
-   Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] color);
+   Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color);
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
    Event gameTrackSkullUpdate(Character currCharacter,int skullNumber);
@@ -53,7 +53,7 @@ public interface RemoteViewInterface {
    //todo fare per ultimi
    Event effectPaymentChoice();
    Event targetPowerUpChoice();
-   Event powerUpChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours);
+   Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
 
    //todo magari per position comune
    void positionChoice();

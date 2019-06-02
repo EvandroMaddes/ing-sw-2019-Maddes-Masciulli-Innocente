@@ -8,10 +8,8 @@ import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 //todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
@@ -380,8 +378,13 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event powerUpChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
-        return null;
+    public Event powerUpChoice(String[] powerUpNames,CubeColour[] powerUpColours) {
+        String choice;
+        ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
+        CLIHandler.arrayPrint(powerUpList);
+        System.out.println("select your PowerUp: ");
+        choice=CLIHandler.stringRead();
+        return new PowerUpChoiceEvent(getUser(),choice);
     }
 
     @Override
@@ -473,7 +476,7 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] colour) {
+    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] colour) {
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
