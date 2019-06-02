@@ -12,6 +12,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -114,16 +115,18 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
             registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
             registry.rebind("RMIServer",serverStub);
 
-        }catch(RemoteException e) {
-            CustomLogger.logException(e);
+        }catch(ExportException e) {
             try {
                 UnicastRemoteObject.unexportObject(this,false);
                 RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
                 registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
                 registry.rebind("RMIServer",serverStub);
-            }catch(Exception exc){
+            }catch(RemoteException exc){
                 CustomLogger.logException(exc);
             }
+        }
+        catch (RemoteException exception){
+            CustomLogger.logException(exception);
         }
 
     }
