@@ -208,9 +208,9 @@ public class ActionManager {
     public void askForEffectPay(int chosenEffect) {
         // TODO: 2019-05-29
     }
-    
+
     public void askForTargets(){
-        // TODO: 2019-05-29  
+        // TODO: 2019-05-29
     }
 
     /**
