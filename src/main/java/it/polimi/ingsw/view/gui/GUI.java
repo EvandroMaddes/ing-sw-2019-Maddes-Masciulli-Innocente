@@ -78,7 +78,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event respawnChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+    public Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
         return null;
     }
 

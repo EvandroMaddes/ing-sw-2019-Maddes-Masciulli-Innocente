@@ -29,7 +29,7 @@ public interface RemoteViewInterface {
    Event actionChoice(boolean fireEnable);
    Event reloadChoice(ArrayList<String> reloadableWeapons);
 
-   Event respawnChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours);
+   Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours);
    Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event weaponChoice(ArrayList<String> availableWeapons);//to fire
