@@ -15,7 +15,7 @@ import java.util.Map;
 //todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
 
-
+    private CLIDisplay display;//la map sara sostiyuita da display.getmap, idem per playerBoard
     private CLIMap map;
     private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character,String>(Character.class);

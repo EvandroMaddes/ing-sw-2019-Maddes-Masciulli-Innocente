@@ -76,7 +76,7 @@ public class CLIPlayerBoard {
         playerBoard[2][5] = "︻┳═一 WEAPONS: ";
         playerBoard[2][6] = "♦ POWERUP: ";
         playerBoard[2][7] = "■ AMMO AVAILABLE: ";
-        playerBoard[2][8] = "SKULLS: ";
+        playerBoard[2][8] = "✞SKULLS: ";
 
             for (int i = 0; i < MAXCOLUMN; i++) {
                 for (int j = 1; j < MAXROW2; j++) {
