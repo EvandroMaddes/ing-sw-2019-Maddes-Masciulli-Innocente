@@ -8,10 +8,8 @@ import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 //todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
@@ -34,6 +32,7 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
     }
+
 
     public Map<Character, String> getMapCharacterNameColors() {
         return mapCharacterNameColors;
@@ -383,14 +382,15 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event powerUpChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
-        return null;
+    public Event powerUpChoice(String[] powerUpNames,CubeColour[] powerUpColours) {
+        String choice;
+        ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
+        CLIHandler.arrayPrint(powerUpList);
+        System.out.println("select your PowerUp: ");
+        choice=CLIHandler.stringRead();
+        return new PowerUpChoiceEvent(getUser(),choice);
     }
 
-    @Override
-    public void positionChoice() {
-
-    }
 
     @Override
     public void printScreen() {
@@ -464,21 +464,15 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-        ) {
-            if(currentPlayerBoard.getCharacter() == currCharacter) {
-                currentPlayerBoard.markDamageUpdate(damageToken,markNumber,hittingCharacter);//deve essere quella del payer corretto
-                return new UpdateChoiceEvent(getUser());
-            }
-        }
+    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter,int damageToken, int markNumber) {
+        display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken,markNumber, hittingCharacter);
         return new UpdateChoiceEvent(getUser());
     }
 
     @Override
-    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] colour) {
+    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] colour) {
         for (int i = 0; i < powerUp.length; i++) {
-            powerUp[i] = findColorEscape(colour[i]) + powerUp[i];
+            powerUp[i] = findColorEscape(colour[i].name()) + powerUp[i];
         }
         display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
@@ -506,6 +500,7 @@ public class CLI extends RemoteView {
             ammoString[i] = findColorEscape(ammoCube.getColour().name()) + "█";
             i++;
         }
+
         display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
         return new UpdateChoiceEvent(getUser());
@@ -523,6 +518,12 @@ public class CLI extends RemoteView {
         display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
         display.getGameTrack().removeSkull(damageTokenNumber, mapCharacterNameColors.get(killerCharacter));
         return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
+
+        return null;
     }
 
     private String findColorEscape(String colourString){

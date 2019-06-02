@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * represent a Player Position Update (after a Spawn o Movement)
  */
 public class WeaponUpdateEvent extends PositionUpdateEvent {
-    private ArrayList<String> weapon;
+    private String[] weapon;
 
     /**
      * Constructor
@@ -21,15 +21,19 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
      * @param squareY the square Y coordinate that must be updated
      * @param weapon the new weapon based on the ground
      */
-    public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY, ArrayList<String> weapon){
+    public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY,String[] weapon){
         super(user, squareX, squareY);
         this.weapon=weapon;
+    }
+
+    public String[] getWeapon() {
+        return weapon;
     }
 
     @Override
     public Event performAction(RemoteView remoteView) {
         //todo aggiorna la risorsa sul client
 
-        return null;
+        return remoteView.weaponReplaceUpdate(getPositionX(), getPositionY(),getWeapon());
     }
 }

@@ -114,11 +114,11 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event powerUpChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+    public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
         return null;
     }
 
-    @Override
+
     public void positionChoice() {
 
     }
@@ -137,10 +137,6 @@ public class GUI extends RemoteView {
         return null;
     }
 
-    @Override
-    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] color) {
-        return null;
-    }
 
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
@@ -154,6 +150,16 @@ public class GUI extends RemoteView {
 
     @Override
     public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber, Character killerCharacter) {
+        return null;
+    }
+
+    @Override
+    public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
+        return null;
+    }
+
+    @Override
+    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         return null;
     }
 }

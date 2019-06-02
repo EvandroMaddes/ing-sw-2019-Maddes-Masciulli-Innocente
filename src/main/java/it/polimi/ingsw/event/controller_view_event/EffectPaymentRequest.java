@@ -23,7 +23,8 @@ public class EffectPaymentRequest extends PowerUpRequestEvent {
 
     //todo reimplentare
     @Override
-    public Event performAction(RemoteView remoteView) {
-        return super.performAction(remoteView);
+    public Event performAction(RemoteView remoteView)
+    {
+        return remoteView.effectPaymentChoice();
     }
 }
