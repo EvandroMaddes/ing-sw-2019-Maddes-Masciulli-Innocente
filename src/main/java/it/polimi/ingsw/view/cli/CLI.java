@@ -191,7 +191,7 @@ public class CLI extends RemoteView {
         String chosenPowerUp = null;
         while (chosenPowerUp == null) {
             try {
-                System.out.println("You should respwan");
+                System.out.println("You should respawn");
                 CLIHandler.arrayPrint(powerUpList);
                 chosenPowerUp =CLIHandler.stringRead().toUpperCase();
             } catch (IllegalArgumentException e) {

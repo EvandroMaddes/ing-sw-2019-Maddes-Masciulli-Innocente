@@ -43,7 +43,7 @@ public class DeathManager {
             powerUps.add(p.getName());
             colours.add(p.getColour());
         }
-        controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), powerUps, colours));
+    //    controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), powerUps, colours));
     }
 
     public void spawn(String powerUp, CubeColour cardColour){
