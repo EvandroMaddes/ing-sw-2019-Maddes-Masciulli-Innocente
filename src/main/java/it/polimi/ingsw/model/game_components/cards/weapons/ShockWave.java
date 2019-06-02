@@ -61,8 +61,6 @@ public class ShockWave extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
         int i = 0;
         while (i < 3 && i < targets.size()){
             damage((Player)targets.get(i), 1);

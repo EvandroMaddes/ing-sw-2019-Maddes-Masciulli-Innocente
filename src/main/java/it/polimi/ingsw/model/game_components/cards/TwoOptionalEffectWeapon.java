@@ -72,4 +72,28 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else
             throw new IllegalAccessError("The effect doesn't exist");
     }
+
+    @Override
+    public AmmoCube[] getEffectCost(int effect) {
+        if (effect == 1)
+            return new AmmoCube[]{};
+        else if (effect == 2)
+            return getSecondEffectCost();
+        else if (effect == 3)
+            return thirdEffectCost;
+        else
+            throw new UnsupportedOperationException("Effetto richiseto non esistente");
+    }
+
+    @Override
+    public boolean hasToPay(int effect) {
+        if (effect == 1)
+            return false;
+        else if (effect == 2)
+            return getUsableEffect()[1];
+        else if (effect == 3)
+            return getUsableEffect()[2];
+        else
+            throw new UnsupportedOperationException("efeftto richiesto non esistente");
+    }
 }

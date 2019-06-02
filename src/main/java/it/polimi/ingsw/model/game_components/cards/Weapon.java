@@ -93,12 +93,6 @@ public abstract class Weapon extends Card {
             return false;
     }
 
-
-
-
-
-
-
     protected void setUsableEffect(){
         updateUsableEffect(new boolean[]{true, true, true});
     }
@@ -122,5 +116,18 @@ public abstract class Weapon extends Card {
     public boolean isUsableEffectOne(){
         return effectsEnable[0] && usableEffect[0] && !((TargetPlayerRequestEvent)getTargetEffectOne()).getPossibleTargets().isEmpty();
     }
+
+    public boolean hasToPay(int effect){
+        return false;
+    }
+
+    public AmmoCube[] getEffectCost(int effect){
+        if (effect == 1)
+            return new AmmoCube[]{};
+        else
+            throw new UnsupportedOperationException("Richiesto effetto non presente");
+    }
+
+
 
 }

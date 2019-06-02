@@ -85,6 +85,6 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectThree() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getFirstEffectTarget()), 1);
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getFirstEffectTarget()), -1);
     }
 }

@@ -9,6 +9,7 @@ import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -183,20 +184,22 @@ public class CLI extends RemoteView {
      * @return
      */
     @Override
-    public Event respawnChoice(ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+    public Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
         //todo assocciare colore alle carte
+        ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
+        ArrayList<CubeColour> coloursList = new ArrayList<>(Arrays.asList(powerUpColours));
         String chosenPowerUp = null;
         while (chosenPowerUp == null) {
             try {
                 System.out.println("You should respwan");
-                CLIHandler.arrayPrint(powerUpNames);
+                CLIHandler.arrayPrint(powerUpList);
                 chosenPowerUp =CLIHandler.stringRead().toUpperCase();
             } catch (IllegalArgumentException e) {
                 chosenPowerUp = null;
             }
 
         }
-        return new SpownChoiceEvent(getUser(), chosenPowerUp, powerUpColours.get(powerUpNames.indexOf(chosenPowerUp)));
+        return new SpownChoiceEvent(getUser(), chosenPowerUp, coloursList.get(powerUpList.indexOf(chosenPowerUp)));
     }
 
     /**

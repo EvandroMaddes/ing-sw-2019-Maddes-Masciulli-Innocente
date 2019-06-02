@@ -1,6 +1,8 @@
 package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
@@ -40,5 +42,21 @@ public class Encoder {
             weaponsLite.add(w.getName());
         }
         return weaponsLite;
+    }
+
+    public static String[] encodePowerUpsType (List<PowerUp> powerUps){
+        String[] powerUpsType = new String[powerUps.size()];
+        for (int i = 0; i < powerUps.size(); i++) {
+            powerUpsType[i] = powerUps.get(i).getName();
+        }
+        return powerUpsType;
+    }
+
+    public static CubeColour[] encodePowerUpColour (List<PowerUp> powerUps){
+        CubeColour[] powerUpsColour = new CubeColour[powerUps.size()];
+        for (int i = 0; i < powerUps.size(); i++) {
+            powerUpsColour[i] = powerUps.get(i).getColour();
+        }
+        return powerUpsColour;
     }
 }

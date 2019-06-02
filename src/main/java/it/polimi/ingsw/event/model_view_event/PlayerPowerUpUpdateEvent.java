@@ -5,19 +5,18 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
-    private Map<String, CubeColour> powerUps;
+    private String[] powerUps;
+    private CubeColour[] colours;
     private Character currCharacter;
-    public PlayerPowerUpUpdateEvent(String user, Character currCharacter, Map<String, CubeColour> powerUps) {
+    public PlayerPowerUpUpdateEvent(String user, Character currCharacter, String[] powerUps, CubeColour[] colours) {
         super(user);
         this.powerUps = powerUps;
+        this.colours = colours;
         this.currCharacter = currCharacter;
-    }
-
-    public Map<String, CubeColour> getPowerUps() {
-        return powerUps;
     }
 
     public Character getCurrCharacter() {
@@ -28,7 +27,9 @@ public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
     public Event performAction(RemoteView remoteView) {
         //todo aggiorna la risorsa sul client
 
-        return remoteView.playerPowerUpUpdate(getCurrCharacter(),getPowerUps());
+        // TODO: 2019-05-30  return remoteView.playerPowerUpUpdate(getCurrCharacter(),powerUps);
+        // qui è stato modificato perche prima i power up erano fatti male con una map
+        return null;
     }
 
 }
