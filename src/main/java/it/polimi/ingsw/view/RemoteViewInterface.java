@@ -49,14 +49,13 @@ public interface RemoteViewInterface {
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
    Event gameTrackSkullUpdate(Character currCharacter,int skullNumber);
+   Event weaponReplaceUpdate(int x, int y,String[] weapon);
 
-   //todo fare per ultimi
-   Event effectPaymentChoice();
+   //todo fare per ultimo
+   Event effectPaymentChoice();//TODO
    Event targetPowerUpChoice();
    Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
 
-   //todo magari per position comune
-   void positionChoice();
 
 
 }

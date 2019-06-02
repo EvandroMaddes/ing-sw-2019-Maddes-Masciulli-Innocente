@@ -387,10 +387,6 @@ public class CLI extends RemoteView {
         return new PowerUpChoiceEvent(getUser(),choice);
     }
 
-    @Override
-    public void positionChoice() {
-
-    }
 
     @Override
     public void printScreen() {
@@ -465,13 +461,7 @@ public class CLI extends RemoteView {
 
     @Override
     public Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber) {
-        for (CLIPlayerBoard currentPlayerBoard:playerBoards
-        ) {
-            if(currentPlayerBoard.getCharacter() == currCharacter) {
-                currentPlayerBoard.markDamageUpdate(damageToken,markNumber);//deve essere quella del payer corretto
-                return new UpdateChoiceEvent(getUser());
-            }
-        }
+        display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken,markNumber);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -502,6 +492,7 @@ public class CLI extends RemoteView {
             ammoString[i] = ammoCube.getColour().name();
             i++;
         }
+
         display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
         return new UpdateChoiceEvent(getUser());
@@ -518,5 +509,11 @@ public class CLI extends RemoteView {
         display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
         display.getGameTrack().removeSkull(skullNumber);
         return new UpdateChoiceEvent(getUser());
+    }
+
+    @Override
+    public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
+
+        return null;
     }
 }

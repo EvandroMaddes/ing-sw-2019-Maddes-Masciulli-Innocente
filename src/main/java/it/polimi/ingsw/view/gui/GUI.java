@@ -154,6 +154,11 @@ public class GUI extends RemoteView {
     }
 
     @Override
+    public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
+        return null;
+    }
+
+    @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         return null;
     }
