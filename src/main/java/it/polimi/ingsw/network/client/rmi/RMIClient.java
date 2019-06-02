@@ -2,24 +2,17 @@ package it.polimi.ingsw.network.client.rmi;
 
 import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.network.NetConfiguration;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.RemoteInterface;
-import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.ClientInterface;
-import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Random;
 
 
 public class RMIClient extends UnicastRemoteObject implements ClientInterface, NetworkHandler, RemoteInterface, Runnable{

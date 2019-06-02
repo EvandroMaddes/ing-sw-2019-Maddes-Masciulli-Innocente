@@ -3,25 +3,17 @@ package it.polimi.ingsw.network.client;
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.UsernameModificationEvent;
-import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
-import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.NetConfiguration;
-import it.polimi.ingsw.network.NetworkHandler;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
-import it.polimi.ingsw.view.cli.graph.CLIMap;
 import it.polimi.ingsw.view.gui.GUI;
 
 
-import java.io.EOFException;
-import java.rmi.RemoteException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -63,7 +55,7 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-        remoteViewImplementation.gameChoice();
+    /*   remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
         System.out.flush();
@@ -74,7 +66,7 @@ public class Client {
         remoteViewImplementation.positionUpdate(Character.VIOLET,0,0);
         remoteViewImplementation.positionUpdate(Character.VIOLET,2,2);
         remoteViewImplementation.printScreen();
-    /*    ArrayList<Character> availableTestedCharacter = new ArrayList<>();
+        ArrayList<Character> availableTestedCharacter = new ArrayList<>();
         availableTestedCharacter.add(Character.SPROG);
         availableTestedCharacter.add(Character.BANSHEE);
         availableTestedCharacter.add(Character.D_STRUCT_OR);

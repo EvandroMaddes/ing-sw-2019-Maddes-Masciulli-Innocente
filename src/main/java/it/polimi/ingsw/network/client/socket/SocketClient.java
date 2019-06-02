@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.client.socket;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.network.NetConfiguration;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
