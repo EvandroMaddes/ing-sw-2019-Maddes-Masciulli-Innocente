@@ -35,6 +35,9 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
     }
 
+    public Map<Character, String> getMapCharacterNameColors() {
+        return mapCharacterNameColors;
+    }
 
     /**
      *
@@ -420,7 +423,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
-        String[] color = {fistColour, secondColour};
+        String[] color = {fistColour, secondColour, null};
         CLIPrintableElement currElement;
         if(thirdColour.equals("POWERUP")) {
 
@@ -461,11 +464,11 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber) {
+    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
         for (CLIPlayerBoard currentPlayerBoard:playerBoards
         ) {
             if(currentPlayerBoard.getCharacter() == currCharacter) {
-                currentPlayerBoard.markDamageUpdate(damageToken,markNumber);//deve essere quella del payer corretto
+                currentPlayerBoard.markDamageUpdate(damageToken,markNumber,hittingCharacter);//deve essere quella del payer corretto
                 return new UpdateChoiceEvent(getUser());
             }
         }
@@ -474,7 +477,9 @@ public class CLI extends RemoteView {
 
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] colour) {
-
+        for (int i = 0; i < powerUp.length; i++) {
+            powerUp[i] = findColorEscape(colour[i]) + powerUp[i];
+        }
         display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
         return new UpdateChoiceEvent(getUser());
@@ -491,12 +496,14 @@ public class CLI extends RemoteView {
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
         int size = ammo.size();
+
         String[] ammoString = new String[size];
         int i=0;
 
         for (AmmoCube ammoCube:ammo
              ) {
-            ammoString[i] = ammoCube.getColour().name();
+
+            ammoString[i] = findColorEscape(ammoCube.getColour().name()) + "█";
             i++;
         }
         display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
@@ -505,15 +512,30 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber) {
-        String[] skull = new String[skullNumber];
-        skull[0] = "☠";
+    public Event gameTrackSkullUpdate(Character currCharacter, int damageTokenNumber, Character killerCharacter) {
+        String[] skull = new String[1];
+        skull[0] = Color.ANSI_RED.escape() + "☠";
 
-        if(skullNumber==2){
+        /*if(skullNumber==2){
             skull[1]= "☠";
         }
+        */
         display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
-        display.getGameTrack().removeSkull(skullNumber);
+        display.getGameTrack().removeSkull(damageTokenNumber, mapCharacterNameColors.get(killerCharacter));
         return new UpdateChoiceEvent(getUser());
+    }
+
+    private String findColorEscape(String colourString){
+        String colourEscape = Color.ANSI_BLACK_BACKGROUND.escape();
+        if(colourString.equalsIgnoreCase("RED")){
+            colourEscape = colourEscape + Color.ANSI_RED.escape();
+        }
+        else if (colourString.equalsIgnoreCase("BLUE")){
+            colourEscape =  colourEscape + Color.ANSI_BLUE.escape();
+        }
+        else{
+            colourEscape = colourEscape + Color.ANSI_YELLOW;
+        }
+        return colourEscape;
     }
 }

@@ -44,11 +44,11 @@ public interface RemoteViewInterface {
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
    Event removeAmmoTileUpdate(int x, int y);
    Event positionUpdate(Character currCharacter, int x, int y);
-   Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber);
+   Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber);
    Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] color);
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
-   Event gameTrackSkullUpdate(Character currCharacter,int skullNumber);
+   Event gameTrackSkullUpdate(Character currCharacter,int skullNumber, Character killerCharacter);
 
    //todo fare per ultimi
    Event effectPaymentChoice();

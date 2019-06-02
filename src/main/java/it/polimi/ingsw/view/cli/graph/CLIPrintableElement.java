@@ -42,14 +42,14 @@ public class CLIPrintableElement {
                 colorPrint[i] = Color.ANSI_YELLOW;
             else colorPrint[i]= Color.ANSI_BLUE;
         }
-        resource = resource + colorPrint[0].escape()+"█"+colorPrint[1].escape() + "█";
+        resource = resource + colorPrint[0].escape()+"A"+ resource + colorPrint[1].escape() + "A";
         if(isPowerUp) {
-                    resource = resource + Color.ANSI_WHITE.escape()+"P";
+                    resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_WHITE.escape()+"P";
         }
         else{
-            resource = resource + colorPrint[2].escape() + "█";
+            resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape() + "A";
         }
-        resource = resource + Color.RESET.escape();
+        //resource = resource + Color.RESET.escape();
         isPlayer = false;
     }
     public CLIPrintableElement(String currentWeapon, String currentSpawnSquare){

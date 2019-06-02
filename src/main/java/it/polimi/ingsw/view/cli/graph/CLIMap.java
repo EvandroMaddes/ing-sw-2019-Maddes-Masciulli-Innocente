@@ -298,6 +298,14 @@ public class CLIMap {
                 tempCoordY = tempCoordY + 1;
             }
         }
+        else{
+            String completeString = element.getResource();
+            int resourceLenght = completeString.indexOf('A');
+            map[coordX+1][coordY]= completeString.substring(0,resourceLenght+1);
+            map[coordX+3][coordY] = completeString.substring(resourceLenght+1,resourceLenght*2 + 2);
+            map[coordX+5][coordY] = completeString.substring(resourceLenght*2 + 2);
+            }
+
     }
 
     public void removePlayer(String player){

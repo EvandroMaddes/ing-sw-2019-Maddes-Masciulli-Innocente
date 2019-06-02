@@ -3,6 +3,9 @@ package it.polimi.ingsw.network.client;
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.UsernameModificationEvent;
+import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
@@ -10,6 +13,7 @@ import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
+import it.polimi.ingsw.view.cli.graph.CLIPlayerBoard;
 import it.polimi.ingsw.view.gui.GUI;
 
 
@@ -55,10 +59,20 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-    /*   remoteViewImplementation.gameChoice();
+        CLI currentView = (CLI)remoteViewImplementation;
+        CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
+        testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
+        testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
+        String[] powerUp = {"Teleporter","Newton"};
+        CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
+        testPlayerboard.printPlayerBoard();
+    /*    remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
         System.out.flush();
+        remoteViewImplementation.addAmmoTileUpdate(3,2,"RED", "RED", "RED");
+        remoteViewImplementation.addAmmoTileUpdate(1,2,"YELLOW", "BLUE", "POWERUP");
+        remoteViewImplementation.printScreen();
         remoteViewImplementation.positionUpdate(Character.BANSHEE,3,2);
         remoteViewImplementation.positionUpdate(Character.SPROG,3,2);
         remoteViewImplementation.positionUpdate(Character.D_STRUCT_OR,3,2);

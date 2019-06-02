@@ -133,12 +133,12 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event PlayerBoardUpdate(Character currCharacter, int damageToken, int markNumber) {
+    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
         return null;
     }
 
     @Override
-    public Event playerPowerUpUpdate(Character currCharacter, Map<String, CubeColour> powerUps) {
+    public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, String[] color) {
         return null;
     }
 
@@ -153,7 +153,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber) {
+    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber, Character killerCharacter) {
         return null;
     }
 }
