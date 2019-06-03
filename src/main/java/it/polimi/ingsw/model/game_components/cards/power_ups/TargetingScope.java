@@ -12,9 +12,9 @@ import java.security.InvalidParameterException;
  */
 public class TargetingScope extends PowerUp {
 
-    boolean chooseCube;
-    AmmoCube cubeChoice;
-    PowerUp powerUpChoice;
+    public boolean chooseCube;
+    public AmmoCube cubeChoice;
+    public PowerUp powerUpChoice;
 
 
     /**

@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
  */
 public class Teleporter extends PowerUp {
 
-    Square destination;
+    public Square destination;
 
     public Teleporter(CubeColour colour)
     {
