@@ -13,6 +13,6 @@ public class EffectPaymentRequestEvent extends PaymentRequestEvent {
     //todo reimplentare
     @Override
     public Event performAction(RemoteView remoteView) {
-        return super.performAction(remoteView);
+        return remoteView.effectPaymentChoice();
     }
 }
