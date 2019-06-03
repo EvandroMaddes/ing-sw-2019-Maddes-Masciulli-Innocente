@@ -28,32 +28,32 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     /**
-     *
      * @throws RemoteException
      */
-    public RMIServer() throws RemoteException{
+    public RMIServer() throws RemoteException {
         super(NetConfiguration.RMISERVERPORTNUMBER);
         clientList = new CopyOnWriteArrayList<>();
         clientRegistries = new ArrayList<>();
-        try{
+        try {
             ipAddress = InetAddress.getLocalHost().getHostAddress();
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
         }
     }
 
     /**
      * Getter method
+     *
      * @return the connected Clients ArrayList
      */
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
         Iterator iterator = clientList.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             RemoteInterface currRemoteClient = (RemoteInterface) iterator.next();
             try {
                 clientUserList.add(currRemoteClient.getUser());
-            }catch(RemoteException e){
+            } catch (RemoteException e) {
                 CustomLogger.logException(e);
             }
         }
@@ -62,9 +62,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     @Override
-    public void run(){
+    public void run() {
         runServer();
-        while(!gameCouldStart){
+        while (!gameCouldStart) {
             acceptClient();
         }
 
@@ -77,7 +77,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     /**
-     *
      * @return
      * @throws RemoteException
      */
@@ -85,23 +84,24 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public int getClientListNumber() {
         return clientList.size();
     }
+
     @Override
-    public String getIPAddress(){
+    public String getIPAddress() {
         return ipAddress;
     }
 
     @Override
-    public int getPort(){
+    public int getPort() {
         return NetConfiguration.RMISERVERPORTNUMBER;
     }
 
     @Override
-    public String getUser(){
+    public String getUser() {
         return "SERVER";
     }
 
     @Override
-    public Event getCurrMessage() throws RemoteException{
+    public Event getCurrMessage() throws RemoteException {
         return currMessage;
     }
 
@@ -110,22 +110,21 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public void runServer() {
-        try{
-            RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
+        try {
+            RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 1099);
             registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
-            registry.rebind("RMIServer",serverStub);
+            registry.rebind("RMIServer", serverStub);
 
-        }catch(ExportException e) {
+        } catch (ExportException e) {
             try {
-                UnicastRemoteObject.unexportObject(this,false);
-                RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
+                UnicastRemoteObject.unexportObject(this, false);
+                RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 1099);
                 registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
-                registry.rebind("RMIServer",serverStub);
-            }catch(RemoteException exc){
+                registry.rebind("RMIServer", serverStub);
+            } catch (RemoteException exc) {
                 CustomLogger.logException(exc);
             }
-        }
-        catch (RemoteException exception){
+        } catch (RemoteException exception) {
             CustomLogger.logException(exception);
         }
 
@@ -136,26 +135,26 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public void acceptClient() {
-           if(clientList.size()==5){
-               gameCouldStart();
-           }
+        if (clientList.size() == 5) {
+            gameCouldStart();
+        }
     }
 
 
     @Override
     public void sendBroadcast(Event message) {
-        try{
+        try {
             remoteSendBroadcast(message);
-        }catch (RemoteException rmtException){
+        } catch (RemoteException rmtException) {
             CustomLogger.logException(rmtException);
         }
     }
 
     @Override
     public void shutDown() {
-        try{
+        try {
             registry.unbind("RMIServer");
-        }catch(RemoteException|NotBoundException e){
+        } catch (RemoteException | NotBoundException e) {
             CustomLogger.logException(e);
         }
 
@@ -163,7 +162,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     @Override
     public void gameCouldStart() {
-        gameCouldStart=true;
+        gameCouldStart = true;
     }
 
     @Override
@@ -176,20 +175,21 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
 
     /**
-     *  is called by a client during the connection
-     * @param remotePort is the client port
+     * is called by a client during the connection
+     *
+     * @param remotePort      is the client port
      * @param remoteIPAddress is the client IP address
      */
     @Override
-    public void acceptRemoteClient( int remotePort, String remoteIPAddress) {
-        if(clientList.size()<5) {
-            try{
-                int clientNumber = getClientListNumber()+1;
+    public void acceptRemoteClient(int remotePort, String remoteIPAddress) {
+        if (clientList.size() < 5) {
+            try {
+                int clientNumber = getClientListNumber() + 1;
                 Registry currRegistry = LocateRegistry.getRegistry(remoteIPAddress, remotePort);
                 clientRegistries.add(currRegistry);
-                RemoteInterface remoteClient = (RemoteInterface) currRegistry.lookup("RMIClient"+clientNumber);
+                RemoteInterface remoteClient = (RemoteInterface) currRegistry.lookup("RMIClient" + clientNumber);
                 clientList.add(remoteClient);
-            }catch(RemoteException|NotBoundException e){
+            } catch (RemoteException | NotBoundException e) {
                 CustomLogger.logException(e);
             }
 
@@ -199,15 +199,16 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     /**
      * it must handle the thread clients
+     *
      * @param message
      * @throws RemoteException
      */
     @Override
     public synchronized void remoteSendMessage(Event message) throws RemoteException {
-        for(int i=clientList.size()-1; i>=0;i--){
-            RemoteInterface currentClient =  clientList.get(i);
+        for (int i = clientList.size() - 1; i >= 0; i--) {
+            RemoteInterface currentClient = clientList.get(i);
 
-            if(currentClient.getUser().equals(message.getUser())){
+            if (currentClient.getUser().equals(message.getUser())) {
                 (clientList.get(i)).remoteSetCurrEvent(message);
                 return;
                 //clientList.get(i).remoteListenMessage();
@@ -217,14 +218,14 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     @Override
     public void remoteSetCurrEvent(Event message) throws RemoteException {
-        this.currMessage=message;
+        this.currMessage = message;
     }
 
     @Override
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
-        for (RemoteInterface client: clientList){
-         //todo se modelUpdate che cos'è user?
-            message.setUser(((RMIClient)client).getUser());
+        for (RemoteInterface client : clientList) {
+            //todo se modelUpdate che cos'è user?
+            message.setUser(((RMIClient) client).getUser());
             client.remoteSendMessage(message);
         }
     }
@@ -232,7 +233,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public synchronized Event remoteListenMessage() throws RemoteException {
         Event listenedMessage = currMessage;
-        currMessage= null;
+        currMessage = null;
         return listenedMessage;
     }
 
@@ -241,16 +242,15 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
 
     /**
-     *
      * @return
      */
     @Override
     public Event listenMessage() {
-       Event currEvent = null;
-        while(currEvent == null){
+        Event currEvent = null;
+        while (currEvent == null) {
             try {
                 currEvent = remoteListenMessage();
-            }catch (RemoteException rmtException){
+            } catch (RemoteException rmtException) {
                 CustomLogger.logException(rmtException);
             }
         }
@@ -259,10 +259,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     @Override
     public void sendMessage(Event message) {
-       try {
-           remoteSendMessage(message);
-       }catch (RemoteException rmtException){
+        try {
+            remoteSendMessage(message);
+        } catch (RemoteException rmtException) {
             CustomLogger.logException(rmtException);
-       }
+        }
     }
 }

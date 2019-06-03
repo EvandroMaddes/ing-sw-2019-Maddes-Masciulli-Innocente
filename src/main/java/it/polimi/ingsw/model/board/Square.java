@@ -169,17 +169,12 @@ public abstract class Square extends Observable {
      * @return plyers visible by this square
      */
     public ArrayList<Player>  findVisiblePlayers(){
-     ArrayList<Player> visiblePlayers = new ArrayList<Player>();
-
-
-     visiblePlayers.addAll(findRoomPlayers(this,this.getSquareColour())); // player in the same room of current square);
-
-     for(int i =0; i<4; i++){
-         if(checkDirection(i) && getNextSquare(i).getSquareColour()!= this.getSquareColour())
-            visiblePlayers.addAll(findRoomPlayers(getNextSquare(i),getNextSquare(i).getSquareColour()));//player in room near current square
-     }
-
-      return visiblePlayers;
+        ArrayList<Square> visibleSquares = findVisibleSquare();
+        ArrayList<Player> visiblePlayers = new ArrayList<>();
+        for (Square s :visibleSquares) {
+            visiblePlayers.addAll(s.getSquarePlayers());
+        }
+        return visiblePlayers;
     }
     /**
      *
