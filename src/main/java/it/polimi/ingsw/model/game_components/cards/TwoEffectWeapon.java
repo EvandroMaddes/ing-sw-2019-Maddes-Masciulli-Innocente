@@ -24,7 +24,9 @@ public abstract class TwoEffectWeapon extends Weapon {
     @Override
     public void setLoaded() {
         super.setLoaded();
-        firstEffectTarget.clear();
+        if(firstEffectTarget != null) {
+            firstEffectTarget.clear();
+        }
     }
 
     public boolean isUsableEffectTwo(){

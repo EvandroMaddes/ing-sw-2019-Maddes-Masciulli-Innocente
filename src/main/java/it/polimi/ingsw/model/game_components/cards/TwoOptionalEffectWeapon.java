@@ -82,7 +82,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (effect == 3)
             return thirdEffectCost;
         else
-            throw new UnsupportedOperationException("Effetto richiseto non esistente");
+            throw new UnsupportedOperationException("Effetto richiesto non esistente");
     }
 
     @Override
@@ -94,6 +94,6 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (effect == 3)
             return getUsableEffect()[2];
         else
-            throw new UnsupportedOperationException("efeftto richiesto non esistente");
+            throw new UnsupportedOperationException("Effetto richiesto non esistente");
     }
 }

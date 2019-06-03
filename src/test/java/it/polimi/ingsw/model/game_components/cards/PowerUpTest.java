@@ -33,7 +33,8 @@ public class PowerUpTest {
         ((Teleporter)testedPowerUp).setDestination(expectedPosition);
         testedPowerUp.useEffect();
         Assert.assertEquals(expectedPosition,testPlayer.getPosition());
-        System.out.println("Tested Teleporter");
+        System.out.println("Tested Teleporter!\nExpected position is:"+expectedPosition.toString() +
+                            "\tFinal position is");
     }
 
     @Test
