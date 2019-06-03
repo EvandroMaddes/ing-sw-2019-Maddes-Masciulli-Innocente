@@ -10,6 +10,6 @@ public class WeaponReloadChoiceEvent extends CardChoiceEvent {
 
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().getActionManager().reloadWeapon(getCard());
+        controller.getGameManager().getCurrentRound().getActionManager().askForWeaponReloadPay(getCard());
     }
 }
