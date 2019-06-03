@@ -1,6 +1,7 @@
-package it.polimi.ingsw.model.game_components.cards;
+package it.polimi.ingsw.model.game_components.cards.power_ups;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
