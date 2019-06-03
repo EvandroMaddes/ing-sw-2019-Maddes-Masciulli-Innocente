@@ -15,6 +15,9 @@ public class CLIMap {
     private String[][] map = new String[MAXCOLUMN][MAXROW];
 
 
+    public String[][] getMap() {
+        return map;
+    }
 
     public CLIMap(int mapNumber){
         for (int i = 1; i < MAXCOLUMN; i++) {
