@@ -12,10 +12,12 @@ import it.polimi.ingsw.view.RemoteView;
  */
 public class GameTrackUpdateEvent extends ModelViewEvent {
     private Character character;
+    private Character killerCharacter;
     private int skullNumber;
 
-    public GameTrackUpdateEvent(String user,Character character, int skullNumber) {
+    public GameTrackUpdateEvent(String user,Character character, int skullNumber, Character killerCharacter) {
         super(user);
+        this.killerCharacter = killerCharacter;
         this.character = character;
         this.skullNumber = skullNumber;
     }
@@ -31,6 +33,6 @@ public class GameTrackUpdateEvent extends ModelViewEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.gameTrackSkullUpdate(getCharacter(),getSkullNumber());
+        return remoteView.gameTrackSkullUpdate(character, skullNumber, killerCharacter);
     }
 }

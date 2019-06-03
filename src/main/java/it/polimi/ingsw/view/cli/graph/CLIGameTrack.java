@@ -24,14 +24,14 @@ public class CLIGameTrack {
         }
     }
 
-    public void removeSkull(int damageToken){
+    public void removeSkull(int damageToken, String colorEscape){
         boolean done= false;
         int column = 2;
         while (!done && column<MAXCOLUMN){
             if(track[column][1].contains("☠")){
-                track[column][1] = "| ▼"+Color.ANSI_RED.escape();
+                track[column][1] = "|"+colorEscape+" ▼";
                 if(damageToken==2){
-                    track[column+1][1]="▼";
+                    track[column+1][1]=colorEscape+ "▼";
                 }
                 done = true;
             }

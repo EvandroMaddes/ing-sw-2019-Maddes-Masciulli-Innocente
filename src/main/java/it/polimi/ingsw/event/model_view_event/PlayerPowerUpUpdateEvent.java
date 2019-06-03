@@ -23,13 +23,21 @@ public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
         return currCharacter;
     }
 
+    public String[] getPowerUps() {
+        return powerUps;
+    }
+
+    public CubeColour[] getColours() {
+        return colours;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
         //todo aggiorna la risorsa sul client
 
         // TODO: 2019-05-30  return remoteView.playerPowerUpUpdate(getCurrCharacter(),powerUps);
         // qui è stato modificato perche prima i power up erano fatti male con una map
-        return null;
+        return remoteView.playerPowerUpUpdate(getCurrCharacter(),getPowerUps(),getColours());
     }
 
 }

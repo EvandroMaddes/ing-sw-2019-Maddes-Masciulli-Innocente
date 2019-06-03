@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class RespawnRequestEvent extends PowerUpRequestEvent {
 
-    public RespawnRequestEvent(String user, ArrayList<String> powerUpNames, ArrayList<CubeColour> powerUpColours) {
+    public RespawnRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
         super(user, powerUpNames, powerUpColours);
     }
 

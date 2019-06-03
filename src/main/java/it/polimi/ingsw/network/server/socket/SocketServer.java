@@ -1,9 +1,7 @@
 package it.polimi.ingsw.network.server.socket;
 
-import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.network.NetConfiguration;
-import it.polimi.ingsw.network.client.ClientInterface;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.server.ServerInterface;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -13,8 +11,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.SynchronousQueue;
 

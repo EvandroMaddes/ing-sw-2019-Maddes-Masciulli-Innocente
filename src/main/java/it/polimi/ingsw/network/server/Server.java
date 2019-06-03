@@ -9,6 +9,8 @@ import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
+import it.polimi.ingsw.utils.CustomTimer;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.view.VirtualView;
 
 
@@ -32,16 +34,12 @@ public class Server {
     private static SocketServer serverSocket;
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
     private static Map<String, VirtualView> mapUserView = new HashMap<>();
+    private static CustomTimer gameTimer;
     private static Event message;
 
 
     public static void main(String[] args){
-/*        ArrayList<VirtualView> virtualViewList = new ArrayList<VirtualView>();
-        RMIServer serverRMI;
-        SocketServer serverSocket;
-        Map<String,ServerInterface> mapUserServer = new HashMap<>();
-        Event message;
-*/
+
         try{
             serverRMI = new RMIServer();
             serverSocket = new SocketServer();
@@ -74,14 +72,13 @@ public class Server {
                         virtualViewList.add(userView);
                         mapUserView.put(connectedUser,userView);
                     }
-                    if(clientList.size()==1&&!setUpComplete){
+                    if(!clientList.isEmpty()&&!setUpComplete){
                         String firstUser = clientList.get(0);
                         ServerInterface currServer = mapUserServer.get(firstUser);
                         currServer.sendMessage(new GameRequestEvent(firstUser));
-                        message = currServer.listenMessage();
-                    while(message == null) {
-                        message = currServer.listenMessage();
-                    }
+                        while(message == null) {
+                            message = currServer.listenMessage();
+                        }
                             VirtualView currentView = mapUserView.get(message.getUser());
                             currentView.toController(message);
                             setUpComplete = true;
@@ -89,7 +86,7 @@ public class Server {
                             message = null;
                     }
 
-                    //todo PROVA!!! funge socket, provato RMI OK
+                    //todo PROVA!!! Qui si prova socket, provato RMI OK, NB chiamo serverSocket.send/listen!!!
                     if(clientList.size()==2) {
                         message = null;
                         serverSocket.sendMessage(new GameRequestEvent(clientList.get(0)));
@@ -104,17 +101,30 @@ public class Server {
                         }
                         System.out.println(message.getUser());
                     }
+
+
                     //todo FINE PROVA!!
 
-                    //todo aggiungere timer parte ?60? secondi dopo la terza connessione
-                    if(clientList.size() > 2) {
-                        serverRMI.gameCouldStart();
-                        serverSocket.gameCouldStart();
-                        gameCouldStart = true;
-                        log.info("Game could start;\t\tthere are "+clientList.size()+" players");
+                    //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
+ /*                   if(clientList.size() > 2) {
+                        if(gameTimer==null){
+                            gameTimer = new CustomTimer(NetConfiguration.STARTGAMETIMER);
+                            gameTimer.start();
+                            log.info("Started the match countdown!\n\nGame start in "
+                                    + NetConfiguration.STARTGAMETIMER+" seconds.");
+                        }
+                        else if(!gameTimer.isAlive()) {
+                            serverRMI.gameCouldStart();
+                            serverSocket.gameCouldStart();
+                            gameCouldStart = true;
+                            log.info("Game could start; There are " + clientList.size() + " players");
+                        }
                     }
 
+  */
                 }
+
+
                 //todo ora si richiederanno personaggi ecc, legge da input se richiesto QUIT però non terminano i client
                 String inputCommand = reader.readLine();
                 if(inputCommand.equalsIgnoreCase("QUIT")) {
