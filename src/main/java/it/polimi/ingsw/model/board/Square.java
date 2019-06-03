@@ -293,10 +293,10 @@ public abstract class Square extends Observable {
                         !toCheckSquare.contains(toCheckSquare.get(0).getNextSquare(direction)) &&
                         visibleRoomColours.contains(toCheckSquare.get(0).getNextSquare(direction).getSquareColour())) {
                     toCheckSquare.add(toCheckSquare.get(0).getNextSquare(direction));
-                    visibleSquare.add(toCheckSquare.get(0));
-                    toCheckSquare.remove(toCheckSquare.get(0));
                 }
             }
+            visibleSquare.add(toCheckSquare.get(0));
+            toCheckSquare.remove(toCheckSquare.get(0));
         }
         return visibleSquare;
     }
