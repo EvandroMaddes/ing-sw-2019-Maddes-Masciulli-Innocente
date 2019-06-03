@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.player.Player;
 /**
  * @author federicoinnocente
  */
-public  class PowerUp extends Card {
+public abstract class PowerUp extends Card {
 
     private Player target;
 
