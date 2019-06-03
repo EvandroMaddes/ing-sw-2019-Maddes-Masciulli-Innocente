@@ -1,7 +1,8 @@
-package it.polimi.ingsw.model.game_components.cards;
+package it.polimi.ingsw.model.game_components.cards.power_ups;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 
 import java.security.InvalidParameterException;
 
@@ -11,9 +12,9 @@ import java.security.InvalidParameterException;
  */
 public class TargetingScope extends PowerUp {
 
-    boolean chooseCube;
-    AmmoCube cubeChoice;
-    PowerUp powerUpChoice;
+    public boolean chooseCube;
+    public AmmoCube cubeChoice;
+    public PowerUp powerUpChoice;
 
 
     /**

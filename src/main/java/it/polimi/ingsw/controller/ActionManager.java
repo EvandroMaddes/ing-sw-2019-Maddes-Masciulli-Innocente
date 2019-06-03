@@ -255,7 +255,7 @@ public class ActionManager {
     /**
      * Paga l'effetto scelto
      */
-    private void payWeaponGrab(String[] powerUpsType, CubeColour[] powerUpsColour){
+    public void payWeaponGrab(String[] powerUpsType, CubeColour[] powerUpsColour){
         int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getEffectCost(chosenEffect));
         if (chosenWeapon.getReloadCost()[0].getColour() == CubeColour.Red)
             grabCost[0]--;
@@ -324,7 +324,7 @@ public class ActionManager {
     /**
      * Chiama la ricarica dell'arma
      */
-    private void payWeaponReload(String[] powerUpType, CubeColour[] powerUpColour){
+    public void payWeaponReload(String[] powerUpType, CubeColour[] powerUpColour){
         int[] reloadCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
         payCost(reloadCost, Decoder.decodePowerUps(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour));
         reloadWeapon();

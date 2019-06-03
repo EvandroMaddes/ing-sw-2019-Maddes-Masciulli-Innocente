@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.board.GameBoard;
-import it.polimi.ingsw.model.board.KillShotTrack;
-import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.board.*;
+import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.cards.AmmoTilesDeck;
 import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
+import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
@@ -99,6 +99,8 @@ public class GameManager {
      * firstPlayerPlayed - set to true only in the final frenzy, in the first player round
      */
     public void newRound(){
+        refillMap();
+
         if(gameEnded())
             setFinalFrenzyPhase();
 
@@ -130,6 +132,22 @@ public class GameManager {
         if (!finalFrenzyPhase){
             finalFrenzyPhase = true;
             lastPlayer = playerTurn;
+        }
+    }
+
+    private void refillMap(){
+        for(int x = 0; x < 4; x++){
+            for (int y = 0; y < 3; y++){
+                GameBoard gameBoard = controller.getGameManager().getModel().getGameboard();
+                if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
+                    if (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
+                        !gameBoard.getWeaponDeck().getDeck().isEmpty())
+                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add((Weapon) gameBoard.getWeaponDeck().draw());
+                }
+                else
+                    if (!((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
+                        ((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile((AmmoTile) gameBoard.getAmmoTilesDeck().draw());
+            }
         }
     }
 

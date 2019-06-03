@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.game_components.cards;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.power_ups.TagbackGrenade;
+import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
+import it.polimi.ingsw.model.game_components.cards.power_ups.Teleporter;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
@@ -33,7 +36,8 @@ public class PowerUpTest {
         ((Teleporter)testedPowerUp).setDestination(expectedPosition);
         testedPowerUp.useEffect();
         Assert.assertEquals(expectedPosition,testPlayer.getPosition());
-        System.out.println("Tested Teleporter");
+        System.out.println("Tested Teleporter!\nExpected position is:"+expectedPosition.toString() +
+                            "\tFinal position is");
     }
 
     @Test

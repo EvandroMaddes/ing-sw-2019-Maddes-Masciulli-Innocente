@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Teleporter;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
