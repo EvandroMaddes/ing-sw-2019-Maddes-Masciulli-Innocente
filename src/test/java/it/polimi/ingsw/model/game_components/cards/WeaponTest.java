@@ -84,7 +84,7 @@ public class WeaponTest {
         //todo perchè è false?
         Assert.assertFalse(currentWeapon.isUsableEffect(2));
         targetEvent = currentWeapon.getTargetEffect(2);
-        Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player2.getCharacter()));
         Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player3.getCharacter()));
 
         testTargets.clear();

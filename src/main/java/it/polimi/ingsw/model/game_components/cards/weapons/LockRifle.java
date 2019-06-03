@@ -49,7 +49,9 @@ public class LockRifle extends OneOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()),1 );
+        ArrayList<Player> visiblePlayer = getOwner().getPosition().findVisiblePlayers();
+        visiblePlayer.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(visiblePlayer),1 );
     }
 
     @Override
