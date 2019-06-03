@@ -13,8 +13,7 @@ import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
-import it.polimi.ingsw.view.cli.graph.CLIPlayerBoard;
-import it.polimi.ingsw.view.cli.graph.Color;
+import it.polimi.ingsw.view.cli.graph.*;
 import it.polimi.ingsw.view.gui.GUI;
 
 
@@ -64,16 +63,33 @@ public class Client {
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
         testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
-
+        /*
         String[] coloredPowerUp = {Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Teleporter",
                 Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Newton"};
         testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
         CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
-        //todo manca impl display da cui passa il metodo, da modificare sopra passando da CLI
+        */
+        CLIMap map = new CLIMap(2);
+        CLIGameTrack gametrack = new CLIGameTrack();
+        CLIDisplay display = new CLIDisplay();
+        CLIPlayerBoard player1 = new CLIPlayerBoard("raul",Character.D_STRUCT_OR,currentView.getMapCharacterNameColors());
+        CLIPlayerBoard player2 = new CLIPlayerBoard("lu",Character.DOZER,currentView.getMapCharacterNameColors());
+        CLIPlayerBoard player3 = new CLIPlayerBoard("fede",Character.SPROG,currentView.getMapCharacterNameColors());
+        CLIPlayerBoard player4 = new CLIPlayerBoard("fra",Character.VIOLET,currentView.getMapCharacterNameColors());
+
+        gametrack.createGameTrack();
+        display.setGameTrack(gametrack);
+        display.setMap(map);
+        display.setPlayerBoard(testPlayerboard);
+        display.setPlayerBoard(player1);
+        display.setPlayerBoard(player2);
+        display.setPlayerBoard(player3);
+        display.setPlayerBoard(player4);
+
+        display.createDisplay();
+        display.printDisplay();
         //remoteViewImplementation.playerPowerUpUpdate(Character.BANSHEE, powerUp,colours);
-
-
-        testPlayerboard.printPlayerBoard();
+      //  testPlayerboard.printPlayerBoard();
     /*    remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();

@@ -13,7 +13,7 @@ public class CLIPlayerBoard {
     private Map<Character,String> mapCharacterNameColors;
     private static final int MAXCOLUMN = 57;
     private static final int MAXROW = 4+1;
-    private static final int MAXROW2 = 10;
+    private static final int MAXROW2 = 12;
     private String[][] playerBoard = new String[MAXCOLUMN][MAXROW2];
 
     public CLIPlayerBoard(String user, Character character, Map<Character, String> mapCharacterNameColors){
@@ -159,10 +159,9 @@ public class CLIPlayerBoard {
 
     }
 
-
-
-
-
+    public String[][] getPlayerBoard() {
+        return playerBoard;
+    }
 }
 
 
