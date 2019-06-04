@@ -14,9 +14,9 @@ import java.util.*;
 public class CLI extends RemoteView {
 
     private CLIDisplay display;//la map sara sostiyuita da display.getmap, idem per playerBoard
-    private int provaCommit;
-    private CLIMap map;
-    private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
+
+
+   // private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character,String>(Character.class);
     //todo map tra colore arma e nome arma
     // todo map tra powerUp e relativo colore
@@ -102,7 +102,7 @@ public class CLI extends RemoteView {
 
                     map = CLIHandler.intRead();
                 }
-                this.map = new CLIMap(map);
+                display.setMap( new CLIMap(map));
             } catch (IllegalArgumentException e) {
 
                 map = 404;
@@ -115,9 +115,6 @@ public class CLI extends RemoteView {
         return message;
     }
 
-    public CLIMap getMap() {
-        return map;
-    }
 
     /**
      *
@@ -407,7 +404,7 @@ public class CLI extends RemoteView {
 
     @Override
     public void printScreen() {
-        map.plot();
+        display.printDisplay();
     }
 
     /**
@@ -445,7 +442,7 @@ public class CLI extends RemoteView {
             color[2] = thirdColour;
             currElement = new CLIPrintableElement(false,color);
         }
-        map.updateResource(currElement ,x ,y);
+        display.getMap().updateResource(currElement ,x ,y);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -458,7 +455,7 @@ public class CLI extends RemoteView {
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
         CLIPrintableElement currElement= new CLIPrintableElement(false);
-        map.updateResource(currElement,x,y);
+        display.getMap().updateResource(currElement,x,y);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -472,7 +469,7 @@ public class CLI extends RemoteView {
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter,mapCharacterNameColors.get(currCharacter));
-        map.updateResource(currElement,x,y);
+        display.getMap().updateResource(currElement,x,y);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -535,8 +532,8 @@ public class CLI extends RemoteView {
 
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
-
-        return null;
+        display.weaponsSpawnSquare(x,y,weapon);
+        return new UpdateChoiceEvent(getUser());
     }
 
     private String findColorEscape(String colourString){

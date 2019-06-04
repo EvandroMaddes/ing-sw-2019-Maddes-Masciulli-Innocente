@@ -70,6 +70,7 @@ public class Client {
         CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
         */
         CLIMap map = new CLIMap(2);
+        String[] weapon = {"sparo","oo",};
         CLIGameTrack gametrack = new CLIGameTrack();
         CLIDisplay display = new CLIDisplay();
         CLIPlayerBoard player1 = new CLIPlayerBoard("raul",Character.D_STRUCT_OR,currentView.getMapCharacterNameColors());
@@ -87,6 +88,9 @@ public class Client {
         display.setPlayerBoard(player4);
 
         display.createDisplay();
+        display.weaponsSpawnSquare(0,1,weapon);
+        display.weaponsSpawnSquare(2,0,weapon);
+        display.weaponsSpawnSquare(3,2,weapon);
         display.printDisplay();
         //remoteViewImplementation.playerPowerUpUpdate(Character.BANSHEE, powerUp,colours);
       //  testPlayerboard.printPlayerBoard();
