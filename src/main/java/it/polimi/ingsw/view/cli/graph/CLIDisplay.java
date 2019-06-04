@@ -11,7 +11,7 @@ public class CLIDisplay {
 
 
     private static final int COLUMN = 150;
-    private static final int ROW =72;
+    private static final int ROW =77;
     private CLIMap map;
     private CLIGameTrack gameTrack;
     private ArrayList<CLIPlayerBoard> playerBoard = new ArrayList<CLIPlayerBoard>();
@@ -65,13 +65,17 @@ public class CLIDisplay {
         display[69][5]=Color.ANSI_RED.escape()+"R";
         display[70][5]=Color.ANSI_RED.escape()+"E";
         display[71][5]=Color.ANSI_RED.escape()+"D";
-        display[72][5]=Color.ANSI_RED.escape()+":";
+        display[72][5]=Color.ANSI_RED.escape()+": ";
+        display[73][5]=Color.ANSI_GREEN.escape()+"*";
+
 
 
         display[69][7]=Color.ANSI_BLUE.escape()+"B";
         display[70][7]=Color.ANSI_BLUE.escape()+"L";
         display[71][7]=Color.ANSI_BLUE.escape()+"U";
-        display[72][7]=Color.ANSI_BLUE.escape()+":";
+        display[72][7]=Color.ANSI_BLUE.escape()+": ";
+        display[73][7]=Color.ANSI_GREEN.escape()+"*";
+
 
         display[66][9]=Color.ANSI_YELLOW.escape()+"Y";
         display[67][9]=Color.ANSI_YELLOW.escape()+"E";
@@ -79,7 +83,9 @@ public class CLIDisplay {
         display[69][9]=Color.ANSI_YELLOW.escape()+"L";
         display[70][9]=Color.ANSI_YELLOW.escape()+"O";
         display[71][9]=Color.ANSI_YELLOW.escape()+"W";
-        display[72][9]=Color.ANSI_YELLOW.escape()+":";
+        display[72][9]=Color.ANSI_YELLOW.escape()+": ";
+        display[73][9]=Color.ANSI_GREEN.escape()+"*";
+
 
 
     }
@@ -148,28 +154,28 @@ public class CLIDisplay {
 
     /**
      * Set available weapon on spawn square
-     * @param x
-     * @param y
+     * @param column
+     * @param row
      * @param weapons
      */
-    public void weaponsSpawnSquare(int x, int y, String[] weapons){
+    public void weaponsSpawnSquare(int column, int row, String[] weapons){
         int h=0;
         int j=0;
 
                 //RED
-        if (x==0 && y==1){
-            j=3;
-        }else //BLUE
-            if (x==2 && y==0){
+        if (column==0 && row==1){
             j=5;
-        }else //YELLOW
-            if( x==3 && y==2){
+        }else //BLUE
+            if (column==2 && row==0){
             j=7;
+        }else //YELLOW
+            if( column==3 && row==2){
+            j=9;
         }
 
-        for (int i =73; i<76; i++ ) {
+        for (int i =74; i<77; i++ ) {
             if(h<weapons.length && weapons[h]!=null) {
-                display[j][i] = weapons[h];
+                display[i][j] = Color.ANSI_GREEN.escape()+weapons[h]+" * ";
                 h++;
             }
         }

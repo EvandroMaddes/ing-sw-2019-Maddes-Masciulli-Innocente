@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.cli.graph;
 
-import com.sun.org.apache.xerces.internal.impl.io.ASCIIReader;
-import it.polimi.ingsw.model.board.GameTrack;
+
 import it.polimi.ingsw.model.player.Character;
 
 import java.util.Map;

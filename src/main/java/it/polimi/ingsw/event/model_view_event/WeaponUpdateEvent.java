@@ -32,7 +32,6 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        //todo aggiorna la risorsa sul client
 
         return remoteView.weaponReplaceUpdate(getPositionX(), getPositionY(),getWeapon());
     }
