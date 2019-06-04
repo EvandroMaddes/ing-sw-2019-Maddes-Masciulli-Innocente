@@ -382,12 +382,26 @@ public class CLI extends RemoteView {
 
     @Override
     public Event powerUpChoice(String[] powerUpNames,CubeColour[] powerUpColours) {
+
         String choice;
+        boolean done = false;
+        int index = powerUpNames.length;
+
         ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
         CLIHandler.arrayPrint(powerUpList);
         System.out.println("select your PowerUp: ");
         choice=CLIHandler.stringRead();
-        return new PowerUpChoiceEvent(getUser(),choice);
+
+        while(!done){
+            if(powerUpNames[index].equals(choice)){
+                done = true;
+            }
+            else {
+                index--;
+            }
+        }
+
+        return new PowerUpChoiceEvent(getUser(),choice,powerUpColours[index]);
     }
 
 
