@@ -33,7 +33,7 @@ public class RoundManager {
             case 3:
             case 5:{
                 actionManager = new ActionManager(controller, model, this);
-                actionManager.askForPowerUp();
+                actionManager.askForPowerUpAsAction();
                 break;
             }
             case 2:

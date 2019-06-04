@@ -197,4 +197,8 @@ public class GameManager {
     public int getLastPlayer() {
         return lastPlayer;
     }
+
+    public boolean isFirstRoundPhase() {
+        return firstRoundPhase;
+    }
 }

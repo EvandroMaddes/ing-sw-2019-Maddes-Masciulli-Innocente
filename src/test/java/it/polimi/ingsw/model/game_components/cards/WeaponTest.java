@@ -52,12 +52,7 @@ public class WeaponTest {
         player1.setPosition(square1);
         player2.setPosition(square2);
         player3.setPosition(square3);
-        square1.addCurrentPlayer(player1);
-        square2.addCurrentPlayer(player2);
-        square3.addCurrentPlayer(player3);
         target = new ArrayList<>();
-
-
     }
 
 
@@ -84,7 +79,7 @@ public class WeaponTest {
         //todo perchè è false?
         Assert.assertFalse(currentWeapon.isUsableEffect(2));
         targetEvent = currentWeapon.getTargetEffect(2);
-        Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player2.getCharacter()));
         Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player3.getCharacter()));
 
         testTargets.clear();

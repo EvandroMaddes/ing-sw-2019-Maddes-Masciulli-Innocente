@@ -78,13 +78,13 @@ public class PowerUpDeck extends DeckManagement {
     private ArrayList<Object> addPowerupColour(ArrayList<Object> currentDeck, CubeColour colour){
 
         for(int i=0; i<2; i++){
-            PowerUp currentTagbackGranade = new TagbackGrenade(colour);
+            PowerUp currentTagbackGranade = new TagbackGrenade(colour, "TagbackGranade");
             currentDeck.add(currentTagbackGranade);
-            PowerUp currentTargetingScope = new TargetingScope(colour);
+            PowerUp currentTargetingScope = new TargetingScope(colour, "TargetingScope");
             currentDeck.add(currentTargetingScope);
-            PowerUp currentTeleporter = new Teleporter(colour);
+            PowerUp currentTeleporter = new Teleporter(colour, "Teleporter");
             currentDeck.add(currentTeleporter);
-            PowerUp currentNewton = new Newton(colour);
+            PowerUp currentNewton = new Newton(colour, "Newton");
             currentDeck.add(currentNewton);
         }
         return currentDeck;

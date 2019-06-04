@@ -1,8 +1,12 @@
 package it.polimi.ingsw.model.game_components.cards.power_ups;
 
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
+import it.polimi.ingsw.event.controller_view_event.NewtonTargetSquareRequestEvent;
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
 
@@ -10,48 +14,38 @@ import java.util.ArrayList;
  * @author Federico Innocente
  */
 public class Newton extends PowerUp {
+    private Player targetPlayer;
 
-    private int direction;
-    private int times;
-
-    /**
-     *
-     * @param colour card colour
-     */
-    public Newton(CubeColour colour)
-    {
-        super(colour , "Newton");
+    public Newton(CubeColour colour, String name) {
+        super(colour, name);
+        targetPlayer = null;
     }
 
-    /**
-     *
-     * @param times that the target moves
-     */
-    public void setTimes(int times)
-    {
-        this.times = times;
-    }
-
-    /**
-     *
-     * @param direction in which target moves
-     */
-    public void setDirection(int direction)
-    {
-        this.direction = direction;
-    }
-
-    /**
-     * move the target
-     */
     @Override
-    public void useEffect()
-    {
-        for (int i = 0; i < times; i++)
-        {
-           // move(getTarget(), direction);
+    public void performEffect(Object target) {
+        if (targetPlayer == null)
+            targetPlayer = (Player) target;
+        else {
+            move(targetPlayer, (Square) target);
+            targetPlayer = null;
         }
-        super.useEffect();
+    }
+
+    public ControllerViewEvent getTargets() {
+        ArrayList<Square> possibleDestination = new ArrayList<>();
+        for (int direction = 0; direction < 4; direction++) {
+            if (targetPlayer.getPosition().checkDirection(direction)) {
+                possibleDestination.add(targetPlayer.getPosition().getNextSquare(direction));
+                if (targetPlayer.getPosition().getNextSquare(direction).checkDirection(direction))
+                    possibleDestination.add(targetPlayer.getPosition().getNextSquare(direction).getNextSquare(direction));
+            }
+        }
+        return new NewtonTargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
+    }
+
+    @Override
+    public Usability whenToUse() {
+        return Usability.AS_ACTION;
     }
 
 }

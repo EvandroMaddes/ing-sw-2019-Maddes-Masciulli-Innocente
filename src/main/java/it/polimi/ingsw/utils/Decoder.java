@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class Decoder {
 
-    public static ArrayList<PowerUp> decodePowerUps(Player powerUpsOwner, String[] powerUpType, CubeColour[] powerUpColour){
+    public static ArrayList<PowerUp> decodePowerUpsList(Player powerUpsOwner, String[] powerUpType, CubeColour[] powerUpColour){
         ArrayList<PowerUp> decodedPowerUps = new ArrayList<>();
         for(int i = 0; i < powerUpType.length; i++){
             for (PowerUp p:powerUpsOwner.getPowerUps()){
@@ -23,6 +24,14 @@ public class Decoder {
             }
         }
         return decodedPowerUps;
+    }
+
+    public static PowerUp decodePowerUp (Player powerUpOwner, String powerUpType, CubeColour powerUpColour){
+        for (PowerUp p: powerUpOwner.getPowerUps()) {
+            if (p.getName().equals(powerUpType) && p.getColour() == powerUpColour)
+                return p;
+        }
+        throw new UnsupportedOperationException("Something wrong in powerUp decode");
     }
 
     public static Square decodeSquare (int squareX, int squareY, Map map){
@@ -36,6 +45,14 @@ public class Decoder {
                 decodedList.add(p);
         }
         return decodedList;
+    }
+
+    public static Player decodePlayer (Character character, List<Player> playerList){
+        for (Player p:playerList){
+            if (p.getCharacter() == character)
+                return p;
+        }
+        throw new UnsupportedOperationException("Something wrong in player decode");
     }
 
     public static Weapon decodePlayerWeapon (Player weaponOwner, String weaponName){

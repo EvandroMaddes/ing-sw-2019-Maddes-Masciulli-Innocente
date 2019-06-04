@@ -26,7 +26,7 @@ public class PowerUpTest {
         testPlayer.setPosition(new BasicSquare(0,0));
     }
 
-
+/*
     @Test
     public void testTeleporter(){
         Square expectedPosition = new BasicSquare(1,1);

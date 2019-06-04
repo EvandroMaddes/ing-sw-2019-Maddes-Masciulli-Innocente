@@ -32,6 +32,7 @@ public class Player extends Observable {
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
     private boolean dead;
+    private int timesGetDamged;
 
     /**
      *
@@ -51,6 +52,7 @@ public class Player extends Observable {
         this.ammo = new ArrayList<>();
         this.firstPlayer = false;
         this.dead = true;
+        timesGetDamged = 0;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -92,6 +94,14 @@ public class Player extends Observable {
 
     public Weapon[] getWeapons() {
         return weapons;
+    }
+
+    public void addTimesGetDamaged(){
+        timesGetDamged++;
+    }
+
+    public void resetTimesGetDamaged(){
+        timesGetDamged = 0;
     }
 
     /**

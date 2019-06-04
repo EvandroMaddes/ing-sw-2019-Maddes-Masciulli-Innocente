@@ -1,45 +1,24 @@
 package it.polimi.ingsw.model.game_components.cards;
 
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.player.Player;
-
 
 /**
  * @author federicoinnocente
  */
 public abstract class PowerUp extends Card {
 
-    private Player target;
+    public enum Usability{
+        AS_ACTION,
+        DURING_ACTION,
+        END_TURN;
+    }
 
-    public PowerUp(CubeColour colour, String name)
-    {
+    public PowerUp(CubeColour colour, String name) {
         super(colour, name);
     }
 
-    /**
-     *
-     * @return target
-     */
-    public Player getTarget()
-    {
-        return target;
-    }
+    public abstract void performEffect(Object target);
 
-    /**
-     *
-     * @param target is the target of the effect
-     */
-    public void setTarget(Player target)
-    {
-        this.target = target;
-    }
-
-    /**
-     * Discard the power uop
-     * Overrided for every powerup
-     */
-    public void useEffect()
-    {
-        getOwner().discardPowerUp(this);
-    }
+    public abstract Usability whenToUse();
 }

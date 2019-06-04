@@ -2,32 +2,24 @@ package it.polimi.ingsw.model.game_components.cards.power_ups;
 
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.player.Player;
 
 /**
  * @author Federico Innocetnte
  */
 public class TagbackGrenade extends PowerUp {
 
-    /**
-     *
-     * @param colour is the colour of the powerup
-     */
-    public TagbackGrenade(CubeColour colour)
-    {
-        super(colour, "TagbackGranade");
+    public TagbackGrenade(CubeColour colour, String name) {
+        super(colour, name);
     }
 
-
-
-    /**
-     * add 1 mark to the target by the owner of the powerUp
-     */
     @Override
-    public void useEffect()
-    {
+    public void performEffect(Object target) {
+        mark((Player)target, 1);
+    }
 
-
-        getTarget().getPlayerBoard().addMarks(this.getOwner(), 1);
-        super.useEffect();
+    @Override
+    public Usability whenToUse() {
+        return Usability.END_TURN;
     }
 }

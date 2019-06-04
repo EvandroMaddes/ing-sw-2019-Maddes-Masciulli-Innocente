@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
 
@@ -139,6 +141,10 @@ public class ActionManager {
     *
      */
 
+    public void askForMovePreShot(){
+        // TODO: 2019-06-04
+    }
+
     /**
      * Manda le possibili armi
      */
@@ -191,7 +197,7 @@ public class ActionManager {
      */
     public void payEffect(String[] powerUpsType, CubeColour[] powerUpsColour){
         int[] effectCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getEffectCost(chosenEffect));
-        payCost(effectCost, Decoder.decodePowerUps(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
+        payCost(effectCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
         askForTargets();
     }
 
@@ -263,7 +269,7 @@ public class ActionManager {
             grabCost[1]--;
         else
             grabCost[2]--;
-        payCost(grabCost, Decoder.decodePowerUps(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
+        payCost(grabCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
         manageWeaponLimit();
     }
 
@@ -326,7 +332,7 @@ public class ActionManager {
      */
     public void payWeaponReload(String[] powerUpType, CubeColour[] powerUpColour){
         int[] reloadCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
-        payCost(reloadCost, Decoder.decodePowerUps(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour));
+        payCost(reloadCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour));
         reloadWeapon();
     }
 
@@ -412,36 +418,19 @@ public class ActionManager {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /*
+    *
+    * GESTIONE RICHIESTA POWERUP DA USARE
+    *
+     */
 
     /**
      * if the player has at least one Newton or Teleporter, send a PowerUpRequest message to ask if the player want to use it
      */
-    public void askForPowerUp(){
+    public void askForPowerUpAsAction(){
         ArrayList<PowerUp> powerUps = new ArrayList<>();
         for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p.getName().equals("Newton") || p.getName().equals("Teleporter"))
+            if (p.whenToUse() == PowerUp.Usability.AS_ACTION)
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
@@ -453,24 +442,49 @@ public class ActionManager {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    public void usePowerUp(String powerUpChoice, String powerUpColour) {
-        // TODO: 2019-05-18
-        for (PowerUp p : currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p.getName().equals(powerUpChoice) && p.getColour().toString().equals(powerUpColour))
-                chosenPowerUp = p;
+    public void usePowerUp(String powerUpChoice, CubeColour powerUpColour) {
+        chosenPowerUp = Decoder.decodePowerUp(currentRoundManager.getCurrentPlayer(), powerUpChoice, powerUpColour);
+        if (chosenPowerUp.getName().equals("Teleporter")){
+            askForTargetsTeleporter();
         }
-        Object targetList = chosenPowerUp.getTarget();
+        else if (chosenPowerUp.getName().equals("Newton")){
+            if (! (controller.getGameManager().isFirstRoundPhase() && controller.getGameManager().getModel().getPlayers().get(0) == currentRoundManager.getCurrentPlayer() ) )
+                askForPlayerTargetsNewton();
+        }
     }
+
+    /*
+    *
+    * GESTIONE DEI POWERUP
+    *
+     */
+
+    private void askForTargetsTeleporter(){
+        ArrayList<Square> possibleDestination = new ArrayList<>();
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 4; j++){
+                possibleDestination.add(controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j]);
+            }
+        }
+        controller.callView(new TeleporterTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
+    }
+
+    private void askForPlayerTargetsNewton(){
+        controller.callView(new NewtonPlayerTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(controller.getGameManager().getModel().getPlayers()), 1));
+    }
+
+    public void askForSquareTargetsNewton(){
+        controller.callView(((Newton)chosenPowerUp).getTargets());
+    }
+
+    public void performPowerUp(Object target){
+        chosenPowerUp.performEffect(target);
+    }
+
+    public void endPowerUpPhase(){
+        currentRoundManager.getCurrentPlayer().discardPowerUp(chosenPowerUp);
+        controller.getGameManager().getCurrentRound().nextPhase();
+    }
+
+
 }
