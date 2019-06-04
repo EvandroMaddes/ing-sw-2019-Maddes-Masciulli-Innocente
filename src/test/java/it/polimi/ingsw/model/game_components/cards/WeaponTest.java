@@ -60,7 +60,7 @@ public class WeaponTest {
     @Test
     public void testLockRifle(){
 
-        currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
+/*        currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
         currentWeapon = new LockRifle(CubeColour.Blue,"LockRifle",currentReloadCost,new AmmoCube[] {new AmmoCube(CubeColour.Red)});
         currentWeapon.setOwner(player1);
         Assert.assertTrue(currentWeapon.isUsable());
@@ -76,7 +76,6 @@ public class WeaponTest {
         currentWeapon.performEffect(1, testTargets);
         Assert.assertEquals(player1, player2.getPlayerBoard().getDamageReceived()[0].getPlayer());
         Assert.assertEquals(1, player2.getPlayerBoard().checkNumberOfMarks(player1));
-        //todo perchè è false?
         Assert.assertFalse(currentWeapon.isUsableEffect(2));
         targetEvent = currentWeapon.getTargetEffect(2);
         Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player2.getCharacter()));
@@ -86,10 +85,10 @@ public class WeaponTest {
         testTargets.add(player1);
         currentWeapon.performEffect(2, testTargets);
         Assert.assertEquals(1, player1.getPlayerBoard().checkNumberOfMarks(player1));
+*/
 
 
-        //todo posizione dei quadrati non giusta, player2 non vede player3
-    /*    currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
+        currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
         currentWeapon = new LockRifle(CubeColour.Blue,"LockRifle",currentReloadCost,new AmmoCube[] {new AmmoCube(CubeColour.Red)});
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
@@ -108,9 +107,9 @@ public class WeaponTest {
 
         Assert.assertFalse(currentWeapon.isUsableEffect(2));
         targetEvent = currentWeapon.getTargetEffect(2);
-        Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player1.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player1.getCharacter()));
         Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player3.getCharacter()));
-        */
+
 
 
         System.out.println("Tested LockRifle! ︻┳═一- - - ");
