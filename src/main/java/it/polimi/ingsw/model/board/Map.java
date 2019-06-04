@@ -48,9 +48,9 @@ public class Map {
         //creation of the left part
         ArrayList<Square> squares = new ArrayList<Square>();
 
-        Square square0 = new BasicSquare(2, 0);
+        Square square0 = new BasicSquare(0, 0);
         squares.add(0, square0);
-        squaresMatrix[2][0] = square0;
+        squaresMatrix[0][0] = square0;
 
         SpawnSquare square1 = new SpawnSquare(1, 0);
         squares.add(square1);
@@ -60,31 +60,32 @@ public class Map {
         Square square2;
         if (selectedLeftMap == "leftFirst") {
 
-            square2 = new BasicSquare(0, 0);
+            square2 = new BasicSquare(2, 0);
         }else { square2 = null;}
-        squares.add(square2);
-        squaresMatrix[0][0] = square2;
 
-        Square square3 = new BasicSquare(2, 1);
+        squares.add(square2);
+        squaresMatrix[2][0] = square2;
+
+        Square square3 = new BasicSquare(0, 1);
         squares.add(square3);
-        squaresMatrix[2][1] = square3;
+        squaresMatrix[0][1] = square3;
 
         Square square4 = new BasicSquare(1, 1);
         squares.add(square4);
         squaresMatrix[1][1] = square4;
 
-        Square square5 = new BasicSquare(0, 1);
+        Square square5 = new BasicSquare(2, 1);
         squares.add(square5);
-        squaresMatrix[0][1] = square5;
+        squaresMatrix[2][1] = square5;
 
 
         int i = squares.size();//number of square of left part
 
 
         //creation of the right part
-        SpawnSquare square6 = new SpawnSquare(2, 2);
+        SpawnSquare square6 = new SpawnSquare(0, 2);
         squares.add(square6);
-        squaresMatrix[2][2] = square6;
+        squaresMatrix[0][2] = square6;
         getSpawnSquares().add(square6);
 
 
@@ -92,25 +93,25 @@ public class Map {
         squares.add(square7);
         squaresMatrix[1][2] = square7;
 
-        Square square8 = new BasicSquare(0, 2);
+        Square square8 = new BasicSquare(2, 2);
         squares.add(square8);
-        squaresMatrix[0][2] = square8;
+        squaresMatrix[2][2] = square8;
 
         Square square9;
         if (selectedRightMap == "rightFirst") {
+            square9 = new BasicSquare(0, 3);
 
-            square9 = new BasicSquare(2, 3);
         }else{square9=null;}
         squares.add(square9);
-        squaresMatrix[2][3] = square9;
+        squaresMatrix[0][3] = square9;
 
         Square square10 = new BasicSquare(1, 3);
         squares.add(square10);
         squaresMatrix[1][3] = square10;
 
-        SpawnSquare square11 = new SpawnSquare(0, 3);
+        SpawnSquare square11 = new SpawnSquare(2, 3);
         squares.add(square11);
-        squaresMatrix[0][3] = square11;
+        squaresMatrix[2][3] = square11;
         getSpawnSquares().add(square11);
 
 
