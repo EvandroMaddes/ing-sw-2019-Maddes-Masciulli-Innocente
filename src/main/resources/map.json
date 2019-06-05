@@ -211,7 +211,7 @@
     "9":{
       "row":2,
       "column":3,
-      "colour":"grey",
+      "colour":"green",
       "northSquare":null,
       "northReachable":false,
       "southSquare":10,
