@@ -53,7 +53,7 @@ public class VirtualView  extends Observable implements Observer{
 
 
     /**
-     * send  a message to remote view
+     * send  a message to remote view: this method is NOT necessary because the attribute toRemoteView is set by model's calls()
      */
     public void toRemoteView(){
 
@@ -64,12 +64,11 @@ public class VirtualView  extends Observable implements Observer{
     }
 
     /**
-     * this method is called when a message arrives from Remote view;
+     * this method is called by the server when a message arrives from Remote view;
      * this means that message should be send to controller.
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
      */
     public void toController(Event message){
-        //todo metodi che dal server ricevono il messaggio;
         setToController(message);
         setChanged();
         notifyObservers(this.getToController());

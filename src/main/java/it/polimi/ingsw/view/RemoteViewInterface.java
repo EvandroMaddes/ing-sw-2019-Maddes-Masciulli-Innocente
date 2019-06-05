@@ -23,37 +23,37 @@ public interface RemoteViewInterface {
      */
    void printScreen();
 
+   //following methods manages Request event
    Event gameChoice();
    Event characterChoice(ArrayList<Character> availableCharacters);
-   //todo devono rimandare SkipActionChoice se non fa niente
    Event actionChoice(boolean fireEnable);
    Event reloadChoice(ArrayList<String> reloadableWeapons);
-
    Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours);
    Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event weaponChoice(ArrayList<String> availableWeapons);//to fire
    Event weaponGrabChoice(ArrayList<String> availableWeapon);
+   Event weaponDiscardChoice(ArrayList<String> yourWeapon);
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
-   Event weaponDiscardChoice(ArrayList<String> yourWeapon);
+   Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
    Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
+   Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget);
+   Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
 
    //following methods manage UpdateEvent
    Event newPlayerJoinedUpdate(String newPlayer);
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
    Event removeAmmoTileUpdate(int x, int y);
    Event positionUpdate(Character currCharacter, int x, int y);
-   Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber);
+   Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber);
    Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color);
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
    Event gameTrackSkullUpdate(Character currCharacter,int skullNumber, Character killerCharacter);
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
 
-   //todo fare per ultimo
-   Event effectPaymentChoice();//TODO
-   Event targetPowerUpChoice();
+   //todo fare per ultimo Event targetPowerUpChoice();
    Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
 
 

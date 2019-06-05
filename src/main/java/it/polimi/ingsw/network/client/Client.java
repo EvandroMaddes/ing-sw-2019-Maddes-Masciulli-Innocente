@@ -63,12 +63,12 @@ public class Client {
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
         testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
-        /*
+
         String[] coloredPowerUp = {Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Teleporter",
-                Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Newton"};
-        testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
+                Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_BLUE.escape()+"Newton"};
+        /*testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
         CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
-        */
+
         CLIMap map = new CLIMap(2);
         String[] weapon = {"sparo","oo",};
         CLIGameTrack gametrack = new CLIGameTrack();
@@ -92,9 +92,9 @@ public class Client {
         display.weaponsSpawnSquare(2,0,weapon);
         display.weaponsSpawnSquare(3,2,weapon);
         display.printDisplay();
-        //remoteViewImplementation.playerPowerUpUpdate(Character.BANSHEE, powerUp,colours);
-      //  testPlayerboard.printPlayerBoard();
-    /*    remoteViewImplementation.gameChoice();
+        remoteViewImplementation.playerPowerUpUpdate(Character.BANSHEE, powerUp,colours);
+        testPlayerboard.printPlayerBoard();
+       remoteViewImplementation.gameChoice();
         remoteViewImplementation.printScreen();
         System.out.println();
         System.out.flush();
@@ -118,6 +118,22 @@ public class Client {
         Event returnedEvent = testEvent.performAction(remoteViewImplementation);
 
      */
+       boolean[] weap = {true,false,false};
+       int[] x = {1,2,0};
+        int[] y = {2,1,2};
+       ArrayList<Character> lobby = new ArrayList<>();
+
+       lobby.add(Character.VIOLET);
+
+        lobby.add(Character.VIOLET);
+
+        lobby.add(Character.VIOLET);
+
+        CubeColour[] cubetest = new CubeColour[2];
+        cubetest[0] = CubeColour.Red;
+        cubetest[1] = CubeColour.Blue;
+       currentView.weaponEffectPaymentChoice(coloredPowerUp,cubetest,x,y);
+
         /**
          * !!!
          * !!!FINE PROVA

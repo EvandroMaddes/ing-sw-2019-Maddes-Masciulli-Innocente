@@ -12,6 +12,17 @@ import java.util.Map;
 
 public class GUI extends RemoteView {
 
+    @Override
+    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+        return null;
+    }
+
+    @Override
+    public Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
+
+
 
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
@@ -19,8 +30,10 @@ public class GUI extends RemoteView {
     }
 
 
-
-
+    @Override
+    public Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget) {
+        return null;
+    }
 
     @Override
     public String[] gameInit() {
@@ -103,15 +116,8 @@ public class GUI extends RemoteView {
     }
 
 
-    @Override
-    public Event effectPaymentChoice() {
-        return null;
-    }
 
-    @Override
-    public Event targetPowerUpChoice() {
-        return null;
-    }
+
 
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
@@ -133,7 +139,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
+    public Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
         return null;
     }
 
