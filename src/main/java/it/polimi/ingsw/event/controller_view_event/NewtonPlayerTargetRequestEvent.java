@@ -14,7 +14,6 @@ public class NewtonPlayerTargetRequestEvent extends TargetPlayerRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-04  
-        return null;
+        return remoteView.newtonTargetChoice(getPossibleTargets(),getMaxTarget());
     }
 }

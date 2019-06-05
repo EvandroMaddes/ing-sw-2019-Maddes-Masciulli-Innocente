@@ -12,6 +12,6 @@ public class TeleporterTargetRequestEvent extends PositionRequestEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
         // TODO: 2019-06-04
-        return null;
+        return remoteView.newtonTeleporterTargetSquareChoice(getPossibleSquareX(),getPossibleSquareY());
     }
 }
