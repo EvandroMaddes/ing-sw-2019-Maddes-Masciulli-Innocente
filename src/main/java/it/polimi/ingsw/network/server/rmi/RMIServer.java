@@ -20,9 +20,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteInterface, ServerInterface {
     private CopyOnWriteArrayList<RemoteInterface> clientList;
-    private ArrayList<Registry> clientRegistries;
+    //private transient ArrayList<Registry> clientRegistries;
     private Event currMessage;
-    private transient Registry registry;
+    //private transient Registry registry;
     private String ipAddress;
     private boolean gameCouldStart = false;
 
@@ -33,7 +33,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public RMIServer() throws RemoteException {
         super(NetConfiguration.RMISERVERPORTNUMBER);
         clientList = new CopyOnWriteArrayList<>();
-        clientRegistries = new ArrayList<>();
+      //  clientRegistries = new ArrayList<>();
         try {
             ipAddress = InetAddress.getLocalHost().getHostAddress();
         } catch (Exception e) {
@@ -112,14 +112,14 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public void runServer() {
         try {
             RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 1099);
-            registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
+            Registry registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
             registry.rebind("RMIServer", serverStub);
 
         } catch (ExportException e) {
             try {
                 UnicastRemoteObject.unexportObject(this, false);
                 RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 1099);
-                registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
+                Registry registry = LocateRegistry.createRegistry(NetConfiguration.RMISERVERPORTNUMBER);
                 registry.rebind("RMIServer", serverStub);
             } catch (RemoteException exc) {
                 CustomLogger.logException(exc);
@@ -153,8 +153,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public void shutDown() {
         try {
-            registry.unbind("RMIServer");
-        } catch (RemoteException | NotBoundException e) {
+            //registry.unbind("RMIServer");
+            unexportObject(this,false);
+        } catch (RemoteException e) {
             CustomLogger.logException(e);
         }
 
@@ -186,7 +187,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
             try {
                 int clientNumber = getClientListNumber() + 1;
                 Registry currRegistry = LocateRegistry.getRegistry(remoteIPAddress, remotePort);
-                clientRegistries.add(currRegistry);
+                //clientRegistries.add(currRegistry);
                 RemoteInterface remoteClient = (RemoteInterface) currRegistry.lookup("RMIClient" + clientNumber);
                 clientList.add(remoteClient);
             } catch (RemoteException | NotBoundException e) {
