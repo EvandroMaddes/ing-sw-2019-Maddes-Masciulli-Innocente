@@ -104,6 +104,10 @@ public class Player extends Observable {
         timesGetDamged = 0;
     }
 
+    public void removeOneTimesGetDamaged(){
+        timesGetDamged--;
+    }
+
     /**
      *
      * @param weapon is the weapon searched
@@ -372,5 +376,9 @@ public class Player extends Observable {
                 whileActionPowerUps.add(p);
         }
         return whileActionPowerUps;
+    }
+
+    public int getTimesGetDamged() {
+        return timesGetDamged;
     }
 }
