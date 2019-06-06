@@ -24,14 +24,13 @@ public class CLIHandler {
     public static void arrayPrint(ArrayList<String> printedStrings){
 
         for (String currObject: printedStrings) {
-            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+currObject+"\t\t");
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+currObject+"\t\t");
             System.out.flush();
         }
 
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\nSelect from " +
                     "available choices:\t");
             System.out.flush();
-
 
     }
 
@@ -42,22 +41,22 @@ public class CLIHandler {
      * @return
      */
     public static int[] coordinatePrintAndRead(int X[], int Y[]){
-        int returnedX = 404, returnedY = 404;
+        int index = 404;
         System.out.print(Color.RESET.escape());
 
         for (int i =0; i<X.length;i++) {
 
-            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+"\n"
-                    +"coordinate X = "+X[i]+"\t"+"coordinate Y:"+Y[i]+"\t\t");
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_CYAN.escape()+"\n"
+                    +"coordinate X = "+X[i]+"coordinate Y:"+Y[i]+" option "+i);
             System.out.flush();
         }
-        while(returnedX == 404 && returnedY==404) {
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+"Select Square:");
+        while(index==404) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+"Select Square:[option number]");
             System.out.flush();
-            returnedX = intRead();
-            returnedY = intRead();
+             index = intRead();
+
         }
-        int[] coordinateSelected = {returnedX,returnedX};
+        int[] coordinateSelected = {X[index],Y[index]};
         return coordinateSelected;
     }
 
