@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.cli;
 
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -648,7 +647,8 @@ public class CLI extends RemoteView {
                     System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
                 }
 
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp to pay:[option number/type: 404 to terminate]");
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[N" +
+                        "404 to terminate]");
             for (int i = 0; i < powerUpNames.length; i++) {
                 index = 600;
                 while (index == 600) {
@@ -676,4 +676,89 @@ public class CLI extends RemoteView {
     }
 
 
+    @Override
+    public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
+        String[] nameSelected = new String[maximumPowerUpRequest.length];
+        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        if(index ==null){
+            message = new WeaponGrabPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
+        return message;
+    }
+
+    private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        int[] selected = new int[powerUpNames.length];
+        int index ;
+        String choice;
+
+
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you Like to pay with PowerUP? [Y/N]");
+        choice = CLIHandler.stringRead();
+
+        if (choice.equals("Y")) {
+            System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
+            for (int i = 0; i < minimumPowerUpRequest.length; i++) {
+
+                if (minimumPowerUpRequest[i] == 0) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
+                }else if (minimumPowerUpRequest[i] == 1){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
+
+                }
+                else if (minimumPowerUpRequest[i] == 2) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
+                }
+            }
+
+            System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
+            for (int i = 0; i < maximumPowerUpRequest.length; i++) {
+
+                if (maximumPowerUpRequest[i] == 0) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
+                }else if (maximumPowerUpRequest[i] == 1){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
+
+                }
+                else if (maximumPowerUpRequest[i] == 2) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
+                }
+            }
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
+
+            for(int i=0;i<powerUpNames.length;i++){
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
+            }
+
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[N" +
+                    "404 to terminate]");
+            for (int i = 0; i < powerUpNames.length; i++) {
+                index = 600;
+                while (index == 600) {
+                    try {
+                        index = CLIHandler.intRead();
+
+
+                    } catch (IllegalArgumentException e) {
+                        index = 404;
+                    }
+                    if (index==404){
+                        i=powerUpNames.length;
+                    }else {
+                        selected[i] = index;
+                    }
+                }
+            }
+        }
+        else if(choice.equals("N"))
+            selected = null;
+        return selected;
+    }
 }
