@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.cli;
 
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -29,6 +28,7 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.DOZER, Color.ANSI_WHITE.escape());
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
+        display = new CLIDisplay();
     }
 
 
@@ -603,11 +603,52 @@ public class CLI extends RemoteView {
      * [2] - # Blue
      */
     @Override
-    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
         String[] nameSelected = new String[maximumPowerUpRequest.length];
         CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        if(index ==null){
+            message = new WeaponEffectPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponEffectPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
+        return message;
+    }
+
+    /**
+     * it return how a player pay the weapon GRAB cost
+     * @param powerUpNames
+     * @param powerUpColours
+     * @param minimumPowerUpRequest
+     * @param maximumPowerUpRequest
+     * @return
+     */
+    @Override
+    public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
+        String[] nameSelected = new String[maximumPowerUpRequest.length];
+        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        if(index ==null){
+            message = new WeaponGrabPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
+        return message;
+    }
+
+    private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        int[] selected = new int[powerUpNames.length];
         int index ;
-        Event message = null;
         String choice;
 
 
@@ -629,26 +670,27 @@ public class CLI extends RemoteView {
                 }
             }
 
-                System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
-                for (int i = 0; i < maximumPowerUpRequest.length; i++) {
+            System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
+            for (int i = 0; i < maximumPowerUpRequest.length; i++) {
 
-                    if (maximumPowerUpRequest[i] == 0) {
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
-                    }else if (maximumPowerUpRequest[i] == 1){
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
+                if (maximumPowerUpRequest[i] == 0) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
+                }else if (maximumPowerUpRequest[i] == 1){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
 
-                    }
-                    else if (maximumPowerUpRequest[i] == 2) {
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
-                    }
-            }
-                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
-
-                for(int i=0;i<powerUpNames.length;i++){
-                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
                 }
+                else if (maximumPowerUpRequest[i] == 2) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
+                }
+            }
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
 
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp to pay:[option number/type: 404 to terminate]");
+            for(int i=0;i<powerUpNames.length;i++){
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
+            }
+
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[N" +
+                    "404 to terminate]");
             for (int i = 0; i < powerUpNames.length; i++) {
                 index = 600;
                 while (index == 600) {
@@ -659,21 +701,16 @@ public class CLI extends RemoteView {
                     } catch (IllegalArgumentException e) {
                         index = 404;
                     }
-                   if (index==404){
-                       i=powerUpNames.length;
-                   }else {
-                       nameSelected[i]= powerUpNames[index];
-                       colourSelected[i] = powerUpColours[index];
-                   }
+                    if (index==404){
+                        i=powerUpNames.length;
+                    }else {
+                        selected[i] = index;
+                    }
                 }
             }
-            message = new WeaponEffectPaymentChoiceEvent(getUser(),nameSelected,colourSelected);
-
         }
-         else if(choice.equals("N"))
-            message = new WeaponEffectPaymentChoiceEvent(getUser(),null,null);
-        return message;
+        else if(choice.equals("N"))
+            selected = null;
+        return selected;
     }
-
-
 }

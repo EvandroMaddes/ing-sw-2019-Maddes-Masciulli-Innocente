@@ -106,12 +106,13 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
             try {
                 UnicastRemoteObject.unexportObject(this,false);
                 int clientNumber = server.getClientListNumber()+1;
-                RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,clientNumber);
+                RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
                 Registry clientRegistry = LocateRegistry.createRegistry(port);
                 clientRegistry.rebind("RMIClient"+clientNumber,clientStub);
                 bindName = "RMIClient"+clientNumber;
                 server.acceptRemoteClient(port,clientIPAddress);
-            }catch(Exception exc){
+            }
+            catch(Exception exc){
                 CustomLogger.logException(exc);
             }
         }
@@ -124,6 +125,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     @Override
     public void disconnectClient() throws Exception {
             //clientRegistry.unbind(bindName);
+
         unexportObject(this, false);
     }
 

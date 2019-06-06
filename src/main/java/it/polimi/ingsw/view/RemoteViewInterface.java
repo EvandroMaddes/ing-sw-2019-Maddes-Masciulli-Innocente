@@ -34,6 +34,7 @@ public interface RemoteViewInterface {
    Event weaponChoice(ArrayList<String> availableWeapons);//to fire
    Event weaponGrabChoice(ArrayList<String> availableWeapon);
    Event weaponDiscardChoice(ArrayList<String> yourWeapon);
+   Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
    Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
