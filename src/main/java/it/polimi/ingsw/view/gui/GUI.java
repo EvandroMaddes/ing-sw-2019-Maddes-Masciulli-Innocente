@@ -13,6 +13,16 @@ import java.util.Map;
 public class GUI extends RemoteView {
 
     @Override
+    public Event genericPaymentChoice(boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour) {
+        return null;
+    }
+
+    @Override
+    public Event endRoundPowerUpRequest(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
+        return null;
+    }
+
+    @Override
     public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         return null;
     }

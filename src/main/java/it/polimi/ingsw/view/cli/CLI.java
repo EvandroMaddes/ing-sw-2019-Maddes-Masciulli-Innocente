@@ -566,9 +566,9 @@ public class CLI extends RemoteView {
 
     /**
      * it selects the destination square of target or newton powerUp
-     * @param possibleSquareX
-     * @param possibleSquareY
-     * @return
+     * @param possibleSquareX column of possible square
+     * @param possibleSquareY row of possible square
+     * @return event that contains player's choice
      */
     @Override
     public Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
@@ -590,11 +590,11 @@ public class CLI extends RemoteView {
 
     /**
      * it return how a player pay the cost of effect selected(weapon effect)
-     * @param powerUpNames
-     * @param powerUpColours
-     * @param minimumPowerUpRequest
-     * @param maximumPowerUpRequest
-     * @return
+     * @param powerUpNames list of power up's name available to use
+     * @param powerUpColours list of power up's colour available to use
+     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
      */
     /*****REMIND***
      * int arrays are built like that:
@@ -622,11 +622,11 @@ public class CLI extends RemoteView {
 
     /**
      * it return how a player pay the weapon GRAB cost
-     * @param powerUpNames
-     * @param powerUpColours
-     * @param minimumPowerUpRequest
-     * @param maximumPowerUpRequest
-     * @return
+     * @param powerUpNames list of power up's name available to use
+     * @param powerUpColours list of power up's colour available to use
+     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
      */
     @Override
     public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
@@ -647,12 +647,177 @@ public class CLI extends RemoteView {
     }
 
     /**
+     *
+     * @param powerUpNames list of power up's name available to use
+     * @param powerUpColours list of power up's colour available to use
+     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
+     */
+    @Override
+    public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
+        String[] nameSelected = new String[maximumPowerUpRequest.length];
+        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+
+        if(index ==null){
+            message = new WeaponReloadPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponReloadPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
+        return message;
+    }
+
+    /**
+     * Select how to pay when you can choose on item from ammo or powerUp
+     * @param usableAmmo
+     * @param powerUpsType list of power up's name available to use
+     * @param powerUpsColour list of power up's colour available to use
+     * @return event that contains player's choice
+     */
+    @Override
+    public Event genericPaymentChoice(boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour) {
+        int payChoice= 404 ;
+        int validSelection = 1;
+        boolean[] ammoChoice = {false,false,false};
+        String powerUpChoice = null;
+        CubeColour colourChoice = null;
+
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You have follow ammo: \n");
+        if (usableAmmo[0]==true){
+            //RED
+            validSelection=0;
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape()+"RED option 0\t");
+        }
+        if (usableAmmo[1]==true){
+            //YELLOW
+            validSelection=1;
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape()+"YELLOW option 1\t");
+        }
+        if (usableAmmo[2] == true){
+            //BLUE
+            validSelection=2;
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape()+"BLUE option 2\t");
+        }
+        if (usableAmmo[0] == false && usableAmmo[1] == false && usableAmmo[2] ==false){
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"no ammo in your bag =(");
+        }
+
+
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\n\nOr yuo can choose one powerUp:  \n");
+
+        for(int i=3;i<powerUpsType.length+3;i++){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpsColour[i-3].toString())+powerUpsType[i-3]+" OPTION "+i);
+        }
+
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\nSelect one item for pay: ");
+
+        while (payChoice == 404) {
+            try {
+
+                System.out.flush();
+
+                payChoice = CLIHandler.intRead();
+                if ((payChoice != validSelection && payChoice<3) || payChoice >= powerUpsType.length + 3) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "no item for this option");
+                    payChoice = 404;
+
+                }
+            } catch (IllegalArgumentException e) {
+                payChoice = 404;
+            }
+        }
+            if (payChoice == validSelection ){
+                ammoChoice[payChoice] = true;
+                powerUpChoice = null;
+                colourChoice = null;
+            }
+            else {
+                powerUpChoice = powerUpsType[payChoice-3];
+                colourChoice = powerUpsColour[payChoice-3];
+            }
+
+
+        return new GenericPayChoiceEvent(getUser(),ammoChoice,powerUpChoice,colourChoice);
+    }
+
+    /**
+     * It show the possibility to use one power up at the end of turn(no yor turn)
+     * @param powerUpNames list of  power up's name available to use
+     * @param powerUpColours list of power up's colour available to use
+     * @param maxUsablePowerUps max powerUp that you can use
+     * @return event that contains player's choice
+     */
+    @Override
+    public Event endRoundPowerUpRequest(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
+        String choice = null;
+        Event message = null;
+        int index;
+        String[] powerUpChoice = new String[maxUsablePowerUps];
+        CubeColour[] colourChoice = new CubeColour[maxUsablePowerUps];
+
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You receive damage: would you like to use one PowerUp? [Y/N] ");
+
+
+        choice = CLIHandler.stringRead();
+
+        if (choice.equalsIgnoreCase("y")){
+        for(int i=0;i<powerUpNames.length;i++){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
+        }
+
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You can choose at most "+maxUsablePowerUps+" option,type 404 to end: ");
+
+            for (int i = 0; i < maxUsablePowerUps; i++) {
+                index = 600;
+                while (index == 600) {
+                    try {
+
+                        System.out.flush();
+
+                        index = CLIHandler.intRead();
+
+
+                    } catch (IllegalArgumentException e) {
+                        index = 404;
+                    }
+
+                    if (index==404){
+                        i=powerUpNames.length;
+                    }else {
+                        if(index<0 || index>=maxUsablePowerUps){
+                            System.out.print("Invalid choice \n");
+                            i--;
+
+                        }else {
+                            powerUpChoice[i] = powerUpNames[index];
+                            colourChoice[i] = powerUpColours[index];
+                        }
+                    }
+                }
+            }
+
+            message = new EndRoundPowerUpChoiceEvent(getUser(),powerUpChoice,powerUpColours);
+
+
+        } else if (choice.equalsIgnoreCase("n")) {
+          message =  new EndRoundPowerUpChoiceEvent(getUser(),null,null);
+        }
+        return message;
+    }
+
+    /**
      * use to catch player choice to pay
-     * @param powerUpNames
-     * @param powerUpColours
-     * @param minimumPowerUpRequest
-     * @param maximumPowerUpRequest
-     * @return
+     * @param powerUpNames list of power up's name available to use
+     * @param powerUpColours list of power up's colour available to use
+     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return index of powerUp selected
      */
     private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         int[] selected = new int[powerUpNames.length];
@@ -660,10 +825,10 @@ public class CLI extends RemoteView {
         String choice;
 
 
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you Like to pay with PowerUP? [Y/N]");
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you like to pay with PowerUP? [Y/N]");
         choice = CLIHandler.stringRead();
 
-        if (choice.equals("Y")) {
+        if (choice.equalsIgnoreCase("Y")) {
             System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
             for (int i = 0; i < minimumPowerUpRequest.length; i++) {
 
@@ -697,12 +862,15 @@ public class CLI extends RemoteView {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
             }
 
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[N" +
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[type" +
                     "404 to terminate]");
             for (int i = 0; i < powerUpNames.length; i++) {
                 index = 600;
                 while (index == 600) {
                     try {
+
+                        System.out.flush();
+
                         index = CLIHandler.intRead();
 
 
@@ -712,7 +880,13 @@ public class CLI extends RemoteView {
                     if (index==404){
                         i=powerUpNames.length;
                     }else {
-                        selected[i] = index;
+                        if(index<0 || index>=powerUpNames.length){
+                            System.out.print("Invalid choice \n");
+                            i--;
+
+                        }else {
+                            selected[i] = index;
+                        }
                     }
                 }
             }
@@ -720,32 +894,6 @@ public class CLI extends RemoteView {
         else if(choice.equals("N"))
             selected = null;
         return selected;
-    }
-
-    /**
-     *
-     * @param powerUpNames
-     * @param powerUpColours
-     * @param minimumPowerUpRequest
-     * @param maximumPowerUpRequest
-     * @return
-     */
-    @Override
-    public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
-        Event message;
-        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
-        String[] nameSelected = new String[maximumPowerUpRequest.length];
-        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
-        if(index ==null){
-            message = new WeaponReloadPaymentChoiceEvent(getUser(),null,null);
-        }else {
-            for (int i = 0; i < index.length; i++) {
-                nameSelected[i] = powerUpNames[index[i]];
-                colourSelected[i] = colourSelected[index[i]];
-            }
-            message = new WeaponReloadPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
-        }
-        return message;
     }
 
 }
