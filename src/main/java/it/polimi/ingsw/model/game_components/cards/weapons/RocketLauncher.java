@@ -61,6 +61,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     private void performEffectOneFirstStep(List<Object> targets){
         damage((Player)targets.get(0), 2);
+        getDamagedPlayer().add((Player)targets.get(0));
         targetSquare = ((Player)targets.get(0)).getPosition();
         getFirstEffectTarget().add((Player)targets.get(0));
     }
@@ -116,10 +117,14 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        for (Player p: targetSquare.getSquarePlayers())
+        for (Player p: targetSquare.getSquarePlayers()) {
             damage(p, 1);
-        if (getFirstEffectTarget().get(0).getPosition() != targetSquare)
+            getDamagedPlayer().add(p);
+        }
+        if (getFirstEffectTarget().get(0).getPosition() != targetSquare) {
             damage(getFirstEffectTarget().get(0), 1);
+            getDamagedPlayer().add(getFirstEffectTarget().get(0));
+        }
         effectControlFlow(3);
     }
 

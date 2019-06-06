@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
 
@@ -141,10 +142,6 @@ public class ActionManager {
     *
      */
 
-    public void askForMovePreShot(){
-        // TODO: 2019-06-04
-    }
-
     /**
      * Manda le possibili armi
      */
@@ -218,14 +215,23 @@ public class ActionManager {
     public void performWeaponEffect(List<Character> targetsLite){
         ArrayList<Object> targets = Decoder.decodePlayerListAsObject(targetsLite, controller.getGameManager().getModel().getPlayers());
         chosenWeapon.performEffect(chosenEffect, targets);
-        sendPossibleEffects();
+        checkForWhileActionPowerUp();
     }
 
     public void performWeaponEffect(int squareX, int squareY){
         ArrayList<Object> targets = new ArrayList<>();
         targets.add(Decoder.decodeSquare(squareX,squareY, controller.getGameManager().getModel().getGameboard().getMap()));
         chosenWeapon.performEffect(chosenEffect, targets);
-        sendPossibleEffects();
+        checkForWhileActionPowerUp();
+    }
+
+    private void checkForWhileActionPowerUp(){
+        ArrayList<PowerUp> usablePowerUps = currentRoundManager.getCurrentPlayer().getWhileActionPowerUp();
+        if (!usablePowerUps.isEmpty() && !chosenWeapon.getDamagedPlayer().isEmpty() && !(currentRoundManager.getCurrentPlayer().getAmmo().isEmpty() && currentRoundManager.getCurrentPlayer().getPowerUps().isEmpty())){
+            controller.callView(new WhileActionPowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(usablePowerUps), Encoder.encodePowerUpColour(usablePowerUps)));
+        }
+        else
+            sendPossibleEffects();
     }
 
 
@@ -391,7 +397,7 @@ public class ActionManager {
         }
     }
 
-    private void payCost(int[] cost, List<PowerUp> powerUps){
+    public void payCost(int[] cost, List<PowerUp> powerUps){
         for (PowerUp p: powerUps) {
             currentRoundManager.getCurrentPlayer().discardPowerUp(p);
             if (p.getColour() == CubeColour.Red)
@@ -415,6 +421,18 @@ public class ActionManager {
                 cost[2]--;
             }
         }
+    }
+
+    public void askForGenericPay(String powerUpType, CubeColour powerUpColour){
+        PowerUp choice = Decoder.decodePowerUp(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour);
+        chosenPowerUp = choice;
+        ArrayList<PowerUp> usablePowerUp = currentRoundManager.getCurrentPlayer().getPowerUps();
+        usablePowerUp.remove(choice);
+        boolean[] usableAmmo = new boolean[3];
+        usableAmmo[0] = currentRoundManager.getCurrentPlayer().getCubeColourNumber(CubeColour.Red) > 0;
+        usableAmmo[1] = currentRoundManager.getCurrentPlayer().getCubeColourNumber(CubeColour.Yellow) > 0;
+        usableAmmo[2] = currentRoundManager.getCurrentPlayer().getCubeColourNumber(CubeColour.Blue) > 0;
+        controller.callView(new GenericPayRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), usableAmmo, Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp)));
     }
 
 
@@ -459,6 +477,9 @@ public class ActionManager {
     *
      */
 
+    /**
+     *
+     */
     private void askForTargetsTeleporter(){
         ArrayList<Square> possibleDestination = new ArrayList<>();
         for (int i = 0; i < 3; i++){
@@ -469,22 +490,45 @@ public class ActionManager {
         controller.callView(new TeleporterTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
     }
 
+    /**
+     *
+     */
     private void askForPlayerTargetsNewton(){
         controller.callView(new NewtonPlayerTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(controller.getGameManager().getModel().getPlayers()), 1));
     }
 
+    /**
+     *
+     */
     public void askForSquareTargetsNewton(){
         controller.callView(((Newton)chosenPowerUp).getTargets());
     }
 
+    /**
+     *
+     */
     public void performPowerUp(Object target){
         chosenPowerUp.performEffect(target);
     }
 
+    /**
+     *
+     */
     public void endPowerUpPhase(){
         currentRoundManager.getCurrentPlayer().discardPowerUp(chosenPowerUp);
         controller.getGameManager().getCurrentRound().nextPhase();
     }
+
+    public void askTargetTargetingScope(){
+        controller.callView(new TargetingScopeTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(chosenWeapon.getDamagedPlayer())));
+    }
+
+    public void performTargetingScopeEffect(Character target){
+        Player decodedTarget = Decoder.decodePlayer(target, controller.getGameManager().getModel().getPlayers());
+        chosenWeapon.damage(decodedTarget, 1);
+        sendPossibleEffects();
+    }
+
 
 
 }

@@ -25,6 +25,7 @@ public class Furnace extends AlternateFireWeapon {
         ArrayList<Player> roomPlayers = ((Square)targets.get(0)).findRoomPlayers();
         for (Player p:roomPlayers){
             damage(p, 1);
+            getDamagedPlayer().add(p);
         }
         effectControlFlow(1);
     }
@@ -52,6 +53,7 @@ public class Furnace extends AlternateFireWeapon {
         for (Player p:target.getSquarePlayers()){
             damage(p, 1);
             mark(p, 1);
+            getDamagedPlayer().add(p);
         }
         effectControlFlow(1);
     }

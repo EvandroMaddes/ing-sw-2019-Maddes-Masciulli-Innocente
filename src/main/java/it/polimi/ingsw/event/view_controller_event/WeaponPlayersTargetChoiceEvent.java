@@ -5,20 +5,16 @@ import it.polimi.ingsw.model.player.Character;
 
 import java.util.ArrayList;
 
-public class WeaponTargetChoiceEvent extends ViewControllerEvent {
+public class WeaponPlayersTargetChoiceEvent extends ViewControllerEvent {
     private ArrayList<Character> targetPlayer;
 
-    public WeaponTargetChoiceEvent(String user, ArrayList<Character> targetPlayer) {
+    public WeaponPlayersTargetChoiceEvent(String user, ArrayList<Character> targetPlayer) {
         super(user);
         this.targetPlayer = targetPlayer;
     }
 
-    public ArrayList<Character> getTargetPlayer() {
-        return targetPlayer;
-    }
-
     @Override
     public void performAction(Controller controller) {
-        //TODO
+        controller.getGameManager().getCurrentRound().getActionManager().performWeaponEffect(targetPlayer);
     }
 }

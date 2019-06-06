@@ -60,6 +60,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
         for (int i = 0; i < targets.size() && i < 2; i++){
             damage((Player)targets.get(i), 1);
             getFirstEffectTarget().add((Player)targets.get(i));
+            getDamagedPlayer().add((Player)targets.get(i));
         }
         effectControlFlow(1);
     }
@@ -93,6 +94,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
         if ( !extraDamageThirdEffect && getFirstEffectTarget().contains(target)) {
             damage(getFirstEffectTarget().get(0), 1);
             alreadyReDamagedTarget.add(target);
+            getDamagedPlayer().add(target);
             getFirstEffectTarget().remove(target);
             extraDamageThirdEffect = true;
         }

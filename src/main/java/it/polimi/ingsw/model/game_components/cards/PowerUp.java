@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.game_components.cards;
 
-import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 /**
@@ -10,7 +9,7 @@ public abstract class PowerUp extends Card {
 
     public enum Usability{
         AS_ACTION,
-        DURING_ACTION,
+        WHILE_ACTION,
         END_TURN;
     }
 

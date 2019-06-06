@@ -52,6 +52,7 @@ public class Shotgun extends AlternateFireWeapon {
     private void performEffectOneFirstStep(List<Object> targets){
         Player target = (Player)targets.get(0);
         damage(target, 3);
+        getDamagedPlayer().add(target);
         getFirstEffectTarget().add(target);
     }
 
@@ -96,6 +97,7 @@ public class Shotgun extends AlternateFireWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("no targets");
         damage((Player)targets.get(0), 2);
+        getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(2);
     }
 

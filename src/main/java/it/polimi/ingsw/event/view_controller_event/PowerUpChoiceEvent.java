@@ -15,4 +15,8 @@ public class PowerUpChoiceEvent extends CardChoiceEvent {
     public void performAction(Controller controller){
         controller.getGameManager().getCurrentRound().getActionManager().usePowerUp(getCard(), powerUpColour);
     }
+
+    public CubeColour getPowerUpColour() {
+        return powerUpColour;
+    }
 }

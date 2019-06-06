@@ -17,4 +17,7 @@ public class WeaponReloadRequestEvent extends WeaponRequestEvent {
         //todo sarà return remoteView.metodoGiusto();
         return remoteView.reloadChoice(getWeapons());
     }
+
+    public static class GenericPayRequestEvent {
+    }
 }

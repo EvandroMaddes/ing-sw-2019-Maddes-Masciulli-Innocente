@@ -21,6 +21,7 @@ public class Zx2 extends AlternateFireWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("no targets");
         damage(((Player)targets.get(0)),1);
+        getDamagedPlayer().add((Player)targets.get(0));
         mark(((Player)targets.get(0)),2);
         effectControlFlow(1);
     }

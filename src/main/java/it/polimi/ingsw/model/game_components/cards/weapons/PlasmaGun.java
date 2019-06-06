@@ -54,6 +54,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
+        getDamagedPlayer().add(target);
         effectControlFlow(1);
     }
 
@@ -82,6 +83,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
     @Override
     public void performEffectThree(List<Object> targets) {
         damage(getFirstEffectTarget().get(0), 1);
+        getDamagedPlayer().add(getFirstEffectTarget().get(0));
         effectControlFlow(3);
     }
 
