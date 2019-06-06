@@ -26,6 +26,7 @@ public class Electroscythe extends AlternateFireWeapon {
         squarePlayers.remove(getOwner());
         for (Player currentTarget: squarePlayers){
             damage(currentTarget, 1);
+            getDamagedPlayer().add(currentTarget);
         }
         effectControlFlow(1);
     }
@@ -43,6 +44,7 @@ public class Electroscythe extends AlternateFireWeapon {
         squarePlayers.remove(getOwner());
         for (Player currentTarget: squarePlayers){
             damage(currentTarget, 2);
+            getDamagedPlayer().add(currentTarget);
         }
         effectControlFlow(2);
     }

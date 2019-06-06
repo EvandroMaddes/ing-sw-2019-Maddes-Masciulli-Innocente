@@ -52,6 +52,7 @@ public class Thor extends TwoOptionalEffectWeapon {
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
+        getDamagedPlayer().add(target);
         lastPlayerHit = target;
         effectControlFlow(1);
     }
@@ -68,6 +69,7 @@ public class Thor extends TwoOptionalEffectWeapon {
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getFirstEffectTarget().add(target);
+        getDamagedPlayer().add(target);
         lastPlayerHit = target;
         effectControlFlow(2);
     }
@@ -86,6 +88,7 @@ public class Thor extends TwoOptionalEffectWeapon {
             throw new IllegalArgumentException("Empty targets");
         Player target = (Player)targets.get(0);
         damage(target, 2);
+        getDamagedPlayer().add(target);
         effectControlFlow(3);
     }
 

@@ -23,6 +23,7 @@ public class Railgun extends AlternateFireWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("no targets");
         damage((Player)targets.get(0), 3);
+        getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(1);
     }
 
@@ -37,8 +38,11 @@ public class Railgun extends AlternateFireWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("no targets");
         damage((Player)targets.get(0), 2);
-        if (targets.size() > 1)
-            damage((Player)targets.get(1), 2);
+        getDamagedPlayer().add((Player)targets.get(0));
+        if (targets.size() > 1) {
+            damage((Player) targets.get(1), 2);
+            getDamagedPlayer().add((Player)targets.get(1));
+        }
         effectControlFlow(2);
     }
 

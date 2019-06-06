@@ -21,6 +21,6 @@ public class TargetingScope extends PowerUp {
 
     @Override
     public Usability whenToUse() {
-        return Usability.DURING_ACTION;
+        return Usability.WHILE_ACTION;
     }
 }

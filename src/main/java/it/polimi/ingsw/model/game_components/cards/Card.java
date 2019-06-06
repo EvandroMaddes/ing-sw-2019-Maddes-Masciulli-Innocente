@@ -81,6 +81,7 @@ public abstract class Card implements BaseFightAction {
     @Override
     public void damage(Player target, int amount) {
         target.getPlayerBoard().addDamages(getOwner(),amount);
+        target.addTimesGetDamaged();
     }
 
 

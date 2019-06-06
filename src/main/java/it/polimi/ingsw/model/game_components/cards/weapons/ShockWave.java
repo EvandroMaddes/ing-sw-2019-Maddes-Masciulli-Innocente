@@ -48,6 +48,7 @@ public class ShockWave extends AlternateFireWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("no targets");
         damage((Player)targets.get(0), 1);
+        getDamagedPlayer().add((Player)targets.get(0));
         getFirstEffectTarget().add((Player)targets.get(0));
         effectControlFlow(1);
     }
@@ -64,6 +65,7 @@ public class ShockWave extends AlternateFireWeapon {
         int i = 0;
         while (i < 3 && i < targets.size()){
             damage((Player)targets.get(i), 1);
+            getDamagedPlayer().add((Player)targets.get(i));
             i++;
         }
         effectControlFlow(2);

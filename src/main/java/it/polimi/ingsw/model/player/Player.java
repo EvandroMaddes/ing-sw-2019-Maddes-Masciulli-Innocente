@@ -365,4 +365,12 @@ public class Player extends Observable {
         return false;
     }
 
+    public ArrayList<PowerUp> getWhileActionPowerUp(){
+        ArrayList<PowerUp> whileActionPowerUps = new ArrayList<>();
+        for (PowerUp p: this.powerUps) {
+            if (p.whenToUse() == PowerUp.Usability.WHILE_ACTION)
+                whileActionPowerUps.add(p);
+        }
+        return whileActionPowerUps;
+    }
 }

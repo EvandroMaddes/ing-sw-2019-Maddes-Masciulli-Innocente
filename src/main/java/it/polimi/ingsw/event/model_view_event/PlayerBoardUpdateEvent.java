@@ -58,6 +58,6 @@ public class PlayerBoardUpdateEvent extends ModelViewEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.PlayerBoardUpdate(getHitCharacter(), getHittingCharacter(), getDamageTokenNumber(),getMarkNumber());
+        return remoteView.playerBoardUpdate(getHitCharacter(), getHittingCharacter(), getDamageTokenNumber(),getMarkNumber());
     }
 }

@@ -4,7 +4,9 @@ import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Weapon extends Card {
@@ -13,12 +15,14 @@ public abstract class Weapon extends Card {
     private boolean loaded;
     private boolean[] effectsEnable;
     private boolean[] usableEffect;
+    private ArrayList<Player> damagedPlayer;
 
 
     public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
         super(colour, name);
         this.reloadCost = reloadCost;
         setEffectsEnable(new boolean[]{true, false, false});
+        damagedPlayer = new ArrayList<>();
         setLoaded();
     }
 
@@ -128,6 +132,11 @@ public abstract class Weapon extends Card {
             throw new UnsupportedOperationException("Richiesto effetto non presente");
     }
 
+    public ArrayList<Player> getDamagedPlayer() {
+        return damagedPlayer;
+    }
 
-
+    public void resetDamagedplayer(){
+        damagedPlayer.clear();
+    }
 }

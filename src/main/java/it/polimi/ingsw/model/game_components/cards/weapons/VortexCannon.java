@@ -64,6 +64,7 @@ public class VortexCannon extends OneOptionalEffectWeapon {
         Player target = (Player)targets.get(0);
         move(target, vortex);
         damage(target, 2);
+        getDamagedPlayer().add(target);
         getFirstEffectTarget().add(target);
     }
 
@@ -113,6 +114,7 @@ public class VortexCannon extends OneOptionalEffectWeapon {
         while (i < 2 && i < targets.size()){
             move((Player)targets.get(i), vortex);
             damage((Player)targets.get(i), 1);
+            getDamagedPlayer().add((Player)targets.get(0));
         }
         effectControlFlow(2);
     }

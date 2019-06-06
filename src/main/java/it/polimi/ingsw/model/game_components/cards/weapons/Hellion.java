@@ -23,6 +23,7 @@ public class Hellion extends AlternateFireWeapon {
             throw new IllegalArgumentException("No Targets");
         Player target = (Player)targets.get(0);
         damage(target, 1);
+        getDamagedPlayer().add(target);
         for (Player p :target.getPosition().getSquarePlayers()){
             mark(p, 1);
         }
@@ -45,6 +46,7 @@ public class Hellion extends AlternateFireWeapon {
             throw new IllegalArgumentException("No Targets");
         Player target = (Player)targets.get(0);
         damage(target, 1);
+        getDamagedPlayer().add(target);
         for (Player p :target.getPosition().getSquarePlayers()){
             mark(p, 2);
         }

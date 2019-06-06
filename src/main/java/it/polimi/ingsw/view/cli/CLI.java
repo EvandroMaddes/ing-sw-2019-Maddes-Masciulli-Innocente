@@ -28,6 +28,7 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.DOZER, Color.ANSI_WHITE.escape());
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
+        display = new CLIDisplay();
     }
 
 
@@ -360,7 +361,7 @@ public class CLI extends RemoteView {
             }
         }
 
-        return new WeaponTargetChoiceEvent(getUser(), targetCharacter);
+        return new WeaponPlayersTargetChoiceEvent(getUser(), targetCharacter);
     }
 
     @Override
