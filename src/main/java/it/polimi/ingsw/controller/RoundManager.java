@@ -61,6 +61,7 @@ public class RoundManager {
                 break;
             }
             case 8:{
+                resetRoundDamageCounter();
                 manageDeadPlayers();
                 break;
             }
@@ -141,5 +142,11 @@ public class RoundManager {
             powerUpUser.discardPowerUp(p);
         }
         endRoundPowerUpCheck();
+    }
+
+    private void resetRoundDamageCounter(){
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            p.resetTimesGetDamaged();
+        }
     }
 }
