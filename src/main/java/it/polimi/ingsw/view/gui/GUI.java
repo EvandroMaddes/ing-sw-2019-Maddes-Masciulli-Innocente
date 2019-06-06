@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class GUI extends RemoteView {
+    @Override
+    public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+        return null;
+    }
 
     @Override
     public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {

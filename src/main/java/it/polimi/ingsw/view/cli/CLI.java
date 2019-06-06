@@ -603,80 +603,31 @@ public class CLI extends RemoteView {
      * [2] - # Blue
      */
     @Override
-    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
         String[] nameSelected = new String[maximumPowerUpRequest.length];
         CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
-        int index ;
-        Event message = null;
-        String choice;
-
-
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you Like to pay with PowerUP? [Y/N]");
-        choice = CLIHandler.stringRead();
-
-        if (choice.equals("Y")) {
-            System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
-            for (int i = 0; i < minimumPowerUpRequest.length; i++) {
-
-                if (minimumPowerUpRequest[i] == 0) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
-                }else if (minimumPowerUpRequest[i] == 1){
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
-
-                }
-                else if (minimumPowerUpRequest[i] == 2) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
-                }
-            }
-
-                System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
-                for (int i = 0; i < maximumPowerUpRequest.length; i++) {
-
-                    if (maximumPowerUpRequest[i] == 0) {
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
-                    }else if (maximumPowerUpRequest[i] == 1){
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
-
-                    }
-                    else if (maximumPowerUpRequest[i] == 2) {
-                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
-                    }
-            }
-                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
-
-                for(int i=0;i<powerUpNames.length;i++){
-                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
-                }
-
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[N" +
-                        "404 to terminate]");
-            for (int i = 0; i < powerUpNames.length; i++) {
-                index = 600;
-                while (index == 600) {
-                    try {
-                        index = CLIHandler.intRead();
-
-
-                    } catch (IllegalArgumentException e) {
-                        index = 404;
-                    }
-                   if (index==404){
-                       i=powerUpNames.length;
-                   }else {
-                       nameSelected[i]= powerUpNames[index];
-                       colourSelected[i] = powerUpColours[index];
-                   }
-                }
-            }
-            message = new WeaponEffectPaymentChoiceEvent(getUser(),nameSelected,colourSelected);
-
-        }
-         else if(choice.equals("N"))
+        if(index ==null){
             message = new WeaponEffectPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponEffectPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
         return message;
     }
 
-
+    /**
+     * it return how a player pay the weapon GRAB cost
+     * @param powerUpNames
+     * @param powerUpColours
+     * @param minimumPowerUpRequest
+     * @param maximumPowerUpRequest
+     * @return
+     */
     @Override
     public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         Event message;
