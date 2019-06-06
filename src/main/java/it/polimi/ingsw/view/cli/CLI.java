@@ -646,6 +646,14 @@ public class CLI extends RemoteView {
         return message;
     }
 
+    /**
+     * use to catch player choice to pay
+     * @param powerUpNames
+     * @param powerUpColours
+     * @param minimumPowerUpRequest
+     * @param maximumPowerUpRequest
+     * @return
+     */
     private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         int[] selected = new int[powerUpNames.length];
         int index ;
@@ -713,4 +721,31 @@ public class CLI extends RemoteView {
             selected = null;
         return selected;
     }
+
+    /**
+     *
+     * @param powerUpNames
+     * @param powerUpColours
+     * @param minimumPowerUpRequest
+     * @param maximumPowerUpRequest
+     * @return
+     */
+    @Override
+    public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
+        Event message;
+        int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
+        String[] nameSelected = new String[maximumPowerUpRequest.length];
+        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        if(index ==null){
+            message = new WeaponReloadPaymentChoiceEvent(getUser(),null,null);
+        }else {
+            for (int i = 0; i < index.length; i++) {
+                nameSelected[i] = powerUpNames[index[i]];
+                colourSelected[i] = colourSelected[index[i]];
+            }
+            message = new WeaponReloadPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
+        }
+        return message;
+    }
+
 }
