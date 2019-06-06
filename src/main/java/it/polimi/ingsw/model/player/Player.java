@@ -373,4 +373,8 @@ public class Player extends Observable {
         }
         return whileActionPowerUps;
     }
+
+    public int getTimesGetDamged() {
+        return timesGetDamged;
+    }
 }

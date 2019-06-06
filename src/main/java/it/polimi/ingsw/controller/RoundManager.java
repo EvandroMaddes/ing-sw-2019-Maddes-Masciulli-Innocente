@@ -2,8 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
+import java.util.ArrayList;
 
 
 public class RoundManager {
@@ -48,6 +50,13 @@ public class RoundManager {
                 break;
             }
             case 7:{
+                for (Player p: controller.getGameManager().getModel().getPlayers()) {
+                    if (p.getTimesGetDamged() > 0){
+                        // TODO: 2019-06-06
+                    }
+                }
+            }
+            case 8:{
                 manageDeadPlayers();
                 break;
             }
@@ -96,5 +105,17 @@ public class RoundManager {
 
     public void createDeathManager(GameModel model, Player deadPlayer, RoundManager roundManager){
         deathManager = new DeathManager(controller, model, deadPlayer, this);
+    }
+
+    private ArrayList<Player> getPossibleEndRoundPowerUpUser(){
+        // TODO: 2019-06-06 _ 
+        ArrayList<Player> possibleEndRoundPowerUpUser = new ArrayList<>();
+        ArrayList<PowerUp> endRoundPowerUp;
+        for (Player p: controller.getGameManager().getModel().getPlayers()){
+            if (p.getTimesGetDamged() > 0){
+
+            }
+        }
+        return null;
     }
 }
