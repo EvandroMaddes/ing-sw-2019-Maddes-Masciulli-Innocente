@@ -361,7 +361,7 @@ public class CLI extends RemoteView {
             }
         }
 
-        return new WeaponTargetChoiceEvent(getUser(), targetCharacter);
+        return new WeaponPlayersTargetChoiceEvent(getUser(), targetCharacter);
     }
 
     @Override
