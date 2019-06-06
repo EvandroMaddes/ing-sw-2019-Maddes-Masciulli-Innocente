@@ -34,6 +34,7 @@ public class Whisper extends Weapon {
 
         damage(target, 3);
         mark(target, 1);
+        getDamagedPlayer().add(target);
 
         effectControlFlow(1);
     }

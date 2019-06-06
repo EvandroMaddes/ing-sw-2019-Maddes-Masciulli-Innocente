@@ -45,6 +45,7 @@ public class PowerGlove extends AlternateFireWeapon {
         Player target = (Player)targets.get(0);
         move(getOwner(), target.getPosition());
         damage(target, 1);
+        getDamagedPlayer().add(target);
         mark(target, 2);
         effectControlFlow(1);
     }
@@ -66,6 +67,7 @@ public class PowerGlove extends AlternateFireWeapon {
         }
         move(getOwner(), target.getPosition());
         damage(target, 2);
+        getDamagedPlayer().add(target);
         effectControlFlow(2);
     }
 

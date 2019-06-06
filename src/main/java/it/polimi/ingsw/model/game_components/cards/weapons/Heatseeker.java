@@ -32,6 +32,7 @@ public class Heatseeker extends Weapon {
             throw new IllegalArgumentException("Nessun target selezionato");
         Player target = (Player) targets.get(0);
         damage(target, 3);
+        getDamagedPlayer().add(target);
 
         effectControlFlow(1);
     }

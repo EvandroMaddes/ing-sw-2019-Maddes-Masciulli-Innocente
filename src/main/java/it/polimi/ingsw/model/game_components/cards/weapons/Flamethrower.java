@@ -53,6 +53,7 @@ public class Flamethrower extends AlternateFireWeapon {
 
     private void performEffectOneFirstStep(List<Object> targets){
         damage((Player)targets.get(0), 1);
+        getDamagedPlayer().add((Player)targets.get(0));
         for (int direction = 0; direction < 4; direction++)
             if (getOwner().getPosition().getNextSquare(direction) == ((Player)targets.get(0)).getPosition())
                 firstEffectDirection = direction;
@@ -60,6 +61,7 @@ public class Flamethrower extends AlternateFireWeapon {
 
     private void performEffectOneSecondStep(List<Object> targets){
         damage((Player)targets.get(0), 1);
+        getDamagedPlayer().add((Player)targets.get(0));
     }
 
     @Override
@@ -106,11 +108,13 @@ public class Flamethrower extends AlternateFireWeapon {
         }
         for (Player p:target.getSquarePlayers()){
             damage(p, 2);
+            getDamagedPlayer().add(p);
         }
         if (target.checkDirection(direction))
             target = target.getNextSquare(direction);
         for (Player p:target.getSquarePlayers()) {
             damage(p, 1);
+            getDamagedPlayer().add(p);
         }
         effectControlFlow(2);
     }

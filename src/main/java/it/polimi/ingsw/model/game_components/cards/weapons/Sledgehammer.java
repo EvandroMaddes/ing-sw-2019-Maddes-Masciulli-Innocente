@@ -45,6 +45,7 @@ public class Sledgehammer extends AlternateFireWeapon {
             throw new IllegalArgumentException("no targets");
         Player target = (Player)targets.get(0);
         damage(target, 2);
+        getDamagedPlayer().add(target);
         effectControlFlow(1);
     }
 
@@ -68,6 +69,7 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     private void performEffectTwoFirstStep(List<Object> targets){
         damage((Player)targets.get(0), 3);
+        getDamagedPlayer().add((Player)targets.get(0));
         getFirstEffectTarget().add((Player)targets.get(0));
     }
 

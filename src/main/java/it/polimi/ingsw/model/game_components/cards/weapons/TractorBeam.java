@@ -55,6 +55,7 @@ public class TractorBeam extends AlternateFireWeapon {
     private void performEffectOneSecondStep(List<Object> targets){
         move(getFirstEffectTarget().get(0), (Square)targets.get(0));
         damage(getFirstEffectTarget().get(0), 1);
+        getDamagedPlayer().add(getFirstEffectTarget().get(0));
     }
 
     @Override
@@ -107,6 +108,7 @@ public class TractorBeam extends AlternateFireWeapon {
             throw new IllegalArgumentException("no targets");
         move((Player)targets.get(0), getOwner().getPosition());
         damage((Player)targets.get(0), 3);
+        getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(2);
     }
 

@@ -44,6 +44,7 @@ public class LockRifle extends OneOptionalEffectWeapon {
         damage(target, 2);
         mark(target, 1);
         getFirstEffectTarget().add(target);
+        getDamagedPlayer().add(target);
         effectControlFlow(1);
     }
 

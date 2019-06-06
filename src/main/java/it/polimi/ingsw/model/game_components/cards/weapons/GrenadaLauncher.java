@@ -54,6 +54,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
         if (targets.isEmpty())
             throw new IllegalArgumentException("No targets");
         damage((Player)targets.get(0), 1);
+        getDamagedPlayer().add((Player)targets.get(0));
         getFirstEffectTarget().add((Player)targets.get(0));
     }
 
@@ -97,8 +98,10 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
             throw new IllegalArgumentException("no targets");
         Square targetSquare = (Square)targets.get(0);
         for (Player p:targetSquare.getSquarePlayers()){
-            if (p != getOwner())
+            if (p != getOwner()) {
                 damage(p, 1);
+                getDamagedPlayer().add(p);
+            }
         }
         effectControlFlow(2);
     }
