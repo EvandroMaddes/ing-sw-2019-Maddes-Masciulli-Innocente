@@ -254,12 +254,20 @@ public abstract class Square extends Observable {
         for (int i = 0; i < numberOfMoves; i ++){
             for (Square currentSquare: reachAtPreviousStep) {
                 for (int direction = 0; direction < 4; direction++){
-                    if(currentSquare.checkDirection(direction) && !reachAtPreviousStep.contains(currentSquare) && !reachInThatStep.contains(currentSquare)){
-                        reachInThatStep.add(currentSquare.getNextSquare(direction));
+                    Square possibleNextDestination = currentSquare.getNextSquare(direction);
+                    if(currentSquare.checkDirection(direction) && !reachAtPreviousStep.contains(possibleNextDestination)
+                                    && !reachInThatStep.contains(possibleNextDestination)){
+                        reachInThatStep.add(possibleNextDestination);
                     }
                 }
             }
-            possibleDestination.addAll(reachInThatStep);
+            for (Square currSquare : reachInThatStep) {
+                if(!possibleDestination.contains(currSquare)){
+                    possibleDestination.add(currSquare);
+                }
+
+            }
+            //possibleDestination.addAll(reachInThatStep);
             reachAtPreviousStep.clear();
             reachAtPreviousStep.addAll(reachInThatStep);
             reachInThatStep.clear();

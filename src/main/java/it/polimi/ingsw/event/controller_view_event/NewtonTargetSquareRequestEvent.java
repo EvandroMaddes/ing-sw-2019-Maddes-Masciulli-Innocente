@@ -11,6 +11,6 @@ public class NewtonTargetSquareRequestEvent extends PositionRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.newtonTeleporterTargetSquareChoice(getPossibleSquareX(),getPossibleSquareY());
     }
 }

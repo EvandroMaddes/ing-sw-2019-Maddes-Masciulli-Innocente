@@ -50,7 +50,6 @@ public class PositionUpdateEvent extends ModelViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        //todo aggiorna la risorsa sul client
 
         return remoteView.positionUpdate(getCurrCharacter(),getPositionX(),getPositionY());
     }

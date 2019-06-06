@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TractorBeam extends AlternateFireWeapon {
@@ -77,9 +78,22 @@ public class TractorBeam extends AlternateFireWeapon {
             }
 
         }
+
+
         possibleStartingSquare.addAll(notVisibleStartingSquare);
         for (Square s:possibleStartingSquare)
-            possibleTargets.addAll(s.getSquarePlayers());
+        {
+            ArrayList<Player> squarePlayers = s.getSquarePlayers();
+            for (Player currTarget : squarePlayers) {
+                if(!possibleTargets.contains(currTarget)) {
+                    possibleTargets.add(currTarget);
+                }
+            }
+            while(possibleTargets.contains(getOwner())){
+                possibleTargets.remove(getOwner());
+            }
+            //possibleTargets.addAll(s.getSquarePlayers());
+        }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
@@ -115,9 +129,21 @@ public class TractorBeam extends AlternateFireWeapon {
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
         ArrayList<Player> possibleTargets = new ArrayList<>();
-        for (Square s:getOwner().getPosition().reachalbeInMoves(2)){
-            possibleTargets.addAll(s.getSquarePlayers());
+        ArrayList<Square> reachablePosition = getOwner().getPosition().reachalbeInMoves(2);
+        for (Square s: reachablePosition){
+            ArrayList<Player> squarePlayers = s.getSquarePlayers();
+            for (Player currTarget : squarePlayers) {
+                if(!possibleTargets.contains(currTarget)) {
+                    possibleTargets.add(currTarget);
+                }
+            }
+            //possibleTargets.addAll(s.getSquarePlayers());
+        }
+        while(possibleTargets.contains(getOwner())){
+            possibleTargets.remove(getOwner());
         }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
+
 }
+

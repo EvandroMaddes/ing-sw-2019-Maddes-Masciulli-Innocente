@@ -3,6 +3,9 @@ package it.polimi.ingsw.event.view_controller_event;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
+/**
+ * SE sceglie di non usare i power up per pagare la i poerup name e color sono settati a null
+ */
 public class WeaponEffectPaymentChoiceEvent extends PowerUpListChoiceEvent {
 
     public WeaponEffectPaymentChoiceEvent(String user, String[] powerUpType, CubeColour[] powerUpColour) {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
+import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -14,14 +15,12 @@ import java.util.*;
 public class CLI extends RemoteView {
 
     private CLIDisplay display;//la map sara sostiyuita da display.getmap, idem per playerBoard
-    private int provaCommit;
-    private CLIMap map;
-    private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
-    private Map<Character, String> mapCharacterNameColors = new EnumMap<Character,String>(Character.class);
+
+
+    // private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
+    private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
     //todo map tra colore arma e nome arma
     // todo map tra powerUp e relativo colore
-
-
 
 
     public CLI() {
@@ -38,7 +37,6 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -47,8 +45,8 @@ public class CLI extends RemoteView {
         String[] userInput = new String[3];
         userInput[0] = CLIHandler.stringPrintAndRead("Insert your Username:");
         setUser(userInput[0]);
-        userInput[1]="";
-        while(!(userInput[1].equalsIgnoreCase("RMI")||userInput[1].equalsIgnoreCase("SOCKET"))) {
+        userInput[1] = "";
+        while (!(userInput[1].equalsIgnoreCase("RMI") || userInput[1].equalsIgnoreCase("SOCKET"))) {
             userInput[1] = CLIHandler.stringPrintAndRead("Choose one of the available connection, type:\n\nRMI\tor\tSOCKET\n");
         }
         userInput[2] = CLIHandler.stringPrintAndRead("Insert the Server IP Address:");
@@ -56,7 +54,6 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
      * @param availableCharacters
      * @return
      */
@@ -64,25 +61,24 @@ public class CLI extends RemoteView {
     public Event characterChoice(ArrayList<Character> availableCharacters) {
 
         ArrayList<String> cliCharacters = new ArrayList<>();
-        for (Character currCharacter:availableCharacters) {
-            cliCharacters.add(mapCharacterNameColors.get(currCharacter)+currCharacter.name());
+        for (Character currCharacter : availableCharacters) {
+            cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
         }
         Character chosenCharacter = null;
-        while(chosenCharacter==null) {
-            try{
+        while (chosenCharacter == null) {
+            try {
                 CLIHandler.arrayPrint(cliCharacters);
                 String chosenStringCharacter = CLIHandler.stringRead();
                 chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
-            }catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 chosenCharacter = null;
             }
 
         }
-        return new CharacterChoiceEvent(getUser(),chosenCharacter);
+        return new CharacterChoiceEvent(getUser(), chosenCharacter);
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -91,7 +87,7 @@ public class CLI extends RemoteView {
         while (map == 404) {
             try {
 
-                while(map<0||map>3) {
+                while (map < 0 || map > 3) {
 
                     System.out.println("option 0 for twelve squares" +
                             "\noption 1 for eleven squares" +
@@ -102,7 +98,7 @@ public class CLI extends RemoteView {
 
                     map = CLIHandler.intRead();
                 }
-                this.map = new CLIMap(map);
+                display.setMap(new CLIMap(map));
             } catch (IllegalArgumentException e) {
 
                 map = 404;
@@ -111,67 +107,71 @@ public class CLI extends RemoteView {
 
 
         //todo modalità selezionata
-        GameChoiceEvent message = new GameChoiceEvent(getUser(), map,0);
+        GameChoiceEvent message = new GameChoiceEvent(getUser(), map, 0);
         return message;
     }
 
-    public CLIMap getMap() {
-        return map;
-    }
 
     /**
-     *
      * @param fireEnable
      * @return
      */
     @Override
     public Event actionChoice(boolean fireEnable) {
         int chosenAction = 404;
-        while (chosenAction == 404){
+        while (chosenAction == 404) {
             try {
                 System.out.println(
                         "option 1 for MOVE"
-                        +"\noption 2 for GRAB");
-                if(fireEnable){
+                                + "\noption 2 for GRAB");
+                if (fireEnable) {
                     System.out.println("option 3 for SHOT");
                 }
-                System.out.println("option 4 for SKIP YOUR TURN"+"\nSelect one action:");
+                System.out.println("option 4 for SKIP YOUR TURN" + "\nSelect one action:");
 
                 System.out.flush();
 
                 chosenAction = CLIHandler.intRead();
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 chosenAction = 404;
             }
         }
 
         Event message;
-        if (chosenAction==4) {
+        if (chosenAction == 4) {
             message = new SkipActionChoiceEvent(getUser());
-        } else message = new ActionChoiceEvent(getUser(), chosenAction);;
+        } else message = new ActionChoiceEvent(getUser(), chosenAction);
+        ;
 
         return message;
     }
 
     /**
-     *
      * @param reloadableWeapons
      * @return
      */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
         String weaponSelected = null;
-        while (weaponSelected==null) {
+        while (weaponSelected == null) {
             try {
-                System.out.println("You choose to reload ");
                 CLIHandler.arrayPrint(reloadableWeapons);
-                weaponSelected = CLIHandler.stringRead();
+                System.out.println("Choose weapon to reload:  ");
+                weaponSelected = CLIHandler.stringRead().toUpperCase();
             } catch (IllegalArgumentException e) {
                 weaponSelected = null;
 
             }
         }
-        return new WeaponReloadChoiceEvent(getUser(),weaponSelected);
+
+        Event message;
+        if (!reloadableWeapons.contains(weaponSelected)) {
+            message = new SkipActionChoiceEvent(getUser());
+        } else {
+            message = new WeaponReloadChoiceEvent(getUser(), weaponSelected);
+        }
+
+        return message;
     }
 
     @Override
@@ -180,7 +180,6 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
      * @param powerUpNames
      * @param powerUpColours
      * @return
@@ -195,7 +194,7 @@ public class CLI extends RemoteView {
             try {
                 System.out.println("You should respawn");
                 CLIHandler.arrayPrint(powerUpList);
-                chosenPowerUp =CLIHandler.stringRead().toUpperCase();
+                chosenPowerUp = CLIHandler.stringRead().toUpperCase();
             } catch (IllegalArgumentException e) {
                 chosenPowerUp = null;
             }
@@ -205,7 +204,6 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
      * @param possibleSquareX
      * @param possibleSquareY
      * @return
@@ -213,22 +211,21 @@ public class CLI extends RemoteView {
     @Override
     public Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY) {
         int[] chosenSquare = null;
-        while (chosenSquare == null){
+        while (chosenSquare == null) {
             try {
 
 
-            chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
-         }catch (IllegalArgumentException e){
+                chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
+            } catch (IllegalArgumentException e) {
                 chosenSquare = null;
 
-        }
+            }
 
         }
-        return new MoveChoiceEvent(getUser(),chosenSquare[0],chosenSquare[1]);
+        return new MoveChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
 
     /**
-     *
      * @param possibleSquareX
      * @param possibleSquareY
      * @return
@@ -236,29 +233,28 @@ public class CLI extends RemoteView {
     @Override
     public Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY) {
         int[] chosenSquare = null;
-        while (chosenSquare == null){
+        while (chosenSquare == null) {
             try {
 
 
                 chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 chosenSquare = null;
 
             }
 
         }
-        return new GrabChoiceEvent(getUser(),chosenSquare[0],chosenSquare[1]);
+        return new GrabChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
 
     /**
-     *
      * @param yourWeapons
      * @return
      */
     @Override
     public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
         String weaponSelected = null;
-        while (weaponSelected==null) {
+        while (weaponSelected == null) {
             try {
                 System.out.println("You choose to reload ");
                 CLIHandler.arrayPrint(yourWeapons);
@@ -268,18 +264,17 @@ public class CLI extends RemoteView {
 
             }
         }
-        return new WeaponDiscardChoice(getUser(),weaponSelected);
+        return new WeaponDiscardChoice(getUser(), weaponSelected);
     }
 
     /**
-     *
      * @param availableWeapons
      * @return
      */
     @Override
     public Event weaponChoice(ArrayList<String> availableWeapons) {
         String weaponSelected = null;
-        while (weaponSelected==null) {
+        while (weaponSelected == null) {
             try {
                 System.out.println("You choose to fire ");
                 CLIHandler.arrayPrint(availableWeapons);
@@ -289,18 +284,17 @@ public class CLI extends RemoteView {
 
             }
         }
-        return new WeaponChoiceEvent(getUser(),weaponSelected);
+        return new WeaponChoiceEvent(getUser(), weaponSelected);
     }
 
     /**
-     *
      * @param availableWeapon
      * @return
      */
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
         String weaponSelected = null;
-        while (weaponSelected==null) {
+        while (weaponSelected == null) {
             try {
                 System.out.println("You choose to grab");
                 CLIHandler.arrayPrint(availableWeapon);
@@ -310,11 +304,10 @@ public class CLI extends RemoteView {
 
             }
         }
-        return new WeaponGrabChoiceEvent(getUser(),weaponSelected);
+        return new WeaponGrabChoiceEvent(getUser(), weaponSelected);
     }
 
     /**
-     *
      * @param availableWeaponEffects
      * @return
      */
@@ -322,82 +315,88 @@ public class CLI extends RemoteView {
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
         int effectChoice = 404;
 
-        for (int i =0; i<= availableWeaponEffects.length;i++)
+        for (int i = 0; i < availableWeaponEffects.length && availableWeaponEffects[i] == true; i++) // print only available effects
         {
-            System.out.println("effect "+i);
+            System.out.println("effect " + i);
         }
-        while (effectChoice == 404){
+        while (effectChoice == 404) {
             try {
 
                 System.out.flush();
 
                 effectChoice = CLIHandler.intRead();
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 effectChoice = 404;
             }
         }
 
-        return new WeaponEffectChioceEvent(getUser(),effectChoice);
+        return new WeaponEffectChioceEvent(getUser(), effectChoice);
     }
 
     /**
-     *
      * @param availableTargets
      * @return
      */
     @Override
-    public Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget) {
+    public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
         ArrayList<String> cliCharacters = new ArrayList<>();
         ArrayList<Character> targetCharacter = new ArrayList<>();
-        for (Character currCharacter:availableTargets) {
-            cliCharacters.add(mapCharacterNameColors.get(currCharacter)+currCharacter.name());
+        for (Character currCharacter : availableTargets) {
+            cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
         }
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Max targets: " + numTarget);
         CLIHandler.arrayPrint(cliCharacters);
         Character chosenCharacter = null;
-        for (int i=0; i<=numTarget; i++){
-            while(chosenCharacter==null) {
+        for (int i = 0; i < numTarget; i++) {
+            chosenCharacter = null;
+            while (chosenCharacter == null) {
                 try {
-                 String chosenStringCharacter = CLIHandler.stringRead();
-                 chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+                    String chosenStringCharacter = CLIHandler.stringRead();
+                    chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
 
-             } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     chosenCharacter = null;
                 }
                 targetCharacter.add(chosenCharacter);
             }
         }
 
-        return new WeaponPlayersTargetChoiceEvent(getUser(),targetCharacter );
+        return new WeaponTargetChoiceEvent(getUser(), targetCharacter);
     }
 
     @Override
-    public Event effectPaymentChoice() {
-        return null;
-    }
+    public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
 
-    @Override
-    public Event targetPowerUpChoice() {
-        return null;
-    }
-
-    @Override
-    public Event powerUpChoice(String[] powerUpNames,CubeColour[] powerUpColours) {
         String choice;
+        boolean done = false;
+        int index = powerUpNames.length;
+
         ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
         CLIHandler.arrayPrint(powerUpList);
         System.out.println("select your PowerUp: ");
-        choice=CLIHandler.stringRead();
-        return new PowerUpChoiceEvent(getUser(),choice);
+        choice = CLIHandler.stringRead();
+
+        while (!done) {
+            if (powerUpNames[index].equals(choice)) {
+                done = true;
+            } else {
+                index--;
+            }
+        }
+
+        return new PowerUpChoiceEvent(getUser(), choice, powerUpColours[index]);
     }
 
 
     @Override
     public void printScreen() {
-        map.plot();
+        //todo interazione con aggiornamento armi sullo spqwn square
+        display.printDisplay();
     }
 
     /**
      * Every tima one player joins the game it's notified to other player
+     *
      * @param newPlayer
      * @return
      */
@@ -405,14 +404,13 @@ public class CLI extends RemoteView {
     public Event newPlayerJoinedUpdate(String newPlayer) {
 
 
-        System.out.println("New player joined the game:"+newPlayer);
-             //TODO   "character choice:"+mapCharacterNameColors.get(newPlayer));
+        System.out.println("New player joined the game:" + newPlayer);
+        //TODO   "character choice:"+mapCharacterNameColors.get(newPlayer));
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
      * @param x
      * @param y
      * @param fistColour
@@ -424,32 +422,30 @@ public class CLI extends RemoteView {
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
         String[] color = {fistColour, secondColour, null};
         CLIPrintableElement currElement;
-        if(thirdColour.equals("POWERUP")) {
+        if (thirdColour.equals("POWERUP")) {
 
-             currElement = new CLIPrintableElement(true, color);
-        }else {
+            currElement = new CLIPrintableElement(true, color);
+        } else {
             color[2] = thirdColour;
-            currElement = new CLIPrintableElement(false,color);
+            currElement = new CLIPrintableElement(false, color);
         }
-        map.updateResource(currElement ,x ,y);
+        display.getMap().updateResource(currElement, x, y);
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
      * @param x
      * @param y
      * @return
      */
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
-        CLIPrintableElement currElement= new CLIPrintableElement(false);
-        map.updateResource(currElement,x,y);
+        CLIPrintableElement currElement = new CLIPrintableElement(false);
+        display.getMap().updateResource(currElement, x, y);
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
      * @param currCharacter
      * @param x
      * @param y
@@ -457,14 +453,14 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
-        CLIPrintableElement currElement = new CLIPrintableElement(currCharacter,mapCharacterNameColors.get(currCharacter));
-        map.updateResource(currElement,x,y);
+        CLIPrintableElement currElement = new CLIPrintableElement(currCharacter, mapCharacterNameColors.get(currCharacter));
+        display.getMap().updateResource(currElement, x, y);
         return new UpdateChoiceEvent(getUser());
     }
 
     @Override
-    public Event PlayerBoardUpdate(Character currCharacter, Character hittingCharacter,int damageToken, int markNumber) {
-        display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken,markNumber, hittingCharacter);
+    public Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
+        display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken, markNumber, hittingCharacter);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -491,10 +487,10 @@ public class CLI extends RemoteView {
         int size = ammo.size();
 
         String[] ammoString = new String[size];
-        int i=0;
+        int i = 0;
 
-        for (AmmoCube ammoCube:ammo
-             ) {
+        for (AmmoCube ammoCube : ammo
+        ) {
 
             ammoString[i] = findColorEscape(ammoCube.getColour().name()) + "█";
             i++;
@@ -519,23 +515,165 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     * It repaces weapons on spawn square
+     *
+     * @param x      coordinate (row)
+     * @param y      coordinate(column)
+     * @param weapon
+     * @return
+     */
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
-
-        return null;
+        display.weaponsSpawnSquare(x, y, weapon);
+        return new UpdateChoiceEvent(getUser());
     }
 
-    private String findColorEscape(String colourString){
+    private String findColorEscape(String colourString) {
         String colourEscape = Color.ANSI_BLACK_BACKGROUND.escape();
-        if(colourString.equalsIgnoreCase("RED")){
+        if (colourString.equalsIgnoreCase("RED")) {
             colourEscape = colourEscape + Color.ANSI_RED.escape();
-        }
-        else if (colourString.equalsIgnoreCase("BLUE")){
-            colourEscape =  colourEscape + Color.ANSI_BLUE.escape();
-        }
-        else{
+        } else if (colourString.equalsIgnoreCase("BLUE")) {
+            colourEscape = colourEscape + Color.ANSI_BLUE.escape();
+        } else {
             colourEscape = colourEscape + Color.ANSI_YELLOW;
         }
         return colourEscape;
     }
+
+    @Override
+    public Event newtonTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
+        ArrayList<String> cliCharacters = new ArrayList<>();
+        ArrayList<Character> targetCharacter = new ArrayList<>();
+        for (Character currCharacter : availableTargets) {
+            cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
+        }
+        CLIHandler.arrayPrint(cliCharacters);
+        Character chosenCharacter = null;
+        while (chosenCharacter == null) {
+            try {
+                String chosenStringCharacter = CLIHandler.stringRead();
+                chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+
+            } catch (IllegalArgumentException e) {
+                chosenCharacter = null;
+            }
+        }
+
+        return new NewtonPlayerTargetChoiceEvent(getUser(), chosenCharacter);
+    }
+
+
+    /**
+     * it selects the destination square of target or newton powerUp
+     * @param possibleSquareX
+     * @param possibleSquareY
+     * @return
+     */
+    @Override
+    public Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
+        int[] chosenSquare = null;
+        while (chosenSquare == null) {
+            try {
+
+
+                chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
+            } catch (IllegalArgumentException e) {
+                chosenSquare = null;
+
+            }
+
+        }
+        return new PowerUpSquareTargetChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
+
+    }
+
+    /**
+     * it return how a player pay the cost of effect selected(weapon effect)
+     * @param powerUpNames
+     * @param powerUpColours
+     * @param minimumPowerUpRequest
+     * @param maximumPowerUpRequest
+     * @return
+     */
+    /*****REMIND***
+     * int arrays are built like that:
+     * [0] - # Red
+     * [1] - # Yellow
+     * [2] - # Blue
+     */
+    @Override
+    public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
+        String[] nameSelected = new String[maximumPowerUpRequest.length];
+        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        int index ;
+        Event message = null;
+        String choice;
+
+
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you Like to pay with PowerUP? [Y/N]");
+        choice = CLIHandler.stringRead();
+
+        if (choice.equals("Y")) {
+            System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
+            for (int i = 0; i < minimumPowerUpRequest.length; i++) {
+
+                if (minimumPowerUpRequest[i] == 0) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
+                }else if (minimumPowerUpRequest[i] == 1){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
+
+                }
+                else if (minimumPowerUpRequest[i] == 2) {
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
+                }
+            }
+
+                System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
+                for (int i = 0; i < maximumPowerUpRequest.length; i++) {
+
+                    if (maximumPowerUpRequest[i] == 0) {
+                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
+                    }else if (maximumPowerUpRequest[i] == 1){
+                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
+
+                    }
+                    else if (maximumPowerUpRequest[i] == 2) {
+                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
+                    }
+            }
+                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
+
+                for(int i=0;i<powerUpNames.length;i++){
+                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
+                }
+
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp to pay:[option number/type: 404 to terminate]");
+            for (int i = 0; i < powerUpNames.length; i++) {
+                index = 600;
+                while (index == 600) {
+                    try {
+                        index = CLIHandler.intRead();
+
+
+                    } catch (IllegalArgumentException e) {
+                        index = 404;
+                    }
+                   if (index==404){
+                       i=powerUpNames.length;
+                   }else {
+                       nameSelected[i]= powerUpNames[index];
+                       colourSelected[i] = powerUpColours[index];
+                   }
+                }
+            }
+            message = new WeaponEffectPaymentChoiceEvent(getUser(),nameSelected,colourSelected);
+
+        }
+         else if(choice.equals("N"))
+            message = new WeaponEffectPaymentChoiceEvent(getUser(),null,null);
+        return message;
+    }
+
+
 }

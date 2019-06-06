@@ -33,6 +33,6 @@ public class GameTrackUpdateEvent extends ModelViewEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.gameTrackSkullUpdate(character, skullNumber, killerCharacter);
+        return remoteView.gameTrackSkullUpdate(getCharacter(), getSkullNumber(), killerCharacter);
     }
 }
