@@ -1,11 +1,18 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.controller_view_event.EndRoundPowerUpRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.PaymentRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Decoder;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class RoundManager {
@@ -50,11 +57,8 @@ public class RoundManager {
                 break;
             }
             case 7:{
-                for (Player p: controller.getGameManager().getModel().getPlayers()) {
-                    if (p.getTimesGetDamged() > 0){
-                        // TODO: 2019-06-06
-                    }
-                }
+                endRoundPowerUpCheck();
+                break;
             }
             case 8:{
                 manageDeadPlayers();
@@ -107,15 +111,35 @@ public class RoundManager {
         deathManager = new DeathManager(controller, model, deadPlayer, this);
     }
 
-    private ArrayList<Player> getPossibleEndRoundPowerUpUser(){
-        // TODO: 2019-06-06 _ 
-        ArrayList<Player> possibleEndRoundPowerUpUser = new ArrayList<>();
-        ArrayList<PowerUp> endRoundPowerUp;
-        for (Player p: controller.getGameManager().getModel().getPlayers()){
-            if (p.getTimesGetDamged() > 0){
-
+    private void endRoundPowerUpCheck(){
+        Iterator iterator = controller.getGameManager().getModel().getPlayers().iterator();
+        ArrayList<PowerUp> usablePowerUp = new ArrayList<>();
+        Player currentPlayer = null;
+        while (iterator.hasNext() && usablePowerUp.isEmpty()){
+            currentPlayer = (Player)iterator.next();
+            if (currentPlayer.getTimesGetDamged() > 0)
+                for (PowerUp p: currentPlayer.getPowerUps()){
+                    if (p.whenToUse() == PowerUp.Usability.END_TURN)
+                        usablePowerUp.add(p);
             }
         }
-        return null;
+        if (!usablePowerUp.isEmpty())
+            askForEndRoundPowerUp(currentPlayer, usablePowerUp);
+        else
+            nextPhase();
+    }
+
+    private void askForEndRoundPowerUp(Player player, List<PowerUp> usablePowerUp){
+        controller.callView(new EndRoundPowerUpRequestEvent(player.getUsername(), Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp)));
+    }
+
+    public void performEndRoundPowerUpEffect(String powerUpOwner, String[] powerUpType, CubeColour[] powerUpColour){
+        Player powerUpUser = Decoder.decodePlayerFromUsername(powerUpOwner, controller.getGameManager().getModel().getPlayers());
+        ArrayList<PowerUp> toUsePowerUp = Decoder.decodePowerUpsList(powerUpUser, powerUpType, powerUpColour);
+        for (PowerUp p:toUsePowerUp) {
+            p.performEffect(currentPlayer);
+            powerUpUser.discardPowerUp(p);
+        }
+        endRoundPowerUpCheck();
     }
 }

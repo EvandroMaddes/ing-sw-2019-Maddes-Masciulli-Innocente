@@ -524,7 +524,7 @@ public class ActionManager {
     }
 
     public void performTargetingScopeEffect(Character target){
-        Player decodedTarget = Decoder.decodePlayer(target, controller.getGameManager().getModel().getPlayers());
+        Player decodedTarget = Decoder.decodePlayerFromCharacter(target, controller.getGameManager().getModel().getPlayers());
         chosenWeapon.damage(decodedTarget, 1);
         sendPossibleEffects();
     }
