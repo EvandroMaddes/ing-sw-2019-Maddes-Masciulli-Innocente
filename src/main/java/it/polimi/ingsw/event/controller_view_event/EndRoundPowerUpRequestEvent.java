@@ -5,9 +5,11 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
 public class EndRoundPowerUpRequestEvent extends PowerUpRequestEvent {
+    private int maxUsablePowerUps;
 
-    public EndRoundPowerUpRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
+    public EndRoundPowerUpRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
         super(user, powerUpNames, powerUpColours);
+        this.maxUsablePowerUps = maxUsablePowerUps;
     }
 
     @Override

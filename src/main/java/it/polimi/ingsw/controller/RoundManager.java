@@ -131,7 +131,7 @@ public class RoundManager {
     }
 
     private void askForEndRoundPowerUp(Player player, List<PowerUp> usablePowerUp){
-        controller.callView(new EndRoundPowerUpRequestEvent(player.getUsername(), Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp)));
+        controller.callView(new EndRoundPowerUpRequestEvent(player.getUsername(), Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp), player.getTimesGetDamged()));
     }
 
     public void performEndRoundPowerUpEffect(String powerUpOwner, String[] powerUpType, CubeColour[] powerUpColour){
