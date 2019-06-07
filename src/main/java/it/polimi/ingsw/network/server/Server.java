@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.UsernameModificationEvent;
+import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.network.NetworkHandler;
@@ -30,6 +31,7 @@ public class Server {
 
     private static ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private static ArrayList<String> clientList = new ArrayList<>();
+    private static ArrayList<String> disconnectedClient = new ArrayList<>();
     private static RMIServer serverRMI;
     private static SocketServer serverSocket;
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
@@ -67,10 +69,12 @@ public class Server {
                                 connectedUser = updateClientList(serverSocket);
                             }
                         }
-
+                        if(!mapUserView.containsKey(connectedUser)){
                         VirtualView userView = new VirtualView(connectedUser);
                         virtualViewList.add(userView);
-                        mapUserView.put(connectedUser,userView);
+                        mapUserView.putIfAbsent(connectedUser,userView);
+
+                        }
                     }
                     if(!clientList.isEmpty()&&!setUpComplete){
                         String firstUser = clientList.get(0);
@@ -86,27 +90,59 @@ public class Server {
                             message = null;
                     }
 
-                    //todo PROVA!!! Qui si prova socket, provato RMI OK, NB chiamo serverSocket.send/listen!!!
+                    //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
+                    //todo da provare client disconnesso dopo ping e devo inviare messaggio a lui
                     if(clientList.size()==2) {
                         message = null;
-                        serverSocket.sendMessage(new GameRequestEvent(clientList.get(0)));
-                        while (message == null) {
-                            message = serverSocket.listenMessage();
+                        String currentClient = clientList.get(0);
+                        ServerInterface server = mapUserServer.get(currentClient);
+                        ArrayList<Event> disconnectedClients = ping();
+                        if(disconnectedClients.isEmpty()) {
+                            //todo log.info(sendMessage)
+                            server.sendMessage(new GameRequestEvent(clientList.get(0)));
+                            message = server.listenMessage();
+                            if (message == null) {
+                                message = new DisconnectedEvent(clientList.get(0));
+                                disconnectClient(currentClient);
+                            }
+                            else {
+                                mapUserView.get(message.getUser()).toController(message);
+                                log.info("Listened message from:\t" + message.getUser());
+                            }
                         }
-                        System.out.println(message.getUser());
-                        message = null;
-                        serverSocket.sendMessage(new GameRequestEvent(clientList.get(1)));
-                        while (message == null) {
-                            message = serverSocket.listenMessage();
+                        else{
+
+                            log.severe("Client disconnected in other player's turn");
+
                         }
-                        System.out.println(message.getUser());
+                        if (clientList.size()>1){
+
+                            disconnectedClients = ping();
+                            if(disconnectedClients.isEmpty()) {
+                                currentClient = clientList.get(1);
+                                server = mapUserServer.get(currentClient);
+                                server.sendMessage(new GameRequestEvent(currentClient));
+                                message = server.listenMessage();
+                                if(message==null){
+                                    message= new DisconnectedEvent(currentClient);
+                                    disconnectClient(currentClient);
+                                }
+                                mapUserView.get(message.getUser()).toController(message);
+                                log.info("Listened message from:\t" + message.getUser());
+                            }
+                            else {
+
+                                log.severe("Client disconnected in other player's turn");
+                            }
+                        }
+                        gameCouldStart = true;
                     }
 
 
                     //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
- /*                   if(clientList.size() > 2) {
+                    if(clientList.size() > 2) {
                         if(gameTimer==null){
                             gameTimer = new CustomTimer(NetConfiguration.STARTGAMETIMER);
                             gameTimer.start();
@@ -121,11 +157,13 @@ public class Server {
                         }
                     }
 
-  */
+
                 }
 
-
                 //todo ora si richiederanno personaggi ecc, legge da input se richiesto QUIT però non terminano i client
+                //todo chiama ping();
+                //ping();
+                log.info("Type Quit for server shutdown");
                 String inputCommand = reader.readLine();
                 if(inputCommand.equalsIgnoreCase("QUIT")) {
                     shutDown=true;
@@ -140,6 +178,41 @@ public class Server {
         }catch(IOException e){
             CustomLogger.logException(e);
         }
+    }
+
+    /**
+     * this method is called before the sendMessage, it update the clients that disconnected during the last round
+     * @return the DisconnectedEvents from the disconnected clients
+     */
+    private static ArrayList<Event> ping(){
+        ArrayList<Event> currentDisconnectedClients = serverSocket.ping();
+        currentDisconnectedClients.addAll(serverRMI.ping());
+       if(!currentDisconnectedClients.isEmpty()){
+           //todo gestire qui il controller con disconnectClient()
+           log.info(currentDisconnectedClients.size()+" disconnected clients in this turn!");
+           for (Event currEvent: currentDisconnectedClients) {
+
+                   disconnectClient(currEvent.getUser());
+           }
+       }
+       return currentDisconnectedClients;
+    }
+
+
+    //todo deve notificare il controller!
+
+    /**
+     * Is called when the listenMessage() return null, exactly when its timer elapses, or by ping()
+     *  handle the Kick out of the selected user
+     * @param user is the user that must be kicked out
+     */
+    private static void disconnectClient(String user){
+        clientList.remove(user);
+        message = mapUserServer.get(user).disconnectClient(user);
+        mapUserView.get(user).toController(message);
+        log.info("Listened message from:\t" + message.getUser());
+        mapUserServer.remove(user);
+        log.severe("Client Disconnected:\t"+user);
     }
 
     private static void userAddAndMap( String currUser, ServerInterface serverImplementation){

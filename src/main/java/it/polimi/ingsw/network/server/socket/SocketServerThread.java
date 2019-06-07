@@ -1,21 +1,27 @@
 package it.polimi.ingsw.network.server.socket;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.utils.CustomLogger;
+import it.polimi.ingsw.utils.CustomTimer;
+import it.polimi.ingsw.utils.NetConfiguration;
 
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
-public class SocketServerThread extends Thread implements NetworkHandler {
+public class SocketServerThread extends Thread implements  NetworkHandler {
     private Socket client;
     private String clientUser;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Event currMessage;
     private boolean connected;
+    private boolean alive;
 
     public SocketServerThread(Socket socket){
         this.client = socket;
@@ -37,7 +43,20 @@ public class SocketServerThread extends Thread implements NetworkHandler {
         this.clientUser = clientUser;
     }
 
-    public void disconnect(){
+    public boolean isConnected(){
+        try {
+            if (connected) {
+                join(200);
+            }
+        }
+        catch (InterruptedException e){
+            interrupt();
+        }
+
+        return connected;
+    }
+    public synchronized void disconnect(){
+        currMessage = new DisconnectedEvent(getClientUser());
         connected=false;
     }
 
@@ -53,14 +72,37 @@ public class SocketServerThread extends Thread implements NetworkHandler {
         return client;
     }
 
+
     @Override
     public void run() {
-        while(connected){
-            currMessage = listenMessage();
+       while(!isInterrupted()){
+           while (connected) {
+               currMessage = listenMessage();
+           }
+           setPriority(2);
+        //   waitServer();
+           interrupt();
+       }
 
-            //if msg=logout->connected=false;
+    }
+    private synchronized void waitServer(){
+        try{
+            interrupt();
+            while(alive){
+                System.out.println();
+                //interrupt();
+
+                wait();
+            }
+        }catch (InterruptedException e){
+            interrupt();
         }
+        kill();
+    }
 
+    public synchronized void  kill(){
+        alive = false;
+        interrupt();
     }
 
     /**
@@ -80,12 +122,24 @@ public class SocketServerThread extends Thread implements NetworkHandler {
 
     @Override
     public Event listenMessage() {
+
         try{
+
             Event actualMessage =(Event) inputStream.readObject();
             return actualMessage;
         }
         catch (SocketException|EOFException socketClosed){
+
+
             disconnect();
+            try {
+                join();
+                //sleep(5000);
+            }catch (InterruptedException e){
+
+                interrupt();
+            }
+
         }
         catch (Exception e){CustomLogger.logException(e);}
         return currMessage;

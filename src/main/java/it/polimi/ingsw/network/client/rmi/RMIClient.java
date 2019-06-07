@@ -158,6 +158,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     }
 
     @Override
+    public void clientConnectionGuard() throws RemoteException {
+
+    }
+
+    @Override
     public void remoteSetCurrEvent(Event message) throws RemoteException {
         currMessage=message;
     }

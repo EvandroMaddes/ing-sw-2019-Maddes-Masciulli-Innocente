@@ -59,14 +59,14 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-        CLI currentView = (CLI)remoteViewImplementation;
+        /*CLI currentView = (CLI)remoteViewImplementation;
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
         testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
 
         String[] coloredPowerUp = {Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape()+"Teleporter",
                 Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_BLUE.escape()+"Newton"};
-        /*testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
+        testPlayerboard.gadgetsUpdate('P', coloredPowerUp);
         CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
 
         CLIMap map = new CLIMap(2);
@@ -117,7 +117,7 @@ public class Client {
         ClientEvent testEvent = new CharacterRequestEvent(remoteViewImplementation.getUser(), availableTestedCharacter);
         Event returnedEvent = testEvent.performAction(remoteViewImplementation);
 
-     */
+
        boolean[] weap = {true,false,false};
        int[] x = {1,2,0};
         int[] y = {2,1,2};
@@ -133,7 +133,7 @@ public class Client {
         cubetest[0] = CubeColour.Red;
         cubetest[1] = CubeColour.Blue;
        currentView.weaponEffectPaymentChoice(coloredPowerUp,cubetest,x,y);
-
+        */
         /**
          * !!!
          * !!!FINE PROVA
