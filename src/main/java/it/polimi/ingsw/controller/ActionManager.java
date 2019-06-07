@@ -28,11 +28,13 @@ public class ActionManager {
     private PowerUp chosenPowerUp;
     private Weapon chosenWeapon;
     private int chosenEffect;
+    private boolean reloadPhase;
 
     public ActionManager(Controller controller, GameModel model, RoundManager currentRoundManager) {
         this.controller = controller;
         this.model = model;
         this.currentRoundManager = currentRoundManager;
+        this.reloadPhase = false;
     }
 
     /*
@@ -69,8 +71,7 @@ public class ActionManager {
     }
 
     public void askForAction(){
-        boolean ableToFire = currentRoundManager.getCurrentPlayer().canShot();
-        controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), ableToFire));
+        controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), getValidator().getUsableActions(controller)));
     }
 
     /*
@@ -83,7 +84,7 @@ public class ActionManager {
      * send a message with all possible destination
      */
     public void sendPossibleMoves(){
-        ArrayList<Square> possibleSquare = getValidator().aviableMoves(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().availableMoves(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionMoveRequestEvent message = new PositionMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
@@ -92,7 +93,6 @@ public class ActionManager {
 
     public void performMove(int positionX, int positionY){
         currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
-        currentRoundManager.nextPhase();
     }
 
     /*
@@ -105,7 +105,7 @@ public class ActionManager {
      * send a message with possible grab square
      */
     public void sendPossibleGrabs(){
-        ArrayList<Square> possibleSquare = getValidator().aviableGrab(currentRoundManager.getCurrentPlayer());
+        ArrayList<Square> possibleSquare = getValidator().availableGrab(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionGrabRequestEvent message = new PositionGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
@@ -142,11 +142,32 @@ public class ActionManager {
     *
      */
 
+    public void manageShot(){
+        if (controller.getGameManager().isFinalFrenzyPhase() || currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState() == 2){
+            ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachalbeInMoves(1);
+            controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
+        }
+        else sendPossibleWeapons();
+    }
+
+    public void managePreEffectShot(){
+        if (controller.getGameManager().isFinalFrenzyPhase() && !getUnloadedWeapon().isEmpty()){
+            askForReload();
+        }
+        else {
+            if (!Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()).isEmpty()){
+                sendPossibleWeapons();
+            }
+            else
+                controller.getGameManager().getCurrentRound().nextPhase();
+        }
+    }
+
     /**
      * Manda le possibili armi
      */
     public void sendPossibleWeapons(){
-        controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(getValidator().aviableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
+        controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
     }
 
     /**
@@ -305,18 +326,25 @@ public class ActionManager {
     *
      */
 
+    private ArrayList<Weapon> getUnloadedWeapon(){
+        ArrayList<Weapon> possibleReload = new ArrayList<>();
+        for (int i = 0 ; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+            Weapon currentWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
+            if ( !currentWeapon.isLoaded() && currentRoundManager.getCurrentPlayer().canAffortCost(currentWeapon.getReloadCost()) )
+                possibleReload.add(currentRoundManager.getCurrentPlayer().getWeapons()[i]);
+        }
+        return possibleReload;
+    }
+
     /**
      * reload phase: if the player has weapon unloaded which cost can be payed, pass them to the player. If the player can't do it, go to the next phase
      */
     public void askForReload(){
-        ArrayList<String> possibleReload = new ArrayList<>();
-        for (int i = 0 ; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
-            Weapon currentWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
-            if ( !currentWeapon.isLoaded() && currentRoundManager.getCurrentPlayer().canAffortCost(currentWeapon.getReloadCost()) )
-                possibleReload.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
+        ArrayList<Weapon> possibleReload = getUnloadedWeapon();
+        if ( !possibleReload.isEmpty() ) {
+            controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(possibleReload)));
+            reloadPhase = true;
         }
-        if ( !possibleReload.isEmpty() )
-            controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleReload));
         else
             currentRoundManager.nextPhase();
     }
@@ -348,7 +376,10 @@ public class ActionManager {
      */
     private void reloadWeapon(){
         chosenWeapon.setLoaded();
-        askForReload();
+        if (reloadPhase)
+            askForReload();
+        else
+            sendPossibleWeapons();
     }
 
 
@@ -452,7 +483,7 @@ public class ActionManager {
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
-            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
+            PowerUpRequestEvent message = new AsActionPowerUprequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
             controller.callView(message);
         }
         else

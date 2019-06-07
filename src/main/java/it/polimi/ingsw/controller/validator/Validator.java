@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.validator;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
  * @author federicoinnocente
  */
 public abstract class Validator {
-
 
     /**
      * @param start         is the starting position
@@ -43,32 +43,20 @@ public abstract class Validator {
 
     /**
      *
-     * @param player is the player who move
      * @return all possible destination square
      */
-    public abstract ArrayList<Square> aviableMoves(Player player);
+    public abstract ArrayList<Square> availableMoves(Controller controller);
 
     /**
-     *
-     * @param player is the player who grab
      * @return all the square in which the player can grab
      */
-    public abstract ArrayList<Square> aviableGrab(Player player);
+    public abstract ArrayList<Square> availableGrab(Controller controller);
 
     /**
      *
-     * @param weapon is the weapon with a player want to fire
-     * @return a list of all possible target
-     */
-    public abstract ArrayList<Player> aviableShot (Weapon weapon);
-
-
-    /**
-     *
-     * @param player is the weapons owner
      * @return a list of all loaded weapons that can be used in that moment for a shot action
      */
-    public ArrayList<Weapon> aviableToFireWeapons (Player player){
+    public static ArrayList<Weapon> availableToFireWeapons(Player player){
         ArrayList<Weapon> possibleWeapons = new ArrayList<>();
         for (int i = 0; i < player.getNumberOfWeapons(); i++){
             if (player.getWeapons()[i].isUsable())
@@ -76,5 +64,7 @@ public abstract class Validator {
         }
         return possibleWeapons;
     }
+
+    public abstract boolean[] getUsableActions(Controller controller);
 
 }

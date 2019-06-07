@@ -6,6 +6,7 @@ public class NetConfiguration {
     //The timer time is in SECONDS
     //todo modificare a valori accettabili(Ex 60-120 sec), ora 5 sec per TESTING
     public static  final int STARTGAMETIMER = 5;
+    public static final int ROUNDTIMER = 10;
     public enum ConnectionType {
         RMI,
         SOCKET;

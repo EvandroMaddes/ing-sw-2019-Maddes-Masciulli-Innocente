@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.validator;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
@@ -17,8 +18,8 @@ public class BaseActionValidator extends Validator {
      * @param player is the player that move
      * @return all possible destination
      */
-    public ArrayList<Square> aviableMoves(Player player){
-        return reachableInMoves(player.getPosition(), 3);
+    public ArrayList<Square> availableMoves(Controller controller){
+        return reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 3);
     }
 
     @Override
@@ -27,18 +28,19 @@ public class BaseActionValidator extends Validator {
      * @param player is the moving player
      * @return all possible grabbable square
      */
-    public ArrayList<Square> aviableGrab(Player player){
-        ArrayList<Square> grabbableSquare = reachableInMoves(player.getPosition(), 1);
+    public ArrayList<Square> availableGrab(Controller controller){
+        ArrayList<Square> grabbableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 1);
         for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable(player))
+            if (!currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
                 grabbableSquare.remove(currentSquare);
         }
         return grabbableSquare;
     }
 
     @Override
-    public ArrayList<Player> aviableShot(Weapon weapon) {
-        // TODO: 2019-05-20
-        return null;
+    public boolean[] getUsableActions(Controller controller) {
+        boolean[] usableActions = new boolean[]{true, true, true};
+        usableActions[2] = !availableToFireWeapons(controller.getGameManager().getCurrentRound().getCurrentPlayer()).isEmpty();
+        return usableActions;
     }
 }

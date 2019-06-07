@@ -40,7 +40,7 @@ public class ActionChoiceEvent extends ViewControllerEvent {
                 break;
             }
             case 3:{
-                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleWeapons();
+                controller.getGameManager().getCurrentRound().getActionManager().manageShot();
                 break;
             }
             default:{

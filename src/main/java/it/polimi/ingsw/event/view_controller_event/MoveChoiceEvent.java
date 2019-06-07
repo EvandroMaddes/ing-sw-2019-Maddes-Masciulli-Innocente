@@ -11,5 +11,6 @@ public class MoveChoiceEvent extends PositionChoiceEvent {
     @Override
     public void performAction(Controller controller) {
         controller.getGameManager().getCurrentRound().getActionManager().performMove(getPositionX(), getPositionY());
+        controller.getGameManager().getCurrentRound().nextPhase();
     }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public interface RemoteInterface extends Remote {
     void acceptRemoteClient( int remotePort, String remoteIPAddress) throws RemoteException;
+    void clientConnectionGuard() throws RemoteException;
     void remoteSendMessage(Event message) throws RemoteException;
     void remoteSetCurrEvent(Event message) throws RemoteException;
     void remoteSendBroadcast(Event message) throws RemoteException;
