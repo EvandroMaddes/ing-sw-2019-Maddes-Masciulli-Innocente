@@ -201,4 +201,8 @@ public class GameManager {
     public boolean isFirstRoundPhase() {
         return firstRoundPhase;
     }
+
+    public boolean isFirsPlayerPlayed() {
+        return firsPlayerPlayed;
+    }
 }

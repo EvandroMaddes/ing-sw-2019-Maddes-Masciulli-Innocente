@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.*;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.util.*;
 
@@ -359,14 +360,6 @@ public class Player extends Observable {
 
     public void invertDeathState(){
         dead = !dead;
-    }
-
-    public boolean canShot(){
-        for (int i = 0; i < numberOfWeapons; i++) {
-            if (weapons[i].isUsable())
-                return true;
-        }
-        return false;
     }
 
     public ArrayList<PowerUp> getWhileActionPowerUp(){

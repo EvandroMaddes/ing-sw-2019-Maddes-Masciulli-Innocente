@@ -1,40 +1,40 @@
 package it.polimi.ingsw.controller.validator;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
 
 public class FinalFrenzyValidator extends Validator{
 
     @Override
-    public ArrayList<Square> aviableMoves(Player player) {
-        /* todo ********** ancora non c'è un modo per capire qual'è l'ordine dei giocatori, ma sarà implemetnato nel controller ******* */
-        if (/*isBeforeFirstPlayer(player)*/ true)
-            return reachableInMoves(player.getPosition(), 4);
+    public ArrayList<Square> availableMoves(Controller controller) {
+        if (!controller.getGameManager().isFirsPlayerPlayed())
+            return reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 4);
         else throw new IllegalArgumentException("I giocatori dopo il primo non possono fare azioni di movimento in questa fase");
     }
 
     @Override
-    public ArrayList<Square> aviableGrab(Player player) {
+    public ArrayList<Square> availableGrab(Controller controller) {
         int numberOfMoves;
-        if (/*todo isBeforeFirstPlayer(player)*/ true)
+        if (!controller.getGameManager().isFirsPlayerPlayed())
             numberOfMoves = 2;
         else
             numberOfMoves = 3;
 
-        ArrayList<Square> grabbableSquare = reachableInMoves(player.getPosition(), numberOfMoves);
+        ArrayList<Square> grabbableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), numberOfMoves);
         for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable(player))
+            if (!currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
                 grabbableSquare.remove(currentSquare);
         }
         return grabbableSquare;
     }
 
     @Override
-    /* todo da implementare */
-    public ArrayList<Player> aviableShot(Weapon weapon) {
-        return null;
+    public boolean[] getUsableActions(Controller controller) {
+        boolean[] usableActions = new boolean[]{true, true, true};
+        if (controller.getGameManager().isFirsPlayerPlayed())
+            usableActions[0] = false;
+        return usableActions;
     }
 }
