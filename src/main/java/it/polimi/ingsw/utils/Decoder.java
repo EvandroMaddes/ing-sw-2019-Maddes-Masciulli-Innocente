@@ -47,9 +47,17 @@ public class Decoder {
         return decodedList;
     }
 
-    public static Player decodePlayer (Character character, List<Player> playerList){
+    public static Player decodePlayerFromCharacter(Character character, List<Player> playerList){
         for (Player p:playerList){
             if (p.getCharacter() == character)
+                return p;
+        }
+        throw new UnsupportedOperationException("Something wrong in player decode");
+    }
+
+    public static Player decodePlayerFromUsername(String username, List<Player> playerList){
+        for (Player p: playerList){
+            if (p.getUsername().equals(username))
                 return p;
         }
         throw new UnsupportedOperationException("Something wrong in player decode");
