@@ -9,7 +9,9 @@ import java.util.ArrayList;
 public interface ServerInterface extends NetworkHandler {
     void runServer();
     void acceptClient();
+    ArrayList<Event> ping();
     ArrayList<String> getClientList();
+    Event disconnectClient(String user);
     void sendBroadcast(Event message);
     void shutDown();
     void gameCouldStart();

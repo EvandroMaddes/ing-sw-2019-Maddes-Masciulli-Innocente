@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.server.socket;
 
+import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
+import it.polimi.ingsw.utils.CustomTimer;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.server.ServerInterface;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -10,14 +13,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Queue;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.SynchronousQueue;
+import java.util.logging.Logger;
+
 
 public class SocketServer extends Thread implements ServerInterface {
     private ServerSocket serverSocket;
     private CopyOnWriteArrayList<SocketServerThread> socketList = new CopyOnWriteArrayList<>();
-    private Queue<Event> messageQueue = new SynchronousQueue<>();
     private boolean gameCouldStart = false;
 
 
@@ -48,7 +51,6 @@ public class SocketServer extends Thread implements ServerInterface {
 
     @Override
     public void updateUsername(String username, String newUser) {
-        boolean isFirstOccurence = true;
         for (int i = socketList.size()-1; i >=0 ; i--) {
             SocketServerThread currSocketThread = socketList.get(i);
             if(currSocketThread.getClientUser().equalsIgnoreCase(username)){
@@ -100,15 +102,8 @@ public class SocketServer extends Thread implements ServerInterface {
     @Override
     public void shutDown() {
         for (SocketServerThread currThread: socketList) {
-            try{
-                Socket currSocket = currThread.getClient();
-                currThread.disconnect();
-                currSocket.shutdownInput();
-                currSocket.shutdownOutput();
-                currSocket.close();
-            }catch(IOException e){
-                CustomLogger.logException(e);
-            }
+
+            currThread.disconnect();
         }
     }
 
@@ -125,12 +120,17 @@ public class SocketServer extends Thread implements ServerInterface {
 
     }
 
+    //todo inoltre farà partire timer??
     @Override
     public Event listenMessage() {
         Event currMessage;
+        CustomTimer timer = new CustomTimer(NetConfiguration.ROUNDTIMER);
+        timer.start();
+        Logger log = Logger.getLogger("Logger");
+        log.info("Started the round countdown!\n\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.");
         for (int i = 0; i < socketList.size() ; i++) {
             SocketServerThread currSocket = socketList.get(i);
-            if(currSocket.getCurrMessage()!=null) {
+            if(currSocket.getCurrMessage()!=null&&currSocket.isConnected()) {
                 currMessage = currSocket.getCurrMessage();
                 currSocket.resetMessage();
                 return currMessage;
@@ -138,15 +138,44 @@ public class SocketServer extends Thread implements ServerInterface {
 //                currSocket.resetMessage();
 
             }
-            //todo inoltre farà partire timer??
-            else if (i == socketList.size()-1){
+            else if (i == socketList.size()-1&&timer.isAlive()){
                 i = -1;
             }
         }
         return null;
+    }
 
+    /**
+     * Force a client KickOut after the timer elapses
+     * @param user the client's username that must be kicked out
+     * @return the DisconnectionEvent
+     */
+    @Override
+    public Event disconnectClient(String user) {
+        for (SocketServerThread currThread: socketList) {
+            if(currThread.getClientUser().equals(user)){
+                currThread.disconnect();
+                Event currEvent = currThread.getCurrMessage();
+                currThread.kill();
+                currThread.interrupt();
+                socketList.remove(currThread);
+                return currEvent;
+            }
+        }
+        return null;
+    }
 
+    @Override
+    public synchronized   ArrayList<Event> ping(){
+        ArrayList<Event> currentDisconnectedClients = new ArrayList<>();
+        for (int i = 0; i < socketList.size(); i++) {
+            SocketServerThread currThread= socketList.get(i);
 
+            if(!currThread.isConnected()){
+                currentDisconnectedClients.add(currThread.getCurrMessage());
 
+            }
+        }
+        return currentDisconnectedClients ;
     }
 }

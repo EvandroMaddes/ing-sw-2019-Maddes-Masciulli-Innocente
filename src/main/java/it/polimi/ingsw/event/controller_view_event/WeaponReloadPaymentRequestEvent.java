@@ -12,6 +12,6 @@ public class WeaponReloadPaymentRequestEvent extends PaymentRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return super.performAction(remoteView);
+        return remoteView.weaponReloadPaymentChoice(getPowerUpNames(),getPowerUpColours(),getMinimumPowerUpRequest(),getMaximumPowerUpRequest());
     }
 }
