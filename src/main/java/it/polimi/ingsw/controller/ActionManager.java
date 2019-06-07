@@ -16,7 +16,6 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -484,7 +483,7 @@ public class ActionManager {
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
-            PowerUpRequestEvent message = new PowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
+            PowerUpRequestEvent message = new AsActionPowerUprequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
             controller.callView(message);
         }
         else
