@@ -11,7 +11,7 @@ public class PlayerReconnectionNotify extends ModelViewEvent{
         super(user);
         this.reconnectedCharacter = reconnectedCharacter;
     }
-    
+
     @Override
     public Event performAction(RemoteView remoteView) {
         return null;

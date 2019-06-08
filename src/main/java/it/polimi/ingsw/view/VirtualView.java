@@ -24,6 +24,7 @@ public class VirtualView  extends Observable implements Observer{
     private String user;
     private Event toController;
     private Event toRemoteView;
+    private boolean playerConnected;
 
     /**
      * Every player has a his own view
@@ -32,6 +33,7 @@ public class VirtualView  extends Observable implements Observer{
     public VirtualView(String user)
     {
         this.user = user;
+        playerConnected = true;
     }
 
     /**
@@ -110,4 +112,11 @@ public class VirtualView  extends Observable implements Observer{
         // TODO: 2019-05-28  
     }
 
+    public void setPlayerConnected(){
+        playerConnected = true;
+    }
+
+    public void setPlayerDisonnected(){
+        playerConnected = false;
+    }
 }
