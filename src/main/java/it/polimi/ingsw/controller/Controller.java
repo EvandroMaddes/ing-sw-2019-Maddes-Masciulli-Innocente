@@ -14,6 +14,12 @@ public class Controller implements Observer {
     private GameManager gameManager;
     private Map<String, VirtualView> usersVirtualView;
 
+    public Controller(Map<String, VirtualView> usersVirtualView, int mapChoice) {
+        this.usersVirtualView = usersVirtualView;
+        createGameManager(mapChoice);
+        gameManager.characterSelect();
+    }
+
     @Override
     /**
      *
@@ -25,7 +31,6 @@ public class Controller implements Observer {
 
     public void createGameManager(int mapChoice){
         gameManager = new GameManager(this, mapChoice);
-        usersVirtualView = new HashMap<>();
     }
 
     public GameManager getGameManager() {
@@ -36,7 +41,7 @@ public class Controller implements Observer {
         usersVirtualView.get(message.getUser()).callRemoteView(message);
     }
 
-    public void addVirtualView (String user, VirtualView virtualView){
-        usersVirtualView.put(user, virtualView);
+    public Map<String, VirtualView> getUsersVirtualView() {
+        return usersVirtualView;
     }
 }

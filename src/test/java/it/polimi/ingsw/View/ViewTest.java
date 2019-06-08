@@ -26,7 +26,7 @@ public class ViewTest {
     @Before
     public void setUp(){
         virtualView = new VirtualView("Evandro");
-        controller = new Controller();
+      //  controller = new Controller();
         eventTest1 = new CharacterChoiceEvent("Evandro",Character.BANSHEE);
         eventTest2 = new CharacterChoiceEvent("Giovanni",Character.SPROG);
         eventTest3 = new PositionUpdateEvent("Evandro",1,1);

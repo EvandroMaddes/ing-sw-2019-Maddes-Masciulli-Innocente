@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.RespawnRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -101,8 +100,8 @@ public class DeathManager {
                 currentMaxDamager++;
             damageDealed[currentMaxDamager] = 100;
 
-            if (deadPlayer.getPlayerBoard().getSkullsNumber() + i < PlayerBoard.points.length)
-                damageDealer[currentMaxDamager].addPoints(PlayerBoard.points[i + deadPlayer.getPlayerBoard().getSkullsNumber()]);
+            if (deadPlayer.getPlayerBoard().getSkullsNumber() + i < PlayerBoard.POINTS.length)
+                damageDealer[currentMaxDamager].addPoints(PlayerBoard.POINTS[i + deadPlayer.getPlayerBoard().getSkullsNumber()]);
             else
                 damageDealer[currentMaxDamager].addPoints(1);
         }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
@@ -12,6 +13,8 @@ import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class GameManager {
 
@@ -36,7 +39,6 @@ public class GameManager {
         finalFrenzyPhase = false;
         firsPlayerPlayed = false;
         lastPlayer = -2;
-        //todo notificare la creazione della map?
         model = new GameModel (buildGameBoard(mapChoice));
     }
 
@@ -74,21 +76,41 @@ public class GameManager {
         return new GameBoard(new KillShotTrack(),map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
     }
 
-    //todo aggiungere un controllo sul personaggio gia scelto
+    public void characterSelect(){
+        if (getModel().getPlayers().size() < controller.getUsersVirtualView().size()){
+            ArrayList<Character> availableCharacter = new ArrayList<>();
+            availableCharacter.add(Character.BANSHEE);
+            availableCharacter.add(Character.D_STRUCT_OR);
+            availableCharacter.add(Character.DOZER);
+            availableCharacter.add(Character.SPROG);
+            availableCharacter.add(Character.VIOLET);
+            for (Player p: getModel().getPlayers()){
+                availableCharacter.remove(p.getCharacter());
+            }
+            String[] usernames = new String[controller.getUsersVirtualView().size()];
+            controller.getUsersVirtualView().keySet().toArray(usernames);
+            controller.callView(new CharacterRequestEvent(usernames[getModel().getPlayers().size()], availableCharacter));
+        }
+        else
+            startGame();
+    }
+
     public void addPlayer (String user, Character character) {
         Player newPlayer = new Player(user, character);
         if (model.getPlayers().isEmpty()){
             newPlayer.setFirstPlayer();
         }
         model.addPlayer(newPlayer);
+        characterSelect();
     }
 
-    //todo lo start della partita dovrebbe essere gestito da un timer
-    public void startGame(){
+    private void startGame(){
         playersReady++;
         if (playersReady == model.getPlayers().size() && playersReady >= 3 && playersReady <= 5) {
             newRound();
         }
+        else
+            throw new UnsupportedOperationException();
     }
 
     /**

@@ -4,7 +4,6 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.UsernameModificationEvent;
 import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
-import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;

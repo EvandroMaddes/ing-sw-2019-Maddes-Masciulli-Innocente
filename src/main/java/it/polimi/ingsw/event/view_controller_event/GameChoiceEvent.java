@@ -19,6 +19,8 @@ import it.polimi.ingsw.event.Event;
  */
 public class GameChoiceEvent extends ViewControllerEvent {
 
+    // TODO: 2019-06-08 eliminare, è diventata superflua
+
     private int map;
     private int mod;
 

@@ -14,7 +14,7 @@ public class PlayerBoard implements Serializable {
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;
-    public static final int[] points = new int[]{ 8,6,4,2,1,1 };
+    public static final int[] POINTS = new int[]{ 8,6,4,2,1,1 };
 
     private DamageToken[] damageReceived;
     private int damageAmount;
