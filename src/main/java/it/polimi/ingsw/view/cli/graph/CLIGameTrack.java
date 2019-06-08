@@ -28,32 +28,22 @@ public class CLIGameTrack {
     }
 
     public void removeSkull(int damageToken, String colorEscape){
-        boolean done= false;
-        int column = 2;
-        while (!done && column<MAXCOLUMN){
-            if(track[column][1].contains("☠")){
-                track[column][1] = "|"+colorEscape+" ▼";
-                if(damageToken==2){
-                    track[column+1][1]=colorEscape+ "▼";
+        if(damageToken!=0) {
+            boolean done = false;
+            int column = 2;
+            while (!done && column < MAXCOLUMN) {
+                if (track[column][1].contains("☠")) {
+                    track[column][1] = "|" + colorEscape + " ▼";
+                    if (damageToken == 2) {
+                        track[column + 1][1] = colorEscape + "▼";
+                    }
+                    done = true;
                 }
-                done = true;
-            }
-            column= column+4;
+                column = column + 4;
 
+            }
         }
 
     }
 
-
-    public void printGameTrack(){
-        for(int i=0; i<MAXROW; i++){
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
-            for (int j=0; j<MAXCOLUMN; j++){
-                System.out.print(Color.ANSI_BLACK_BACKGROUND.escape());
-                System.out.print(Color.ANSI_GREEN.escape()+track[j][i]);
-            }
-
-        }
-        System.out.print("\n \n \n");
-    }
 }

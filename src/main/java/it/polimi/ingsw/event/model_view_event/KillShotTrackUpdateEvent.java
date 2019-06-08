@@ -22,8 +22,6 @@ public class KillShotTrackUpdateEvent extends ModelViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-08
-        //return remoteView.gameTrackSkullUpdate(getCharacter(), getSkullNumber(), killerCharacter);
-        return null;
+        return remoteView.gameTrackSkullUpdate( damageTokens, sequence);
     }
 }
