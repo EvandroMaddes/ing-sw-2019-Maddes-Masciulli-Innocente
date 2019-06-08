@@ -26,7 +26,7 @@ public class ViewTest {
       //  controller = new Controller();
         eventTest1 = new CharacterChoiceEvent("Evandro",Character.BANSHEE);
         eventTest2 = new CharacterChoiceEvent("Giovanni",Character.SPROG);
-        eventTest3 = new PlayerPositionUpdateEvent("Evandro",1,1);
+        eventTest3 = new PlayerPositionUpdateEvent("Evandro", Character.BANSHEE,1,1);
         controller.createGameManager(1);
 
     }
