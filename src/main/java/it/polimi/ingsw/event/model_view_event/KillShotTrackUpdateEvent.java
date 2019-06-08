@@ -12,12 +12,12 @@ import it.polimi.ingsw.view.RemoteView;
  */
 public class KillShotTrackUpdateEvent extends ModelViewEvent {
     private Character[] damageTokens;
-    private int skullsNumber;
+    private int[] sequence;
 
-    public KillShotTrackUpdateEvent(String user, Character[] damageTokens, int skullsNumber) {
+    public KillShotTrackUpdateEvent(String user, Character[] damageTokens, int[] sequence) {
         super(user);
         this.damageTokens = damageTokens;
-        this.skullsNumber = skullsNumber;
+        this.sequence = sequence;
     }
 
     @Override
