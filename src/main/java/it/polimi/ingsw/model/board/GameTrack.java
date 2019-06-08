@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.board;
 
+import java.util.Observable;
+
 /**
  * @author Evandro Maddes
  */
-public abstract class GameTrack {
+public abstract class GameTrack extends Observable {
 
     private int skullBox = 8;
     final static int points[] = new int[]{ 8,6,4,2,1,1 };

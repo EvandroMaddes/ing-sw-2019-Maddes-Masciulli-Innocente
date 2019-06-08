@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.EndRoundPowerUpRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PaymentRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -118,7 +117,7 @@ public class RoundManager {
         Player currentPlayer = null;
         while (iterator.hasNext() && usablePowerUp.isEmpty()){
             currentPlayer = (Player)iterator.next();
-            if (currentPlayer.getTimesGetDamged() > 0)
+            if (currentPlayer.getTimesGetDamaged() > 0)
                 for (PowerUp p: currentPlayer.getPowerUps()){
                     if (p.whenToUse() == PowerUp.Usability.END_TURN)
                         usablePowerUp.add(p);
@@ -131,7 +130,7 @@ public class RoundManager {
     }
 
     private void askForEndRoundPowerUp(Player player, List<PowerUp> usablePowerUp){
-        controller.callView(new EndRoundPowerUpRequestEvent(player.getUsername(), Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp), player.getTimesGetDamged()));
+        controller.callView(new EndRoundPowerUpRequestEvent(player.getUsername(), Encoder.encodePowerUpsType(usablePowerUp), Encoder.encodePowerUpColour(usablePowerUp), player.getTimesGetDamaged()));
     }
 
     public void performEndRoundPowerUpEffect(String powerUpOwner, String[] powerUpType, CubeColour[] powerUpColour){

@@ -9,7 +9,6 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.*;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.view.VirtualView;
 
 import java.util.*;
 
@@ -33,7 +32,7 @@ public class Player extends Observable {
     private ArrayList<PowerUp> powerUps;
     private int numberOfWeapons;
     private boolean dead;
-    private int timesGetDamged;
+    private int timesGetDamaged;
 
     /**
      *
@@ -53,7 +52,7 @@ public class Player extends Observable {
         this.ammo = new ArrayList<>();
         this.firstPlayer = false;
         this.dead = true;
-        timesGetDamged = 0;
+        timesGetDamaged = 0;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));
         addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -98,15 +97,15 @@ public class Player extends Observable {
     }
 
     public void addTimesGetDamaged(){
-        timesGetDamged++;
+        timesGetDamaged++;
     }
 
     public void resetTimesGetDamaged(){
-        timesGetDamged = 0;
+        timesGetDamaged = 0;
     }
 
     public void removeOneTimesGetDamaged(){
-        timesGetDamged--;
+        timesGetDamaged--;
     }
 
     /**
@@ -371,7 +370,7 @@ public class Player extends Observable {
         return whileActionPowerUps;
     }
 
-    public int getTimesGetDamged() {
-        return timesGetDamged;
+    public int getTimesGetDamaged() {
+        return timesGetDamaged;
     }
 }

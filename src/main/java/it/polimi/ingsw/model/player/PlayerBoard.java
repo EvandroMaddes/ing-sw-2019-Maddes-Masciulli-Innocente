@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
 /**
  * Class to manage the player board
@@ -10,7 +11,7 @@ import java.util.Iterator;
  * @author Federico Innocente
  *
  */
-public class PlayerBoard implements Serializable {
+public class PlayerBoard extends Observable implements Serializable{
 
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARKS = 3;

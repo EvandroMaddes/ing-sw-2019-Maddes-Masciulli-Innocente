@@ -20,7 +20,6 @@ public class GameManager {
 
     private Controller controller;
     private RoundManager currentRound;
-    private int playersReady;
     private final GameModel model;
     private int playerTurn;
     private boolean finalFrenzyPhase;
@@ -33,7 +32,6 @@ public class GameManager {
      */
     public GameManager(Controller controller, int mapChoice){
         this.controller = controller;
-        playersReady = 0;
         playerTurn = -1;
         firstRoundPhase = true;
         finalFrenzyPhase = false;
@@ -105,12 +103,8 @@ public class GameManager {
     }
 
     private void startGame(){
-        playersReady++;
-        if (playersReady == model.getPlayers().size() && playersReady >= 3 && playersReady <= 5) {
-            newRound();
-        }
-        else
-            throw new UnsupportedOperationException();
+        SetUpObserverObservable.connect(getModel().getPlayers(), controller.getUsersVirtualView(), getModel().getGameboard());
+        newRound();
     }
 
     /**
