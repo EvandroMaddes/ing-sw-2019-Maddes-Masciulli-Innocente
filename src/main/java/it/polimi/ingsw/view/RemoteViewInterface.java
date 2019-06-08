@@ -43,7 +43,8 @@ public interface RemoteViewInterface {
    Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget);
    Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event genericPaymentChoice( boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour);
-   Event endRoundPowerUpRequest(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps);
+   Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps);
+   Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets);
    //following methods manage UpdateEvent
    Event newPlayerJoinedUpdate(String newPlayer);
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);

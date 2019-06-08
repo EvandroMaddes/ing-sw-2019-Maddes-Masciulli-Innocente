@@ -14,6 +14,6 @@ public class EndRoundPowerUpRequestEvent extends PowerUpRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return remoteView.endRoundPowerUpRequest(getPowerUpNames(),getPowerUpColours(),maxUsablePowerUps);
+        return remoteView.endRoundPowerUpChoice(getPowerUpNames(),getPowerUpColours(),maxUsablePowerUps);
     }
 }

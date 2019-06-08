@@ -70,28 +70,32 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
-
+        ArrayList<String> stringCharacter = new ArrayList<>();
         ArrayList<String> cliCharacters = new ArrayList<>();
+        String chosenStringCharacter= "init";
+        int index = 404;
         for (Character currCharacter : availableCharacters) {
             cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
+            stringCharacter.add(currCharacter.name().toUpperCase());
         }
         Character chosenCharacter = null;
-        while (availableCharacters.contains(chosenCharacter)) {
+        while (!stringCharacter.contains(chosenStringCharacter.toUpperCase())) {
             try {
-                //todo CONTROLO  se assegnazioni character è corretta
                 CLIHandler.arrayPrint(cliCharacters);
-                String chosenStringCharacter = CLIHandler.stringRead();
-                chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
+                 chosenStringCharacter = CLIHandler.stringRead();
             } catch (IllegalArgumentException e) {
                 chosenCharacter = null;
             }
 
         }
+        index = stringCharacter.indexOf(chosenStringCharacter.toUpperCase());
+        chosenCharacter = availableCharacters.get(index);
+
         return new CharacterChoiceEvent(getUser(), chosenCharacter);
     }
 
     /**
-     * user choice for map and todo game mode
+     * user choice for map a
      * @return event that contains player's choice
      */
     @Override
@@ -119,14 +123,13 @@ public class CLI extends RemoteView {
         }
 
 
-        //todo modalità selezionata
-        GameChoiceEvent message = new GameChoiceEvent(getUser(), map, 0);
+        GameChoiceEvent message = new GameChoiceEvent(getUser(), map, 0);//TODO cambiare messaggio:togliere scelta mdalità
         return message;
     }
 
 
-    /**choice for action at the beginning of his own turn
-     * user
+    /**
+     *User choose an action at the beginning of his own turn
      * @param fireEnable true if player can use action fire
      * @return event that contains player's choice
      */
@@ -198,7 +201,6 @@ public class CLI extends RemoteView {
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
        PositionChoiceEvent message =(PositionChoiceEvent) positionMoveChoice(possibleSquareX,possibleSquareY);
        Event choice = new WeaponSquareTargetChoiceEvent(getUser(), message.getPositionX(),message.getPositionY());
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+message.getPositionX()+message.getPositionY());
 
         return choice;
 
@@ -212,8 +214,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
-        ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
-        ArrayList<CubeColour> coloursList = new ArrayList<>(Arrays.asList(powerUpColours));
+
         int chosenPowerUp = 404;
         while (chosenPowerUp<0 || chosenPowerUp>powerUpNames.length) {
             try {
@@ -402,17 +403,19 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
-        ArrayList<String> cliCharacters = new ArrayList<String>();
+        ArrayList<String> cliColorCharacters = new ArrayList<String>();
+        ArrayList<String > cliStringCharacter = new ArrayList<>();
         ArrayList<Character> targetCharacter = new ArrayList<Character>();
         for (Character currCharacter : availableTargets) {
-            cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
+            cliColorCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name().toUpperCase());
+            cliStringCharacter.add(currCharacter.name().toUpperCase());
         }
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select yor targets to hit,max targets: " + numTarget+"[type END to select less then "+numTarget+" targets]");
-        CLIHandler.arrayPrint(cliCharacters);
+        CLIHandler.arrayPrint(cliColorCharacters);
 
         Character chosenCharacter = null ;
         String chosenStringCharacter = "init";
-//TODO si blocca nel ciclo while
+
         for(int i=0;i<=numTarget;i++){
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "next choice");
 
@@ -424,11 +427,11 @@ public class CLI extends RemoteView {
 
                 }
 
-            }while (!cliCharacters.contains(chosenStringCharacter.toUpperCase()) || !chosenStringCharacter.equalsIgnoreCase("end"));
+            }while (!cliStringCharacter.contains(chosenStringCharacter.toUpperCase()) && !chosenStringCharacter.equalsIgnoreCase("end"));
             if (chosenStringCharacter.equalsIgnoreCase("end")) {
                     i = numTarget + 1;
-                } else {
-                int index = cliCharacters.indexOf(chosenStringCharacter.toUpperCase());
+                } else if(cliStringCharacter.contains(chosenStringCharacter.toUpperCase())){
+                int index = cliStringCharacter.indexOf(chosenStringCharacter.toUpperCase());
                 chosenCharacter = availableTargets.get(index);
                 targetCharacter.add(chosenCharacter);
             }
@@ -438,36 +441,37 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
-     * @param powerUpNames
-     * @param powerUpColours
-     * @return
+     *User choice one powerUp to use
+     * @param powerUpNames name of powerUp available
+     * @param powerUpColours color of powerUp available
+     * @return event that contains player's choice
      */
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
 
-        String choice;
-        boolean done = false;
-        int index = powerUpNames.length;
+        int chosenPowerUp = 404;
+        while (chosenPowerUp<0 || chosenPowerUp>powerUpNames.length) {
+            try {
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Your powerUp!");
+                for(int i=0;i<powerUpNames.length;i++){
+                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
+                }
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select one powerUp:[option number]");
+                chosenPowerUp = CLIHandler.intRead();
+                if(chosenPowerUp<0 || chosenPowerUp>powerUpNames.length){
 
-        ArrayList<String> powerUpList = new ArrayList<>(Arrays.asList(powerUpNames));
-        CLIHandler.arrayPrint(powerUpList);
-        System.out.println("select your PowerUp: ");
-        choice = CLIHandler.stringRead();
-
-            //TODO METODI CONTROLLO SCELTA
-        while (!done) {
-            if (powerUpNames[index].equals(choice)) {
-                done = true;
-            } else {
-                index--;
+                }
+            } catch (IllegalArgumentException e) {
+                chosenPowerUp = 404;
             }
-        }
 
-        return new PowerUpChoiceEvent(getUser(), choice, powerUpColours[index]);
+        }
+        return new PowerUpChoiceEvent(getUser(),powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
     }
 
-
+    /**
+     * Print screen updated
+     */
     @Override
     public void printScreen() {
         //todo interazione con aggiornamento armi sullo spqwn square
@@ -475,17 +479,16 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * Every tima one player joins the game it's notified to other player
+     * Every time one player joins the game it's notified to other player
      *
      * @param newPlayer
-     * @return
+     * @return message notify the success of updating
      */
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer) {
 
-
-        System.out.println("New player joined the game:" + newPlayer);
-        //TODO   "character choice:"+mapCharacterNameColors.get(newPlayer));
+        //TODO questo messaggo viene inviato quando un player joina la partita o dopo aver scelto il proprio caracther?
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(newPlayer)+"New player joined the game:" + newPlayer);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -496,7 +499,7 @@ public class CLI extends RemoteView {
      * @param fistColour
      * @param secondColour
      * @param thirdColour
-     * @return
+     * @return message notify the success of updating
      */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
@@ -538,12 +541,27 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param currCharacter
+     * @param hittingCharacter
+     * @param damageToken
+     * @param markNumber
+     * @return
+     */
     @Override
     public Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
         display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken, markNumber, hittingCharacter);
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param currCharacter
+     * @param powerUp
+     * @param colour
+     * @return
+     */
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] colour) {
         for (int i = 0; i < powerUp.length; i++) {
@@ -554,6 +572,12 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param currCharacter
+     * @param weapons
+     * @return
+     */
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
 
@@ -562,6 +586,12 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param currCharacter
+     * @param ammo
+     * @return
+     */
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
         int size = ammo.size();
@@ -581,6 +611,13 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     *
+     * @param currCharacter
+     * @param damageTokenNumber
+     * @param killerCharacter
+     * @return
+     */
     @Override
     public Event gameTrackSkullUpdate(Character currCharacter, int damageTokenNumber, Character killerCharacter) {
         String[] skull = new String[1];
@@ -590,13 +627,14 @@ public class CLI extends RemoteView {
             skull[1]= "☠";
         }
         */
+        // Si assegnano i teschi al player esatto
         display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
         display.getGameTrack().removeSkull(damageTokenNumber, mapCharacterNameColors.get(killerCharacter));
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     * It repaces weapons on spawn square
+     * It replaces weapons on spawn square
      *
      * @param x      coordinate (row)
      * @param y      coordinate(column)
@@ -623,24 +661,12 @@ public class CLI extends RemoteView {
 
     @Override
     public Event newtonTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
-        ArrayList<String> cliCharacters = new ArrayList<>();
-        ArrayList<Character> targetCharacter = new ArrayList<>();
-        for (Character currCharacter : availableTargets) {
-            cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
-        }
-        CLIHandler.arrayPrint(cliCharacters);
-        Character chosenCharacter = null;
-        while (chosenCharacter == null) {
-            try {
-                String chosenStringCharacter = CLIHandler.stringRead();
-                chosenCharacter = Character.valueOf(chosenStringCharacter.toUpperCase());
 
-            } catch (IllegalArgumentException e) {
-                chosenCharacter = null;
-            }
-        }
+       CharacterChoiceEvent message =(CharacterChoiceEvent)characterChoice(availableTargets);
+       Event choice = new NewtonPlayerTargetChoiceEvent(getUser(),message.getChosenCharacter());
 
-        return new NewtonPlayerTargetChoiceEvent(getUser(), chosenCharacter);
+
+        return choice;
     }
 
 
@@ -827,6 +853,18 @@ public class CLI extends RemoteView {
     }
 
     /**
+     * User choice a target character
+     * @param possibleTargets
+     * @return event that contains player's choice
+     */
+    @Override
+    public Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets) {
+        CharacterChoiceEvent message =(CharacterChoiceEvent) characterChoice(possibleTargets);
+        Event choice = new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
+        return choice;
+    }
+
+    /**
      * It show the possibility to use one power up at the end of turn(no yor turn)
      * @param powerUpNames list of  power up's name available to use
      * @param powerUpColours list of power up's colour available to use
@@ -834,7 +872,7 @@ public class CLI extends RemoteView {
      * @return event that contains player's choice
      */
     @Override
-    public Event endRoundPowerUpRequest(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
+    public Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
         String choice = null;
         Event message = null;
         int index;
@@ -892,7 +930,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * use to catch player choice to pay
+     * User choose one way for pay
      * @param powerUpNames list of power up's name available to use
      * @param powerUpColours list of power up's colour available to use
      * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp

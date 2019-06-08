@@ -23,7 +23,6 @@ public class ActionRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-07
         return remoteView.actionChoice(isFireEnable());
     }
 }

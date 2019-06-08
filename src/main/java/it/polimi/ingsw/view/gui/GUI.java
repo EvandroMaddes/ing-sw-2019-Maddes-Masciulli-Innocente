@@ -18,7 +18,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event endRoundPowerUpRequest(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
+    public Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
         return null;
     }
 
@@ -135,9 +135,10 @@ public class GUI extends RemoteView {
         return null;
     }
 
-
-
-
+    @Override
+    public Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets) {
+        return null;
+    }
 
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
