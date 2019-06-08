@@ -8,8 +8,8 @@ import it.polimi.ingsw.utils.Decoder;
 import java.util.ArrayList;
 
 public class DisconnectionManager {
-    Controller controller;
-    ArrayList<Player> disconnectedPlayers;
+    private Controller controller;
+    private ArrayList<Player> disconnectedPlayers;
 
 
     public DisconnectionManager(Controller controller) {
