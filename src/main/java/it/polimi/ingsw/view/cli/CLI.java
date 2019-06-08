@@ -15,13 +15,11 @@ import static it.polimi.ingsw.model.player.Character.VIOLET;
 //todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
 
-    private CLIDisplay display;//la map sara sostiyuita da display.getmap, idem per playerBoard
+    private CLIDisplay display;
 
 
     // private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
-    //todo map tra colore arma e nome arma
-    // todo map tra powerUp e relativo colore
 
     /**
      * Constructor:
@@ -35,6 +33,15 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
         display = new CLIDisplay();
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public CLIDisplay getDisplay() {
+        return display;
     }
 
     /**
@@ -474,7 +481,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public void printScreen() {
-        //todo interazione con aggiornamento armi sullo spqwn square
+        display.createDisplay();
         display.printDisplay();
     }
 
@@ -567,7 +574,7 @@ public class CLI extends RemoteView {
         for (int i = 0; i < powerUp.length; i++) {
             powerUp[i] = findColorEscape(colour[i].name()) + powerUp[i];
         }
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp,1);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -581,7 +588,7 @@ public class CLI extends RemoteView {
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons,1);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -606,30 +613,28 @@ public class CLI extends RemoteView {
             i++;
         }
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString,1);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
      *
-     * @param currCharacter
      * @param damageTokenNumber
-     * @param killerCharacter
+     * @param skullNumber
      * @return
      */
     @Override
-    public Event gameTrackSkullUpdate(Character currCharacter, int damageTokenNumber, Character killerCharacter) {
+    public Event gameTrackSkullUpdate( Character[] damageTokenNumber, int[] skullNumber) {
         String[] skull = new String[1];
         skull[0] = Color.ANSI_RED.escape() + "☠";
 
-        /*if(skullNumber==2){
-            skull[1]= "☠";
-        }
-        */
         // Si assegnano i teschi al player esatto
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('S', skull);
-        display.getGameTrack().removeSkull(damageTokenNumber, mapCharacterNameColors.get(killerCharacter));
+        for (int i =0; i<damageTokenNumber.length;i++) {
+
+                display.getPlayerBoard(damageTokenNumber[i]).gadgetsUpdate('S', skull,skullNumber[i]);
+                display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]));
+            }
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -664,8 +669,6 @@ public class CLI extends RemoteView {
 
        CharacterChoiceEvent message =(CharacterChoiceEvent)characterChoice(availableTargets);
        Event choice = new NewtonPlayerTargetChoiceEvent(getUser(),message.getChosenCharacter());
-
-
         return choice;
     }
 

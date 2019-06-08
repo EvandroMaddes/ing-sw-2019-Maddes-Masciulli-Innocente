@@ -16,7 +16,7 @@ public class TargetingScopeTargetRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-06  
-        return null;
+
+        return remoteView.targetingScopeTargetChoice(possibleTargets);
     }
 }

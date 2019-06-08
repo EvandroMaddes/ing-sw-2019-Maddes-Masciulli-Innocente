@@ -185,7 +185,7 @@ public class CLIDisplay {
 
     public void printDisplay(){
         for(int i=0; i<ROW;i++) {//ROW
-            System.out.println("");
+            System.out.println(""+Color.ANSI_BLACK_BACKGROUND.escape());
             for (int j = 0; j < COLUMN; j++) {//COLUMN
                 System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+display[j][i]);
             }

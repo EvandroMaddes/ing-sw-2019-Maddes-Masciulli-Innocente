@@ -12,6 +12,12 @@ import java.util.Map;
 
 public class GUI extends RemoteView {
 
+
+    @Override
+    public Event gameTrackSkullUpdate( Character[] killerCharacter, int[] skullNumber) {
+        return null;
+    }
+
     @Override
     public Event genericPaymentChoice(boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour) {
         return null;
@@ -172,11 +178,6 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
-        return null;
-    }
-
-    @Override
-    public Event gameTrackSkullUpdate(Character currCharacter, int skullNumber, Character killerCharacter) {
         return null;
     }
 
