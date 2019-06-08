@@ -14,11 +14,6 @@ public class DominationTrack extends GameTrack {
     private ArrayList<DamageToken> blueTokenTrack;
     private ArrayList<DamageToken> yellowTokenTrack;
 
-    private DominationTrack ()
-    {
-
-    }
-
     public void instance()
     {
 
@@ -37,5 +32,10 @@ public class DominationTrack extends GameTrack {
                 blueTokenTrack.add(damageToken);
         else if(track==yellowTokenTrack)
                 yellowTokenTrack.add(damageToken);
+    }
+
+    @Override
+    public void evaluateDamage(DamageToken damageToken, int number) {
+        // TODO: 2019-06-08  
     }
 }

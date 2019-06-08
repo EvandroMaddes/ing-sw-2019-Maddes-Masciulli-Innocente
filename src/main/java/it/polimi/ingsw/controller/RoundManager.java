@@ -61,6 +61,7 @@ public class RoundManager {
             }
             case 8:{
                 resetRoundDamageCounter();
+                markDeadPlayer();
                 manageDeadPlayers();
                 break;
             }
@@ -80,6 +81,13 @@ public class RoundManager {
             controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
         else
             gameManager.newRound();
+    }
+
+    private void markDeadPlayer(){
+        for (Player p: controller.getGameManager().getModel().getPlayers()){
+            if (p.getPlayerBoard().getDamageAmount() > 10)
+                p.invertDeathState();
+        }
     }
 
     /**

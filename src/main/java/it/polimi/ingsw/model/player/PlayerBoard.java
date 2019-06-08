@@ -24,19 +24,19 @@ public class PlayerBoard extends Observable implements Serializable{
     private int damageAmount;
     private int skullsNumber;
     private ArrayList<DamageToken> marks;
-    private Player myPlayer;
+    private Character character;
 
 
-    public PlayerBoard(Player myPlayer) {
+    public PlayerBoard(Character character) {
         damageReceived = new DamageToken[12];
         damageAmount = 0;
         skullsNumber = 0;
         marks = new ArrayList<>();
-        this.myPlayer = myPlayer;
+        this.character = character;
     }
 
-    private void notifyViwes(){
-        PlayerBoardUpdateEvent message = new PlayerBoardUpdateEvent(myPlayer.getUsername(), skullsNumber, Encoder.encodeDamageTokenArrayList(marks), Encoder.encodeDamages(damageReceived, damageAmount));
+    private void notifyViews(){
+        PlayerBoardUpdateEvent message = new PlayerBoardUpdateEvent("", character, skullsNumber, Encoder.encodeDamageTokenArrayList(marks), Encoder.encodeDamages(damageReceived, damageAmount));
         notifyObservers(message);
     }
 
@@ -61,7 +61,7 @@ public class PlayerBoard extends Observable implements Serializable{
         if(skullsNumber<6) {
             skullsNumber += 1;
         }
-        notifyViwes();
+        notifyViews();
     }
 
     /**
@@ -81,7 +81,7 @@ public class PlayerBoard extends Observable implements Serializable{
         }
 
         inflictMarks(player);
-        notifyViwes();
+        notifyViews();
     }
 
     /**
@@ -90,7 +90,7 @@ public class PlayerBoard extends Observable implements Serializable{
     public void resetDamages()
     {
         damageAmount = 0;
-        notifyViwes();
+        notifyViews();
     }
 
 
@@ -119,7 +119,7 @@ public class PlayerBoard extends Observable implements Serializable{
                 iterator.remove();
             }
         }
-        notifyViwes();
+        notifyViews();
     }
 
 
@@ -141,7 +141,7 @@ public class PlayerBoard extends Observable implements Serializable{
         {
             this.marks.add(new DamageToken(player));
         }
-        notifyViwes();
+        notifyViews();
     }
 
 
