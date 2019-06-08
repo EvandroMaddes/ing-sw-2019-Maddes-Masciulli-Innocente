@@ -29,7 +29,7 @@ public class CLIHandler {
         }
 
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\nSelect from " +
-                    "available choices:\t");
+                    "available choices:[type name]\t");
             System.out.flush();
 
     }
@@ -47,13 +47,17 @@ public class CLIHandler {
         for (int i =0; i<X.length;i++) {
 
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_CYAN.escape()+"\n"
-                    +"coordinate X = "+X[i]+"coordinate Y:"+Y[i]+" option "+i);
+                    +"coordinate x:"+X[i]+"  coordinate y:"+Y[i]+" option "+i);
             System.out.flush();
         }
         while(index==404) {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+"Select Square:[option number]");
             System.out.flush();
              index = intRead();
+             if(index<0 || index>=X.length){
+                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select one choice available");
+                 index=404;
+             }
 
         }
         int[] coordinateSelected = {X[index],Y[index]};
