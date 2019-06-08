@@ -103,7 +103,7 @@ public class GameManager {
     }
 
     private void startGame(){
-        SetUpObserverObservable.connect(getModel().getPlayers(), controller.getUsersVirtualView(), getModel().getGameboard());
+        SetUpObserverObservable.connect(getModel().getPlayers(), controller.getUsersVirtualView(), getModel());
         newRound();
     }
 
