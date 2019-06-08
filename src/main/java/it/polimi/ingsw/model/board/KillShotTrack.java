@@ -42,7 +42,7 @@ public class KillShotTrack extends GameTrack {
     }
 
     private void notifyView(){
-        KillShotTrackUpdateEvent message = new KillShotTrackUpdateEvent("", Encoder.encodeDamageTokenArrayList(tokenTrack), getSkullBox());
+        KillShotTrackUpdateEvent message = new KillShotTrackUpdateEvent("", Encoder.encodeDamageTokenArrayList(tokenTrack), getTokenSequence());
         notifyObservers(message);
     }
 

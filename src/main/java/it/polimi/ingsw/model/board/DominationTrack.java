@@ -14,11 +14,6 @@ public class DominationTrack extends GameTrack {
     private ArrayList<DamageToken> blueTokenTrack;
     private ArrayList<DamageToken> yellowTokenTrack;
 
-    private DominationTrack ()
-    {
-
-    }
-
     public void instance()
     {
 

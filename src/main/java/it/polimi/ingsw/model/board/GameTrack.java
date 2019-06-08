@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.model.player.DamageToken;
+
 import java.util.Observable;
 
 /**
@@ -7,8 +9,14 @@ import java.util.Observable;
  */
 public abstract class GameTrack extends Observable {
 
-    private int skullBox = 8;
+    private int skullBox;
     public final static int[] POINTS = new int[]{ 8,6,4,2,1,1 };
+    public int[] tokenSequence;
+
+    public GameTrack() {
+        this.skullBox = 8;
+        this.tokenSequence = new int[]{0,0,0,0,0,0,0,0};
+    }
 
     /**
      * Remove a skull for every Player death
@@ -30,4 +38,10 @@ public abstract class GameTrack extends Observable {
     public int getSkullBox() {
         return skullBox;
     }
+
+    public int[] getTokenSequence() {
+        return tokenSequence;
+    }
+
+    public abstract void evaluateDamage(DamageToken damageToken, int number );
 }
