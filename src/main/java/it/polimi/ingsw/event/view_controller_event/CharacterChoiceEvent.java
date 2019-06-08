@@ -14,6 +14,10 @@ public class CharacterChoiceEvent extends ViewControllerEvent {
         this.chosenCharacter = chosenCharacter;
     }
 
+    public Character getChosenCharacter() {
+        return chosenCharacter;
+    }
+
     @Override
     public void performAction(Controller controller) {
         controller.getGameManager().addPlayer(getUser(), chosenCharacter);

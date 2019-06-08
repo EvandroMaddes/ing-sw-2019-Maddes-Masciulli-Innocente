@@ -18,7 +18,6 @@ public class GenericPayRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-04
         return remoteView.genericPaymentChoice(usableAmmo,powerUpsType,powerUpsColour);
     }
 }
