@@ -45,7 +45,7 @@ public class Player extends Observable {
     {
         this.username = username;
         this.character = character;
-        this.playerBoard = new PlayerBoard(this);
+        this.playerBoard = new PlayerBoard(character);
         this.points = 0;
         this.numberOfWeapons = 0;
         this.powerUps = new ArrayList<>();

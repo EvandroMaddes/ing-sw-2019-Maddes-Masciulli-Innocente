@@ -33,4 +33,9 @@ public class DominationTrack extends GameTrack {
         else if(track==yellowTokenTrack)
                 yellowTokenTrack.add(damageToken);
     }
+
+    @Override
+    public void evaluateDamage(DamageToken damageToken, int number) {
+        // TODO: 2019-06-08  
+    }
 }

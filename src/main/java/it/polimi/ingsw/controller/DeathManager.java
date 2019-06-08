@@ -66,15 +66,16 @@ public class DeathManager {
 
     private void updateGameTrack(){
         GameTrack gameTrack = controller.getGameManager().getModel().getGameboard().getGameTrack();
-        if (deadPlayer.getPlayerBoard().getDamageAmount() == 12) {
-            gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 2;
-            gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 2);
+        if (gameTrack.getSkullBox() > 0) {
+            if (deadPlayer.getPlayerBoard().getDamageAmount() == 12) {
+                gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 2;
+                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 2);
+            } else {
+                gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 1;
+                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 1);
+            }
+            gameTrack.removeSkull();
         }
-        else {
-            gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 1;
-            gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 1);
-        }
-        gameTrack.removeSkull();
     }
 
     private void givePoints(){
