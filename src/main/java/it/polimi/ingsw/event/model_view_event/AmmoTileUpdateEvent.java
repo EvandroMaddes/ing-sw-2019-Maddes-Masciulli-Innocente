@@ -30,23 +30,11 @@ public class AmmoTileUpdateEvent extends PositionUpdateEvent {
         this.replace = replace;
     }
 
-    public String getSecondColour() {
-        return secondColour;
-    }
-
-    public String getThirdColour() {
-        return thirdColour;
-    }
-
-
-    public String getFirstColour() {
-        return firstColour;
-    }
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        if (replace == true) {
-            return remoteView.addAmmoTileUpdate(getPositionX(), getPositionY(), getFirstColour(), getSecondColour(), getThirdColour());
+        if (replace) {
+            return remoteView.addAmmoTileUpdate(getPositionX(), getPositionY(), firstColour, secondColour, thirdColour);
         }
         else {
             return remoteView.removeAmmoTileUpdate(getPositionX(),getPositionY());

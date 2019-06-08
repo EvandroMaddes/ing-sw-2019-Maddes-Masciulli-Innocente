@@ -1,16 +1,13 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PlayerPositionUpdateEvent;
 import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
 
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.VirtualView;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 public class ViewTest {
 
@@ -29,7 +26,7 @@ public class ViewTest {
       //  controller = new Controller();
         eventTest1 = new CharacterChoiceEvent("Evandro",Character.BANSHEE);
         eventTest2 = new CharacterChoiceEvent("Giovanni",Character.SPROG);
-        eventTest3 = new PositionUpdateEvent("Evandro",1,1);
+        eventTest3 = new PlayerPositionUpdateEvent("Evandro", Character.BANSHEE,1,1);
         controller.createGameManager(1);
 
     }

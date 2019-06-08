@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
@@ -44,6 +45,14 @@ public class Encoder {
         return weaponsLite;
     }
 
+    public static String[] encodeWeaponsIntoArray(List<Weapon> weapons){
+        String[] weaponsLite = new String[weapons.size()];
+        for (int i = 0; i < weapons.size(); i++){
+            weaponsLite[i] = weapons.get(i).getName();
+        }
+        return weaponsLite;
+    }
+
     public static String[] encodePowerUpsType (List<PowerUp> powerUps){
         String[] powerUpsType = new String[powerUps.size()];
         for (int i = 0; i < powerUps.size(); i++) {
@@ -58,5 +67,21 @@ public class Encoder {
             powerUpsColour[i] = powerUps.get(i).getColour();
         }
         return powerUpsColour;
+    }
+
+    public static Character[] encodeDamageTokenArrayList(List<DamageToken> damageTokensList){
+        Character[] marksLite = new Character[damageTokensList.size()];
+        for (int i = 0; i < damageTokensList.size(); i++){
+            marksLite[i] = damageTokensList.get(i).getPlayer().getCharacter();
+        }
+        return marksLite;
+    }
+
+    public static Character[] encodeDamages (DamageToken[] damages, int numberOfDamages){
+        Character[] damagesLite = new Character[numberOfDamages];
+        for (int i = 0; i < numberOfDamages; i++){
+            damagesLite[i] = damages[i].getPlayer().getCharacter();
+        }
+        return damagesLite;
     }
 }

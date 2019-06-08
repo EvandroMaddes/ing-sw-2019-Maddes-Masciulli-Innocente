@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.event.model_view_event.WeaponUpdateEvent;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
 
@@ -61,19 +63,13 @@ public class SpawnSquare extends Square {
 
                weapons.remove(null);
           }
-     }
-
-     /**
-      * @param weaponCard card that is selected by a player
-      */
-     public void removeWeapon(Weapon weaponCard)
-     {
-          weapons.remove(weaponCard);
+          notifyView();
      }
 
      public void grabWeapon(Weapon weaponSelected, Player player){
           player.addWeapon(weaponSelected);
-          removeWeapon(weaponSelected);
+          weapons.remove(weaponSelected);
+          notifyView();
      }
 
      @Override
@@ -88,5 +84,10 @@ public class SpawnSquare extends Square {
                     return true;
           }
           return false;
+     }
+
+     private void notifyView(){
+          WeaponUpdateEvent message = new WeaponUpdateEvent("", getColumn(), getRow(), Encoder.encodeWeaponsIntoArray(weapons));
+          notifyObservers(message);
      }
 }

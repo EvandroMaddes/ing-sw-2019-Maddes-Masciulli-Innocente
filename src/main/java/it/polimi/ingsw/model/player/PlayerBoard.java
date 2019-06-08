@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.event.model_view_event.PlayerBoardUpdateEvent;
+import it.polimi.ingsw.utils.Encoder;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,13 +24,20 @@ public class PlayerBoard extends Observable implements Serializable{
     private int damageAmount;
     private int skullsNumber;
     private ArrayList<DamageToken> marks;
+    private Player myPlayer;
 
 
-    public PlayerBoard() {
+    public PlayerBoard(Player myPlayer) {
         damageReceived = new DamageToken[12];
         damageAmount = 0;
         skullsNumber = 0;
         marks = new ArrayList<>();
+        this.myPlayer = myPlayer;
+    }
+
+    private void notifyViwes(){
+        PlayerBoardUpdateEvent message = new PlayerBoardUpdateEvent(myPlayer.getUsername(), skullsNumber, Encoder.encodeDamageTokenArrayList(marks), Encoder.encodeDamages(damageReceived, damageAmount));
+        notifyObservers(message);
     }
 
     public DamageToken[] getDamageReceived() {
@@ -51,6 +61,7 @@ public class PlayerBoard extends Observable implements Serializable{
         if(skullsNumber<6) {
             skullsNumber += 1;
         }
+        notifyViwes();
     }
 
     /**
@@ -70,6 +81,7 @@ public class PlayerBoard extends Observable implements Serializable{
         }
 
         inflictMarks(player);
+        notifyViwes();
     }
 
     /**
@@ -78,6 +90,7 @@ public class PlayerBoard extends Observable implements Serializable{
     public void resetDamages()
     {
         damageAmount = 0;
+        notifyViwes();
     }
 
 
@@ -106,6 +119,7 @@ public class PlayerBoard extends Observable implements Serializable{
                 iterator.remove();
             }
         }
+        notifyViwes();
     }
 
 
@@ -127,6 +141,7 @@ public class PlayerBoard extends Observable implements Serializable{
         {
             this.marks.add(new DamageToken(player));
         }
+        notifyViwes();
     }
 
 
