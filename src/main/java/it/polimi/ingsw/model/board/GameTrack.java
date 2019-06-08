@@ -8,24 +8,7 @@ import java.util.Observable;
 public abstract class GameTrack extends Observable {
 
     private int skullBox = 8;
-    final static int points[] = new int[]{ 8,6,4,2,1,1 };
-
-    /**
-     *
-     * @param skullBox
-     */
-
-    public void setSkullBox(int skullBox) {
-        this.skullBox = skullBox;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getSkullBox() {
-        return skullBox;
-    }
+    public final static int[] POINTS = new int[]{ 8,6,4,2,1,1 };
 
     /**
      * Remove a skull for every Player death
@@ -41,13 +24,10 @@ public abstract class GameTrack extends Observable {
      */
     public boolean checkEndTrack()
     {
-        boolean i;
-
-        if(skullBox==0)
-            i=true;
-        else i=false;
-
-        return i;
+        return skullBox == 0;
     }
 
+    public int getSkullBox() {
+        return skullBox;
+    }
 }

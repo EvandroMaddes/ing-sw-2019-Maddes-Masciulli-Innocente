@@ -16,23 +16,18 @@ public class WeaponUpdateEvent extends PositionUpdateEvent {
     /**
      * Constructor
      * @param user the Client user
-     * @param mapUpdate must be "MAPUPDATE"
      * @param squareX the square X coordinate that must be updated
      * @param squareY the square Y coordinate that must be updated
      * @param weapon the new weapon based on the ground
      */
-    public WeaponUpdateEvent(String user, String mapUpdate, int squareX, int squareY,String[] weapon){
+    public WeaponUpdateEvent(String user, int squareX, int squareY, String[] weapon){
         super(user, squareX, squareY);
         this.weapon=weapon;
-    }
-
-    public String[] getWeapon() {
-        return weapon;
     }
 
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.weaponReplaceUpdate(getPositionX(), getPositionY(),getWeapon());
+        return remoteView.weaponReplaceUpdate(getPositionX(), getPositionY(), weapon);
     }
 }

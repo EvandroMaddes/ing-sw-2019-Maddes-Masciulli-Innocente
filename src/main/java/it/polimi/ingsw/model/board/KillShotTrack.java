@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.event.model_view_event.KillShotTrackUpdateEvent;
 import it.polimi.ingsw.model.player.DamageToken;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
 
@@ -10,8 +12,6 @@ import java.util.ArrayList;
 public class KillShotTrack extends GameTrack {
 
     private ArrayList<DamageToken> tokenTrack = new ArrayList<>();
-
-
 
     /**
      *
@@ -35,6 +35,17 @@ public class KillShotTrack extends GameTrack {
         }
     }
 
+    @Override
+    public void removeSkull() {
+        super.removeSkull();
+        notifyView();
+    }
+
+    private void notifyView(){
+        KillShotTrackUpdateEvent message = new KillShotTrackUpdateEvent("", Encoder.encodeDamageTokenArrayList(tokenTrack), getSkullBox());
+        notifyObservers(message);
+    }
+
     /**
      *
      * @param damageToken
@@ -42,6 +53,7 @@ public class KillShotTrack extends GameTrack {
     private void addDamage( DamageToken damageToken )
     {
         tokenTrack.add(damageToken);
+        notifyView();
     }
 
 }

@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.player;
 import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
 import it.polimi.ingsw.event.model_view_event.PlayerWeaponUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.PositionUpdateEvent;
+import it.polimi.ingsw.event.model_view_event.PlayerPositionUpdateEvent;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -45,7 +45,7 @@ public class Player extends Observable {
     {
         this.username = username;
         this.character = character;
-        this.playerBoard = new PlayerBoard();
+        this.playerBoard = new PlayerBoard(this);
         this.points = 0;
         this.numberOfWeapons = 0;
         this.powerUps = new ArrayList<>();
@@ -146,7 +146,7 @@ public class Player extends Observable {
             this.position.removeCurrentPlayer(this);
         this.position = position;
         position.addCurrentPlayer(this);
-        PositionUpdateEvent message = new PositionUpdateEvent( username, position.getRow(), position.getColumn());
+        PlayerPositionUpdateEvent message = new PlayerPositionUpdateEvent( username, character, position.getRow(), position.getColumn());
         notifyObservers(message);
     }
 
