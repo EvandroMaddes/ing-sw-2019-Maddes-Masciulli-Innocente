@@ -181,9 +181,12 @@ public class Client {
                     waiting = true;
                 }
                 catch (ClassCastException e){
-                    ((UsernameModificationEvent)currentMessage).performAction(clientImplementation);
-                    user = ((UsernameModificationEvent)currentMessage).getNewUser();
-                    System.out.println("Username already connected, yours is now:\t"+user);
+                    //la perform action del messaggio è chiamata all'interno di printUserModification();
+                    Event returnedEvent =
+                            remoteViewImplementation.printUserNotification((UsernameModificationEvent)currentMessage, clientImplementation);
+                    if(returnedEvent != null){
+                        clientImplementation.sendMessage(returnedEvent);
+                    }
                     waiting = true;
                 }
                 catch (Exception e){

@@ -7,12 +7,14 @@ import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 
 public class DisconnectedEvent extends ViewControllerEvent {
 
+    private boolean isDisconnected = true;
+
     public DisconnectedEvent(String user) {
         super(user);
     }
 
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getDisconnectionManager().removePlayer(getUser());
+        //todo mette in lista disconessi nel controller
     }
 }

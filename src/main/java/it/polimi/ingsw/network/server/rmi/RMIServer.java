@@ -63,12 +63,24 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
             try {
                 clientUserList.add(currRemoteClient.getUser());
             } catch (RemoteException e) {
-                CustomLogger.logException(e);
+
             }
         }
         return clientUserList;
     }
 
+    public void cleanDisconnectedEventList(){
+        disconnectedClients.clear();
+    }
+
+    public void cleanDisconnectedEventList(String user){
+        for (Event currEvent : disconnectedClients) {
+            if(currEvent.getUser().equals(user)){
+                disconnectedClients.remove(currEvent);
+                return;
+            }
+        }
+    }
 
     /**
      * During the setup, it accept new connection;
@@ -282,9 +294,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
                 currClient.clientConnectionGuard();
             }catch (RemoteException disconnected){
                 String disconnectedUser = clientUserOrder.get(clientList.indexOf(currClient));
+                clientList.remove(currClient);
                 clientUserOrder.remove(clientList.indexOf(currClient));
                 disconnectedClients.add(new DisconnectedEvent(disconnectedUser));
-                clientList.remove(currClient);
             }
         }
     }
@@ -356,7 +368,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
                 CustomLogger.logException(rmtException);
             }
         }
-
         return currEvent;
     }
 

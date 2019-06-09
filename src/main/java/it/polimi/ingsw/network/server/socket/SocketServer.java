@@ -19,6 +19,7 @@ public class SocketServer extends Thread implements ServerInterface {
     private ServerSocket serverSocket;
     private CopyOnWriteArrayList<SocketServerThread> socketList = new CopyOnWriteArrayList<>();
     private boolean gameCouldStart = false;
+    private boolean gameIsRunning = false;
 
 
 
@@ -27,6 +28,10 @@ public class SocketServer extends Thread implements ServerInterface {
         runServer();
         while(!gameCouldStart){
             acceptClient();
+        }
+        gameIsRunning = true;
+        while(gameIsRunning){
+
         }
     }
 
@@ -82,7 +87,9 @@ public class SocketServer extends Thread implements ServerInterface {
                 clientSocketThread.start();
 
                 socketList.add(clientSocketThread);
+                if(gameIsRunning){
 
+                }
             } catch (IOException e) {
                 CustomLogger.logException(e);
             }
