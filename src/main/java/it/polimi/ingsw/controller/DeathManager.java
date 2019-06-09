@@ -27,7 +27,7 @@ public class DeathManager {
     }
 
     public void manageKill(){
-        givePoints();
+        controller.getGameManager().collectGameBoardPoints(deadPlayer);
         updateGameTrack();
         deadPlayer.getPlayerBoard().addSkull();
         deadPlayer.getPlayerBoard().resetDamages();
@@ -78,43 +78,4 @@ public class DeathManager {
         }
     }
 
-    private void givePoints(){
-        int[] damageDealed = new int[model.getPlayers().size()];
-        Player[] damageDealer = new Player[model.getPlayers().size()];
-
-        for (int i = 0; i < damageDealed.length; i++)
-            damageDealed[i] = 0;
-
-        if (deadPlayer.getPlayerBoard().getDamageAmount() == 0)
-            return;
-        //aggiunge il punto della prima kill
-        deadPlayer.getPlayerBoard().getDamageReceived()[0].getPlayer().addPoints(1);
-
-        //aggiunge i punti in base a chi ha fatto più danni e al numero di teschi
-        for (DamageToken d: deadPlayer.getPlayerBoard().getDamageReceived()) {
-            int i = 0;
-            while (damageDealed[i] != 0 && damageDealer[i] != d.getPlayer())
-                i++;
-            if (damageDealed[i] == 0)
-                damageDealer[i] = d.getPlayer();
-            damageDealed[i]++;
-        }
-
-        int max = 0;
-        for(int i = 0; i < damageDealed.length && damageDealed[i] > 0; i++){
-            for(int j = 0; j < damageDealed.length && damageDealed[j] > 0; j++) {
-                if (damageDealed[j] > max && damageDealed[j] <= 12)
-                    max = damageDealed[j];
-            }
-            int currentMaxDamager = 0;
-            while (damageDealed[currentMaxDamager] != max)
-                currentMaxDamager++;
-            damageDealed[currentMaxDamager] = 100;
-
-            if (deadPlayer.getPlayerBoard().getSkullsNumber() + i < PlayerBoard.POINTS.length)
-                damageDealer[currentMaxDamager].addPoints(PlayerBoard.POINTS[i + deadPlayer.getPlayerBoard().getSkullsNumber()]);
-            else
-                damageDealer[currentMaxDamager].addPoints(1);
-        }
-    }
 }

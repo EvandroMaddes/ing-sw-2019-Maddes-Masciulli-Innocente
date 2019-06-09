@@ -76,7 +76,14 @@ public class RoundManager {
     }
 
 
-    public void endRound(){
+    private void endRound(){
+        int deadPlayers = 0;
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            if(p.isDead())
+                deadPlayers++;
+        }
+        if (deadPlayers > 1)
+            currentPlayer.addPoints(1);
         if (gameManager.isFinalFrenzyPhase() && gameManager.getPlayerTurn() == gameManager.getLastPlayer())
             controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
         else

@@ -38,4 +38,9 @@ public class DominationTrack extends GameTrack {
     public void evaluateDamage(DamageToken damageToken, int number) {
         // TODO: 2019-06-08  
     }
+
+    @Override
+    public void collectGameTrackPoints() {
+        // TODO: 2019-06-09
+    }
 }

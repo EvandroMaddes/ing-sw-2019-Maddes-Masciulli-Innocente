@@ -11,9 +11,11 @@ import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.player.PlayerBoard;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class GameManager {
@@ -26,6 +28,7 @@ public class GameManager {
     private boolean firstRoundPhase;
     private boolean firsPlayerPlayed;
     private int lastPlayer;
+    private DisconnectionManager disconnectionManager;
 
     /**
      *
@@ -172,6 +175,8 @@ public class GameManager {
      * @return winner player. In case of draw, return null
      */
     public Player calculateWinner() {
+        giveEndGamePoints();
+
         Player winner = null;
         boolean draw = false;
         for (Player p : model.getPlayers()) {
@@ -220,5 +225,69 @@ public class GameManager {
 
     public boolean isFirsPlayerPlayed() {
         return firsPlayerPlayed;
+    }
+
+    public DisconnectionManager getDisconnectionManager() {
+        if (this.disconnectionManager == null)
+            disconnectionManager = new DisconnectionManager(controller);
+        return disconnectionManager;
+    }
+
+    private void giveEndGamePoints(){
+        ArrayList<Player> playerList;
+        if (disconnectionManager != null)
+            playerList = getDisconnectionManager().getGamePlayers();
+        else
+            playerList = getModel().getPlayers();
+        for (Player p:playerList) {
+            collectGameBoardPoints(p);
+        }
+        model.getGameboard().getGameTrack().collectGameTrackPoints();
+    }
+
+    public void collectGameBoardPoints (Player evaluatedPlayer){
+        ArrayList<Player> playersList;
+        if (disconnectionManager != null)
+            playersList = getDisconnectionManager().getGamePlayers();
+        else
+            playersList = getModel().getPlayers();
+
+        int[] damageDealed = new int[playersList.size()];
+        Player[] damageDealer = new Player[playersList.size()];
+
+        for (int i = 0; i < damageDealed.length; i++)
+            damageDealed[i] = 0;
+
+        if (evaluatedPlayer.getPlayerBoard().getDamageAmount() == 0)
+            return;
+        //aggiunge il punto della prima kill
+        evaluatedPlayer.getPlayerBoard().getDamageReceived()[0].getPlayer().addPoints(1);
+
+        //aggiunge i punti in base a chi ha fatto più danni e al numero di teschi
+        for (DamageToken d: evaluatedPlayer.getPlayerBoard().getDamageReceived()) {
+            int i = 0;
+            while (damageDealed[i] != 0 && damageDealer[i] != d.getPlayer())
+                i++;
+            if (damageDealed[i] == 0)
+                damageDealer[i] = d.getPlayer();
+            damageDealed[i]++;
+        }
+
+        int max = 0;
+        for(int i = 0; i < damageDealed.length && damageDealed[i] > 0; i++){
+            for(int j = 0; j < damageDealed.length && damageDealed[j] > 0; j++) {
+                if (damageDealed[j] > max && damageDealed[j] <= 12)
+                    max = damageDealed[j];
+            }
+            int currentMaxDamager = 0;
+            while (damageDealed[currentMaxDamager] != max)
+                currentMaxDamager++;
+            damageDealed[currentMaxDamager] = 100;
+
+            if (evaluatedPlayer.getPlayerBoard().getSkullsNumber() + i < PlayerBoard.POINTS.length)
+                damageDealer[currentMaxDamager].addPoints(PlayerBoard.POINTS[i + evaluatedPlayer.getPlayerBoard().getSkullsNumber()]);
+            else
+                damageDealer[currentMaxDamager].addPoints(1);
+        }
     }
 }

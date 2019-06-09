@@ -44,4 +44,6 @@ public abstract class GameTrack extends Observable {
     }
 
     public abstract void evaluateDamage(DamageToken damageToken, int number );
+
+    public abstract void collectGameTrackPoints();
 }
