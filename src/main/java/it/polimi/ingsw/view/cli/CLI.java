@@ -574,7 +574,7 @@ public class CLI extends RemoteView {
         for (int i = 0; i < powerUp.length; i++) {
             powerUp[i] = findColorEscape(colour[i].name()) + powerUp[i];
         }
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -588,7 +588,7 @@ public class CLI extends RemoteView {
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -613,7 +613,7 @@ public class CLI extends RemoteView {
             i++;
         }
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
         return new UpdateChoiceEvent(getUser());
     }
@@ -632,7 +632,7 @@ public class CLI extends RemoteView {
         // Si assegnano i teschi al player esatto
         for (int i =0; i<damageTokenNumber.length;i++) {
 
-                display.getPlayerBoard(damageTokenNumber[i]).gadgetsUpdate('S', skull,skullNumber[i]);
+                display.getPlayerBoard(damageTokenNumber[i]).gadgetsUpdate('S', skull);
                 display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]));
             }
         return new UpdateChoiceEvent(getUser());
