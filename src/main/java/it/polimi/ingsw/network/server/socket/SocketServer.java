@@ -1,8 +1,6 @@
 package it.polimi.ingsw.network.server.socket;
 
-import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
 import it.polimi.ingsw.utils.CustomTimer;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.server.ServerInterface;
@@ -13,7 +11,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
