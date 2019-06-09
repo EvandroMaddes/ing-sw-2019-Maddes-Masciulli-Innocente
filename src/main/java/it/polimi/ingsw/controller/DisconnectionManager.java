@@ -25,7 +25,8 @@ public class DisconnectionManager {
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();
         controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[disconnectedPlayer.getPosition().getRow()][disconnectedPlayer.getPosition().getColumn()].removeCurrentPlayer(disconnectedPlayer);
         controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getUsername(), disconnectedPlayer.getCharacter()));
-
+        if (controller.getGameManager().getModel().getPlayers().size() < 3)
+            controller.getGameManager().endGame();
     }
 
     public void reconnectPlayer(String username){

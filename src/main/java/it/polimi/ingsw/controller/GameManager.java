@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
@@ -113,7 +114,7 @@ public class GameManager {
     /**
      * If the gameTrack is ended, set the final frenzy phase
      * Generate a new RoundManager and run it. The RoundManager type depends on three flags:
-     * firstRoundPhase - enable only fo one round for player
+     * firstRoundPhase - enable only for one round for player
      * finalFrenzyPhase - is enabled when the GameTrack end
      * firstPlayerPlayed - set to true only in the final frenzy, in the first player round
      */
@@ -289,5 +290,9 @@ public class GameManager {
             else
                 damageDealer[currentMaxDamager].addPoints(1);
         }
+    }
+
+    public void endGame(){
+        controller.callView(new WinnerEvent(calculateWinner().getUsername()));
     }
 }

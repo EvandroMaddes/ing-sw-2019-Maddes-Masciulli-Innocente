@@ -85,7 +85,7 @@ public class RoundManager {
         if (deadPlayers > 1)
             currentPlayer.addPoints(1);
         if (gameManager.isFinalFrenzyPhase() && gameManager.getPlayerTurn() == gameManager.getLastPlayer())
-            controller.callView(new WinnerEvent(gameManager.calculateWinner().getUsername()));
+            gameManager.endGame();
         else
             gameManager.newRound();
     }
