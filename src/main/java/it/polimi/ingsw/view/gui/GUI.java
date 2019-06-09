@@ -3,15 +3,17 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GUI extends RemoteView {
 
+    @Override
+    public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
+        return null;
+    }
 
     @Override
     public Event gameTrackSkullUpdate( Character[] killerCharacter, int[] skullNumber) {
@@ -166,10 +168,9 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
+    public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
         return null;
     }
-
 
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {

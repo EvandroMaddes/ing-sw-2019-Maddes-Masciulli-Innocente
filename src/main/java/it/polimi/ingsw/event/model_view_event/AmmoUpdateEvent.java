@@ -27,7 +27,6 @@ public class AmmoUpdateEvent extends ModelViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        //todo aggiorna la risorsa sul client, il Event tornato dalla view è null, da cambiare return
 
         return remoteView.playerAmmoUpdate(getCurrCharacter(),getAmmo());
     }

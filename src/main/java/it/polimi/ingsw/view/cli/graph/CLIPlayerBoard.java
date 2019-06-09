@@ -90,73 +90,84 @@ public class CLIPlayerBoard {
 
     }
 
-    public void markDamageUpdate(int damage, int mark, Character hittingCharacter){
-        int i =10;
+    public void damageUpdate(int damage, Character hittingCharacter, int i){
+
         String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(hittingCharacter);
         while (damage>0 && i<MAXCOLUMN){
-            if(playerBoard[i][3].contains(" ")) {
-
              playerBoard[i][3]= currColorEscape + "¤";
              damage--;
 
-            } else{
-                i = i+4;
-             }
         }
-        i=10;
+
+    }
+
+    public void markUpdate (int mark, Character hittingCharacter, int i){
+        String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(hittingCharacter);
         while (mark>0 && i<MAXCOLUMN){
-            if(playerBoard[i][2].contains(" ")) {
-                playerBoard[i][2]= currColorEscape + "¤";
-                mark--;
 
-            } else{
-                i = i+4;
-            }
+            playerBoard[i][2]= currColorEscape + "¤";
+            mark--;
+
         }
-
     }
 
-    public void printPlayerBoard(){
-        for (int row = 0; row < MAXROW2; row++) {
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
-            for (int column =0; column < MAXCOLUMN; column++) {
-                System.out.print(playerBoard[column][row]);
-            }
-        }
 
-    }
 
 
     public void gadgetsUpdate(char type, String[] gadgets){
 
         boolean done = false;
-        int h=0, i=3,j=404;
-        if(type =='W'){
-            j=5;
-        }else if (type=='P'){
-            j=6;
-        }else if(type=='A'){
-            j=7;
-        } else if(type == 'S')
-            j=8;
-
-        for(int row=3;row<MAXCOLUMN;row++){
+        int h = 0, i = 3, j = 404;
+        if (type == 'W') {
+            j = 5;
+        } else if (type == 'P') {
+            j = 6;
+        } else if (type == 'A') {
+            j = 7;
+        }
+        for (int row = 3; row < MAXCOLUMN; row++) {
             playerBoard[row][j] = " ";
         }
 
 
-            while(!done){
+        while (!done) {
 
-                if(i< MAXCOLUMN && h<gadgets.length){
-                    playerBoard[i][j] = gadgets[h];
-                    playerBoard[i + 1][j] = "  ";
-                    i = i+2;
-                    h++;
-                } else {
-                    done = true;}
+            if (i < MAXCOLUMN && h < gadgets.length) {
+                playerBoard[i][j] = gadgets[h];
+                playerBoard[i + 1][j] = "  ";
+                i = i + 2;
+                h++;
+            } else {
+                done = true;
             }
+        }
 
+
+        }
+
+    public void clean(int j){
+        int i=3;
+        if(j==2||j==3){
+            i=10;
+        }
+        for(int h=0;h<8;h++){
+
+            playerBoard[i][j] =Color.ANSI_BLACK_BACKGROUND.escape() + " ";
+            if(j==2||j==3){
+                i=i+4;
+            }else {
+            i=i+2;}
+        }
     }
+
+        public void skullUpdate(int skullNumber){
+        int i=3;
+        for(int rep=0;rep<skullNumber;rep++){
+             playerBoard[i][8] =Color.ANSI_RED.escape() + "☠";
+             i=i+2;
+            }
+        }
+
 
     public String[][] getPlayerBoard() {
         return playerBoard;

@@ -12,7 +12,6 @@ public class WhileActionPowerUpRequestEvent extends PowerUpRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-04
-        return null;
+        return remoteView.whileActionPowerUpRequestEvent(getPowerUpNames(),getPowerUpColours());
     }
 }

@@ -27,23 +27,16 @@ public class CLIGameTrack {
         }
     }
 
-    public void removeSkull(int damageToken, String colorEscape){
-        if(damageToken!=0) {
-            boolean done = false;
-            int column = 2;
-            while (!done && column < MAXCOLUMN) {
-                if (track[column][1].contains("☠")) {
-                    track[column][1] = "|" + colorEscape + " ▼";
-                    if (damageToken == 2) {
-                        track[column + 1][1] = colorEscape + "▼";
-                    }
-                    done = true;
-                }
-                column = column + 4;
+    public void removeSkull(int damageToken, String colorEscape,int column){
+          if(damageToken!=0) {
+              if (track[column][1].contains("☠")) {
+                  track[column][1] = Color.ANSI_BLACK_BACKGROUND.escape()+ colorEscape + "| ▼";
+                  if (damageToken == 2) {
+                      track[column + 1][1] = Color.ANSI_BLACK_BACKGROUND.escape()+colorEscape + "▼";
+                  }
+              }
 
-            }
-        }
-
+          }
     }
 
 }

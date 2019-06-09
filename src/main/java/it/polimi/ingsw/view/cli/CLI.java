@@ -10,8 +10,6 @@ import it.polimi.ingsw.view.cli.graph.*;
 
 import java.util.*;
 
-import static it.polimi.ingsw.model.player.Character.VIOLET;
-
 //todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
 
@@ -448,7 +446,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *User choice one powerUp to use
+     *User choose one powerUp to use
      * @param powerUpNames name of powerUp available
      * @param powerUpColours color of powerUp available
      * @return event that contains player's choice
@@ -487,25 +485,25 @@ public class CLI extends RemoteView {
 
     /**
      * Every time one player joins the game it's notified to other player
-     *
      * @param newPlayer
      * @return message notify the success of updating
      */
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer) {
 
-        //TODO questo messaggo viene inviato quando un player joina la partita o dopo aver scelto il proprio caracther?
+        //todo questo messaggo viene inviato quando un player joina la partita o dopo aver scelto il proprio caracther?
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(newPlayer)+"New player joined the game:" + newPlayer);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     * @param x
-     * @param y
-     * @param fistColour
-     * @param secondColour
-     * @param thirdColour
+     * It updates map by adding an ammo tile
+     * @param x row
+     * @param y column
+     * @param fistColour ammo cube
+     * @param secondColour ammo cube
+     * @param thirdColour ammo cube or power up
      * @return message notify the success of updating
      */
     @Override
@@ -524,9 +522,10 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * @param x
-     * @param y
-     * @return
+     * It updates map by deleting an ammo tile
+     * @param x row
+     * @param y column
+     * @return message notify the success of updating
      */
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
@@ -536,10 +535,10 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * @param currCharacter
-     * @param x
-     * @param y
-     * @return
+     * @param currCharacter modified player position
+     * @param x row
+     * @param y column
+     * @return message notify the success of updating
      */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
@@ -549,55 +548,75 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
-     * @param currCharacter
-     * @param hittingCharacter
-     * @param damageToken
-     * @param markNumber
-     * @return
+     * modification of player Board(damage, mark, skull)
+     * @param character modified player board
+     * @param skullNumber number of skull
+     * @param marks number of marks and who did it
+     * @param damages number of damage and who did it
+     * @return message notify the success of updating
      */
     @Override
-    public Event playerBoardUpdate(Character currCharacter, Character hittingCharacter, int damageToken, int markNumber) {
-        display.getPlayerBoard(currCharacter).markDamageUpdate(damageToken, markNumber, hittingCharacter);
+    public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
+        display.getPlayerBoard(character).clean(2);//MARKS
+        display.getPlayerBoard(character).clean(3);//DAMAGE
+        display.getPlayerBoard(character).clean(5);//WEAPON
+        display.getPlayerBoard(character).clean(6);//POWERUP
+        display.getPlayerBoard(character).clean(7);//AMMO
+        display.getPlayerBoard(character).clean(8);//SKULL
+        int j=10;
+        for (int i=0; i<marks.length;i++) {
+
+            display.getPlayerBoard(character).markUpdate(1,marks[i],j);
+            j=j+4;
+        }
+        j=10;
+        for (int i=0; i<damages.length;i++) {
+            display.getPlayerBoard(character).damageUpdate(1, damages[i],j);
+            j=j+4;
+        }
+
+        display.getPlayerBoard(character).skullUpdate(skullNumber);
+
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
-     * @param currCharacter
-     * @param powerUp
-     * @param colour
-     * @return
+     *It shows power up available on player board
+     * @param currCharacter  modified player board
+     * @param powerUp power up of player
+     * @param colour colour of power up
+     * @return message notify the success of updating
      */
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] colour) {
+
         for (int i = 0; i < powerUp.length; i++) {
             powerUp[i] = findColorEscape(colour[i].name()) + powerUp[i];
         }
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
-     * @param currCharacter
-     * @param weapons
-     * @return
+     *It shows weapon available on player board
+     * @param currCharacter  modified player board
+     * @param weapons weapons of player
+     * @return message notify the success of updating
      */
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
-     *
-     * @param currCharacter
-     * @param ammo
-     * @return
+     *It shows ammo available on player board
+     * @param currCharacter  modified player board
+     * @param ammo ammo of player
+     * @return message notify the success of updating
      */
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
@@ -613,38 +632,40 @@ public class CLI extends RemoteView {
             i++;
         }
 
-        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString,1);
+        display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
+     * It updates number of skull on the game track
+     * @param damageTokenNumber player who takes the skull
+     * @param skullNumber number of skull left:
+     *                    0-one skull;
+     *                    1-one damage;
+     *                    2-two damage;
      *
-     * @param damageTokenNumber
-     * @param skullNumber
-     * @return
+     * @return message notify the success of updating
      */
     @Override
     public Event gameTrackSkullUpdate( Character[] damageTokenNumber, int[] skullNumber) {
-        String[] skull = new String[1];
-        skull[0] = Color.ANSI_RED.escape() + "☠";
 
+        int column=2;
         // Si assegnano i teschi al player esatto
         for (int i =0; i<damageTokenNumber.length;i++) {
 
-                display.getPlayerBoard(damageTokenNumber[i]).gadgetsUpdate('S', skull,skullNumber[i]);
-                display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]));
+                display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]),column);
+                column = column+4;
             }
         return new UpdateChoiceEvent(getUser());
     }
 
     /**
      * It replaces weapons on spawn square
-     *
      * @param x      coordinate (row)
      * @param y      coordinate(column)
      * @param weapon
-     * @return
+     * @return message notify the success of updating
      */
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
@@ -652,6 +673,11 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
+    /**
+     * it found color by name
+     * @param colourString name of colour
+     * @return colour escape
+     */
     private String findColorEscape(String colourString) {
         String colourEscape = Color.ANSI_BLACK_BACKGROUND.escape();
         if (colourString.equalsIgnoreCase("RED")) {
@@ -659,11 +685,17 @@ public class CLI extends RemoteView {
         } else if (colourString.equalsIgnoreCase("BLUE")) {
             colourEscape = colourEscape + Color.ANSI_BLUE.escape();
         } else {
-            colourEscape = colourEscape + Color.ANSI_YELLOW;
+            colourEscape = colourEscape + Color.ANSI_YELLOW.escape();
         }
         return colourEscape;
     }
 
+    /**
+     * user choose target of his power up
+     * @param availableTargets
+     * @param numTarget max numeber of target
+     * @return event that contains player's choice
+     */
     @Override
     public Event newtonTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
 
@@ -866,6 +898,30 @@ public class CLI extends RemoteView {
         Event choice = new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
         return choice;
     }
+
+    /**
+     * User choose to use one of his power up during an action
+     * @param powerUpNames available power up
+     * @param powerUpColours colour of power up
+     * @return event that contains player's choice
+     */
+    @Override
+    public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
+        String choice ="init";
+        Event selected = null;
+        while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you like to use one of your power up?[Y/N]");
+            choice = CLIHandler.stringRead();
+        }
+        if(choice.equalsIgnoreCase("Y")) {
+            PowerUpChoiceEvent message = (PowerUpChoiceEvent) powerUpChoice(powerUpNames, powerUpColours);
+             selected = new WhileActionPowerUpChoiceEvent(getUser(), message.getCard(), message.getPowerUpColour());
+        }else {
+            selected = new WhileActionPowerUpChoiceEvent(getUser(),null,null);
+        }
+
+          return selected;
+     }
 
     /**
      * It show the possibility to use one power up at the end of turn(no yor turn)

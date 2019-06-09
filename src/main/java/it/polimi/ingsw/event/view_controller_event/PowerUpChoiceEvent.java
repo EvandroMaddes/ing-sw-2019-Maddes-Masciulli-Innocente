@@ -19,4 +19,9 @@ public class PowerUpChoiceEvent extends CardChoiceEvent {
     public CubeColour getPowerUpColour() {
         return powerUpColour;
     }
+
+    @Override
+    public String getCard() {
+        return super.getCard();
+    }
 }
