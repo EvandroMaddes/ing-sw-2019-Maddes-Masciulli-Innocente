@@ -16,6 +16,10 @@ public class UsernameModificationEvent extends Event {
         return newUser;
     }
 
+    public void setNewUser(String newUser) {
+        this.newUser = newUser;
+    }
+
     public void performAction(ClientInterface clientImplementation) {
         clientImplementation.changeUsername(getUser(), getNewUser());
     }

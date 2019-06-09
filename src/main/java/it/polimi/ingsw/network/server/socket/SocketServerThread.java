@@ -1,18 +1,14 @@
 package it.polimi.ingsw.network.server.socket;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.DisconnectedEvent;
+import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.utils.CustomLogger;
-import it.polimi.ingsw.utils.CustomTimer;
-import it.polimi.ingsw.utils.NetConfiguration;
 
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.concurrent.Callable;
-import java.util.logging.Logger;
 
 public class SocketServerThread extends Thread implements  NetworkHandler {
     private Socket client;

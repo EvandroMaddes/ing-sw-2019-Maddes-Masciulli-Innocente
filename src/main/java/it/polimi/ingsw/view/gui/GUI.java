@@ -1,10 +1,12 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
@@ -12,6 +14,11 @@ import java.util.Map;
 
 public class GUI extends RemoteView {
 
+
+    @Override
+    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
+        return null;
+    }
 
     @Override
     public Event gameTrackSkullUpdate( Character[] killerCharacter, int[] skullNumber) {

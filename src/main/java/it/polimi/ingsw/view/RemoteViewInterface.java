@@ -1,10 +1,12 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.network.client.ClientInterface;
 
 import javax.xml.stream.XMLEventWriter;
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ public interface RemoteViewInterface {
      * this method print the gameScreen after each ModelUpdate from Server
      */
    void printScreen();
+
+   /**
+    * this method handle the UsernameModification events
+    * @return the message returning to the server
+    */
+   Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp);
 
    //following methods manages Request event
    Event gameChoice();
