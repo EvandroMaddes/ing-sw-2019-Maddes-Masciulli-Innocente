@@ -40,6 +40,7 @@ public class Server {
     private static boolean gameCouldStart = false;
 
     public static void main(String[] args){
+
         try{
             serverRMI = new RMIServer();
             serverSocket = new SocketServer();
@@ -279,7 +280,7 @@ public class Server {
        return currentDisconnectedClients;
     }
 
-    
+
 
     /**
      * Is called when the listenMessage() return null, exactly when its timer elapses, or by ping()

@@ -19,7 +19,8 @@ public class DisconnectionManager {
         gamePlayers = controller.getGameManager().getModel().getPlayers();
     }
 
-    public void removePlayer(Player disconnectedPlayer){
+    public void removePlayer(String username){
+        Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
         controller.getGameManager().getModel().getPlayers().remove(disconnectedPlayer);
         this.disconnectedPlayers.add(disconnectedPlayer);
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();

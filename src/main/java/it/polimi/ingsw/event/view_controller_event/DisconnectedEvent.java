@@ -13,10 +13,6 @@ public class DisconnectedEvent extends ViewControllerEvent {
         super(user);
     }
 
-    public boolean isDisconnected() {
-        return isDisconnected;
-    }
-
     @Override
     public void performAction(Controller controller) {
         //todo mette in lista disconessi nel controller
