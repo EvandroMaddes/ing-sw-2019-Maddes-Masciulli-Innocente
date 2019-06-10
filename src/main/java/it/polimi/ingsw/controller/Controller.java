@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.HashMap;
@@ -38,6 +39,11 @@ public class Controller implements Observer {
     }
 
     public void callView(ControllerViewEvent message){
+        if (message.getUser().equals("BROADCAST")){
+            for (Player p: getGameManager().getModel().getPlayers()) {
+                usersVirtualView.get(p.getUsername()).callRemoteView(message);
+            }
+        }
         usersVirtualView.get(message.getUser()).callRemoteView(message);
     }
 

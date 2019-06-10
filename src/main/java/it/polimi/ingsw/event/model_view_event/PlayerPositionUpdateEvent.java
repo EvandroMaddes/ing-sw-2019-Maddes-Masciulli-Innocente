@@ -20,7 +20,7 @@ public class PlayerPositionUpdateEvent extends PositionUpdateEvent {
      * @param positionY his next position Y coordinate
      */
     public PlayerPositionUpdateEvent(String user, Character character, int positionX, int positionY){
-        super(user, positionX, positionY);
+        super(positionX, positionY);
         this.character = character;
     }
 

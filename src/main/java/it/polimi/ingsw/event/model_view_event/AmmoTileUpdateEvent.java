@@ -22,7 +22,7 @@ public class AmmoTileUpdateEvent extends PositionUpdateEvent {
      * @param thirdColour   the third ammo colour OR must be setted  "POWERUP"
      */
     public AmmoTileUpdateEvent(boolean replace, int squareX, int squareY, String firstColour, String secondColour, String thirdColour){
-        super("BROADCAST", squareX,squareY);
+        super(squareX,squareY);
         this.firstColour=firstColour;
         this.secondColour=secondColour;
         this.thirdColour=thirdColour;

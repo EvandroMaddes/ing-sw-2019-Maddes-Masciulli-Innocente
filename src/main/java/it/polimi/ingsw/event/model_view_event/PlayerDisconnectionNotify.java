@@ -7,8 +7,8 @@ import it.polimi.ingsw.view.RemoteView;
 public class PlayerDisconnectionNotify extends ModelViewEvent {
     Character disconnectedCharacter;
 
-    public PlayerDisconnectionNotify(String user, Character disconnectedCharacter) {
-        super(user);
+    public PlayerDisconnectionNotify(Character disconnectedCharacter) {
+        super("BROADCAST");
         this.disconnectedCharacter = disconnectedCharacter;
     }
 
