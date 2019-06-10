@@ -38,6 +38,8 @@ public class Server {
     private static CustomTimer gameTimer;
     private static Event message;
     private static boolean gameCouldStart = false;
+    //todo cercare cambio turno != cambio di contesto
+    // private static String lastRoundPlayer =
 
     public static void main(String[] args){
 
@@ -120,6 +122,9 @@ public class Server {
 
                 //todo ora si gestisce il turno
                 message = null;
+
+                Event nextMessage = findNextMessage();
+
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
                 //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
@@ -130,12 +135,9 @@ public class Server {
 
 
                 if(disconnectedClients.isEmpty()) {
-                    String currentUser = activeClientList.get(0);
-                    ServerInterface server = mapUserServer.get(currentUser);
+                    String currentUser = nextMessage.getUser();
 
-                    server.sendMessage(new GameRequestEvent(currentUser));
-                    log.info("Sending message to:\t"+currentUser+"\n");
-                    message = server.listenMessage();
+
                     if (message == null) {
                         message = new DisconnectedEvent(currentUser);
                         disconnectClient(currentUser);
@@ -170,6 +172,44 @@ public class Server {
         }catch(IOException e){
             CustomLogger.logException(e);
         }
+    }
+
+    private static void sendNextMessage(Event toSend){
+        String currentUser = toSend.getUser();
+        if(toSend.getUser().equals("BROADCAST")){
+            serverSocket.sendBroadcast(toSend);
+            serverRMI.sendBroadcast(toSend);
+        }
+        else{
+            ServerInterface server = mapUserServer.get(currentUser);
+            server.sendMessage(toSend);
+
+        }
+    }
+
+    private static void cleanVirtualViews(boolean isBroadcast){
+        for (VirtualView currentView: virtualViewList) {
+            if(isBroadcast){
+                currentView.setToRemoteView(null);
+            }
+            else{
+                if(currentView.getToRemoteView()!=null){
+                    currentView.setToRemoteView(null);
+                }
+            }
+        }
+    }
+
+    private static Event findNextMessage(){
+        message = null;
+        for (VirtualView currentView: virtualViewList) {
+            Event currMessage = currentView.getToRemoteView();
+            if(currMessage!=null){
+                cleanVirtualViews(currMessage.getUser().equals("BROADCAST"));
+                return currMessage;
+            }
+        }
+        return null;
     }
 
     /**
