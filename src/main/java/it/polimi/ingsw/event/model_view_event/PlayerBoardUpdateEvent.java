@@ -18,8 +18,7 @@ public class PlayerBoardUpdateEvent extends ModelViewEvent {
     private Character[] damages;
     private Character playerBoardCharacter;
 
-    public PlayerBoardUpdateEvent(String user, Character playerBoardCharacter, int skullNumber, Character[] marks, Character[] damages) {
-        super(user);
+    public PlayerBoardUpdateEvent(Character playerBoardCharacter, int skullNumber, Character[] marks, Character[] damages) {
         this.skullNumber = skullNumber;
         this.playerBoardCharacter = playerBoardCharacter;
         this.marks = marks;
