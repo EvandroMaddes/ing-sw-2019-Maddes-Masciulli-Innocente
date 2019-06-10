@@ -359,7 +359,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         CustomTimer timer = new CustomTimer(NetConfiguration.ROUNDTIMER);
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\n\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.");
+        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.\n");
         while (currEvent == null&&timer.isAlive()) {
             try {
                 currEvent = remoteListenMessage();

@@ -149,7 +149,9 @@ public class Server {
 
                 //todo ora si gestisce il turno
                 message = null;
+                //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
+                //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
                 //TODO chiama ping solo se currUser != vecchioUser
                 ArrayList<Event> disconnectedClients = ping();
 
@@ -263,7 +265,7 @@ public class Server {
     }
 
     /**
-     * this method is called before the sendMessage, it update the clients that disconnected during the last round
+     * This method is called before the sendMessage, it update the clients that disconnected during the last round
      * @return the DisconnectedEvents from the disconnected clients
      */
     private static ArrayList<Event> ping(){
@@ -297,11 +299,21 @@ public class Server {
         log.warning("Client Disconnected:\t"+user+"\n");
     }
 
+    /**
+     * Add and map the last connected user with his server implementation
+     * @param currUser his the client username
+     * @param serverImplementation is the server implementation depending on user's network preferences
+     */
     private static void userAddAndMap( String currUser, ServerInterface serverImplementation){
         activeClientList.add(currUser);
         mapUserServer.put(currUser,serverImplementation);
     }
 
+    /**
+     * If there isn't any username conflict (when a client try to connect with an already token username),
+     *  this method update
+     * @return the last connected username
+     */
     private static String updateActiveClientList() {
         String connectedUser = updateActiveClientList(serverRMI);
         if (connectedUser.isEmpty()) {
@@ -311,9 +323,9 @@ public class Server {
     }
 
     /**
-     * this method update the client list from the given server implementation
-     * @param serverImplementation
-     * @return the last connected user
+     * This method update the client list from the given server implementation
+     * @param serverImplementation is the chosen implementation
+     * @return the last connected user, or an empty string if there isn't
      */
     private static String updateActiveClientList(ServerInterface serverImplementation){
         String connectedUser ="";
