@@ -3,9 +3,13 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.UsernameModificationEvent;
+import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
+import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
+import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
@@ -80,10 +84,11 @@ public class Server {
 
                     //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
                     if(activeClientList.size()==2) {
+                        message = null;
                         String currentUser = activeClientList.get(0);
                         ServerInterface server = mapUserServer.get(currentUser);
 
-                        server.sendMessage(new GameRequestEvent(currentUser));
+                        server.sendMessage(new ActionRequestEvent(currentUser,new boolean[] {true, false}));
                         log.info("Sending message to:\t"+currentUser+"\n");
                         message = server.listenMessage();
                         if (message == null) {
