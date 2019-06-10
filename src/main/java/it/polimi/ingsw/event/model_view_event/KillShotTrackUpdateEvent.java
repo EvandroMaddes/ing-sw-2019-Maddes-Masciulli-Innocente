@@ -1,6 +1,5 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
@@ -14,8 +13,8 @@ public class KillShotTrackUpdateEvent extends ModelViewEvent {
     private Character[] damageTokens;
     private int[] sequence;
 
-    public KillShotTrackUpdateEvent(String user, Character[] damageTokens, int[] sequence) {
-        super(user);
+    public KillShotTrackUpdateEvent(Character[] damageTokens, int[] sequence) {
+        super("BROADCAST");
         this.damageTokens = damageTokens;
         this.sequence = sequence;
     }

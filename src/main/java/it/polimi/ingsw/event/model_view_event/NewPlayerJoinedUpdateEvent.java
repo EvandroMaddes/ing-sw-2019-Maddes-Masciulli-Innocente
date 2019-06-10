@@ -1,8 +1,7 @@
 package it.polimi.ingsw.event.model_view_event;
 
-import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
 /**
@@ -11,23 +10,18 @@ import it.polimi.ingsw.view.RemoteView;
 public class NewPlayerJoinedUpdateEvent extends ModelViewEvent {
 
     String newPlayer;
+    Character characterChoice;
 
-    public String getNewPlayer() {
-        return newPlayer;
-    }
-
-    public void setNewPlayer(String newPlayer) {
-        this.newPlayer = newPlayer;
-    }
-
-    public NewPlayerJoinedUpdateEvent(String user){
-        super(user);
+    public NewPlayerJoinedUpdateEvent(String username, Character characterChoice){
+        super("BROADCAST");
+        this.newPlayer = username;
+        this.characterChoice = characterChoice;
     }
 
 
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.newPlayerJoinedUpdate(getNewPlayer());
+        return remoteView.newPlayerJoinedUpdate(newPlayer, characterChoice);
     }
 }

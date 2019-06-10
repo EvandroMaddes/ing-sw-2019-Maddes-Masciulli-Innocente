@@ -159,13 +159,13 @@ public class Player extends Observable {
     public void addAmmo(AmmoCube ammo)
     {
         this.ammo.add(ammo);
-        AmmoUpdateEvent message = new AmmoUpdateEvent(username, character, this.ammo );
+        AmmoUpdateEvent message = new AmmoUpdateEvent(character, this.ammo );
         notifyObservers(message);
     }
 
     public void discardAmmo(AmmoCube ammoCube){
         ammo.remove(ammoCube);
-        notifyObservers(new AmmoUpdateEvent(username, character, ammo));
+        notifyObservers(new AmmoUpdateEvent(character, ammo));
     }
 
     /**
