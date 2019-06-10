@@ -62,6 +62,7 @@ public interface RemoteViewInterface {
    Event playerWeaponUpdate(Character currCharacter, String[] weapons);
    Event gameTrackSkullUpdate(Character[] killerCharacter,int[] skullNumber);
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
+   Event winnerUpdate(String user, int point);
 
    //todo fare per ultimo Event targetPowerUpChoice();
    Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
