@@ -95,8 +95,13 @@ public class Server {
                         }
                         if(!message.getUser().equals("BROADCAST")){
                                 mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser()+"\n");
                         }
+                        else{
+                            for (VirtualView currView: virtualViewList) {
+                                currView.toController(message);
+                            }
+                        }
+                        log.info("Listened message from:\t" + message.getUser()+"\n");
 
                         }
 

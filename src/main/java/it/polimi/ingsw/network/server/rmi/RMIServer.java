@@ -333,7 +333,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
         for (RemoteInterface client : clientList) {
             message.setUser(client.getUser());
-            client.remoteSendMessage(message);
+            remoteSendMessage(message);
 
         }
     }
