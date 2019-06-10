@@ -13,7 +13,7 @@ public class NewPlayerJoinedUpdateEvent extends ModelViewEvent {
     Character characterChoice;
 
     public NewPlayerJoinedUpdateEvent(String username, Character characterChoice){
-        super("BROADCAST");
+        super();
         this.newPlayer = username;
         this.characterChoice = characterChoice;
     }

@@ -10,7 +10,7 @@ public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
     private CubeColour[] colours;
     private Character currCharacter;
     public PlayerPowerUpUpdateEvent(Character currCharacter, String[] powerUps, CubeColour[] colours) {
-        super("BROADCAST");
+        super();
         this.powerUps = powerUps;
         this.colours = colours;
         this.currCharacter = currCharacter;
