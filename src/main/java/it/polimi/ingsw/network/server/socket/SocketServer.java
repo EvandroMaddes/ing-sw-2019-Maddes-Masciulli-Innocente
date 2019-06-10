@@ -31,7 +31,7 @@ public class SocketServer extends Thread implements ServerInterface {
         }
         gameIsRunning = true;
         while(gameIsRunning){
-
+            acceptClient();
         }
     }
 
@@ -87,9 +87,6 @@ public class SocketServer extends Thread implements ServerInterface {
                 clientSocketThread.start();
 
                 socketList.add(clientSocketThread);
-                if(gameIsRunning){
-
-                }
             } catch (IOException e) {
                 CustomLogger.logException(e);
             }
@@ -102,12 +99,13 @@ public class SocketServer extends Thread implements ServerInterface {
             currThread.sendMessage(message);
         }
     }
-    //todo non si arresta run() prima che si chiudano i socket a seguito di Server.disconnect();
+    //todo non si arresta run() prima che si chiudano i socket a seguito di Server.disconnect(), da controllare;
     @Override
     public void shutDown() {
         for (SocketServerThread currThread: socketList) {
 
             currThread.disconnect();
+            gameIsRunning= false;
         }
     }
 
@@ -124,22 +122,23 @@ public class SocketServer extends Thread implements ServerInterface {
 
     }
 
-    //todo inoltre farà partire timer??
+    /**
+     * This method start a custom timer and wait for a message delivery;
+     * @return the listened message, or null if the timer elapses and any message is listened.
+     */
     @Override
     public Event listenMessage() {
         Event currMessage;
         CustomTimer timer = new CustomTimer(NetConfiguration.ROUNDTIMER);
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\n\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.");
+        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.\n");
         for (int i = 0; i < socketList.size() ; i++) {
             SocketServerThread currSocket = socketList.get(i);
             if(currSocket.getCurrMessage()!=null&&currSocket.isConnected()) {
                 currMessage = currSocket.getCurrMessage();
                 currSocket.resetMessage();
                 return currMessage;
-//                messageQueue.offer(currMessage);
-//                currSocket.resetMessage();
 
             }
             else if (i == socketList.size()-1&&timer.isAlive()){
