@@ -13,7 +13,7 @@ public class PlayerWeaponUpdateEvent extends ModelViewEvent {
     }
 
     public PlayerWeaponUpdateEvent(String[] playerWeapon, Character currCharacter) {
-        super("BROADCAST");
+        super();
         this.playerWeapon = playerWeapon;
         this.currCharacter = currCharacter;
     }

@@ -8,7 +8,7 @@ public class PlayerReconnectionNotify extends ModelViewEvent{
     Character reconnectedCharacter;
 
     public PlayerReconnectionNotify(Character reconnectedCharacter) {
-        super("BROADCAST");
+        super();
         this.reconnectedCharacter = reconnectedCharacter;
     }
 

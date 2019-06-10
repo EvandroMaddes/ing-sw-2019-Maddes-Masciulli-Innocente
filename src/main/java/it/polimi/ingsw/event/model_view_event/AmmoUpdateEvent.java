@@ -12,7 +12,7 @@ public class AmmoUpdateEvent extends ModelViewEvent {
     private ArrayList<AmmoCube> ammo;
     private Character currCharacter;
     public AmmoUpdateEvent(Character currCharacter, List<AmmoCube> ammo) {
-        super("BROADCAST");
+        super();
         this.currCharacter = currCharacter;
         this.ammo = (ArrayList<AmmoCube>) ammo;
     }

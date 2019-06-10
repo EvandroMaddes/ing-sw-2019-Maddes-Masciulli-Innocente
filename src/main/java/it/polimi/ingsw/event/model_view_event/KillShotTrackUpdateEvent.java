@@ -14,7 +14,7 @@ public class KillShotTrackUpdateEvent extends ModelViewEvent {
     private int[] sequence;
 
     public KillShotTrackUpdateEvent(Character[] damageTokens, int[] sequence) {
-        super("BROADCAST");
+        super();
         this.damageTokens = damageTokens;
         this.sequence = sequence;
     }

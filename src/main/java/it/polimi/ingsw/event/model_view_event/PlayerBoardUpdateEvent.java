@@ -2,10 +2,7 @@ package it.polimi.ingsw.event.model_view_event;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.view.RemoteView;
-
-import java.util.ArrayList;
 
 /**
  * @author Francesco Masciulli
@@ -18,7 +15,7 @@ public class PlayerBoardUpdateEvent extends ModelViewEvent {
     private Character[] damages;
 
     public PlayerBoardUpdateEvent(String user, Character character, int skullNumber, Character[] marks, Character[] damages) {
-        super(user);
+        super();
         this.skullNumber = skullNumber;
         this.marks = marks;
         this.damages = damages;

@@ -5,7 +5,7 @@ public abstract class PositionUpdateEvent extends ModelViewEvent {
     private int positionY;
 
     public PositionUpdateEvent(int positionX, int positionY) {
-        super("BROADCAST");
+        super();
         this.positionX = positionX;
         this.positionY = positionY;
     }

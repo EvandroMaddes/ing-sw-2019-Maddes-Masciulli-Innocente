@@ -8,7 +8,7 @@ public class PlayerDisconnectionNotify extends ModelViewEvent {
     Character disconnectedCharacter;
 
     public PlayerDisconnectionNotify(Character disconnectedCharacter) {
-        super("BROADCAST");
+        super();
         this.disconnectedCharacter = disconnectedCharacter;
     }
 
