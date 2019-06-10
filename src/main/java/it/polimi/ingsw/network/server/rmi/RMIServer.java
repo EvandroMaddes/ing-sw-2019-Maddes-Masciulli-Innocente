@@ -332,9 +332,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
         for (RemoteInterface client : clientList) {
-            //todo se modelUpdate che cos'è user?
-            message.setUser(((RMIClient) client).getUser());
+            message.setUser(client.getUser());
             client.remoteSendMessage(message);
+
         }
     }
 
