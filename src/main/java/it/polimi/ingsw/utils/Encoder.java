@@ -24,7 +24,7 @@ public class Encoder {
     public static int[] encodeSquareTargetsX(List<Square> targets){
         int[] targetsX = new int[targets.size()];
         for(int i = 0 ; i < targets.size(); i++){
-            targetsX[i] = targets.get(i).getColumn();
+            targetsX[i] = targets.get(i).getRow();
         }
         return targetsX;
     }
@@ -32,7 +32,7 @@ public class Encoder {
     public static int[] encodeSquareTargetsY(List<Square> targets){
         int[] targetsY = new int[targets.size()];
         for(int i = 0 ; i < targets.size(); i++){
-            targetsY[i] = targets.get(i).getRow();
+            targetsY[i] = targets.get(i).getColumn();
         }
         return targetsY;
     }
@@ -69,7 +69,7 @@ public class Encoder {
         return powerUpsColour;
     }
 
-    public static Character[] encodeDamageTokenArrayList(List<DamageToken> damageTokensList){
+    public static Character[] encodeDamageTokenList(List<DamageToken> damageTokensList){
         Character[] marksLite = new Character[damageTokensList.size()];
         for (int i = 0; i < damageTokensList.size(); i++){
             marksLite[i] = damageTokensList.get(i).getPlayer().getCharacter();
@@ -77,7 +77,7 @@ public class Encoder {
         return marksLite;
     }
 
-    public static Character[] encodeDamages (DamageToken[] damages, int numberOfDamages){
+    public static Character[] encodeDamagesTokenArray(DamageToken[] damages, int numberOfDamages){
         Character[] damagesLite = new Character[numberOfDamages];
         for (int i = 0; i < numberOfDamages; i++){
             damagesLite[i] = damages[i].getPlayer().getCharacter();

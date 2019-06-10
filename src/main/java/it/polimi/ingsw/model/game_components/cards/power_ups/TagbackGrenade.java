@@ -9,8 +9,8 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class TagbackGrenade extends PowerUp {
 
-    public TagbackGrenade(CubeColour colour, String name) {
-        super(colour, name);
+    public TagbackGrenade(CubeColour colour) {
+        super(colour, "TagbackGrenade");
     }
 
     @Override

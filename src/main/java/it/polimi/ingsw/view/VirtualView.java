@@ -62,6 +62,7 @@ public class VirtualView  extends Observable implements Observer{
         //todo metodi che dal server inviano al client;
         // essendo interna al server ritorna toRemoteView
         // che è stato girato dal model
+        // vedi callRemoteViwe (è quella chiamata dal controller)
 
     }
 

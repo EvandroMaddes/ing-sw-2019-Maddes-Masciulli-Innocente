@@ -10,8 +10,8 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class TargetingScope extends PowerUp {
 
-    public TargetingScope(CubeColour colour, String name) {
-        super(colour, name);
+    public TargetingScope(CubeColour colour) {
+        super(colour, "TargetingScope");
     }
 
     @Override

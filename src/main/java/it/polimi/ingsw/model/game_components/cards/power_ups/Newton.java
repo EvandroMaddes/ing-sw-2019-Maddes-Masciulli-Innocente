@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Newton extends PowerUp {
     private Player targetPlayer;
 
-    public Newton(CubeColour colour, String name) {
-        super(colour, name);
+    public Newton(CubeColour colour) {
+        super(colour, "Newton");
         targetPlayer = null;
     }
 
