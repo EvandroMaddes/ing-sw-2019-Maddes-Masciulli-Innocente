@@ -9,6 +9,7 @@ import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
+import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
@@ -86,18 +87,15 @@ public class Server {
                     if(activeClientList.size()==2) {
                         message = null;
                         String currentUser = activeClientList.get(0);
-                        ServerInterface server = mapUserServer.get(currentUser);
 
-                        server.sendMessage(new ActionRequestEvent(currentUser,new boolean[] {true, false}));
-                        log.info("Sending message to:\t"+currentUser+"\n");
-                        message = server.listenMessage();
+                         message = sendAndWaitNextMessage(new NewPlayerJoinedUpdateEvent("Giorgio", Character.BANSHEE));
                         if (message == null) {
                             message = new DisconnectedEvent(currentUser);
                             disconnectClient(currentUser);
                         }
-                        else {
-                            mapUserView.get(message.getUser()).toController(message);
-                            log.info("Listened message from:\t" + message.getUser()+"\n");
+                        if(!message.getUser().equals("BROADCAST")){
+                                mapUserView.get(message.getUser()).toController(message);
+                                log.info("Listened message from:\t" + message.getUser()+"\n");
                         }
 
                         }
@@ -141,16 +139,15 @@ public class Server {
 
                 if(disconnectedClients.isEmpty()) {
                     String currentUser = nextMessage.getUser();
-
+                    message = sendAndWaitNextMessage(nextMessage);
 
                     if (message == null) {
                         message = new DisconnectedEvent(currentUser);
                         disconnectClient(currentUser);
                     }
-                    else {
-                        mapUserView.get(message.getUser()).toController(message);
-                        log.info("Listened message from:\t" + message.getUser()+"\n");
-                    }
+                    mapUserView.get(message.getUser()).toController(message);
+                    log.info("Listened message from:\t" + message.getUser()+"\n");
+
                 }
                 else{
 
@@ -179,17 +176,22 @@ public class Server {
         }
     }
 
-    private static void sendNextMessage(Event toSend){
+    private static Event sendAndWaitNextMessage(Event toSend){
         String currentUser = toSend.getUser();
+        Event returnedEvent = null;
+        log.info("Sending message to:\t"+currentUser+"\n");
         if(toSend.getUser().equals("BROADCAST")){
-            serverSocket.sendBroadcast(toSend);
             serverRMI.sendBroadcast(toSend);
+            serverSocket.sendBroadcast(toSend);
+            returnedEvent = new UpdateChoiceEvent("BROADCAST");
         }
         else{
             ServerInterface server = mapUserServer.get(currentUser);
-            server.sendMessage(toSend);
 
+            server.sendMessage(toSend);
+            returnedEvent = server.listenMessage();
         }
+        return returnedEvent;
     }
 
     private static void cleanVirtualViews(boolean isBroadcast){

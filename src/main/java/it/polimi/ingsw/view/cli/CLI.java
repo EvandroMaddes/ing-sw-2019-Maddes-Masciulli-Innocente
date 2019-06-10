@@ -393,7 +393,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event winnerUpdate(String user, int point) {
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\t\t\t\t Player "+user+" win this game with "+point);
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+" Player "+user+" win this game with "+point);
         return new UpdateChoiceEvent(getUser());
     }
 
@@ -534,7 +534,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(newPlayer)+"New player joined the game:" + newPlayer+" with "+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"New player joined the game:" + newPlayer+" with "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
         return new UpdateChoiceEvent(getUser());
     }
 
