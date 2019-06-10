@@ -92,7 +92,7 @@ public class EncoderTest {
         powerUpsList.add(powerUp3);
         String[] powerUpType = Encoder.encodePowerUpsType(powerUpsList);
         CubeColour[] powerUpColour = Encoder.encodePowerUpColour(powerUpsList);
-        String[] expectedType = new String[]{"TagbackGranade", "TargetingScope", "Newton"};
+        String[] expectedType = new String[]{"TagbackGrenade", "TargetingScope", "Newton"};
         CubeColour[] expectedColour = new CubeColour[]{CubeColour.Blue, CubeColour.Red, CubeColour.Blue,};
         for (int i = 0; i < powerUpType.length; i++) {
             Assert.assertEquals(expectedType[i], powerUpType[i]);
