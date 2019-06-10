@@ -1,11 +1,8 @@
 package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.player.Player;
-
-import java.util.Observable;
 
 /**
  * @author Evandro Maddes
@@ -56,7 +53,7 @@ public class BasicSquare extends Square {
            ammo.pickAmmo(player);
            ammo= null;//remove ammo after it is grabbed
 
-           AmmoTileUpdateEvent message = new AmmoTileUpdateEvent("MapUpdate", false, getColumn(), getRow(), null, null, null);
+           AmmoTileUpdateEvent message = new AmmoTileUpdateEvent(false, getColumn(), getRow(), null, null, null);
            notifyObservers(message);
     }
 
@@ -80,9 +77,9 @@ public class BasicSquare extends Square {
 
         AmmoTileUpdateEvent message;
         if (ammo.isPowerUpTile())
-            message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP" );
+            message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP" );
         else
-            message = new AmmoTileUpdateEvent("MapUpdate", true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString() );
+            message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString() );
         notifyObservers(message);//send to VirtualView
     }
 

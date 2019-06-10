@@ -5,15 +5,12 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
     private String[] powerUps;
     private CubeColour[] colours;
     private Character currCharacter;
-    public PlayerPowerUpUpdateEvent(String user, Character currCharacter, String[] powerUps, CubeColour[] colours) {
-        super(user);
+    public PlayerPowerUpUpdateEvent(Character currCharacter, String[] powerUps, CubeColour[] colours) {
+        super("BROADCAST");
         this.powerUps = powerUps;
         this.colours = colours;
         this.currCharacter = currCharacter;

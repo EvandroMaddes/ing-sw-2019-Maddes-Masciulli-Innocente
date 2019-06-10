@@ -25,7 +25,7 @@ public class DisconnectionManager {
         this.disconnectedPlayers.add(disconnectedPlayer);
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();
         controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[disconnectedPlayer.getPosition().getRow()][disconnectedPlayer.getPosition().getColumn()].removeCurrentPlayer(disconnectedPlayer);
-        controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getUsername(), disconnectedPlayer.getCharacter()));
+        controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getCharacter()));
         if (controller.getGameManager().getModel().getPlayers().size() < 3)
             controller.getGameManager().endGame();
     }
@@ -36,7 +36,7 @@ public class DisconnectionManager {
         disconnectedPlayers.remove(reconnectedPlayer);
         controller.getUsersVirtualView().get(username).setPlayerConnected();
         controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[reconnectedPlayer.getPosition().getRow()][reconnectedPlayer.getPosition().getColumn()].addCurrentPlayer(reconnectedPlayer);
-        controller.getGameManager().getModel().notifyObservers(new PlayerReconnectionNotify(reconnectedPlayer.getUsername(), reconnectedPlayer.getCharacter()));
+        controller.getGameManager().getModel().notifyObservers(new PlayerReconnectionNotify(reconnectedPlayer.getCharacter()));
     }
 
     public ArrayList<Player> getGamePlayers() {

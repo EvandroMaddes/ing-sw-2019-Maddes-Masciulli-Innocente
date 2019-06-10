@@ -159,13 +159,13 @@ public class Player extends Observable {
     public void addAmmo(AmmoCube ammo)
     {
         this.ammo.add(ammo);
-        AmmoUpdateEvent message = new AmmoUpdateEvent(username, character, this.ammo );
+        AmmoUpdateEvent message = new AmmoUpdateEvent(character, this.ammo );
         notifyObservers(message);
     }
 
     public void discardAmmo(AmmoCube ammoCube){
         ammo.remove(ammoCube);
-        notifyObservers(new AmmoUpdateEvent(username, character, ammo));
+        notifyObservers(new AmmoUpdateEvent(character, ammo));
     }
 
     /**
@@ -200,7 +200,7 @@ public class Player extends Observable {
             powerUps[i] = this.powerUps.get(i).getName();
             colours[i] = this.powerUps.get(i).getColour();
         }
-        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(username, character, powerUps, colours);
+        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(character, powerUps, colours);
         notifyObservers(message);
     }
 
@@ -210,7 +210,7 @@ public class Player extends Observable {
             messageWeapons[i] = weapons[i].getName();
         }
 
-        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(username, messageWeapons, character);
+        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(messageWeapons, character);
         notifyObservers(message);
     }
 
