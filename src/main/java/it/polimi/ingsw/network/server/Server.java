@@ -77,53 +77,24 @@ public class Server {
                     }
 
                     //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
-/*                    if(activeClientList.size()==2) {
-                        message = null;
-                        String currentClient = activeClientList.get(0);
-                        ServerInterface server = mapUserServer.get(currentClient);
-                        ArrayList<Event> disconnectedClients = ping();
-                        if(disconnectedClients.isEmpty()) {
+                    if(activeClientList.size()==2) {
+                        String currentUser = activeClientList.get(0);
+                        ServerInterface server = mapUserServer.get(currentUser);
 
-                            server.sendMessage(new GameRequestEvent(activeClientList.get(0)));
-                            message = server.listenMessage();
-                            if (message == null) {
-                                message = new DisconnectedEvent(activeClientList.get(0));
-                                disconnectClient(currentClient);
-                            }
-                            else {
-                                mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser());
-                            }
+                        server.sendMessage(new GameRequestEvent(currentUser));
+                        log.info("Sending message to:\t"+currentUser+"\n");
+                        message = server.listenMessage();
+                        if (message == null) {
+                            message = new DisconnectedEvent(currentUser);
+                            disconnectClient(currentUser);
                         }
-                        else{
-
-                            log.severe("Client disconnected in other player's turn");
+                        else {
+                            mapUserView.get(message.getUser()).toController(message);
+                            log.info("Listened message from:\t" + message.getUser()+"\n");
+                        }
 
                         }
-                        if (activeClientList.size()>1){
 
-                            disconnectedClients = ping();
-                            if(disconnectedClients.isEmpty()) {
-                                currentClient = activeClientList.get(1);
-                                server = mapUserServer.get(currentClient);
-                                server.sendMessage(new GameRequestEvent(currentClient));
-                                message = server.listenMessage();
-                                if(message==null){
-                                    message= new DisconnectedEvent(currentClient);
-                                    disconnectClient(currentClient);
-                                }
-                                mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser());
-                            }
-                            else {
-
-                                log.severe("Client disconnected in other player's turn");
-                            }
-                        }
-                        gameCouldStart = true;
-                    }
-
-*/
                     //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
