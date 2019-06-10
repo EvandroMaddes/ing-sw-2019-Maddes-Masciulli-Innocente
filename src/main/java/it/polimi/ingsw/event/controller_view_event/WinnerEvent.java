@@ -4,9 +4,10 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
 public class WinnerEvent extends ControllerViewEvent {
-
-    public WinnerEvent(String user) {
+ private int point;
+    public WinnerEvent(String user, int point) {
         super(user);
+        this.point = point;
     }
 
     @Override

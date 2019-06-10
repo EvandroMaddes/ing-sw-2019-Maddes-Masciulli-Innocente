@@ -47,7 +47,7 @@ public class CLIHandler {
         for (int i =0; i<X.length;i++) {
 
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_CYAN.escape()+"\n"
-                    +"coordinate x:"+X[i]+"  coordinate y:"+Y[i]+" option "+i);
+                    +"Row:"+X[i]+" Column:"+Y[i]+" option "+i);
             System.out.flush();
         }
         while(index==404) {

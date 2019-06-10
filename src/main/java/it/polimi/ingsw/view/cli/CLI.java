@@ -17,9 +17,6 @@ import java.util.*;
 public class CLI extends RemoteView {
 
     private CLIDisplay display;
-
-
-    // private ArrayList<CLIPlayerBoard> playerBoards;//una per ogni player
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
 
     /**
@@ -209,8 +206,9 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
-        String weaponSelected = null;
-        while (weaponSelected == null) {
+        String weaponSelected = "init";
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"Select one weapon to reload or type other to skip action.");
+        while (!reloadableWeapons.contains(weaponSelected)) {
             try {
                 CLIHandler.arrayPrint(reloadableWeapons);
                 weaponSelected = CLIHandler.stringRead().toUpperCase();
@@ -385,6 +383,18 @@ public class CLI extends RemoteView {
             }
         }
         return new WeaponGrabChoiceEvent(getUser(), weaponSelected);
+    }
+
+    /**
+     * iT show whio whin the game and his point
+     * @param user winner
+     * @param point
+     * @return message notify the success of updating
+     */
+    @Override
+    public Event winnerUpdate(String user, int point) {
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\t\t\t\t Player "+user+" win this game with "+point);
+        return new UpdateChoiceEvent(getUser());
     }
 
     /**
@@ -707,22 +717,7 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(getUser());
     }
 
-    /**
-     * it found color by name
-     * @param colourString name of colour
-     * @return colour escape
-     */
-    private String findColorEscape(String colourString) {
-        String colourEscape = Color.ANSI_BLACK_BACKGROUND.escape();
-        if (colourString.equalsIgnoreCase("RED")) {
-            colourEscape = colourEscape + Color.ANSI_RED.escape();
-        } else if (colourString.equalsIgnoreCase("BLUE")) {
-            colourEscape = colourEscape + Color.ANSI_BLUE.escape();
-        } else {
-            colourEscape = colourEscape + Color.ANSI_YELLOW.escape();
-        }
-        return colourEscape;
-    }
+
 
     /**
      * user choose target of his power up
@@ -750,12 +745,9 @@ public class CLI extends RemoteView {
         int[] chosenSquare = null;
         while (chosenSquare == null) {
             try {
-
-
                 chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
             } catch (IllegalArgumentException e) {
                 chosenSquare = null;
-
             }
 
         }
@@ -767,7 +759,7 @@ public class CLI extends RemoteView {
      * it return how a player pay the cost of effect selected(weapon effect)
      * @param powerUpNames list of power up's name available to use
      * @param powerUpColours list of power up's colour available to use
-     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
      * @param maximumPowerUpRequest max number of power up you can use
      * @return event that contains player's choice
      */
@@ -799,7 +791,7 @@ public class CLI extends RemoteView {
      * it return how a player pay the weapon GRAB cost
      * @param powerUpNames list of power up's name available to use
      * @param powerUpColours list of power up's colour available to use
-     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
      * @param maximumPowerUpRequest max number of power up you can use
      * @return event that contains player's choice
      */
@@ -825,7 +817,7 @@ public class CLI extends RemoteView {
      *
      * @param powerUpNames list of power up's name available to use
      * @param powerUpColours list of power up's colour available to use
-     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
      * @param maximumPowerUpRequest max number of power up you can use
      * @return event that contains player's choice
      */
@@ -941,12 +933,8 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
-        String choice ="init";
+        String choice =answerControl();
         Event selected = null;
-        while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")){
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you like to use one of your power up?[Y/N]");
-            choice = CLIHandler.stringRead();
-        }
         if(choice.equalsIgnoreCase("Y")) {
             PowerUpChoiceEvent message = (PowerUpChoiceEvent) powerUpChoice(powerUpNames, powerUpColours);
              selected = new WhileActionPowerUpChoiceEvent(getUser(), message.getCard(), message.getPowerUpColour());
@@ -972,10 +960,10 @@ public class CLI extends RemoteView {
         String[] powerUpChoice = new String[maxUsablePowerUps];
         CubeColour[] colourChoice = new CubeColour[maxUsablePowerUps];
 
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You receive damage: would you like to use one PowerUp? [Y/N] ");
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You receive damage");
 
 
-        choice = CLIHandler.stringRead();
+        choice = answerControl();
 
         if (choice.equalsIgnoreCase("y")){
         for(int i=0;i<powerUpNames.length;i++){
@@ -1026,18 +1014,15 @@ public class CLI extends RemoteView {
      * User choose one way for pay
      * @param powerUpNames list of power up's name available to use
      * @param powerUpColours list of power up's colour available to use
-     * @param minimumPowerUpRequest if your ammo are not enough you must pay with powerUp
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
      * @param maximumPowerUpRequest max number of power up you can use
      * @return index of powerUp selected
      */
     private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         int[] selected = new int[powerUpNames.length];
         int index ;
-        String choice;
-
-
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you like to pay with PowerUP? [Y/N]");
-        choice = CLIHandler.stringRead();
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"It's time to pay...");
+        String choice = answerControl();
 
         if (choice.equalsIgnoreCase("Y")) {
             System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
@@ -1107,4 +1092,33 @@ public class CLI extends RemoteView {
         return selected;
     }
 
+    /**
+     * it found color by name
+     * @param colourString name of colour
+     * @return colour escape
+     */
+    private String findColorEscape(String colourString) {
+        String colourEscape = Color.ANSI_BLACK_BACKGROUND.escape();
+        if (colourString.equalsIgnoreCase("RED")) {
+            colourEscape = colourEscape + Color.ANSI_RED.escape();
+        } else if (colourString.equalsIgnoreCase("BLUE")) {
+            colourEscape = colourEscape + Color.ANSI_BLUE.escape();
+        } else {
+            colourEscape = colourEscape + Color.ANSI_YELLOW.escape();
+        }
+        return colourEscape;
+    }
+
+    /**
+     * It checks if imput is equals to Y or N
+     * @return user choice
+     */
+        private String answerControl(){
+        String choice = new String();
+            while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")){
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Would you like to use one of your power up?[Y/N]");
+                choice = CLIHandler.stringRead();
+            }
+        return choice;
+        }
 }

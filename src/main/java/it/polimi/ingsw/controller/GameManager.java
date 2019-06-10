@@ -293,6 +293,6 @@ public class GameManager {
     }
 
     public void endGame(){
-        controller.callView(new WinnerEvent(calculateWinner().getUsername()));
+        controller.callView(new WinnerEvent(calculateWinner().getUsername(),calculateWinner().getPoints()));
     }
 }
