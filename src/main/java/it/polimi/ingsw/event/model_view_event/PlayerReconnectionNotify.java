@@ -7,8 +7,8 @@ import it.polimi.ingsw.view.RemoteView;
 public class PlayerReconnectionNotify extends ModelViewEvent{
     Character reconnectedCharacter;
 
-    public PlayerReconnectionNotify(String user, Character reconnectedCharacter) {
-        super(user);
+    public PlayerReconnectionNotify(Character reconnectedCharacter) {
+        super();
         this.reconnectedCharacter = reconnectedCharacter;
     }
 

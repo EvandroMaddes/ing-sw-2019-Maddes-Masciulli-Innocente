@@ -12,8 +12,8 @@ public class PlayerWeaponUpdateEvent extends ModelViewEvent {
         return currCharacter;
     }
 
-    public PlayerWeaponUpdateEvent(String user, String[] playerWeapon, Character currCharacter) {
-        super(user);
+    public PlayerWeaponUpdateEvent(String[] playerWeapon, Character currCharacter) {
+        super();
         this.playerWeapon = playerWeapon;
         this.currCharacter = currCharacter;
     }

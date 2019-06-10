@@ -11,8 +11,8 @@ import java.util.List;
 public class AmmoUpdateEvent extends ModelViewEvent {
     private ArrayList<AmmoCube> ammo;
     private Character currCharacter;
-    public AmmoUpdateEvent(String user,Character currCharacter, List<AmmoCube> ammo) {
-        super(user);
+    public AmmoUpdateEvent(Character currCharacter, List<AmmoCube> ammo) {
+        super();
         this.currCharacter = currCharacter;
         this.ammo = (ArrayList<AmmoCube>) ammo;
     }

@@ -533,11 +533,8 @@ public class CLI extends RemoteView {
      * @return message notify the success of updating
      */
     @Override
-    public Event newPlayerJoinedUpdate(String newPlayer) {
-
-        //todo questo messaggo viene inviato quando un player joina la partita o dopo aver scelto il proprio caracther?
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(newPlayer)+"New player joined the game:" + newPlayer);
-
+    public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(newPlayer)+"New player joined the game:" + newPlayer+" with "+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
         return new UpdateChoiceEvent(getUser());
     }
 
