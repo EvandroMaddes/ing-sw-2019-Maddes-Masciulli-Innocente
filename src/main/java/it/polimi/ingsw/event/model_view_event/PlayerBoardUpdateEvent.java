@@ -16,18 +16,18 @@ public class PlayerBoardUpdateEvent extends ModelViewEvent {
     private int skullNumber;
     private Character[] marks;
     private Character[] damages;
+    private Character playerBoardCharacter;
 
-    public PlayerBoardUpdateEvent(String user, Character character, int skullNumber, Character[] marks, Character[] damages) {
+    public PlayerBoardUpdateEvent(String user, Character playerBoardCharacter, int skullNumber, Character[] marks, Character[] damages) {
         super(user);
         this.skullNumber = skullNumber;
+        this.playerBoardCharacter = playerBoardCharacter;
         this.marks = marks;
         this.damages = damages;
     }
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-08
-        //return remoteView.playerBoardUpdate(getHitCharacter(), getHittingCharacter(), getDamageTokenNumber(),getMarkNumber());
-        return null;
+        return remoteView.playerBoardUpdate(playerBoardCharacter,skullNumber,marks,damages);
     }
 }
