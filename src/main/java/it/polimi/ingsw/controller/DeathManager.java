@@ -6,12 +6,8 @@ import it.polimi.ingsw.model.board.GameTrack;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.utils.Encoder;
-
-import java.util.ArrayList;
 
 public class DeathManager {
     private Controller controller;
@@ -36,7 +32,7 @@ public class DeathManager {
 
     /**
      *
-     *                   when the player send the square choice, controller call spawn()
+     * when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
         deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());

@@ -146,7 +146,7 @@ public class Player extends Observable {
             this.position.removeCurrentPlayer(this);
         this.position = position;
         position.addCurrentPlayer(this);
-        PlayerPositionUpdateEvent message = new PlayerPositionUpdateEvent( username, character, position.getRow(), position.getColumn());
+        PlayerPositionUpdateEvent message = new PlayerPositionUpdateEvent(character, position.getRow(), position.getColumn());
         notifyObservers(message);
     }
 
@@ -372,5 +372,9 @@ public class Player extends Observable {
 
     public int getTimesGetDamaged() {
         return timesGetDamaged;
+    }
+
+    public void setDead(){
+        dead = true;
     }
 }

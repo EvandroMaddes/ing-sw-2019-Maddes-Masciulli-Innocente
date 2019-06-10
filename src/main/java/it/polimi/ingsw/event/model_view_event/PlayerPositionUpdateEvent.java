@@ -15,11 +15,10 @@ public class PlayerPositionUpdateEvent extends PositionUpdateEvent {
 
     /**
      * Constructor
-     * @param user the Client user
      * @param positionX  his next position X coordinate
      * @param positionY his next position Y coordinate
      */
-    public PlayerPositionUpdateEvent(String user, Character character, int positionX, int positionY){
+    public PlayerPositionUpdateEvent(Character character, int positionX, int positionY){
         super(positionX, positionY);
         this.character = character;
     }
