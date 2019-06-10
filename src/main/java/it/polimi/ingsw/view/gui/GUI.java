@@ -11,6 +11,10 @@ import it.polimi.ingsw.view.RemoteView;
 import java.util.ArrayList;
 
 public class GUI extends RemoteView {
+    @Override
+    public Event winnerUpdate(String user, int point) {
+        return null;
+    }
 
     @Override
     public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {

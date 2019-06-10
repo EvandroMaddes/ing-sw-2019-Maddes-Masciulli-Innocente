@@ -77,53 +77,24 @@ public class Server {
                     }
 
                     //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
-/*                    if(activeClientList.size()==2) {
-                        message = null;
-                        String currentClient = activeClientList.get(0);
-                        ServerInterface server = mapUserServer.get(currentClient);
-                        ArrayList<Event> disconnectedClients = ping();
-                        if(disconnectedClients.isEmpty()) {
+                    if(activeClientList.size()==2) {
+                        String currentUser = activeClientList.get(0);
+                        ServerInterface server = mapUserServer.get(currentUser);
 
-                            server.sendMessage(new GameRequestEvent(activeClientList.get(0)));
-                            message = server.listenMessage();
-                            if (message == null) {
-                                message = new DisconnectedEvent(activeClientList.get(0));
-                                disconnectClient(currentClient);
-                            }
-                            else {
-                                mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser());
-                            }
+                        server.sendMessage(new GameRequestEvent(currentUser));
+                        log.info("Sending message to:\t"+currentUser+"\n");
+                        message = server.listenMessage();
+                        if (message == null) {
+                            message = new DisconnectedEvent(currentUser);
+                            disconnectClient(currentUser);
                         }
-                        else{
-
-                            log.severe("Client disconnected in other player's turn");
+                        else {
+                            mapUserView.get(message.getUser()).toController(message);
+                            log.info("Listened message from:\t" + message.getUser()+"\n");
+                        }
 
                         }
-                        if (activeClientList.size()>1){
 
-                            disconnectedClients = ping();
-                            if(disconnectedClients.isEmpty()) {
-                                currentClient = activeClientList.get(1);
-                                server = mapUserServer.get(currentClient);
-                                server.sendMessage(new GameRequestEvent(currentClient));
-                                message = server.listenMessage();
-                                if(message==null){
-                                    message= new DisconnectedEvent(currentClient);
-                                    disconnectClient(currentClient);
-                                }
-                                mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser());
-                            }
-                            else {
-
-                                log.severe("Client disconnected in other player's turn");
-                            }
-                        }
-                        gameCouldStart = true;
-                    }
-
-*/
                     //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
@@ -149,7 +120,9 @@ public class Server {
 
                 //todo ora si gestisce il turno
                 message = null;
+                //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
+                //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
                 //TODO chiama ping solo se currUser != vecchioUser
                 ArrayList<Event> disconnectedClients = ping();
 
@@ -263,7 +236,7 @@ public class Server {
     }
 
     /**
-     * this method is called before the sendMessage, it update the clients that disconnected during the last round
+     * This method is called before the sendMessage, it update the clients that disconnected during the last round
      * @return the DisconnectedEvents from the disconnected clients
      */
     private static ArrayList<Event> ping(){
@@ -297,11 +270,21 @@ public class Server {
         log.warning("Client Disconnected:\t"+user+"\n");
     }
 
+    /**
+     * Add and map the last connected user with his server implementation
+     * @param currUser his the client username
+     * @param serverImplementation is the server implementation depending on user's network preferences
+     */
     private static void userAddAndMap( String currUser, ServerInterface serverImplementation){
         activeClientList.add(currUser);
         mapUserServer.put(currUser,serverImplementation);
     }
 
+    /**
+     * If there isn't any username conflict (when a client try to connect with an already token username),
+     *  this method update
+     * @return the last connected username
+     */
     private static String updateActiveClientList() {
         String connectedUser = updateActiveClientList(serverRMI);
         if (connectedUser.isEmpty()) {
@@ -311,9 +294,9 @@ public class Server {
     }
 
     /**
-     * this method update the client list from the given server implementation
-     * @param serverImplementation
-     * @return the last connected user
+     * This method update the client list from the given server implementation
+     * @param serverImplementation is the chosen implementation
+     * @return the last connected user, or an empty string if there isn't
      */
     private static String updateActiveClientList(ServerInterface serverImplementation){
         String connectedUser ="";
