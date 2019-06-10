@@ -1,8 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.ReconnectionRequestEvent;
-import it.polimi.ingsw.event.UsernameModificationEvent;
+import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
+import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;

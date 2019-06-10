@@ -2,18 +2,13 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.UsernameModificationEvent;
-import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
-import it.polimi.ingsw.view.cli.graph.*;
 import it.polimi.ingsw.view.gui.GUI;
 
 
