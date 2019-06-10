@@ -52,7 +52,7 @@ public interface RemoteViewInterface {
    Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets);
    Event whileActionPowerUpRequestEvent( String[] powerUpNames, CubeColour[] powerUpColours);
    //following methods manage UpdateEvent
-   Event newPlayerJoinedUpdate(String newPlayer);
+   Event newPlayerJoinedUpdate(String newPlayer,Character characterChoice);
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
    Event removeAmmoTileUpdate(int x, int y);
    Event positionUpdate(Character currCharacter, int x, int y);
