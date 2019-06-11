@@ -12,7 +12,7 @@ import org.junit.Test;
 public class SpawnSquareTest {
 
     @Test
-    public void isGrabbableTest(){
+    public void grabTest(){
         SpawnSquare testSquare = new SpawnSquare(0,0);
         Player testPlayer = new Player("Federico", Character.SPROG);
         Weapon weapon1 = new LockRifle(CubeColour.Blue, "LR", new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)}, new AmmoCube[]{});
@@ -24,5 +24,9 @@ public class SpawnSquareTest {
 
         testPlayer.addAmmo(new AmmoCube(CubeColour.Blue));
         Assert.assertTrue(testSquare.isGrabbable(testPlayer));
+
+        testSquare.grabWeapon(weapon1, testPlayer);
+        Assert.assertFalse(testSquare.getWeapons().contains(weapon1));
+        Assert.assertEquals(weapon1, testPlayer.getWeapons()[0]);
     }
 }
