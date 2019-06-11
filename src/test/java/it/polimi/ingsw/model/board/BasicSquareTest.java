@@ -6,18 +6,9 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class BasicSquareTest {
-    private Map gameMap;
-    private Square[][] map;
-
-    @Before
-    public void setUp(){
-        gameMap = new Map("leftFirst", "rightSecond");
-        map = gameMap.getSquareMatrix();
-    }
 
     @Test
     public void tileTest() {

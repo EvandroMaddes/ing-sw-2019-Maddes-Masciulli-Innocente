@@ -297,9 +297,13 @@ public class ActionManager {
         else
             grabCost[2]--;
         payCost(grabCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
+        ((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
         manageWeaponLimit();
     }
 
+    /**
+     *
+     */
     private void manageWeaponLimit(){
         if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
             ArrayList<String> playerWeapons = new ArrayList<>();

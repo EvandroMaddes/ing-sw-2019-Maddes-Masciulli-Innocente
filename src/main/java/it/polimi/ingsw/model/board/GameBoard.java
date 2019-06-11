@@ -38,10 +38,6 @@ public class GameBoard {
         return powerUpDeck;
     }
 
-    public void setFinalFrenzy() {
-        finalFrenzy = true;
-    }
-
     public boolean isFinalFrenzy() {
         return finalFrenzy;
     }
