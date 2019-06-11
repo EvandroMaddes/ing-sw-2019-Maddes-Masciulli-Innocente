@@ -89,14 +89,6 @@ public abstract class Square extends Observable {
      *
      * @return
      */
-    public boolean[] getReachable() {
-        return reachable;
-    }
-
-    /**
-     *
-     * @return
-     */
     public ArrayList<Player> getSquarePlayers() {
         return squarePlayers;
     }
@@ -168,7 +160,7 @@ public abstract class Square extends Observable {
      *
      * @return plyers visible by this square
      */
-    public ArrayList<Player>  findVisiblePlayers(){
+    public ArrayList<Player> findVisiblePlayers(){
         ArrayList<Square> visibleSquares = findVisibleSquare();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
         for (Square s :visibleSquares) {
@@ -176,13 +168,15 @@ public abstract class Square extends Observable {
         }
         return visiblePlayers;
     }
-    /**
+
+    // TODO: 2019-06-11 che fare di questo sotto? mai usato, non capisco se serve, penso si possa cancellare
+/*    /**
      *
      * @param square one square of the room
      * @param colourSquare colour of the room
      * @return players of one room
      */
-    public ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
+/*    public ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
         ArrayList<Square> squareRoom = new ArrayList<Square>();
         squareRoom.add(square);
 
@@ -207,35 +201,20 @@ public abstract class Square extends Observable {
         }
         return playerRoom;
     }
-
+*/
     /**
      *
      * @return all current room players
      */
     public ArrayList<Player> findRoomPlayers(){
-        ArrayList<Square> squareRoom = new ArrayList<Square>();
-        squareRoom.add(this);
-
-        ArrayList<Player> playerRoom = new ArrayList<Player>();
-
-        for (Square currentSquare : squareRoom) {
-            for(int i=0; i<4; i++) {
-                if (currentSquare.checkDirection(i)) {
-                    //  currentSquare = getNextSquare(i);
-                    if (currentSquare.getNextSquare(i).getSquareColour() == getSquareColour() && !squareRoom.contains(currentSquare)) {
-
-                        squareRoom.add(currentSquare.getNextSquare(i));
-
-                    }
-                }
-            }
+        String roomColour = this.getSquareColour();
+        ArrayList<Square> roomSquares = findVisibleSquare();
+        ArrayList<Player> roomPlayers = new ArrayList<>();
+        for (Square s:roomSquares) {
+            if (s.getSquareColour().equals(roomColour))
+                roomPlayers.addAll(s.getSquarePlayers());
         }
-        for (Square currentSquare:squareRoom
-        ) {
-            playerRoom.addAll(currentSquare.getSquarePlayers());
-
-        }
-        return playerRoom;
+        return roomPlayers;
     }
 
     @Override
@@ -244,7 +223,7 @@ public abstract class Square extends Observable {
         super.notifyObservers(arg);
     }
 
-    public ArrayList<Square> reachalbeInMoves(int numberOfMoves){
+    public ArrayList<Square> reachableInMoves(int numberOfMoves){
         ArrayList<Square> possibleDestination = new ArrayList<>();
 
         ArrayList<Square> reachAtPreviousStep = new ArrayList<>();

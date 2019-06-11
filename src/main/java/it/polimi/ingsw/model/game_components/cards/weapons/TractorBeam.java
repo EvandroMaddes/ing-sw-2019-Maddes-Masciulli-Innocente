@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TractorBeam extends AlternateFireWeapon {
@@ -72,7 +71,7 @@ public class TractorBeam extends AlternateFireWeapon {
         ArrayList<Square> possibleStartingSquare = getOwner().getPosition().findVisibleSquare();
         ArrayList<Square> notVisibleStartingSquare = new ArrayList<>();
         for (Square visibleSqure:possibleStartingSquare){
-            for (Square notVisibleSquare: visibleSqure.reachalbeInMoves(2)){
+            for (Square notVisibleSquare: visibleSqure.reachableInMoves(2)){
                 if (!possibleStartingSquare.contains(notVisibleSquare))
                     notVisibleStartingSquare.add(notVisibleSquare);
             }
@@ -98,7 +97,7 @@ public class TractorBeam extends AlternateFireWeapon {
     }
 
     private ControllerViewEvent getTargetEffectOneSecondStep(){
-        ArrayList<Square> possibleDestination = getFirstEffectTarget().get(0).getPosition().reachalbeInMoves(2);
+        ArrayList<Square> possibleDestination = getFirstEffectTarget().get(0).getPosition().reachableInMoves(2);
         ArrayList<Square> validDestination = getOwner().getPosition().findVisibleSquare();
         ArrayList<Square> possibleTargets = new ArrayList<>();
         for (Square s:possibleDestination){
@@ -129,7 +128,7 @@ public class TractorBeam extends AlternateFireWeapon {
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
         ArrayList<Player> possibleTargets = new ArrayList<>();
-        ArrayList<Square> reachablePosition = getOwner().getPosition().reachalbeInMoves(2);
+        ArrayList<Square> reachablePosition = getOwner().getPosition().reachableInMoves(2);
         for (Square s: reachablePosition){
             ArrayList<Player> squarePlayers = s.getSquarePlayers();
             for (Player currTarget : squarePlayers) {

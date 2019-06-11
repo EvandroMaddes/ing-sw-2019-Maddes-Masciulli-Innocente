@@ -144,7 +144,7 @@ public class ActionManager {
 
     public void manageShot(){
         if (controller.getGameManager().isFinalFrenzyPhase() || currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState() == 2){
-            ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachalbeInMoves(1);
+            ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachableInMoves(1);
             controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
         }
         else sendPossibleWeapons();

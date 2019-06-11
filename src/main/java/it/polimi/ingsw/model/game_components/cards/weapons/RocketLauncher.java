@@ -111,7 +111,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2);
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
 

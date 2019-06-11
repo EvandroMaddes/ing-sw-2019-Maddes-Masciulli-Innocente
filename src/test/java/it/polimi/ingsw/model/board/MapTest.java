@@ -74,7 +74,8 @@ public class MapTest {
         Assert.assertTrue(player1.getPosition().findVisiblePlayers().contains(player2));
         Assert.assertTrue(player2.getPosition().findVisiblePlayers().contains(player1));
 
-        /***** USATO PER PROVARE ATTRIBUTI QUADRATI *****
+        // TODO: 2019-06-11 che fare di questa cosa sotto?
+/*
         Square square;
          for (int i=0; i<mapList.size();i++) {
 
@@ -103,8 +104,7 @@ public class MapTest {
             }
 
         }
-        **/
-
+*/
 
 
 

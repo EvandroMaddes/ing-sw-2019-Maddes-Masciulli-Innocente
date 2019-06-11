@@ -64,7 +64,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleTargets = getOwner().getPosition().reachalbeInMoves(1);
+        ArrayList<Square> possibleTargets = getOwner().getPosition().reachableInMoves(1);
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));
     }
 

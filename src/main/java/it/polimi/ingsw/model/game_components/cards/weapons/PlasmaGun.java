@@ -75,7 +75,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2 - numberOfMoves);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2 - numberOfMoves);
         possibleDestination.remove(getOwner().getPosition());
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
