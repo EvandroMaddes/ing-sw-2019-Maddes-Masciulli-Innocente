@@ -208,4 +208,8 @@ public class PlayerBoard extends Observable implements Serializable{
     public int getDamageAmount() {
         return damageAmount;
     }
+
+    public ArrayList<DamageToken> getMarks() {
+        return marks;
+    }
 }
