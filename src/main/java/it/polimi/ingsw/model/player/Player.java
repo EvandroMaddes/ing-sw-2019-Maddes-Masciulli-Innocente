@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.*;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.utils.Encoder;
 
 import java.util.*;
 
@@ -108,25 +109,6 @@ public class Player extends Observable {
         timesGetDamaged--;
     }
 
-    /**
-     *
-     * @param weapon is the weapon searched
-     * @return the index of the weapon in the inventory, -1 if the player haven't it
-     */
-    public int getWeaponIndex(Weapon weapon)
-    {
-        for(int i = 0; i < weapons.length; i++)
-        {
-            if (weapons[i] == weapon)
-                return i;
-        }
-        return -1;
-    }
-
-    /**
-     *
-     * @return firstPlayer , true or false
-     */
     public boolean isFirstPlayer()
     {
         return firstPlayer;
@@ -158,13 +140,19 @@ public class Player extends Observable {
      */
     public void addAmmo(AmmoCube ammo)
     {
-        this.ammo.add(ammo);
+        if(getCubeColourNumber(ammo.getColour()) < 3)
+            this.ammo.add(ammo);
         AmmoUpdateEvent message = new AmmoUpdateEvent(character, this.ammo );
         notifyObservers(message);
     }
 
     public void discardAmmo(AmmoCube ammoCube){
-        ammo.remove(ammoCube);
+        for (AmmoCube a: this.ammo) {
+            if (ammoCube.getColour() == a.getColour()) {
+                this.ammo.remove(a);
+                break;
+            }
+        }
         notifyObservers(new AmmoUpdateEvent(character, ammo));
     }
 
@@ -176,7 +164,8 @@ public class Player extends Observable {
      */
     public void addPowerUp(PowerUp powerUp)
     {
-        this.powerUps.add(powerUp);
+        if (this.powerUps.size() < 3)
+            this.powerUps.add(powerUp);
         notifyPowerUpChange();
     }
 
@@ -194,13 +183,7 @@ public class Player extends Observable {
     }
 
     private void notifyPowerUpChange(){
-        String[] powerUps = new String[this.powerUps.size()];
-        CubeColour[] colours = new CubeColour[this.powerUps.size()];
-        for (int i = 0; i < this.powerUps.size(); i++){
-            powerUps[i] = this.powerUps.get(i).getName();
-            colours[i] = this.powerUps.get(i).getColour();
-        }
-        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(character, powerUps, colours);
+        PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(character, Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
         notifyObservers(message);
     }
 
@@ -212,31 +195,6 @@ public class Player extends Observable {
 
         PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(messageWeapons, character);
         notifyObservers(message);
-    }
-
-
-    /**
-     *
-     * @param weapon is the weapon dropped
-     * @param spawnSquare is the spawn square in which the weapon is dropped
-     */
-    public void removeWeapon(Weapon weapon, SpawnSquare spawnSquare)
-    {
-        for (int i = 0; i < MAX_WEAPONS; i++)
-        {
-            if (weapons[i] == weapon)
-            {
-                weapons[i] = null;
-            }
-        }
-        numberOfWeapons--;
-        weapon.setOwner(null);
-        if ( !weapon.isLoaded() )
-        {
-            weapon.setLoaded();
-        }
-
-        notifyWeaponsChange();
     }
 
 
@@ -338,15 +296,18 @@ public class Player extends Observable {
      */
     public void discardWeapon(Weapon weapon){
         int i = 0;
-        while (i < MAX_WEAPONS + 1 && weapons[i] != weapon){
+        while (i < numberOfWeapons + 1 && weapons[i] != weapon){
             i++;
         }
         ((SpawnSquare)position).getWeapons().add(weapons[i]);
         weapons[i].setOwner(null);
+        weapons[i] = null;
         numberOfWeapons--;
-        if (i < MAX_WEAPONS){
-            weapons[i] = weapons[MAX_WEAPONS];
+        if (i < numberOfWeapons){
+            weapons[i] = weapons[numberOfWeapons];
+            weapons[numberOfWeapons] = null;
         }
+        notifyWeaponsChange();
     }
 
     public void addPoints(int pointsToAdd){
