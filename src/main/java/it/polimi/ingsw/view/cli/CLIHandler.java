@@ -11,7 +11,6 @@ public class CLIHandler {
 
     public static String stringPrintAndRead(String printedString){
         String returnedString = "";
-        //System.out.print(Color.RESET.escape());
         System.out.flush();
         while(returnedString.isEmpty()) {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+printedString+"\t");
@@ -71,7 +70,9 @@ public class CLIHandler {
      */
     public static int intRead(){
         try {
-            return inputScanner.nextInt();
+            int returned = inputScanner.nextInt();
+            inputScanner.nextLine();
+            return returned;
         } catch (Exception e){
             inputScanner.nextLine();
             return 404;
