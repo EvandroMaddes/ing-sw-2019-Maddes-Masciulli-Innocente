@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.game_components.cards.AmmoTilesDeck;
-import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
-import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
@@ -10,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GameTrackTest {
+public class KillShotTrackTest {
     private GameTrack testedTrack;
     private Player testPlayer;
 
@@ -21,13 +18,14 @@ public class GameTrackTest {
     }
 
     @Test
-    public void testKillShotTrack(){
-        ((KillShotTrack)testedTrack).evaluateDamage(new DamageToken(testPlayer),10);
+    public void evaluateDamageTest(){
+        (testedTrack).evaluateDamage(new DamageToken(testPlayer),10);
         Assert.assertTrue(testedTrack.checkEndTrack());
         Assert.assertEquals(10, ((KillShotTrack)testedTrack).getTokenTrack().size());
         Assert.assertEquals(testPlayer, ((KillShotTrack) testedTrack).getTokenTrack().get(0).getPlayer());
         System.out.println("Tested KillShotTrack methods");
     }
+    
 
 
 
