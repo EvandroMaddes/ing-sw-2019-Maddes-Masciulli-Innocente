@@ -1,17 +1,13 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.ReconnectionRequestEvent;
-import it.polimi.ingsw.event.UsernameModificationEvent;
-import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
+import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
+import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
-import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
-import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -29,7 +25,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 
-public class Server {
+public class Server extends WaitServer{
     private static Logger log = Logger.getLogger("ServerLogger");
 
 
@@ -95,8 +91,13 @@ public class Server {
                         }
                         if(!message.getUser().equals("BROADCAST")){
                                 mapUserView.get(message.getUser()).toController(message);
-                                log.info("Listened message from:\t" + message.getUser()+"\n");
                         }
+                        else{
+                            for (VirtualView currView: virtualViewList) {
+                                currView.toController(message);
+                            }
+                        }
+                        log.info("Listened message from:\t" + message.getUser()+"\n");
 
                         }
 
@@ -218,6 +219,8 @@ public class Server {
         }
         return null;
     }
+
+
 
     /**
      * This method, depending on gameCouldStart value, handle the incoming client connections

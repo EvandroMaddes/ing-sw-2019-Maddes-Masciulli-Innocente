@@ -1,4 +1,4 @@
-package it.polimi.ingsw.event;
+package it.polimi.ingsw.event.server_view_event;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
