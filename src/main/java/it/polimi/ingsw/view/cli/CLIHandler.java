@@ -78,6 +78,21 @@ public class CLIHandler {
         }
 
     }
+    public static int arraylistPrintRead(ArrayList<String> available){
+        int choice = 404;
+        int i=0;
+        for (String current:available
+        ) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + current+" option "+ i);
+            i++;
+        }
+        while(!(choice>-1 && choice<available.size())){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select one option:");
+            choice=CLIHandler.intRead();
+
+        }
+        return choice;
+    }
 
     public static String stringRead(){
         String chosenString;
