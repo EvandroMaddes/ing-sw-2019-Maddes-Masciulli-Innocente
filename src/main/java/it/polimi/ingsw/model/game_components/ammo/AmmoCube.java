@@ -32,7 +32,7 @@ public class AmmoCube {
                 colourRYB[0]++;
             else if (currentAmmoCube.getColour() == CubeColour.Yellow)
                 colourRYB[1]++;
-            else
+            else if (currentAmmoCube.getColour() == CubeColour.Blue)
                 colourRYB[2]++;
         }
         return colourRYB;
@@ -68,6 +68,8 @@ public class AmmoCube {
         int[] differenceRYB = new int[3];
         for (int i = 0; i < 3; i++){
             differenceRYB[i] = firstRYB[i] - secondRYB[i];
+            if (differenceRYB[i] < 0)
+                differenceRYB[i] = 0;
         }
         return differenceRYB;
     }
