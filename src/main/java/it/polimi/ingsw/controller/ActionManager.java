@@ -403,10 +403,6 @@ public class ActionManager {
                 payWeaponGrab(new String[]{}, new CubeColour[]{});
         else {
             minimalPowerUpNumberToUse = AmmoCube.cubeDifference(cost, playerAmmo);
-            for (int i = 0; i < 3; i++) {
-                if (minimalPowerUpNumberToUse[i] < 0)
-                    minimalPowerUpNumberToUse[i] = 0;
-            }
             if (context == PaymentRequestEvent.Context.WEAPON_EFFECT) {
                 EffectPaymentRequestEvent message = new EffectPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
                         Encoder.encodePowerUpsType(currentRoundManager.getCurrentPlayer().getPowerUps()),

@@ -48,5 +48,35 @@ public class PlayerBoardTest {
         System.out.println("Tested mark and damage method");
     }
 
+    @Test
+    public void addMarksTest(){
+        Player player2 = new Player("Federico", Character.SPROG);
+        Player player3 = new Player("Chiara", Character.VIOLET);
+        testedPlayerBoard.addMarks(player2, 3);
+        testedPlayerBoard.addMarks(player3, 5);
+        int player2Marks = testedPlayerBoard.checkNumberOfMarks(player2);
+        int player3Marks = testedPlayerBoard.checkNumberOfMarks(player3);
+
+        Assert.assertEquals(3, player2Marks);
+        Assert.assertEquals(3, player3Marks);
+    }
+
+    @Test
+    public void inflictMarksTest(){
+        Player player2 = new Player("Federico", Character.DOZER);
+        testedPlayerBoard.addMarks(player2, 3);
+        testedPlayerBoard.inflictMarks(player2);
+
+        Assert.assertEquals(0, testedPlayerBoard.checkNumberOfMarks(player2));
+        Assert.assertEquals(3, testedPlayerBoard.getDamageAmount());
+
+        int inflictedDamages = 0;
+        for (int i = 0; i < testedPlayerBoard.getDamageAmount(); i++) {
+            if (testedPlayerBoard.getDamageReceived()[i].getPlayer() == player2)
+                inflictedDamages++;
+        }
+        Assert.assertEquals(3, inflictedDamages);
+    }
+
 
 }

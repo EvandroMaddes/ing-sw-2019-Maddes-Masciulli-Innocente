@@ -109,7 +109,7 @@ public class EncoderTest {
         DamageToken damageToken2 = new DamageToken(player2);
         DamageToken damageToken3 = new DamageToken(player1);
         Character[] expectedResult = new Character[]{Character.BANSHEE, Character.D_STRUCT_OR, Character.BANSHEE};
-        Character[] damageTokensLite = new Character[expectedResult.length];
+        Character[] damageTokensLite;
 
         ArrayList<DamageToken> damageTokensList = new ArrayList<>();
         damageTokensList.add(damageToken1);
