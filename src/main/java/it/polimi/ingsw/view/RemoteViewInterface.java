@@ -45,12 +45,14 @@ public interface RemoteViewInterface {
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
    Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
    Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
+   Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
    Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget);
    Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event genericPaymentChoice( boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour);
    Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps);
    Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets);
    Event whileActionPowerUpRequestEvent( String[] powerUpNames, CubeColour[] powerUpColours);
+
    //following methods manage UpdateEvent
    Event newPlayerJoinedUpdate(String newPlayer,Character characterChoice);
    Event addAmmoTileUpdate(int x, int y,String fistColour,String secondColour, String thirdColour);
@@ -64,8 +66,9 @@ public interface RemoteViewInterface {
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
    Event winnerUpdate(String user, int point);
 
-   //todo fare per ultimo Event targetPowerUpChoice();
-   Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
+   //folliwing method manage server-view even
+   Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername);
+
 
 
 

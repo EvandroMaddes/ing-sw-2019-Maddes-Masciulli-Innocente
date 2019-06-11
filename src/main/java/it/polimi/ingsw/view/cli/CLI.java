@@ -4,6 +4,8 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
+import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
@@ -1005,6 +1007,61 @@ public class CLI extends RemoteView {
           message =  new EndRoundPowerUpChoiceEvent(getUser(),null,null);
         }
         return message;
+    }
+
+    /**
+     *
+     * @param available
+     * @param startedLobbies
+     * @param waitingLobbies
+     * @param startedLobbiesUsername
+     * @return
+     */
+    @Override
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
+        int choice = 404;
+        int lobbyChoice = 404;
+        int userChoice= 404;
+        Event messageChoice = null;
+
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"WELCOME!"+
+                "\nYOU CAN:");
+        if (available[0]) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "-select a new game option 0");
+        }
+        if (available[1]) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "-select a waiting lobby option 1");
+        }
+        if (available[2]) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "-select a started game option 2");
+        }
+
+        while(!(choice>-1 && choice <3)){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select a corrent option:");
+            choice = CLIHandler.intRead();
+        }
+
+        if(choice == 0){
+            messageChoice =  new NewGameChoiceEvent(getUser());
+        }
+
+        if(choice == 1){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Waiting lobbies:");
+            lobbyChoice=CLIHandler.arraylistPrintRead(waitingLobbies);
+            messageChoice = new LobbyChoiceEvent(getUser(),waitingLobbies.get(lobbyChoice));
+
+        }
+
+        if(choice == 2){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Started lobbies:");
+            lobbyChoice= CLIHandler.arraylistPrintRead(startedLobbies);
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your username:");
+            userChoice = CLIHandler.arraylistPrintRead(startedLobbiesUsername);
+            messageChoice = new LobbyChoiceEvent(startedLobbiesUsername.get(userChoice),startedLobbies.get(lobbyChoice));
+
+        }
+        return messageChoice;
+
     }
 
     /**

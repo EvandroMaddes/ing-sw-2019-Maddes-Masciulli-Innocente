@@ -174,6 +174,11 @@ public class GUI extends RemoteView {
     }
 
     @Override
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
+        return null;
+    }
+
+    @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
         return null;
     }

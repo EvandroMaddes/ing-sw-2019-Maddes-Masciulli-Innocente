@@ -54,6 +54,28 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
+        boolean[] available=new boolean[3];
+        available[0]=true;
+        available[1]=true;
+        available[2]=true;
+
+        ArrayList<String> wait = new ArrayList<String>();
+        wait.add("wait1");
+        wait.add("wait2");
+        wait.add("wait3");
+
+        ArrayList<String> started = new ArrayList<String>();
+        started.add("started1");
+        started.add("started2");
+        started.add("started3");
+
+        ArrayList<String> name = new ArrayList<String>();
+        name.add("name1");
+        name.add("name2");
+        name.add("name3");
+
+        remoteViewImplementation.welcomeChoice(available,started,wait,name);
+
         /*CLI currentView = (CLI)remoteViewImplementation;
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
