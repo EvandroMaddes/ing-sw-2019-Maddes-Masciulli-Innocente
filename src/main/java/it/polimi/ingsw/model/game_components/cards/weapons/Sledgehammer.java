@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sledgehammer extends AlternateFireWeapon {
-    boolean intermediateEffect;
+    private boolean intermediateEffect;
 
-    public Sledgehammer(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Sledgehammer() {
+        super(CubeColour.Yellow, "SLDGEHAMMER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override

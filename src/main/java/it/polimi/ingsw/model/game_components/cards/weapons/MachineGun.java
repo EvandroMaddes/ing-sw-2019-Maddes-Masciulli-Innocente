@@ -20,8 +20,11 @@ public class MachineGun extends TwoOptionalEffectWeapon {
     private boolean thirdDamageDealed;
     private ArrayList<Player> alreadyReDamagedTarget;
 
-    public MachineGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
+    public MachineGun() {
+        super(CubeColour.Blue, "MACHINE GUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
         alreadyReDamagedTarget = new ArrayList<>();
     }
 

@@ -17,8 +17,11 @@ import java.util.List;
 public class Thor extends TwoOptionalEffectWeapon {
     private Player lastPlayerHit;
 
-    public Thor(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
+    public Thor() {
+        super(CubeColour.Blue, "T.H.O.R.",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override

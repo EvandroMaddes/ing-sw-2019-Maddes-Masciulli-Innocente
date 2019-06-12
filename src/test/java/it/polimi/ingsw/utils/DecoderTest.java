@@ -2,7 +2,6 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
@@ -88,8 +87,8 @@ public class DecoderTest {
 
     @Test
     public void decodePlayerWeaponTest(){
-        Weapon weapon1 = new LockRifle(CubeColour.Blue, "LockRifle", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon weapon2 = new Electroscythe(CubeColour.Blue, "Electroscythe", new AmmoCube[]{}, new AmmoCube[]{});
+        Weapon weapon1 = new LockRifle();
+        Weapon weapon2 = new Electroscythe();
         player1.addWeapon(weapon1);
         player1.addWeapon(weapon2);
         Weapon decodedWeapon = Decoder.decodePlayerWeapon(player1, "Electroscythe");

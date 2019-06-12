@@ -16,8 +16,10 @@ import java.util.List;
 public class Shotgun extends AlternateFireWeapon {
     private boolean intermediateStateEffect;
 
-    public Shotgun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Shotgun() {
+        super(CubeColour.Yellow, "SHOTGUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{});
     }
 
     @Override

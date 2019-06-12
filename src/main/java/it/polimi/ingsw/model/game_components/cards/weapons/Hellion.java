@@ -13,8 +13,10 @@ import java.util.List;
 
 public class Hellion extends AlternateFireWeapon {
 
-    public Hellion(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Hellion() {
+        super(CubeColour.Red, "HELLION",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override

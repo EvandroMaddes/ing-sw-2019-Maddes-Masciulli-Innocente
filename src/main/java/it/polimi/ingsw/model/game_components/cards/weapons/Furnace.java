@@ -14,8 +14,10 @@ import java.util.List;
 
 public class Furnace extends AlternateFireWeapon {
 
-    public Furnace(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Furnace() {
+        super(CubeColour.Red, "FURNACE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{});
     }
 
     @Override

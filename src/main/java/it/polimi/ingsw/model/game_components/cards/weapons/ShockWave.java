@@ -15,8 +15,10 @@ public class ShockWave extends AlternateFireWeapon {
     private boolean firstRequestDone;
     private boolean secondRequestDone;
 
-    public ShockWave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public ShockWave() {
+        super(CubeColour.Yellow, "SHOCKWAVE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

@@ -16,8 +16,10 @@ import java.util.List;
 public class TractorBeam extends AlternateFireWeapon {
     private boolean intermediateEffectState;
 
-    public TractorBeam(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public TractorBeam() {
+        super(CubeColour.Blue, "TRACTOR BEAM",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

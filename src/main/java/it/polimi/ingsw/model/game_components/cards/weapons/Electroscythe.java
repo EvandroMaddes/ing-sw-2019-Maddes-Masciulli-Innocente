@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class Electroscythe extends AlternateFireWeapon {
 
-    public Electroscythe(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] alternativeEffectCost) {
-        super(colour, name, reloadCost, alternativeEffectCost);
+    public Electroscythe() {
+        super(CubeColour.Blue, "ELECTROSCYTHE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)});
     }
 
     @Override

@@ -3,7 +3,6 @@ package it.polimi.ingsw.utils;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
@@ -61,9 +60,9 @@ public class EncoderTest {
 
     @Test
     public void encodeWeaponsTest() {
-        Weapon  weapon1 = new LockRifle(CubeColour.Blue, "LockRifle", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon  weapon2 = new Electroscythe(CubeColour.Yellow, "Electroscythe", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon  weapon3 = new MachineGun(CubeColour.Blue, "MachineGun", new AmmoCube[]{}, new AmmoCube[]{}, new AmmoCube[]{});
+        Weapon  weapon1 = new LockRifle();
+        Weapon  weapon2 = new Electroscythe();
+        Weapon  weapon3 = new MachineGun();
         ArrayList<Weapon> weaponsList = new ArrayList<>();
         weaponsList.add(weapon1);
         weaponsList.add(weapon2);

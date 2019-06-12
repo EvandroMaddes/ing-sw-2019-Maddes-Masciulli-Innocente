@@ -16,14 +16,10 @@ import java.util.List;
  * done
  */
 public class Heatseeker extends Weapon {
-    /**
-     *
-     * @param colour
-     * @param name
-     * @param reloadCost
-     */
-    public Heatseeker(CubeColour colour, String name, AmmoCube[] reloadCost) {
-        super(colour, name, reloadCost);
+
+    public Heatseeker() {
+        super(CubeColour.Red, "HEATSEEKER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

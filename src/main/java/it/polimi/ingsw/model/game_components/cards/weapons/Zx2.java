@@ -12,8 +12,10 @@ import java.util.List;
 
 public class Zx2 extends AlternateFireWeapon {
 
-    public Zx2(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Zx2() {
+        super(CubeColour.Yellow, "ZX-2",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{});
     }
 
     @Override

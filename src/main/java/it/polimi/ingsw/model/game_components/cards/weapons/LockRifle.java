@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class LockRifle extends OneOptionalEffectWeapon {
 
-    public LockRifle(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost);
+    public LockRifle() {
+        super(CubeColour.Blue, "LOCK RIFLE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override

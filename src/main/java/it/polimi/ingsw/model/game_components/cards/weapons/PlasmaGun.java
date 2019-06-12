@@ -16,8 +16,11 @@ import java.util.List;
 public class PlasmaGun extends TwoOptionalEffectWeapon {
     private int numberOfMoves;
 
-    public PlasmaGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
+    public PlasmaGun() {
+        super(CubeColour.Blue, "PLASMA GUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override

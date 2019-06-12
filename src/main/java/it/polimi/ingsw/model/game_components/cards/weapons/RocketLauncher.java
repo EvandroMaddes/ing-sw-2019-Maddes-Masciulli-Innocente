@@ -17,8 +17,11 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     private boolean intermediateEffectState;
     private Square targetSquare;
 
-    public RocketLauncher(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost, AmmoCube[] thirdEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost, thirdEffectCost);
+    public RocketLauncher() {
+        super(CubeColour.Red, "ROCKET LAUNCHER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

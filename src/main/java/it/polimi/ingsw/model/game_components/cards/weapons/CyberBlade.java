@@ -15,8 +15,11 @@ import java.util.List;
 
 public class CyberBlade extends TwoOptionalEffectWeapon {
 
-    public CyberBlade(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost, AmmoCube[] thirdEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost, thirdEffectCost);
+    public CyberBlade() {
+        super(CubeColour.Yellow, "CYBER BLADE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

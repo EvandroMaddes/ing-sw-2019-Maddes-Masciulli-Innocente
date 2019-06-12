@@ -15,8 +15,10 @@ public class PowerGlove extends AlternateFireWeapon {
     private boolean intermediateEffectState;
     private int firstStepDirection;
 
-    public PowerGlove(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public PowerGlove() {
+        super(CubeColour.Yellow, "POWER GLOVE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override

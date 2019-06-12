@@ -18,12 +18,10 @@ import java.util.List;
 public class Whisper extends Weapon {
     /**
      *
-     * @param colour
-     * @param name
-     * @param reloadCost
      */
-    public Whisper(CubeColour colour, String name, AmmoCube[] reloadCost) {
-        super(colour, name, reloadCost);
+    public Whisper() {
+        super(CubeColour.Blue, "WHISPER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

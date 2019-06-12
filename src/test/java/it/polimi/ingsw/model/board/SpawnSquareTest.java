@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.weapons.Heatseeker;
 import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
@@ -15,14 +16,15 @@ public class SpawnSquareTest {
     public void grabTest(){
         SpawnSquare testSquare = new SpawnSquare(0,0);
         Player testPlayer = new Player("Federico", Character.SPROG);
-        Weapon weapon1 = new LockRifle(CubeColour.Blue, "LR", new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)}, new AmmoCube[]{});
+        Weapon weapon1 = new Heatseeker();
 
         Assert.assertFalse(testSquare.isGrabbable(testPlayer));
 
         testSquare.getWeapons().add(weapon1);
+        testPlayer.discardAmmo(new AmmoCube(CubeColour.Red));
         Assert.assertFalse(testSquare.isGrabbable(testPlayer));
 
-        testPlayer.addAmmo(new AmmoCube(CubeColour.Blue));
+        testPlayer.addAmmo(new AmmoCube(CubeColour.Red));
         Assert.assertTrue(testSquare.isGrabbable(testPlayer));
 
         testSquare.grabWeapon(weapon1, testPlayer);
