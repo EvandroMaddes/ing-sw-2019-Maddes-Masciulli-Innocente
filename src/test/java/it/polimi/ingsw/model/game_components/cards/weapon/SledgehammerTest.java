@@ -12,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SledgehammerTest {
     private Sledgehammer sledgehammer;
-    private Map gameMap;
     private Square[][] map;
     private Player player1;
     private Player player2;
@@ -25,7 +23,7 @@ public class SledgehammerTest {
     @Before
     public void setUp(){
         sledgehammer = new Sledgehammer();
-        gameMap = new Map("leftSecond", "rightFirst");
+        Map gameMap = new Map("leftSecond", "rightFirst");
         map = gameMap.getSquareMatrix();
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.BANSHEE);
