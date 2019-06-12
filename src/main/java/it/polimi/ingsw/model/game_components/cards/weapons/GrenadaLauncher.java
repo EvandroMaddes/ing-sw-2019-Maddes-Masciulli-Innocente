@@ -16,8 +16,10 @@ import java.util.List;
 public class GrenadaLauncher extends OneOptionalEffectWeapon {
     private boolean intermediateEffectState;
 
-    public GrenadaLauncher(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public GrenadaLauncher() {
+        super(CubeColour.Red, "GRENADE LAUNCHER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override

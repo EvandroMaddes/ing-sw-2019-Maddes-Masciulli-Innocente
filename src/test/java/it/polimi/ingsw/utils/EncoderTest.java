@@ -3,7 +3,6 @@ package it.polimi.ingsw.utils;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
@@ -61,9 +60,9 @@ public class EncoderTest {
 
     @Test
     public void encodeWeaponsTest() {
-        Weapon  weapon1 = new LockRifle(CubeColour.Blue, "LockRifle", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon  weapon2 = new Electroscythe(CubeColour.Yellow, "Electroscythe", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon  weapon3 = new MachineGun(CubeColour.Blue, "MachineGun", new AmmoCube[]{}, new AmmoCube[]{}, new AmmoCube[]{});
+        Weapon  weapon1 = new LockRifle();
+        Weapon  weapon2 = new Electroscythe();
+        Weapon  weapon3 = new MachineGun();
         ArrayList<Weapon> weaponsList = new ArrayList<>();
         weaponsList.add(weapon1);
         weaponsList.add(weapon2);
@@ -71,10 +70,10 @@ public class EncoderTest {
         ArrayList<String> weaponsListLite = Encoder.encodeWeaponsList(weaponsList);
         String[] weaponsArrayLite = Encoder.encodeWeaponsIntoArray(weaponsList);
         ArrayList<String> expectedListLite = new ArrayList<>();
-        expectedListLite.add("LockRifle");
-        expectedListLite.add("Electroscythe");
-        expectedListLite.add("MachineGun");
-        String[] expectedArrayLite = new String[]{"LockRifle", "Electroscythe", "MachineGun"};
+        expectedListLite.add("LOCK RIFLE");
+        expectedListLite.add("ELECTROSCYTHE");
+        expectedListLite.add("MACHINE GUN");
+        String[] expectedArrayLite = new String[]{"LOCK RIFLE", "ELECTROSCYTHE", "MACHINE GUN"};
         Assert.assertEquals(expectedListLite, weaponsListLite);
         for (int i = 0; i < weaponsArrayLite.length; i++) {
             Assert.assertEquals(weaponsArrayLite[i], expectedArrayLite[i]);

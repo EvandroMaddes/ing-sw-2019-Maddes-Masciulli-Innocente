@@ -7,9 +7,9 @@ import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
 public class GameBoard {
 
     private GameTrack gameTrack;
-    private  Map map;
-    private  WeaponDeck weaponDeck;
-    private  AmmoTilesDeck ammoTilesDeck;
+    private Map map;
+    private WeaponDeck weaponDeck;
+    private AmmoTilesDeck ammoTilesDeck;
     private PowerUpDeck powerUpDeck;
     private boolean finalFrenzy = false;
 
@@ -38,13 +38,11 @@ public class GameBoard {
         return powerUpDeck;
     }
 
-    public void setFinalFrenzy() {
-        finalFrenzy = true;
-    }
-
     public boolean isFinalFrenzy() {
         return finalFrenzy;
     }
+
+    public void setFinalFrenzy(){ finalFrenzy = true; }
 
     public Map getMap() {
         return map;

@@ -16,8 +16,11 @@ import java.util.List;
 public class PlasmaGun extends TwoOptionalEffectWeapon {
     private int numberOfMoves;
 
-    public PlasmaGun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
+    public PlasmaGun() {
+        super(CubeColour.Blue, "PLASMA GUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override
@@ -75,7 +78,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2 - numberOfMoves);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2 - numberOfMoves);
         possibleDestination.remove(getOwner().getPosition());
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }

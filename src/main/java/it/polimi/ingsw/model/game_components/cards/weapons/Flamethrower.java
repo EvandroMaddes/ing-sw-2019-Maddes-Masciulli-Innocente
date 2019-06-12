@@ -17,8 +17,10 @@ public class Flamethrower extends AlternateFireWeapon {
     private boolean intermediateEffectState;
     private int firstEffectDirection;
 
-    public Flamethrower(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Flamethrower() {
+        super(CubeColour.Red, "FLAMETHROWER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override

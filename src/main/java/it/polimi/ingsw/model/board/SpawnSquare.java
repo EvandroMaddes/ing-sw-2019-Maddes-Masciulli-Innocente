@@ -34,37 +34,6 @@ public class SpawnSquare extends Square {
           return weapons;
      }
 
-     /**
-      * @author Francesco Masciulli
-      * it checks if the discard card and spawn square have the same colour, comparing the Colour's String
-      * @param discardCard is the Player's discarded Card;
-      * @return isSameColour the result of comparison.
-      */
-     public boolean compareColour(Card discardCard) {
-          return (this.getSquareColour().equals(discardCard.getColour().toString()));
-     }
-
-     /**
-      * todo check metodo:
-      * After one player picks-up a weapon, this method replaces it
-      * @param weaponCard card that is drawn, must be NOT NULL
-      */
-     public void replaceWeapon(Weapon weaponCard)
-     {
-
-          try {
-                    weapons.add(weaponCard);
-
-
-          }
-          catch (NullPointerException e)
-          {
-
-               weapons.remove(null);
-          }
-          notifyView();
-     }
-
      public void grabWeapon(Weapon weaponSelected, Player player){
           player.addWeapon(weaponSelected);
           weapons.remove(weaponSelected);
@@ -76,7 +45,7 @@ public class SpawnSquare extends Square {
       * return true if there is at least 1 weapon that the player can buy
       */
      public boolean isGrabbable(Player grabber) {
-          if (!weapons.isEmpty())
+          if (weapons.isEmpty())
                return false;
           for (Weapon w: weapons){
                if (grabber.canAffortCost(w.getGrabCost()))

@@ -17,8 +17,10 @@ public class VortexCannon extends OneOptionalEffectWeapon {
     private boolean intermediateEffectState;
     private Square vortex;
 
-    public VortexCannon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public VortexCannon() {
+        super(CubeColour.Red, "VORTEX CANNON",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override

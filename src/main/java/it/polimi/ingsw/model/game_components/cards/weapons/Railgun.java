@@ -14,8 +14,10 @@ import java.util.List;
 
 public class Railgun extends AlternateFireWeapon {
 
-    public Railgun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Railgun() {
+        super(CubeColour.Yellow, "RAILGUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{});
     }
 
     @Override

@@ -152,6 +152,7 @@ public class GameManager {
         if (!finalFrenzyPhase){
             finalFrenzyPhase = true;
             lastPlayer = playerTurn;
+            getModel().getGameboard().setFinalFrenzy();
         }
     }
 

@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.game_components.cards;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetSquareRequestEvent;
-import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -77,7 +76,7 @@ public class WeaponTest {
     public void testLockRifle(){
 
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
-        currentWeapon = new LockRifle(CubeColour.Blue,"LockRifle",currentReloadCost,new AmmoCube[] {new AmmoCube(CubeColour.Red)});
+        currentWeapon = new LockRifle();
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
         Assert.assertTrue(currentWeapon.isUsableEffect(1));
@@ -115,7 +114,7 @@ public class WeaponTest {
     @Test
     public void testElectroschyte(){
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue)};
-        currentWeapon = new Electroscythe(CubeColour.Blue,"Electroschyte",currentReloadCost,new AmmoCube[] {new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)});
+        currentWeapon = new Electroscythe();
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
         //This is a melee weapon, so all the player must be on the same square
@@ -162,8 +161,8 @@ public class WeaponTest {
     @Test
     public void testMachineGun(){
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)};
-        currentWeapon = new MachineGun(CubeColour.Blue,"MachineGun",currentReloadCost,
-                        new AmmoCube[] {new AmmoCube(CubeColour.Yellow)},new AmmoCube[] {new AmmoCube(CubeColour.Blue)});
+        currentWeapon = new MachineGun(
+        );
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
         Player tempPlayer = new Player("User", Character.VIOLET);
@@ -204,8 +203,8 @@ public class WeaponTest {
     @Test
     public void testTractorBeam(){
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue)};
-        currentWeapon = new TractorBeam(CubeColour.Blue,"TractorBeam",currentReloadCost,
-                new AmmoCube[] {new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Yellow)});
+        currentWeapon = new TractorBeam(
+        );
         currentWeapon.setOwner(player2);
         //trying to move a target that isn't visible at the beginning, according with the Weapon Guide
         player1.setPosition(testedMapMatrix[1][0]);
@@ -253,8 +252,8 @@ public class WeaponTest {
     @Test
     public void testTHOR(){
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)};
-        currentWeapon = new Thor(CubeColour.Blue,"Thor",currentReloadCost,
-                new AmmoCube[] {new AmmoCube(CubeColour.Blue)}, new AmmoCube[] {new AmmoCube(CubeColour.Blue)});
+        currentWeapon = new Thor(
+        );
         currentWeapon.setOwner(player1);
         //Creating another player that is seen just by player 3
         Player tempPlayer = new Player("User", Character.SPROG);
@@ -320,8 +319,8 @@ public class WeaponTest {
     @Test
     public void testPlasmaGun(){
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow)};
-        currentWeapon = new PlasmaGun(CubeColour.Blue,"PlasmaGun",currentReloadCost,
-                    new AmmoCube[] {}, new AmmoCube[] {new AmmoCube(CubeColour.Blue)});
+        currentWeapon = new PlasmaGun(
+        );
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
         Assert.assertTrue(currentWeapon.isUsableEffect(1));

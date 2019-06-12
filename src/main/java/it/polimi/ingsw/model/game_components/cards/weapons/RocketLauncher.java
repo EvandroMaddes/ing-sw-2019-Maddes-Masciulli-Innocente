@@ -17,8 +17,11 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     private boolean intermediateEffectState;
     private Square targetSquare;
 
-    public RocketLauncher(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost, AmmoCube[] thirdEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost, thirdEffectCost);
+    public RocketLauncher() {
+        super(CubeColour.Red, "ROCKET LAUNCHER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override
@@ -111,7 +114,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2);
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
 
