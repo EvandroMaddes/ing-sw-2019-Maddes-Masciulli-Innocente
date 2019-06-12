@@ -980,9 +980,9 @@ public class CLI extends RemoteView {
 
     /**
      * User choose which game would like to join
-     * @param available  * availableChoice[0] = new game
-     *                   * availableChoice[1] = wait lobby
-     *                   * availableChoice[2] = started game
+     * @param available  : availableChoice[0] = new game
+     *                   : availableChoice[1] = wait lobby
+     *                   : availableChoice[2] = started game
      * @param startedLobbies Name of started game
      * @param waitingLobbies Games are going to begin
      * @param startedLobbiesUsername name of players in game
