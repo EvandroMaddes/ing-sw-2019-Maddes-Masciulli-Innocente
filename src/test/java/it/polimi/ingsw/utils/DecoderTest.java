@@ -91,7 +91,7 @@ public class DecoderTest {
         Weapon weapon2 = new Electroscythe();
         player1.addWeapon(weapon1);
         player1.addWeapon(weapon2);
-        Weapon decodedWeapon = Decoder.decodePlayerWeapon(player1, "Electroscythe");
+        Weapon decodedWeapon = Decoder.decodePlayerWeapon(player1, "ELECTROSCYTHE");
         Assert.assertEquals(weapon2, decodedWeapon);
     }
 

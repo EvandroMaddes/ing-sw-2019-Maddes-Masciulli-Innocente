@@ -70,10 +70,10 @@ public class EncoderTest {
         ArrayList<String> weaponsListLite = Encoder.encodeWeaponsList(weaponsList);
         String[] weaponsArrayLite = Encoder.encodeWeaponsIntoArray(weaponsList);
         ArrayList<String> expectedListLite = new ArrayList<>();
-        expectedListLite.add("LockRifle");
-        expectedListLite.add("Electroscythe");
-        expectedListLite.add("MachineGun");
-        String[] expectedArrayLite = new String[]{"LockRifle", "Electroscythe", "MachineGun"};
+        expectedListLite.add("LOCK RIFLE");
+        expectedListLite.add("ELECTROSCYTHE");
+        expectedListLite.add("MACHINE GUN");
+        String[] expectedArrayLite = new String[]{"LOCK RIFLE", "ELECTROSCYTHE", "MACHINE GUN"};
         Assert.assertEquals(expectedListLite, weaponsListLite);
         for (int i = 0; i < weaponsArrayLite.length; i++) {
             Assert.assertEquals(weaponsArrayLite[i], expectedArrayLite[i]);
