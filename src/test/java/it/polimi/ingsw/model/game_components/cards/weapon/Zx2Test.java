@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class Zx2Test {
-    // TODO: 2019-06-12
     private Zx2 zx2;
     private Square[][] map;
     private Player player1;
