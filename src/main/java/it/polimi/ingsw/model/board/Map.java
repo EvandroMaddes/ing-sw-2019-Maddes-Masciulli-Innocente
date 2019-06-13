@@ -12,8 +12,10 @@ import java.util.ArrayList;
  */
 public class Map {
 
-    public final static int DIM_X = 4;
-    public final static int DIM_Y = 3;
+    public static final String BIG_LEFT = "leftFirst";
+    public static final String SMALL_LEFT = "leftSecond";
+    public static final String BIG_RIGHT = "rightFirst";
+    public static final String SMALL_RIGHT = "rightSecond";
 
     private ArrayList<SpawnSquare> spawnSquares = new ArrayList<SpawnSquare>();
     private Square[][] squareMatrix;
