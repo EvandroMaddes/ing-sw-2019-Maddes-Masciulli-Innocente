@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.game_components.cards.AlternateFireWeapon;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Zx2 extends AlternateFireWeapon {
@@ -30,7 +31,9 @@ public class Zx2 extends AlternateFireWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 1);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
@@ -49,6 +52,8 @@ public class Zx2 extends AlternateFireWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 3);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 3);
     }
 }
