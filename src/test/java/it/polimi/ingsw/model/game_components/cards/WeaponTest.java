@@ -95,7 +95,7 @@ public class WeaponTest {
         Assert.assertEquals(1, playerBoard1.checkNumberOfMarks(player2));
 
         //Testing second effect:
-        Assert.assertFalse(currentWeapon.isUsableEffect(2));
+        Assert.assertTrue(currentWeapon.isUsableEffect(2));
         targetEvent = currentWeapon.getTargetEffect(2);
         Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player1.getCharacter()));
         Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player3.getCharacter()));
@@ -116,7 +116,7 @@ public class WeaponTest {
         currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue)};
         currentWeapon = new Electroscythe();
         currentWeapon.setOwner(player2);
-        Assert.assertTrue(currentWeapon.isUsable());
+        Assert.assertFalse(currentWeapon.isUsable());
         //This is a melee weapon, so all the player must be on the same square
         player3.setPosition(player2.getPosition());
         player1.setPosition(player2.getPosition());
@@ -210,7 +210,7 @@ public class WeaponTest {
         player1.setPosition(testedMapMatrix[1][0]);
         Assert.assertTrue(currentWeapon.isUsable());
         Assert.assertTrue(currentWeapon.isUsableEffect(1));
-        Assert.assertFalse(currentWeapon.isUsableEffect(2));
+        Assert.assertTrue(currentWeapon.isUsableEffect(2));
 
         //Testing first effect:
         Event targetEvent = currentWeapon.getTargetEffect(1);
@@ -324,7 +324,7 @@ public class WeaponTest {
         currentWeapon.setOwner(player2);
         Assert.assertTrue(currentWeapon.isUsable());
         Assert.assertTrue(currentWeapon.isUsableEffect(1));
-        Assert.assertFalse(currentWeapon.isUsableEffect(2));
+        Assert.assertTrue(currentWeapon.isUsableEffect(2));
         Assert.assertFalse(currentWeapon.isUsableEffect(3));
 
         //testing first effect:
