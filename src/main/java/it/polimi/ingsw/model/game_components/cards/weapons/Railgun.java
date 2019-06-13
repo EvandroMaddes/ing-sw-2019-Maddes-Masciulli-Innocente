@@ -22,8 +22,7 @@ public class Railgun extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 3);
         getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(1);
@@ -37,8 +36,7 @@ public class Railgun extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 2);
         getDamagedPlayer().add((Player)targets.get(0));
         if (targets.size() > 1) {

@@ -139,4 +139,9 @@ public abstract class Weapon extends Card {
     public void resetDamagedplayer(){
         damagedPlayer.clear();
     }
+
+    public void checkEmptyTargets(List<Object> targets){
+        if (targets.isEmpty())
+            throw new IllegalArgumentException("No targets found");
+    }
 }

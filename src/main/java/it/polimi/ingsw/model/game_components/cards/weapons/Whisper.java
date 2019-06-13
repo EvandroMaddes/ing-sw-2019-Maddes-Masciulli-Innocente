@@ -26,8 +26,7 @@ public class Whisper extends Weapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Nessun target passato");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
 
         damage(target, 3);

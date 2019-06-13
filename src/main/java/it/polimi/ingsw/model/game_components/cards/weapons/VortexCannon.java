@@ -49,8 +49,7 @@ public class VortexCannon extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -110,8 +109,7 @@ public class VortexCannon extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         int i = 0;
         while (i < 2 && i < targets.size()){
             move((Player)targets.get(i), vortex);

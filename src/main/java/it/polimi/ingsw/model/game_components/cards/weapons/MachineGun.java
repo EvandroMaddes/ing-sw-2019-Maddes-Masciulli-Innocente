@@ -58,8 +58,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Targets empty list");
+        checkEmptyTargets(targets);
         for (int i = 0; i < targets.size() && i < 2; i++){
             damage((Player)targets.get(i), 1);
             getFirstEffectTarget().add((Player)targets.get(i));
@@ -75,8 +74,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 1);
         Player target = (Player)targets.get(0);
         alreadyReDamagedTarget.add(target);
@@ -91,8 +89,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         if ( !extraDamageThirdEffect && getFirstEffectTarget().contains(target)) {
             damage(getFirstEffectTarget().get(0), 1);

@@ -44,8 +44,7 @@ public class Flamethrower extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -54,6 +53,7 @@ public class Flamethrower extends AlternateFireWeapon {
     }
 
     private void performEffectOneFirstStep(List<Object> targets){
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 1);
         getDamagedPlayer().add((Player)targets.get(0));
         for (int direction = 0; direction < 4; direction++)
@@ -100,8 +100,7 @@ public class Flamethrower extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         int direction = 0;
         Square target = (Square)targets.get(0);
         for (int i = 0; i < 4; i++){

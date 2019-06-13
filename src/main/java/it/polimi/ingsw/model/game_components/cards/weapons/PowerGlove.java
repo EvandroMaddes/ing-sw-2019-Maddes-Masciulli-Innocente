@@ -42,8 +42,7 @@ public class PowerGlove extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         move(getOwner(), target.getPosition());
         damage(target, 1);
@@ -60,8 +59,7 @@ public class PowerGlove extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         for (int direction = 0 ; direction < 4; direction++){
             if (getOwner().getPosition().getNextSquare(direction) == target.getPosition())

@@ -22,8 +22,7 @@ public class Furnace extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         ArrayList<Player> roomPlayers = ((Square)targets.get(0)).findRoomPlayers();
         for (Player p:roomPlayers){
             damage(p, 1);
@@ -49,8 +48,7 @@ public class Furnace extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         Square target = (Square)targets.get(0);
         for (Player p:target.getSquarePlayers()){
             damage(p, 1);

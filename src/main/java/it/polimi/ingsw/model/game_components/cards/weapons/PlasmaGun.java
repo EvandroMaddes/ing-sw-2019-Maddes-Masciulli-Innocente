@@ -52,8 +52,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
@@ -68,6 +67,7 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
+        checkEmptyTargets(targets);
         Square target = (Square)targets.get(0);
         //qui ha senso calcolare la distanza come distanza di manhattan, perchè si è spostato in una posizione possibile (lo sapiamo per costruzione), a una distanza di massimo 2, il che rende la cosa valida
         numberOfMoves += Math.abs(target.getColumn() - getOwner().getPosition().getColumn()) + Math.abs(target.getRow() - getOwner().getPosition().getRow());

@@ -21,8 +21,7 @@ public class Hellion extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No Targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getDamagedPlayer().add(target);
@@ -44,8 +43,7 @@ public class Hellion extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No Targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getDamagedPlayer().add(target);

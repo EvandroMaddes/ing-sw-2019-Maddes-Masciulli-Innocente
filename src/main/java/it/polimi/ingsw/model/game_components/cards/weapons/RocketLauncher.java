@@ -53,8 +53,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -106,8 +105,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         move(getOwner(), (Square)targets.get(0));
         effectControlFlow(2);
     }

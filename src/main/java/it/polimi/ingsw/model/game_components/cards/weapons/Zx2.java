@@ -21,8 +21,7 @@ public class Zx2 extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage(((Player)targets.get(0)),1);
         getDamagedPlayer().add((Player)targets.get(0));
         mark(((Player)targets.get(0)),2);
@@ -38,8 +37,7 @@ public class Zx2 extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         int targetNumber = 1;
         for (Object p: targets) {
             if (targetNumber <= 3){

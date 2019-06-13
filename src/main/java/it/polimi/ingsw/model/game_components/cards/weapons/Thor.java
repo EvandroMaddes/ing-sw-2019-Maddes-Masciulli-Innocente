@@ -50,8 +50,7 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty target");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
@@ -67,8 +66,7 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getFirstEffectTarget().add(target);
@@ -87,8 +85,7 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);

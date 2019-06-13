@@ -41,8 +41,7 @@ public class TractorBeam extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -119,8 +118,7 @@ public class TractorBeam extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         move((Player)targets.get(0), getOwner().getPosition());
         damage((Player)targets.get(0), 3);
         getDamagedPlayer().add((Player)targets.get(0));

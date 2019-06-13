@@ -40,8 +40,7 @@ public class LockRifle extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         mark(target, 1);
@@ -59,8 +58,7 @@ public class LockRifle extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         mark((Player)targets.get(0), 1);
         effectControlFlow(2);
     }

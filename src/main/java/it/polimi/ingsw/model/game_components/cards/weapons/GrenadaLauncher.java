@@ -53,16 +53,14 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
     }
 
     private void performEffectOneFirstStep(List<Object> targets){
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 1);
         getDamagedPlayer().add((Player)targets.get(0));
         getFirstEffectTarget().add((Player)targets.get(0));
     }
 
     private void performEffectOneSecondStep(List<Object> targets){
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         move(getFirstEffectTarget().get(0), (Square)targets.get(0));
     }
 
@@ -96,8 +94,7 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Square targetSquare = (Square)targets.get(0);
         for (Player p:targetSquare.getSquarePlayers()){
             if (p != getOwner()) {

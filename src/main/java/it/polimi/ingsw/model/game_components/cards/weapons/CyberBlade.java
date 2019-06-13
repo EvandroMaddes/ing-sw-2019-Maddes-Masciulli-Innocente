@@ -40,8 +40,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No taregt");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
@@ -58,8 +57,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no taregts");
+        checkEmptyTargets(targets);
         Square target = (Square) targets.get(0);
         move(getOwner(), target);
         effectControlFlow(2);
@@ -73,8 +71,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no taregts");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);

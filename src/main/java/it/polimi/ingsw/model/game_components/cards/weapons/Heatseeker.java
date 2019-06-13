@@ -24,8 +24,7 @@ public class Heatseeker extends Weapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Nessun target selezionato");
+        checkEmptyTargets(targets);
         Player target = (Player) targets.get(0);
         damage(target, 3);
         getDamagedPlayer().add(target);
