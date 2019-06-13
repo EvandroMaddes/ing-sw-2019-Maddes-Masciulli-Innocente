@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.game_components.cards.weapons;
 
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
@@ -39,12 +40,10 @@ public class Whisper extends Weapon {
     @Override
     public ControllerViewEvent getTargetEffectOne() {
         ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
-
-        for (Player p: possibleTargets) {
-            if ( Math.abs(p.getPosition().getRow() - getOwner().getPosition().getRow() ) + Math.abs(p.getPosition().getColumn() - getOwner().getPosition().getColumn() ) < 2 )
-                possibleTargets.remove(p);
+        ArrayList<Square> invalidTargets = getOwner().getPosition().reachableInMoves(1);
+        for (Square s:invalidTargets) {
+            possibleTargets.removeAll(s.getSquarePlayers());
         }
-
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 }
