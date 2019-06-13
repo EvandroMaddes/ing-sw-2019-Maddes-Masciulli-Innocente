@@ -36,6 +36,13 @@ public class HeatseekerTest {
 
     @Test
     public void isUsableTest(){
+        Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
+        map = gameMap.getSquareMatrix();
+        player1.setPosition(map[0][3]);
+        player2.setPosition(map[0][3]);
+        player3.setPosition(map[2][3]);
+        player4.setPosition(map[2][0]);
+
         Assert.assertTrue(heatseeker.isUsable());
         Assert.assertTrue(heatseeker.isUsableEffect(1));
     }
