@@ -110,4 +110,9 @@ public class Shotgun extends AlternateFireWeapon {
         }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
+    }
 }
