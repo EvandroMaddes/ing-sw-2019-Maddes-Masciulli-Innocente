@@ -38,6 +38,8 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
         effectUsed--;
         if (effectUsed == 0 && !intermediateEffectState)
             intermediateEffectState = true;
+        else if (effectUsed == 1 && intermediateEffectState)
+            updateUsableEffect(new boolean[]{false, false, false});
         else if (effectUsed == 0 || effectUsed == 1)
             getUsableEffect()[effectUsed] = false;
     }
@@ -73,7 +75,9 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
     }
 
     private ControllerViewEvent getTargetEffectOneFirstStep(){
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 1);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     private ControllerViewEvent getTargetEffectOneSecondStep(){
@@ -113,5 +117,10 @@ public class GrenadaLauncher extends OneOptionalEffectWeapon {
                 possibleTargets.add(p.getPosition());
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));
+    }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && ((TargetSquareRequestEvent)getTargetEffectTwo()).getPossibleTargetsY().length != 0;
     }
 }
