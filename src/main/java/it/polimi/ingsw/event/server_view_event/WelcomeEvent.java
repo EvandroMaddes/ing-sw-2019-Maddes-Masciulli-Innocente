@@ -9,8 +9,14 @@ import java.util.ArrayList;
 public class WelcomeEvent extends ClientEvent {
 
     private boolean[] availableChoices;
-    private ArrayList<String> waitingLobbies;
+    /**
+     * availableChoice[0] = nuova partita
+     * availableChoice[1] = partita in attesa di iniziare
+     * availableChoice[2] = partita in corso(+username per riconessione)
+     *
+     */
     private ArrayList<String> startedLobbies;
+    private ArrayList<String> waitingLobbies;
     private ArrayList<String> startedLobbiesUsernames;
 
 
@@ -23,8 +29,10 @@ public class WelcomeEvent extends ClientEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        //todo fa scegliere se -)nuova partita -)partita in attesa di iniziare -)partita in corso(+username per riconessione)
+        //todo fa scegliere se -)nuova partita
+        //                      -)partita in attesa di iniziare
+        //                      -)partita in corso(+username per riconessione)
         // return WelcomeRequestEvent
-        return null;
+        return remoteView.welcomeChoice(availableChoices,startedLobbies,waitingLobbies,startedLobbiesUsernames);
     }
 }
