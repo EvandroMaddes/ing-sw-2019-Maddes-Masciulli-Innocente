@@ -122,7 +122,7 @@ public class WeaponTest {
         player1.setPosition(player2.getPosition());
 
         Assert.assertTrue(currentWeapon.isUsableEffect(1));
-        Assert.assertFalse(currentWeapon.isUsableEffect(2));
+        Assert.assertTrue(currentWeapon.isUsableEffect(2));
         //Testing first effect:
         Event targetEvent = currentWeapon.getTargetEffect(1);
         currentTargets = ((TargetPlayerRequestEvent)targetEvent).getPossibleTargets();
