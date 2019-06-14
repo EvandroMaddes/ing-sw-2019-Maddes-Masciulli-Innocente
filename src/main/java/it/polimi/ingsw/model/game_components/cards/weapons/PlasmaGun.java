@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlasmaGun extends TwoOptionalEffectWeapon {
-    private int numberOfMoves;
 
     public PlasmaGun() {
         super(CubeColour.Blue, "PLASMA GUN",
@@ -31,7 +30,6 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
     @Override
     public void setLoaded() {
         super.setLoaded();
-        numberOfMoves = 0;
     }
 
     @Override
@@ -39,7 +37,9 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
         effectUsed--;
         if (effectUsed == 0 && getUsableEffect()[0])
             updateUsableEffect(new boolean[]{false, true, true});
-        else if (effectUsed == 1 && getUsableEffect()[1] && numberOfMoves == 2)
+        else if (effectUsed == 1 && getUsableEffect()[1] && !getUsableEffect()[0])
+            updateUsableEffect(new boolean[]{false,false,false});
+        else if (effectUsed == 1)
             getUsableEffect()[1] = false;
         else if (effectUsed == 2 && getUsableEffect()[2])
             getUsableEffect()[2] = false;
@@ -62,23 +62,22 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 1);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
     public void performEffectTwo(List<Object> targets) {
         checkEmptyTargets(targets);
         Square target = (Square)targets.get(0);
-        //qui ha senso calcolare la distanza come distanza di manhattan, perchè si è spostato in una posizione possibile (lo sapiamo per costruzione), a una distanza di massimo 2, il che rende la cosa valida
-        numberOfMoves += Math.abs(target.getColumn() - getOwner().getPosition().getColumn()) + Math.abs(target.getRow() - getOwner().getPosition().getRow());
-
         getOwner().setPosition(target);
         effectControlFlow(2);
     }
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2 - numberOfMoves);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2 );
         possibleDestination.remove(getOwner().getPosition());
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
