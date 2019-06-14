@@ -24,6 +24,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void setLoaded() {
+        super.setLoaded();
         updateUsableEffect(new boolean[]{true, true, false});
     }
 
@@ -70,6 +71,11 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
     }
 
     @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1];
+    }
+
+    @Override
     public void performEffectThree(List<Object> targets) {
         checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
@@ -84,5 +90,10 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
         possibleTargets.remove(getOwner());
         possibleTargets.remove(getFirstEffectTarget().get(0));
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+    }
+
+    @Override
+    public boolean isUsable() {
+        return isLoaded() && ( isUsableEffectTwo() || isUsableEffectOne() || isUsableEffectThree() );
     }
 }

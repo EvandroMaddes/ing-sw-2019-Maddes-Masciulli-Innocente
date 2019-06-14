@@ -95,6 +95,5 @@ public abstract class Card implements BaseFightAction {
     {
         target.getPosition().getSquarePlayers().remove(target);
         target.setPosition(destination);
-        destination.addCurrentPlayer(target);
     }
 }

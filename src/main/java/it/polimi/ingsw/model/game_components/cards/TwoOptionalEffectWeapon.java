@@ -28,7 +28,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
     }
 
     public boolean isUsableEffectThree(){
-        return getEffectsEnable()[2] && getUsableEffect()[2] && getOwner().canAffortCost(getThirdEffectCost()) && ((TargetPlayerRequestEvent) getTargetEffectThree()).getPossibleTargets().isEmpty();
+        return getEffectsEnable()[2] && getUsableEffect()[2] && getOwner().canAffortCost(getThirdEffectCost()) && !((TargetPlayerRequestEvent) getTargetEffectThree()).getPossibleTargets().isEmpty();
     }
 
     public abstract ControllerViewEvent getTargetEffectThree();
