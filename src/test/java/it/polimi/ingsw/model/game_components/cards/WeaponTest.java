@@ -66,44 +66,6 @@ public class WeaponTest {
     }
 
 
-    /**
-     * Test for the LockRifle Class
-     */
-    @Test
-    public void testLockRifle(){
-
-        currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue)};
-        currentWeapon = new LockRifle();
-        currentWeapon.setOwner(player2);
-        Assert.assertTrue(currentWeapon.isUsable());
-        Assert.assertTrue(currentWeapon.isUsableEffect(1));
-        Assert.assertFalse(currentWeapon.isUsableEffect(2));
-
-
-        //Testing first effect:
-        Event targetEvent = currentWeapon.getTargetEffect(1);
-        currentTargets = ((TargetPlayerRequestEvent)targetEvent).getPossibleTargets();
-        Assert.assertTrue(currentTargets.contains(player1.getCharacter()));
-        Assert.assertTrue(currentTargets.contains(player3.getCharacter()));
-
-        testTargets.add(player1);
-        currentWeapon.performEffect(1, testTargets);
-        Assert.assertEquals(player2, playerBoard1.getDamageReceived()[0].getPlayer());
-        Assert.assertEquals(1, playerBoard1.checkNumberOfMarks(player2));
-
-        //Testing second effect:
-        Assert.assertTrue(currentWeapon.isUsableEffect(2));
-        targetEvent = currentWeapon.getTargetEffect(2);
-        Assert.assertFalse(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player1.getCharacter()));
-        Assert.assertTrue(((TargetPlayerRequestEvent)targetEvent).getPossibleTargets().contains(player3.getCharacter()));
-
-        testTargets.clear();
-        testTargets.add(player3);
-        currentWeapon.performEffect(2, testTargets);
-        Assert.assertEquals(1,playerBoard3.checkNumberOfMarks(player2));
-
-        System.out.println("Tested LockRifle!\t ︻┳═一- - - \n");
-    }
 
 
 

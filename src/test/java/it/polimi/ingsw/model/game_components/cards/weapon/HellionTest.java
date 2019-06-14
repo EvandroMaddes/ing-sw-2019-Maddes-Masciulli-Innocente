@@ -92,5 +92,5 @@ public class HellionTest {
         Assert.assertEquals(0, player5.getPlayerBoard().getMarks().size());
         Assert.assertFalse(hellion.isUsable());
     }
-    
+
 }
