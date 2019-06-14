@@ -105,52 +105,7 @@ public class WeaponTest {
         System.out.println("Tested LockRifle!\t ︻┳═一- - - \n");
     }
 
-    /**
-     * Test for the Electroschyte Class
-     */
-    @Test
-    public void testElectroschyte(){
-        currentReloadCost = new AmmoCube[] { new AmmoCube(CubeColour.Blue)};
-        currentWeapon = new Electroscythe();
-        currentWeapon.setOwner(player2);
-        Assert.assertFalse(currentWeapon.isUsable());
-        //This is a melee weapon, so all the player must be on the same square
-        player3.setPosition(player2.getPosition());
-        player1.setPosition(player2.getPosition());
 
-        Assert.assertTrue(currentWeapon.isUsableEffect(1));
-        Assert.assertTrue(currentWeapon.isUsableEffect(2));
-        //Testing first effect:
-        Event targetEvent = currentWeapon.getTargetEffect(1);
-        currentTargets = ((TargetPlayerRequestEvent)targetEvent).getPossibleTargets();
-        Assert.assertTrue(currentTargets.contains(player1.getCharacter()));
-        Assert.assertTrue(currentTargets.contains(player3.getCharacter()));
-        Assert.assertFalse(currentTargets.contains(player2.getCharacter()));
-        //This weapon doesn't need any targetList because it damages every other player on the owner's square
-        currentWeapon.performEffect(1, testTargets);
-        Assert.assertEquals(player2, playerBoard1.getDamageReceived()[0].getPlayer());
-        Assert.assertEquals(player2, playerBoard3.getDamageReceived()[0].getPlayer());
-        int totalToken = playerBoard1.getDamageAmount()+playerBoard3.getDamageAmount();
-        Assert.assertEquals(2, totalToken);
-
-        //Testing second effect:
-        playerBoard1.resetDamages();
-        playerBoard3.resetDamages();
-        targetEvent = currentWeapon.getTargetEffect(2);
-        currentTargets = ((TargetPlayerRequestEvent)targetEvent).getPossibleTargets();
-        Assert.assertTrue(currentTargets.contains(player1.getCharacter()));
-        Assert.assertTrue(currentTargets.contains(player3.getCharacter()));
-        currentWeapon.setLoaded();
-
-        //This weapon doesn't need any targetList because it damages every other player on the owner's square
-        currentWeapon.performEffect(2, testTargets);
-        Assert.assertEquals(player2, playerBoard1.getDamageReceived()[1].getPlayer());
-        Assert.assertEquals(player2, playerBoard3.getDamageReceived()[1].getPlayer());
-        totalToken = playerBoard1.getDamageAmount()+playerBoard3.getDamageAmount();
-        Assert.assertEquals(4, totalToken);
-
-        System.out.println("Tested Electroschyte!\t ︻┳═一- - - \n");
-    }
 
     /**
      * Test for the MachineGun Class
