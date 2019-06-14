@@ -149,7 +149,7 @@ public class RocketLauncherTest {
         Assert.assertEquals(map[2][2], player5.getPosition());
         Assert.assertEquals(2, player5.getPlayerBoard().getDamageAmount());
         Assert.assertEquals(map[2][1], player4.getPosition());
-        
+
         message = rocketLauncher.getTargetEffect(3);
         Assert.assertEquals(-1, ((TargetPlayerRequestEvent)message).getMaxTarget());
 
