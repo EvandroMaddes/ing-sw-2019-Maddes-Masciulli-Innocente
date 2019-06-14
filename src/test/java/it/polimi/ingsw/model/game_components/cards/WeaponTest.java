@@ -220,5 +220,5 @@ public class WeaponTest {
 
         System.out.println("Tested THOR! \t︻┳═一- - - \n");
     }
-    
+
 }
