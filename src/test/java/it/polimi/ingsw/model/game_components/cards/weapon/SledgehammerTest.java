@@ -23,7 +23,7 @@ public class SledgehammerTest {
     @Before
     public void setUp(){
         sledgehammer = new Sledgehammer();
-        Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
+        Map gameMap = new Map(Map.SMALL_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.BANSHEE);
