@@ -36,7 +36,7 @@ public class TractorBeamTest {
         player1.addWeapon(tractorBeam);
         player1.setPosition(map[1][0]);
         player2.setPosition(map[0][1]);
-        player3.setPosition(map[1][2]);
+        player3.setPosition(map[1][1]);
         player4.setPosition(map[0][3]);
         player5.setPosition(map[1][0]);
     }
@@ -44,7 +44,7 @@ public class TractorBeamTest {
     @Test
     public void isUsableTest(){
         Assert.assertTrue(tractorBeam.isUsable());
-        Assert.assertFalse(tractorBeam.isUsableEffect(1));
+        Assert.assertTrue(tractorBeam.isUsableEffect(1));
         Assert.assertTrue(tractorBeam.isUsableEffect(2));
     }
 
@@ -141,9 +141,17 @@ public class TractorBeamTest {
         Assert.assertTrue(tractorBeam.isUsableEffect(1));
 
         message = tractorBeam.getTargetEffect(1);
-        Assert.assertEquals(1, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length );
-        Assert.assertEquals(2, ((TargetSquareRequestEvent)message).getPossibleTargetsX()[0]);
-        Assert.assertEquals(1, ((TargetSquareRequestEvent)message).getPossibleTargetsY()[0]);
+        int[] expectedX = new int[]{0,2,2};
+        int[] expectedY = new int[]{0,1,0};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length );
+        for (int i = 0; i < 3; i++) {
+            boolean check = false;
+            for (int j = 0; j < 3; j++) {
+                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                    check = true;
+            }
+            Assert.assertTrue(check);
+        }
 
         target.clear();
         target.add(map[2][1]);
