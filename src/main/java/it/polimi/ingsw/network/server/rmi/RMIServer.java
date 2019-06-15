@@ -90,6 +90,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     }
 
     public void cleanDisconnectedEventList(){
+        for (Event currEvent : disconnectedClients) {
+            clientUserOrder.remove(getClientList().indexOf(currEvent.getUser()));
+        }
         disconnectedClients.clear();
     }
 
