@@ -33,9 +33,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
         super.setLoaded();
         extraDamageThirdEffect = false;
         thirdDamageDealed = false;
-        if(alreadyReDamagedTarget != null) {
-            alreadyReDamagedTarget.clear();
-        }
+        alreadyReDamagedTarget.clear();
     }
 
     @Override

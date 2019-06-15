@@ -311,5 +311,5 @@ public class MachineGunTest {
         Assert.assertFalse(machineGun.isUsableEffect(3));
         Assert.assertFalse(machineGun.isUsable());
     }
-    
+
 }
