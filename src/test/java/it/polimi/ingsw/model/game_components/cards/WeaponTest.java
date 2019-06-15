@@ -70,7 +70,7 @@ public class WeaponTest {
 
 
     /**
-     * Test for the MachineGun Class
+     * Test for the MachineGunTest Class
      */
     @Test
     public void testMachineGun(){
@@ -103,12 +103,12 @@ public class WeaponTest {
         currentWeapon.performEffect(2,testTargets.subList(0,1));
         Assert.assertEquals(player2, playerBoard1.getDamageReceived()[1].getPlayer());
 
-    
+
         currentWeapon.performEffect(3, testTargets.subList(2,3));
         Assert.assertEquals(player2, tempPlayer.getPlayerBoard().getDamageReceived()[0].getPlayer());
         Assert.assertEquals(player2, playerBoard3.getDamageReceived()[1].getPlayer());
 
-        System.out.println("Tested MachineGun! \t︻┳═一- - - \n");
+        System.out.println("Tested MachineGunTest! \t︻┳═一- - - \n");
     }
 
     /**
