@@ -57,7 +57,7 @@ public class CLI extends RemoteView {
      * @return the answer that will be sent to the server.
      */
     @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
+    public Event printUserNotification(UsernameModificationEvent usernameEvent) {
         String newUser = usernameEvent.getNewUser();
         Event returnedEvent;
         if(newUser.equals(usernameEvent.getUser())){
@@ -77,9 +77,9 @@ public class CLI extends RemoteView {
         }
         else{
             System.out.println("Username already connected, yours is now:\t"+newUser);
+
             returnedEvent = null;
         }
-        usernameEvent.performAction(clientImp);
         return returnedEvent;
     }
 
@@ -1014,11 +1014,10 @@ public class CLI extends RemoteView {
      * @param available
      * @param startedLobbies
      * @param waitingLobbies
-     * @param startedLobbiesUsername
      * @return
      */
     @Override
-    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
         int choice = 404;
         int lobbyChoice = 404;
         int userChoice= 404;
@@ -1055,9 +1054,7 @@ public class CLI extends RemoteView {
         if(choice == 2){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Started lobbies:");
             lobbyChoice= CLIHandler.arraylistPrintRead(startedLobbies);
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your username:");
-            userChoice = CLIHandler.arraylistPrintRead(startedLobbiesUsername);
-            messageChoice = new LobbyChoiceEvent(startedLobbiesUsername.get(userChoice),startedLobbies.get(lobbyChoice));
+            messageChoice = new LobbyChoiceEvent(getUser(), startedLobbies.get(lobbyChoice));
 
         }
         return messageChoice;

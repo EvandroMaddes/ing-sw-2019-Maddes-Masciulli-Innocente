@@ -22,11 +22,7 @@ public interface RemoteViewInterface {
      */
    void printScreen();
 
-   /**
-    * this method handle the UsernameModification events
-    * @return the message returning to the server
-    */
-   Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp);
+
 
    //following methods manages Request event
    Event gameChoice();
@@ -67,8 +63,8 @@ public interface RemoteViewInterface {
    Event winnerUpdate(String user, int point);
 
    //folliwing method manage server-view even
-   Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername);
-
+   Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies);
+   Event printUserNotification(UsernameModificationEvent usernameEvent);
 
 
 

@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.RemoteInterface;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
+import sun.nio.ch.Net;
 
 import java.net.InetAddress;
 import java.rmi.RemoteException;
@@ -25,7 +26,9 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     private String clientIPAddress;
     private int port;
     private String serverIPAddress;
+    private int serverPort;
     private Event currMessage;
+
 
 
 
@@ -38,6 +41,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         this.port= port;
         this.user=user;
         this.serverIPAddress = serverIPAddress;
+        serverPort = NetConfiguration.RMISERVERPORTNUMBER;
         try{
             this.clientIPAddress = InetAddress.getLocalHost().getHostAddress();
         }catch(Exception e){
@@ -45,6 +49,25 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         }
 
         connectClient();
+    }
+
+
+    @Override
+    public void reconnectClient() {
+        try{
+            acceptRemoteClient(serverPort,serverIPAddress,"RMIServer:"+serverPort);
+            server.acceptRemoteClient(port,clientIPAddress,bindName);
+
+            //disconnectClient();
+            //connectClient();
+        }catch(Exception e){
+            CustomLogger.logException(e);
+        }
+    }
+
+    @Override
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 
     /**
@@ -67,7 +90,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     }
 
     @Override
-    public int getPort(){
+    public int remoteGetPort(){
         return port;
     }
 
@@ -91,26 +114,24 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      */
     @Override
     public void connectClient() {
+        bindName = "RMIClient:"+clientIPAddress+":"+port;
         try {
 
-            acceptRemoteClient(NetConfiguration.RMISERVERPORTNUMBER, serverIPAddress);
-            int clientNumber = server.getClientListNumber()+1;
+            acceptRemoteClient(serverPort, serverIPAddress, "RMIServer:"+serverPort);
             RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
             Registry clientRegistry = LocateRegistry.createRegistry(port);
-            clientRegistry.rebind("RMIClient"+clientNumber,clientStub);
-            bindName = "RMIClient"+clientNumber;
-            server.acceptRemoteClient(port,clientIPAddress);
+            clientRegistry.rebind(bindName,clientStub);
+            server.acceptRemoteClient(port,clientIPAddress,bindName);
             //run();
         }
         catch (ExportException alreadyExported){
             try {
                 UnicastRemoteObject.unexportObject(this,false);
-                int clientNumber = server.getClientListNumber()+1;
+                //int clientNumber = server.getClientListNumber()+1;
                 RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
                 Registry clientRegistry = LocateRegistry.createRegistry(port);
-                clientRegistry.rebind("RMIClient"+clientNumber,clientStub);
-                bindName = "RMIClient"+clientNumber;
-                server.acceptRemoteClient(port,clientIPAddress);
+                clientRegistry.rebind(bindName,clientStub);
+                server.acceptRemoteClient(port,clientIPAddress,bindName);
             }
             catch(Exception exc){
                 CustomLogger.logException(exc);
@@ -132,7 +153,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
 
     @Override
     public void changeUsername(String user, String newUsername) {
-        if(!user.equalsIgnoreCase(newUsername)){
+        if(!user.equals(newUsername)){
             this.user=newUsername;
         }
     }
@@ -148,10 +169,10 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      * @throws RemoteException
      */
     @Override
-    public void acceptRemoteClient( int remotePort, String remoteIPAddress) throws RemoteException {
+    public void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException {
        try{
-           Registry serverRegistry = LocateRegistry.getRegistry(serverIPAddress, remotePort);
-           server = (RemoteInterface) serverRegistry.lookup("RMIServer");
+           Registry serverRegistry = LocateRegistry.getRegistry(remoteIPAddress, remotePort);
+           server = (RemoteInterface) serverRegistry.lookup(bindName);
        }catch (Exception e){
            CustomLogger.logException(e);
        }

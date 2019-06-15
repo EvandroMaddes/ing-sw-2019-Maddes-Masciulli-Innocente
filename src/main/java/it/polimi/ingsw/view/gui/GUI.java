@@ -22,7 +22,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
+    public Event printUserNotification(UsernameModificationEvent usernameEvent) {
         return null;
     }
 
@@ -174,7 +174,7 @@ public class GUI extends RemoteView {
     }
 
     @Override
-    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
         return null;
     }
 

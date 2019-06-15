@@ -1,6 +1,10 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.ClientReconnectionEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
+import it.polimi.ingsw.event.server_view_event.WelcomeEvent;
+import it.polimi.ingsw.event.view_server_event.ViewServerEvent;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -18,14 +22,17 @@ public class WaitServer {
     private static Logger log = Logger.getLogger("ServerLogger");
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    //setta RMIPORTNUMB e SOCKETPORTNUMB(--)
-    private static final int startPortNumber = NetConfiguration.RMISERVERPORTNUMBER-4;
+
+    private static final int startPortNumber = NetConfiguration.RMISERVERPORTNUMBER;
     private static boolean shutDown = false;
-    private static ArrayList<Server> activeLobby = new ArrayList<>();
+    private static ArrayList<Server> activeLobbies = new ArrayList<>();
     private static ArrayList<String> connectedUsers = new ArrayList<>();
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
     private static ServerInterface acceptingRMI;
     private static ServerInterface acceptingSocket;
+    private static int handledUsers = 0;
+    private static ArrayList<String> waitingLobby = new ArrayList<>();
+    private static ArrayList<String> startedLobby = new ArrayList<>();
 
     public static void main(String[] args){
         try {
@@ -43,7 +50,12 @@ public class WaitServer {
 
         while(!shutDown){
 
-            checkNewClient();
+            cleanConnectedUsers();
+            String incomingUser = checkNewClient();
+            if(!incomingUser.isEmpty()) {
+                welcomeUser(incomingUser);
+            }
+
 
 
             if(connectedUsers.size()>0){
@@ -63,6 +75,78 @@ public class WaitServer {
     }
 
 
+    private static void welcomeUser(String incomingUser){
+        boolean[] availableChoices = {true, false, false};
+        if(!waitingLobby.isEmpty()){
+            availableChoices[1] = true;
+        }
+        if(!startedLobby.isEmpty()){
+            availableChoices[2] = true;
+        }
+        ViewServerEvent message = null;
+        ServerInterface currServer = mapUserServer.get(incomingUser);
+        currServer.sendMessage(new WelcomeEvent(incomingUser, availableChoices, waitingLobby,startedLobby));
+        while(message == null) {
+            message = (ViewServerEvent) currServer.listenMessage();
+        }
+        if(message.isNewGame()){
+            startNewGame(message.performAction());
+        }
+        else{
+            joinLobby(message.performAction(),message.getUser());
+        }
+
+    }
+
+    private static void startNewGame(String user){
+        Server newLobby;
+        newLobby = new Server();
+        activeLobbies.add(newLobby);
+        newLobby.setLobby(user,activeLobbies.size());
+        waitingLobby.add(newLobby.getLobbyName());
+        newLobby.start();
+        reconnectClient(user, newLobby);
+    }
+
+    private static void joinLobby(String lobbyID, String user){
+        Server returnedLobby;
+            returnedLobby = findLobbyByID(lobbyID);
+            reconnectClient(user,returnedLobby);
+    }
+
+    private static Server findLobbyByID(String lobbyID){
+        for (Server currLobby: activeLobbies) {
+            if(currLobby.getLobbyName().equals(lobbyID)){
+                return currLobby;
+            }
+        }
+        return null;
+    }
+
+    private static void reconnectClient(String username, Server lobby){
+        int portNumber;
+        ServerInterface currServer;
+        if(mapUserServer.get(username).equals(acceptingRMI)){
+            currServer = acceptingRMI;
+            portNumber = lobby.getPortRMI();    
+        }
+        else{
+            currServer = acceptingSocket;
+            portNumber = lobby.getPortSocket();
+        }
+        currServer.sendMessage(new ClientReconnectionEvent(username, portNumber));
+        currServer.disconnectClient(username);
+        handledUsers--;
+        
+    }
+    
+    private static void cleanConnectedUsers(){
+        for (Server currLobby: activeLobbies) {
+            connectedUsers.removeAll(currLobby.getDisconnectedClientList());
+        }
+    }
+
+
     /**
      * Add and map the last connected user with his server implementation
      * @param currUser his the client username
@@ -73,24 +157,33 @@ public class WaitServer {
         mapUserServer.put(currUser,serverImplementation);
     }
 
+    private static void updateStartedLobbies(){
+        for (Server currLobby: activeLobbies) {
+            if(currLobby.isGameCouldStart()){
+                if(waitingLobby.remove(currLobby.getLobbyName())) {
+                    startedLobby.add(currLobby.getLobbyName());
+                }
+            }
+        }
+    }
+
     /**
      * This method, depending on gameCouldStart value, handle the incoming client connections
+     * @return true if there is a new client connection
      */
-    private static void checkNewClient(){
-        if (connectedUsers.size() != acceptingSocket.getClientList().size() + acceptingRMI.getClientList().size()) {
+    private static String checkNewClient(){
+        updateStartedLobbies();
+        String connectedUser = "";
+        if (handledUsers < acceptingSocket.getClientList().size() + acceptingRMI.getClientList().size()) {
+            handledUsers = acceptingSocket.getClientList().size() + acceptingRMI.getClientList().size();
+            connectedUser = updateMixedConnectedUser();
+            if (connectedUser.isEmpty()) {
+                connectedUser = updateConnectedUser();
+            }
+            return connectedUser;
 
-            //gameCouldstart = WelcomeEvent.boh
-            //vuol dire che player vuole entrare in partita già in corso, chiama la p
-            //if(!gameCouldStart) {
-                String connectedUser = updateMixedConnectedUser();
-                if (connectedUser.isEmpty()) {
-                    connectedUser = updateConnectedUser();
-                }
-            /*}
-            else{
-                reconnectClient();
-            }*/
         }
+        return connectedUser;
 
     }
 
@@ -100,12 +193,27 @@ public class WaitServer {
      * @return the last connected username
      */
     private static String updateConnectedUser() {
-        String connectedUser = updateConnectedUser(acceptingRMI);
+        ServerInterface serverImplementation = acceptingRMI;
+        String connectedUser = updateConnectedUser(serverImplementation);
         if (connectedUser.isEmpty()) {
-            connectedUser = updateConnectedUser(acceptingSocket);
+            serverImplementation = acceptingSocket;
+            connectedUser = updateConnectedUser(serverImplementation);
         }
+        if(connectedUsers.contains(connectedUser)){
+            String currUser = connectedUser;
+            connectedUser = currUser + new Random().nextInt(100);
+            log.info("Sending message to:\t"+currUser+"\n");
+            serverImplementation.sendMessage(new UsernameModificationEvent(currUser,connectedUser));
+            serverImplementation.updateUsername(currUser,connectedUser);
+
+        }
+
+
+        userAddAndMap(connectedUser, serverImplementation);
         return connectedUser;
     }
+
+
 
     /**
      * This method update the client list from the given server implementation
@@ -119,7 +227,7 @@ public class WaitServer {
         for (String currUser: connectedList) {
             if (!connectedUser.contains(currUser)) {
                 connectedUser = currUser;
-                userAddAndMap(connectedUser, serverImplementation);
+
                 return  connectedUser;
             }
         }    return connectedUser;

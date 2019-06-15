@@ -21,36 +21,79 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.logging.Logger;
 
 
-public class Server extends WaitServer{
-    private static Logger log = Logger.getLogger("ServerLogger");
+public class Server extends Thread {
+    private  Logger log = Logger.getLogger("ServerLogger");
 
-
-    private static ArrayList<VirtualView> virtualViewList = new ArrayList<>();
-    private static ArrayList<String> activeClientList = new ArrayList<>();
-    private static ArrayList<String> disconnectedClientList = new ArrayList<>();
-    private static RMIServer serverRMI;
-    private static SocketServer serverSocket;
-    private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
-    private static Map<String, VirtualView> mapUserView = new HashMap<>();
-    private static CustomTimer gameTimer;
-    private static Event message;
-    private static boolean gameCouldStart = false;
+    private String lobbyName;
+    private  ArrayList<VirtualView> virtualViewList = new ArrayList<>();
+    private  ArrayList<String> activeClientList = new ArrayList<>();
+    private  ArrayList<String> disconnectedClientList = new ArrayList<>();
+    private  RMIServer serverRMI;
+    private int portRMI;
+    private  SocketServer serverSocket;
+    private int portSocket;
+    private  Map<String,ServerInterface> mapUserServer = new HashMap<>();
+    private  Map<String, VirtualView> mapUserView = new HashMap<>();
+    private  CustomTimer gameTimer;
+    private  Event message;
+    private  boolean gameCouldStart = false;
     //todo cercare cambio turno != cambio di contesto
-    // private static String lastRoundPlayer =
+    // private  String lastRoundPlayer =
 
-    public static void main(String[] args){
 
-        try{
-            serverRMI = new RMIServer();
+    public int getPortRMI() {
+        return portRMI;
+    }
+
+    public int getPortSocket() {
+        return portSocket;
+    }
+
+    public ArrayList<String> getDisconnectedClientList() {
+        return disconnectedClientList;
+    }
+
+    public void setLobby(String lobbyName, int aliveLobbies){
+        this.lobbyName = lobbyName+"'s lobby";
+        portRMI = NetConfiguration.RMISERVERPORTNUMBER+6*aliveLobbies+1;
+        portSocket = NetConfiguration.SOCKETSERVERPORTNUMBER + aliveLobbies + 1;
+        try {
+            serverRMI = new RMIServer(portRMI);
             serverSocket = new SocketServer();
+            serverSocket.setServerPort(portSocket);
+        }catch (RemoteException exc){
+            CustomLogger.logException(exc);
+        }
+    }
+
+
+    public String getLobbyName() {
+        return lobbyName;
+    }
+
+
+    //todo è vecchio, da modificare
+
+
+    @Override
+    public void run() {
+
+            /*serverRMI = new RMIServer(portRMI);
+            serverSocket = new SocketServer();
+            serverSocket.setServerPort(portSocket);
             serverSocket.start();
             Thread rmiThread = new Thread(serverRMI);
             rmiThread.start();
-            log.info("Server ready to accept clients\n");
+*/
+            serverSocket.start();
+            Thread rmiThread = new Thread(serverRMI);
+            rmiThread.start();
+            log.info(lobbyName.concat(":\tReady to accept clients\n"));
 
             boolean shutDown = false;
             boolean setUpComplete = false;
@@ -68,18 +111,20 @@ public class Server extends WaitServer{
                         String firstUser = activeClientList.get(0);
                         ServerInterface currServer = mapUserServer.get(firstUser);
                         currServer.sendMessage(new GameRequestEvent(firstUser));
-                        log.info("Sending message to:\t"+firstUser+"\n");
+                        log.info(lobbyName.concat(":\tSending message to:\t"+firstUser+"\n"));
                         while(message == null) {
                             message = currServer.listenMessage();
                         }
                             VirtualView currentView = mapUserView.get(message.getUser());
                             currentView.toController(message);
                             setUpComplete = true;
-                            log.info("Listened message from:\t" + message.getUser()+"\n");
+                            log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
                             message = null;
                     }
 
+
                     //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
+                    /*
                     if(activeClientList.size()==2) {
                         message = null;
                         String currentUser = activeClientList.get(0);
@@ -97,10 +142,10 @@ public class Server extends WaitServer{
                                 currView.toController(message);
                             }
                         }
-                        log.info("Listened message from:\t" + message.getUser()+"\n");
+                        log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
 
                         }
-
+*/
                     //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
@@ -108,14 +153,15 @@ public class Server extends WaitServer{
                         if(gameTimer==null){
                             gameTimer = new CustomTimer(NetConfiguration.STARTGAMETIMER);
                             gameTimer.start();
-                            log.info("Started the match countdown!\n\nGame start in "
-                                    + NetConfiguration.STARTGAMETIMER+" seconds.\n");
+                            log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in "
+                                    + NetConfiguration.STARTGAMETIMER+" seconds.\n"));
                         }
                         else if(!gameTimer.isAlive()) {
                             serverRMI.gameCouldStart();
                             serverSocket.gameCouldStart();
                             gameCouldStart = true;
-                            log.info("Game could start; There are " + activeClientList.size() + " players\n");
+                            //todo istanzia controller e inizia computazione
+                            log.info(lobbyName.concat(":\tGame could start; There are " + activeClientList.size() + " players\n"));
                         }
                     }
 
@@ -123,11 +169,18 @@ public class Server extends WaitServer{
                 }
 
 
-
-                //todo ora si gestisce il turno
+                //todo ora si gestisce il turno, il controller setta nextMessage
                 message = null;
 
                 Event nextMessage = findNextMessage();
+
+                //todo PROVA: ci entra sempre se la partita può iniziare
+
+
+                        nextMessage = new NewPlayerJoinedUpdateEvent("TESTING PLAYER RECONNECTION\n", Character.SPROG);
+                        log.info("Testing player reconnection:");
+
+                //todo FINEPROVA
 
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
@@ -135,52 +188,64 @@ public class Server extends WaitServer{
                 //TODO chiama ping solo se currUser != vecchioUser
                 ArrayList<Event> disconnectedClients = ping();
 
-                //todo cercare il client giusto a cui spedire msg
 
 
                 if(disconnectedClients.isEmpty()) {
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
+                    if (!message.getUser().equals("BROADCAST")) {
+                        if (message == null) {
+                            message = new DisconnectedEvent(currentUser);
+                            disconnectClient(currentUser);
+                        }
+                        mapUserView.get(message.getUser()).toController(message);
+                        log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
 
-                    if (message == null) {
-                        message = new DisconnectedEvent(currentUser);
-                        disconnectClient(currentUser);
                     }
-                    mapUserView.get(message.getUser()).toController(message);
-                    log.info("Listened message from:\t" + message.getUser()+"\n");
-
                 }
-                else{
+                else {
 
-                    log.severe("Client disconnected in other player's turn"+"\n");
+                        log.severe("Client disconnected in other player's turn" + "\n");
 
 
-                }
+                    }
+
                 //todo deve aspettare il controller
 
 
+                //todo controllo se gioco terminato || dopo WinnerEvent??
+                shutDown=!gameCouldStart;
+            }
+
+                /*
                 ////todo dopo ogni esec legge da input se richiesto QUIT però non terminano i client
-                log.info("Type Quit for server shutdown\n");
+
+                log.info(lobbyName.concat(":\tType Quit for server shutdown\n"));
                 String inputCommand = reader.readLine();
                 if(inputCommand.equalsIgnoreCase("QUIT")) {
                     shutDown=true;
                 }
 
-            }
+                 */
+
+
 
 
             serverRMI.shutDown();
             serverSocket.shutDown();
-            log.info("Server shutDown\n");
-        }catch(IOException e){
-            CustomLogger.logException(e);
-        }
+            log.info(lobbyName.concat("\t: ShutDown\n"));
+
     }
 
-    private static Event sendAndWaitNextMessage(Event toSend){
+
+    public  boolean isGameCouldStart() {
+        return gameCouldStart;
+    }
+
+    private Event sendAndWaitNextMessage(Event toSend){
         String currentUser = toSend.getUser();
         Event returnedEvent = null;
-        log.info("Sending message to:\t"+currentUser+"\n");
+        log.info(lobbyName.concat(":\tSending message to:\t"+currentUser+"\n"));
         if(toSend.getUser().equals("BROADCAST")){
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
@@ -195,7 +260,7 @@ public class Server extends WaitServer{
         return returnedEvent;
     }
 
-    private static void cleanVirtualViews(boolean isBroadcast){
+    private  void cleanVirtualViews(boolean isBroadcast){
         for (VirtualView currentView: virtualViewList) {
             if(isBroadcast){
                 currentView.setToRemoteView(null);
@@ -208,7 +273,7 @@ public class Server extends WaitServer{
         }
     }
 
-    private static Event findNextMessage(){
+    private  Event findNextMessage(){
         message = null;
         for (VirtualView currentView: virtualViewList) {
             Event currMessage = currentView.getToRemoteView();
@@ -225,7 +290,7 @@ public class Server extends WaitServer{
     /**
      * This method, depending on gameCouldStart value, handle the incoming client connections
      */
-    private static void checkNewClient(){
+    private  void checkNewClient(){
         if (activeClientList.size() != serverSocket.getClientList().size() + serverRMI.getClientList().size()) {
             if(!gameCouldStart) {
                 String connectedUser = updateMixedActiveClientList();
@@ -249,7 +314,7 @@ public class Server extends WaitServer{
     /**
      * It handle the clients reconnection during the game
      */
-    private static void reconnectClient(){
+    private  void reconnectClient(){
         ArrayList<String> reconnectedClients = serverRMI.getClientList();
         reconnectedClients.addAll(serverSocket.getClientList());
         ServerInterface serverImplementation;
@@ -262,7 +327,7 @@ public class Server extends WaitServer{
             }
             if(!activeClientList.contains(user)){
                 serverImplementation.sendMessage(new ReconnectionRequestEvent(user, disconnectedClientList));
-                log.info("Sending message to:\t"+user+"\n");
+                log.info(lobbyName.concat(":\tSending message to:\t"+user+"\n"));
                 Event listenedMessage = serverImplementation.listenMessage();
                 if(listenedMessage != null){
                     String connectedUsername = user;
@@ -273,7 +338,7 @@ public class Server extends WaitServer{
                     disconnectedClientList.remove(user);
                     activeClientList.add(user);
                     serverRMI.cleanDisconnectedEventList(user);
-                    log.info("Reconnected client:\t"+user+"\n");
+                    log.info(lobbyName.concat(":\tReconnected client:\t"+user+"\n"));
 
                 }
                 else{
@@ -289,11 +354,11 @@ public class Server extends WaitServer{
      * This method is called before the sendMessage, it update the clients that disconnected during the last round
      * @return the DisconnectedEvents from the disconnected clients
      */
-    private static ArrayList<Event> ping(){
+    private  ArrayList<Event> ping(){
         ArrayList<Event> currentDisconnectedClients = serverSocket.ping();
         currentDisconnectedClients.addAll(serverRMI.ping());
        if(!currentDisconnectedClients.isEmpty()){
-           log.info(currentDisconnectedClients.size()+" disconnected clients in this turn!\n");
+           log.info(lobbyName.concat(currentDisconnectedClients.size()+" disconnected clients in this turn!\n"));
            for (Event currEvent: currentDisconnectedClients) {
 
                    disconnectClient(currEvent.getUser());
@@ -310,14 +375,14 @@ public class Server extends WaitServer{
      *  handle the Kick out of the selected user calling the toController view method
      * @param user is the user that must be kicked out
      */
-    private static void disconnectClient(String user){
+    private  void disconnectClient(String user){
         activeClientList.remove(user);
         disconnectedClientList.add(user);
         message = mapUserServer.get(user).disconnectClient(user);
         mapUserServer.remove(user);
         mapUserView.get(user).toController(message);
-        log.info("Listened message from:\t" + message.getUser()+"\n");
-        log.warning("Client Disconnected:\t"+user+"\n");
+        log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
+        log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
     }
 
     /**
@@ -325,7 +390,7 @@ public class Server extends WaitServer{
      * @param currUser his the client username
      * @param serverImplementation is the server implementation depending on user's network preferences
      */
-    private static void userAddAndMap( String currUser, ServerInterface serverImplementation){
+    private  void userAddAndMap( String currUser, ServerInterface serverImplementation){
         activeClientList.add(currUser);
         mapUserServer.put(currUser,serverImplementation);
     }
@@ -335,7 +400,7 @@ public class Server extends WaitServer{
      *  this method update
      * @return the last connected username
      */
-    private static String updateActiveClientList() {
+    private  String updateActiveClientList() {
         String connectedUser = updateActiveClientList(serverRMI);
         if (connectedUser.isEmpty()) {
             connectedUser = updateActiveClientList(serverSocket);
@@ -348,7 +413,7 @@ public class Server extends WaitServer{
      * @param serverImplementation is the chosen implementation
      * @return the last connected user, or an empty string if there isn't
      */
-    private static String updateActiveClientList(ServerInterface serverImplementation){
+    private  String updateActiveClientList(ServerInterface serverImplementation){
         String connectedUser ="";
         ArrayList<String> connectedList = serverImplementation.getClientList();
 
@@ -366,7 +431,7 @@ public class Server extends WaitServer{
      *   it calls method that change it in the server implementation and send the notification to the client
      * @return the new username
      */
-    private static String updateMixedActiveClientList(){
+    private  String updateMixedActiveClientList(){
         int usernameNumber;
         String connectedUser = "";
         ServerInterface serverImplementation;
@@ -385,7 +450,7 @@ public class Server extends WaitServer{
                     serverImplementation = serverSocket;
                 }
                 userAddAndMap(connectedUser, serverImplementation);
-                log.info("Sending message to:\t"+currUser+"\n");
+                log.info(lobbyName.concat("Sending message to:\t"+currUser+"\n"));
                 serverImplementation.sendMessage(new UsernameModificationEvent(currUser,connectedUser));
                 serverImplementation.updateUsername(currUser,connectedUser);
                 return connectedUser;

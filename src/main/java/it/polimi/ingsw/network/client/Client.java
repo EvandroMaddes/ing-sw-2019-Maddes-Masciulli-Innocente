@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.ServerClientEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
@@ -54,7 +55,7 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-        boolean[] available=new boolean[3];
+    /*    boolean[] available=new boolean[3];
         available[0]=true;
         available[1]=true;
         available[2]=true;
@@ -76,7 +77,7 @@ public class Client {
 
         remoteViewImplementation.welcomeChoice(available,started,wait,name);
 
-        /*CLI currentView = (CLI)remoteViewImplementation;
+        CLI currentView = (CLI)remoteViewImplementation;
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         testPlayerboard.markDamageUpdate(1,2,Character.SPROG);
         testPlayerboard.markDamageUpdate(2,0,Character.D_STRUCT_OR);
@@ -168,7 +169,7 @@ public class Client {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
 
             clientImplementation = new RMIClient(user,
-                    NetConfiguration.RMISERVERPORTNUMBER + new Random().nextInt(2000), serverIPAddress);
+                    NetConfiguration.RMISERVERPORTNUMBER +1000 + new Random().nextInt(1000), serverIPAddress);
 
         } else {
             clientImplementation = new SocketClient(user, serverIPAddress);
@@ -190,7 +191,7 @@ public class Client {
                     log.info("Listened message for:\t" + currentMessage.getUser());
                     //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
                     currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
-                    //todo if currentMessage != null invia al server, dopo deve tornare in questol ciclo??
+                    //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
                     if(currentMessage!=null){
                         clientImplementation.sendMessage(currentMessage);
                     }
@@ -201,8 +202,7 @@ public class Client {
                 }
                 catch (ClassCastException e){
                     //la perform action del messaggio è chiamata all'interno di printUserModification();
-                    Event returnedEvent =
-                            remoteViewImplementation.printUserNotification((UsernameModificationEvent)currentMessage, clientImplementation);
+                    Event returnedEvent = ((ServerClientEvent)currentMessage).performAction(clientImplementation,remoteViewImplementation);
                     if(returnedEvent != null){
                         clientImplementation.sendMessage(returnedEvent);
                     }
