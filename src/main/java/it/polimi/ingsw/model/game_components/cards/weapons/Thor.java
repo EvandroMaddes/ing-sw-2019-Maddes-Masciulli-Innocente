@@ -61,7 +61,9 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 1);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
