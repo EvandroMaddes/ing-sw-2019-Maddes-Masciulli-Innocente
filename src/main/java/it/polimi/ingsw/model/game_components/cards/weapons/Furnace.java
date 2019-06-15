@@ -35,7 +35,7 @@ public class Furnace extends AlternateFireWeapon {
     public ControllerViewEvent getTargetEffectOne() {
         ArrayList<Square> possibleTarget = new ArrayList<>();
         for (int i = 0; i < 4; i ++){
-            if (getOwner().getPosition().checkDirection(i) && getOwner().getPosition().getNextSquare(i).getSquareColour() != getOwner().getPosition().getSquareColour() && !getOwner().getPosition().getNextSquare(i).findRoomPlayers().isEmpty())
+            if (getOwner().getPosition().checkDirection(i) && !getOwner().getPosition().getNextSquare(i).getSquareColour().equals(getOwner().getPosition().getSquareColour()) && !getOwner().getPosition().getNextSquare(i).findRoomPlayers().isEmpty())
                 possibleTarget.add(getOwner().getPosition().getNextSquare(i));
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTarget), Encoder.encodeSquareTargetsY(possibleTarget));
