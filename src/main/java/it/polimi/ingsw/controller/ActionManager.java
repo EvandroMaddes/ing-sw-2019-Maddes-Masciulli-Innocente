@@ -144,7 +144,7 @@ public class ActionManager {
 
     public void manageShot(){
         if (controller.getGameManager().isFinalFrenzyPhase() || currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState() == 2){
-            ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachalbeInMoves(1);
+            ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachableInMoves(1);
             controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
         }
         else sendPossibleWeapons();
@@ -297,9 +297,13 @@ public class ActionManager {
         else
             grabCost[2]--;
         payCost(grabCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
+        ((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
         manageWeaponLimit();
     }
 
+    /**
+     *
+     */
     private void manageWeaponLimit(){
         if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
             ArrayList<String> playerWeapons = new ArrayList<>();

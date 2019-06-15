@@ -34,14 +34,7 @@ public class BasicSquare extends Square {
      * @return
      */
     public boolean checkAmmo(){
-        boolean i=true;
-        if(ammo==null)
-        {
-            i=false;
-        }
-        else i=true;
-        return i;
-
+        return ammo != null;
     }
 
     /**
@@ -51,7 +44,7 @@ public class BasicSquare extends Square {
     public void grabAmmoTile( Player player){
 
            ammo.pickAmmo(player);
-           ammo= null;//remove ammo after it is grabbed
+           ammo = null;//remove ammo after it is grabbed
 
            AmmoTileUpdateEvent message = new AmmoTileUpdateEvent(false, getColumn(), getRow(), null, null, null);
            notifyObservers(message);
@@ -72,7 +65,7 @@ public class BasicSquare extends Square {
      * @param ammoTileCard card taht is drawed
      */
     public void replaceAmmoTile(AmmoTile ammoTileCard){
-        if(checkAmmo()==false)
+        if(!checkAmmo())
            ammo = ammoTileCard;
 
         AmmoTileUpdateEvent message;
@@ -85,7 +78,7 @@ public class BasicSquare extends Square {
 
     @Override
     public boolean isGrabbable(Player grabber) {
-        return ammo != null;
+        return checkAmmo();
     }
 }
 

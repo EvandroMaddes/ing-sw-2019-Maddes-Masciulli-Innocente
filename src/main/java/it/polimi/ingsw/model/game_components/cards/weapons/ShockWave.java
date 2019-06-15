@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.game_components.cards.weapons;
 
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
+import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.AlternateFireWeapon;
@@ -15,8 +16,10 @@ public class ShockWave extends AlternateFireWeapon {
     private boolean firstRequestDone;
     private boolean secondRequestDone;
 
-    public ShockWave(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public ShockWave() {
+        super(CubeColour.Yellow, "SHOCKWAVE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override
@@ -45,8 +48,7 @@ public class ShockWave extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 1);
         getDamagedPlayer().add((Player)targets.get(0));
         getFirstEffectTarget().add((Player)targets.get(0));
@@ -56,18 +58,21 @@ public class ShockWave extends AlternateFireWeapon {
     @Override
     public ControllerViewEvent getTargetEffectOne() {
         ArrayList<Player> possibleTargets = getOwner().getPosition().getNextSquarePlayer();
-        possibleTargets.removeAll(getFirstEffectTarget());
+        for (Player p: getFirstEffectTarget()) {
+            possibleTargets.removeAll(p.getPosition().getSquarePlayers());
+        }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        int i = 0;
-        while (i < 3 && i < targets.size()){
-            damage((Player)targets.get(i), 1);
-            getDamagedPlayer().add((Player)targets.get(i));
-            i++;
+        ArrayList<Player> nextSquarePlayer = getOwner().getPosition().getNextSquarePlayer();
+        for (Player p: nextSquarePlayer) {
+            damage(p, 1);
+            getDamagedPlayer().add(p);
         }
+
+
         effectControlFlow(2);
     }
 

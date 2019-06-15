@@ -208,23 +208,18 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
-        String weaponSelected = "init";
+        int selected ;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"Select one weapon to reload or type other to skip action.");
-        while (!reloadableWeapons.contains(weaponSelected)) {
-            try {
-                CLIHandler.arrayPrint(reloadableWeapons);
-                weaponSelected = CLIHandler.stringRead().toUpperCase();
-            } catch (IllegalArgumentException e) {
-                weaponSelected = null;
 
-            }
-        }
+        reloadableWeapons.add("Skip action ");
+        selected = CLIHandler.arraylistPrintRead(reloadableWeapons);
+
 
         Event message;
-        if (!reloadableWeapons.contains(weaponSelected)) {
+        if (reloadableWeapons.get(selected).equalsIgnoreCase("Skip action")) {
             message = new SkipActionChoiceEvent(getUser());
         } else {
-            message = new WeaponReloadChoiceEvent(getUser(), weaponSelected);
+            message = new WeaponReloadChoiceEvent(getUser(), reloadableWeapons.get(selected));
         }
 
         return message;
@@ -329,20 +324,10 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
-        String weaponSelected = null;
-        while (!yourWeapons.contains(weaponSelected)) {
-            try {
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to discard one weapon:");
-                CLIHandler.arrayPrint(yourWeapons);
-
-                weaponSelected = CLIHandler.stringRead();
-
-            } catch (IllegalArgumentException e) {
-                weaponSelected = null;
-
-            }
-        }
-        return new WeaponDiscardChoice(getUser(), weaponSelected);
+        int weaponSelected ;
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to discard one weapon:");
+        weaponSelected = CLIHandler.arraylistPrintRead(yourWeapons);
+        return new WeaponDiscardChoice(getUser(), yourWeapons.get(weaponSelected));
     }
 
     /**
@@ -352,18 +337,10 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event weaponChoice(ArrayList<String> availableWeapons) {
-        String weaponSelected = null;
-        while (!availableWeapons.contains(weaponSelected)) {
-            try {
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to fire ");
-                CLIHandler.arrayPrint(availableWeapons);
-                weaponSelected = CLIHandler.stringRead();
-            } catch (IllegalArgumentException e) {
-                weaponSelected = null;
-
-            }
-        }
-        return new WeaponChoiceEvent(getUser(), weaponSelected);
+        int weaponSelected;
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to fire ");
+        weaponSelected = CLIHandler.arraylistPrintRead(availableWeapons);
+        return new WeaponChoiceEvent(getUser(), availableWeapons.get(weaponSelected));
     }
 
     /**
@@ -373,18 +350,10 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
-        String weaponSelected = null;
-        while (!availableWeapon.contains(weaponSelected)) {
-            try {
-                System.out.println("You choose to grab");
-                CLIHandler.arrayPrint(availableWeapon);
-                weaponSelected = CLIHandler.stringRead();
-            } catch (IllegalArgumentException e) {
-                weaponSelected = null;
-
-            }
-        }
-        return new WeaponGrabChoiceEvent(getUser(), weaponSelected);
+        int weaponSelected;
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to garb ");
+        weaponSelected = CLIHandler.arraylistPrintRead(availableWeapon);
+        return new WeaponGrabChoiceEvent(getUser(), availableWeapon.get(weaponSelected));
     }
 
     /**
@@ -1010,11 +979,13 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
-     * @param available
-     * @param startedLobbies
-     * @param waitingLobbies
-     * @return
+     * User choose which game would like to join
+     * @param available  : availableChoice[0] = new game
+     *                   : availableChoice[1] = wait lobby
+     *                   : availableChoice[2] = started game
+     * @param startedLobbies Name of started game
+     * @param waitingLobbies Games are going to begin
+     * @return event that contains player's choice
      */
     @Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {

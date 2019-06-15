@@ -15,8 +15,10 @@ public class PowerGlove extends AlternateFireWeapon {
     private boolean intermediateEffectState;
     private int firstStepDirection;
 
-    public PowerGlove(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public PowerGlove() {
+        super(CubeColour.Yellow, "POWER GLOVE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override
@@ -40,8 +42,7 @@ public class PowerGlove extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         move(getOwner(), target.getPosition());
         damage(target, 1);
@@ -58,8 +59,7 @@ public class PowerGlove extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         for (int direction = 0 ; direction < 4; direction++){
             if (getOwner().getPosition().getNextSquare(direction) == target.getPosition())

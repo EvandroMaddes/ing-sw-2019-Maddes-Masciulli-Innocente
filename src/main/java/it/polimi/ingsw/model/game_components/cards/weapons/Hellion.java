@@ -13,14 +13,15 @@ import java.util.List;
 
 public class Hellion extends AlternateFireWeapon {
 
-    public Hellion(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Hellion() {
+        super(CubeColour.Red, "HELLION",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No Targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getDamagedPlayer().add(target);
@@ -42,8 +43,7 @@ public class Hellion extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No Targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getDamagedPlayer().add(target);

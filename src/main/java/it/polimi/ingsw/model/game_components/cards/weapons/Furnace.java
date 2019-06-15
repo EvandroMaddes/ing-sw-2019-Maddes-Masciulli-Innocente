@@ -14,14 +14,15 @@ import java.util.List;
 
 public class Furnace extends AlternateFireWeapon {
 
-    public Furnace(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Furnace() {
+        super(CubeColour.Red, "FURNACE",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{});
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         ArrayList<Player> roomPlayers = ((Square)targets.get(0)).findRoomPlayers();
         for (Player p:roomPlayers){
             damage(p, 1);
@@ -34,7 +35,7 @@ public class Furnace extends AlternateFireWeapon {
     public ControllerViewEvent getTargetEffectOne() {
         ArrayList<Square> possibleTarget = new ArrayList<>();
         for (int i = 0; i < 4; i ++){
-            if (getOwner().getPosition().checkDirection(i) && getOwner().getPosition().getNextSquare(i).getSquareColour() != getOwner().getPosition().getSquareColour() && !getOwner().getPosition().getNextSquare(i).findRoomPlayers().isEmpty())
+            if (getOwner().getPosition().checkDirection(i) && !getOwner().getPosition().getNextSquare(i).getSquareColour().equals(getOwner().getPosition().getSquareColour()) && !getOwner().getPosition().getNextSquare(i).findRoomPlayers().isEmpty())
                 possibleTarget.add(getOwner().getPosition().getNextSquare(i));
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTarget), Encoder.encodeSquareTargetsY(possibleTarget));
@@ -47,8 +48,7 @@ public class Furnace extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No targets");
+        checkEmptyTargets(targets);
         Square target = (Square)targets.get(0);
         for (Player p:target.getSquarePlayers()){
             damage(p, 1);

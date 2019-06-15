@@ -9,9 +9,14 @@ import java.util.ArrayList;
 public class WelcomeEvent extends ClientEvent {
 
     private boolean[] availableChoices;
-    private ArrayList<String> waitingLobbies;
+    /**
+     * availableChoice[0] = nuova partita
+     * availableChoice[1] = partita in attesa di iniziare
+     * availableChoice[2] = partita in corso(+username per riconessione)
+     *
+     */
     private ArrayList<String> startedLobbies;
-    private ArrayList<String> startedLobbiesUsernames;
+    private ArrayList<String> waitingLobbies;
 
 
     public WelcomeEvent(String user, boolean[] availableChoices, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbies) {
@@ -20,6 +25,7 @@ public class WelcomeEvent extends ClientEvent {
         this.waitingLobbies = waitingLobbies;
         this.startedLobbies = startedLobbies;
     }
+
 
 
     @Override

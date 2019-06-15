@@ -85,10 +85,10 @@ public class PlayerTest {
 
     @Test
     public void discardWeaponTest(){
-        Weapon weapon1 = new LockRifle(CubeColour.Blue, "Lock", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon weapon2 = new Electroscythe(CubeColour.Red, "Elec", new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon weapon3 = new PlasmaGun(CubeColour.Yellow, "PG", new AmmoCube[]{}, new AmmoCube[]{}, new AmmoCube[]{});
-        Weapon weapon4 = new Heatseeker(CubeColour.Red, "Hs", new AmmoCube[]{});
+        Weapon weapon1 = new LockRifle();
+        Weapon weapon2 = new Electroscythe();
+        Weapon weapon3 = new PlasmaGun();
+        Weapon weapon4 = new Heatseeker();
         Square spawnSquare = new SpawnSquare(1,1);
         player.setPosition(spawnSquare);
 

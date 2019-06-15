@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sledgehammer extends AlternateFireWeapon {
-    boolean intermediateEffect;
+    private boolean intermediateEffect;
 
-    public Sledgehammer(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Sledgehammer() {
+        super(CubeColour.Yellow, "SLDGEHAMMER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
 
     @Override
@@ -41,8 +43,7 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);
@@ -58,12 +59,12 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
-        if (!intermediateEffect)
-            performEffectTwoFirstStep(targets);
-        else
+        checkEmptyTargets(targets);
+        if (intermediateEffect)
             performEffectTwoSecondStep(targets);
+        else
+            performEffectTwoFirstStep(targets);
+
         effectControlFlow(2);
     }
 
@@ -93,6 +94,7 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     private ControllerViewEvent getTargetEffectTwoSecondStep(){
         ArrayList<Square> possibleTargets = new ArrayList<>();
+        possibleTargets.add(getFirstEffectTarget().get(0).getPosition());
         for (int direction = 0; direction < 4; direction++){
             if (getFirstEffectTarget().get(0).getPosition().checkDirection(direction)){
                 possibleTargets.add(getFirstEffectTarget().get(0).getPosition().getNextSquare(direction));
@@ -108,7 +110,7 @@ public class Sledgehammer extends AlternateFireWeapon {
         if (!intermediateEffect)
             return getEffectsEnable()[1] && getUsableEffect()[0] && getOwner().canAffortCost(getSecondEffectCost()) && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
         else
-            return getEffectsEnable()[1] && getUsableEffect()[0] && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
+            return getEffectsEnable()[1] && getUsableEffect()[1] && ((TargetSquareRequestEvent)getTargetEffectTwo()).getPossibleTargetsY().length != 0;
     }
 }
 

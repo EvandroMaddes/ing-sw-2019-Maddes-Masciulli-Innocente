@@ -17,8 +17,11 @@ import java.util.List;
 public class Thor extends TwoOptionalEffectWeapon {
     private Player lastPlayerHit;
 
-    public Thor(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] firstOptionalEffectCost, AmmoCube[] secondOptionalEffectCost) {
-        super(colour, name, reloadCost, firstOptionalEffectCost, secondOptionalEffectCost);
+    public Thor() {
+        super(CubeColour.Blue, "T.H.O.R.",
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)});
     }
 
     @Override
@@ -47,8 +50,7 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty target");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
@@ -59,13 +61,14 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 1);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 1);
         getFirstEffectTarget().add(target);
@@ -84,8 +87,7 @@ public class Thor extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);

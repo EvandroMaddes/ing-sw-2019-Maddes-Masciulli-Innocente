@@ -26,6 +26,7 @@ public class PowerUpTest {
         testPlayer.setPosition(new BasicSquare(0,0));
     }
 
+    // TODO: 2019-06-12
 /*
     @Test
     public void testTeleporter(){

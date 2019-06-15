@@ -13,15 +13,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Railgun extends AlternateFireWeapon {
+    private boolean intermediateEffectState;
 
-    public Railgun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Railgun() {
+        super(CubeColour.Yellow, "RAILGUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{});
+    }
+
+    @Override
+    public void setLoaded() {
+        super.setLoaded();
+        intermediateEffectState = false;
+    }
+
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if (effectUsed == 0)
+            updateUsableEffect(new boolean[]{false, false, false});
+        else if (effectUsed == 1 && !intermediateEffectState) {
+            intermediateEffectState = true;
+            updateUsableEffect(new boolean[]{false, true, false});
+        }
+        else if (effectUsed == 1)
+            getUsableEffect()[1] = false;
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 3);
         getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(1);
@@ -35,21 +56,54 @@ public class Railgun extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 2);
+        getFirstEffectTarget().add((Player)targets.get(0));
         getDamagedPlayer().add((Player)targets.get(0));
-        if (targets.size() > 1) {
-            damage((Player) targets.get(1), 2);
-            getDamagedPlayer().add((Player)targets.get(1));
-        }
         effectControlFlow(2);
     }
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
+        if (!intermediateEffectState)
+            return getTargetEffectTwoFirstStep();
+        else
+            return getTargetEffectTwoSecondStep();
+    }
+
+    private ControllerViewEvent getTargetEffectTwoFirstStep(){
         ArrayList<Player> possibleTargets = getCardinalTargets();
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 2);
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+    }
+
+    private ControllerViewEvent getTargetEffectTwoSecondStep(){
+        Player firstTarget = getFirstEffectTarget().get(0);
+        ArrayList<Player> possibleTargets;
+        if (firstTarget.getPosition() == getOwner().getPosition()){
+            possibleTargets = getCardinalTargets();
+            possibleTargets.remove(firstTarget);
+        }
+        else{
+            int direction = 1;
+            if (firstTarget.getPosition().getRow() == getOwner().getPosition().getRow()) {
+                if (firstTarget.getPosition().getColumn() < getOwner().getPosition().getColumn())
+                    direction = 3;
+                else
+                    direction = 4;
+            }
+            else if (firstTarget.getPosition().getColumn() == getOwner().getPosition().getColumn() && firstTarget.getPosition().getRow() < getOwner().getPosition().getRow()) {
+                    direction = 0;
+            }
+            Square checkedSquare = getOwner().getPosition();
+            possibleTargets = checkedSquare.getSquarePlayers();
+            possibleTargets.remove(getOwner());
+            while (checkedSquare.getNextSquare(direction) != null){
+                checkedSquare = checkedSquare.getNextSquare(direction);
+                possibleTargets.addAll(checkedSquare.getSquarePlayers());
+            }
+            possibleTargets.remove(firstTarget);
+        }
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     private ArrayList<Player> getCardinalTargets(){

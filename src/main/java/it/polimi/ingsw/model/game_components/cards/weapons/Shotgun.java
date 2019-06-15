@@ -16,8 +16,10 @@ import java.util.List;
 public class Shotgun extends AlternateFireWeapon {
     private boolean intermediateStateEffect;
 
-    public Shotgun(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost);
+    public Shotgun() {
+        super(CubeColour.Yellow, "SHOTGUN",
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow), new AmmoCube(CubeColour.Yellow)},
+                new AmmoCube[]{});
     }
 
     @Override
@@ -40,8 +42,7 @@ public class Shotgun extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateStateEffect)
             performEffectOneFirstStep(targets);
         else
@@ -94,8 +95,7 @@ public class Shotgun extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         damage((Player)targets.get(0), 2);
         getDamagedPlayer().add((Player)targets.get(0));
         effectControlFlow(2);
@@ -109,5 +109,10 @@ public class Shotgun extends AlternateFireWeapon {
                 possibleTargets.addAll(getOwner().getPosition().getNextSquare(direction).getSquarePlayers());
         }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+    }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && !((TargetPlayerRequestEvent)getTargetEffectTwo()).getPossibleTargets().isEmpty();
     }
 }

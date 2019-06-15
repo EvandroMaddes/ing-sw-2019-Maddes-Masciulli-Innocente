@@ -75,7 +75,7 @@ public class Client {
         name.add("name2");
         name.add("name3");
 
-        remoteViewImplementation.welcomeChoice(available,started,wait,name);
+        remoteViewImplementation.weaponGrabChoice(name);
 
         CLI currentView = (CLI)remoteViewImplementation;
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());

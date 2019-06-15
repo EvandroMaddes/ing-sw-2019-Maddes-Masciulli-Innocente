@@ -17,8 +17,11 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     private boolean intermediateEffectState;
     private Square targetSquare;
 
-    public RocketLauncher(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost, AmmoCube[] thirdEffectCost) {
-        super(colour, name, reloadCost, secondEffectCost, thirdEffectCost);
+    public RocketLauncher() {
+        super(CubeColour.Red, "ROCKET LAUNCHER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red), new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Blue)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Yellow)});
     }
 
     @Override
@@ -36,22 +39,23 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     @Override
     public void effectControlFlow(int effectUsed) {
         effectUsed--;
-        if (effectUsed == 0 && !intermediateEffectState)
+        if (effectUsed == 0 && !intermediateEffectState) {
             intermediateEffectState = true;
+            getUsableEffect()[2] = true;
+        }
         else if (effectUsed == 0){
             getUsableEffect()[0] = false;
-            getUsableEffect()[2] = true;
         }
         else if (effectUsed == 1)
             getUsableEffect()[1] = false;
-        else if (effectUsed == 2)
-            getUsableEffect()[2] = false;
+        else if (effectUsed == 2) {
+            updateUsableEffect(new boolean[]{false, false, false});
+        }
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -103,16 +107,20 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         move(getOwner(), (Square)targets.get(0));
         effectControlFlow(2);
     }
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Square> possibleDestination = getOwner().getPosition().reachalbeInMoves(2);
+        ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2);
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
+    }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost());
     }
 
     @Override

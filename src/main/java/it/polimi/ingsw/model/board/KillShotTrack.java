@@ -27,12 +27,12 @@ public class KillShotTrack extends GameTrack {
      * @param damageToken that represent the player
      * @param number of token that replace a skull
      */
+    @Override
     public void evaluateDamage( DamageToken damageToken, int number )
-    {   for(int i=0; i<number; i++){
-            addDamage(damageToken);
-            if(!checkEndTrack()) {
-                removeSkull();
-            }
+    {
+        addDamage(damageToken, number);
+        if(!checkEndTrack()) {
+            removeSkull();
         }
     }
 
@@ -47,13 +47,18 @@ public class KillShotTrack extends GameTrack {
         notifyObservers(message);
     }
 
-    /**
-     *
-     * @param damageToken
-     */
-    private void addDamage( DamageToken damageToken )
+
+    private void addDamage( DamageToken damageToken, int number )
     {
-        tokenTrack.add(damageToken);
+        for(int i = 0; i < number; i++){
+            tokenTrack.add(new DamageToken(damageToken.getPlayer()));
+        }
+        if (!checkEndTrack()) {
+            int i = 0;
+            while (getTokenSequence()[i] != 0)
+                i++;
+            getTokenSequence()[i] = number;
+        }
         notifyView();
     }
 
@@ -71,15 +76,15 @@ public class KillShotTrack extends GameTrack {
         }
 
         for (int i = 0; i < 5; i++){
-            for (int j = i; j < 5; j++){
-                if (damageDealed[j] > damageDealed[i]){
+            for (int j = 0; j < 5 - i - 1; j++){
+                if (damageDealed[j + 1] > damageDealed[j]){
                     int intTemp;
                     Player playerTemp;
-                    intTemp = damageDealed[i];
-                    damageDealed[i] = damageDealed[j];
+                    intTemp = damageDealed[j+1];
+                    damageDealed[j+1] = damageDealed[j];
                     damageDealed[j] = intTemp;
-                    playerTemp = damageDealer[i];
-                    damageDealer[i] = damageDealer[j];
+                    playerTemp = damageDealer[j+1];
+                    damageDealer[j+1] = damageDealer[j];
                     damageDealer[j] = playerTemp;
                 }
             }
