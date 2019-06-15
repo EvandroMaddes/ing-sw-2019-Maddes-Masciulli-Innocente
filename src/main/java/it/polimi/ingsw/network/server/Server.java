@@ -202,6 +202,7 @@ public class Server extends Thread {
                         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
 
                     }
+
                 }
                 else {
 

@@ -192,7 +192,7 @@ public class Client {
                     //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
                     currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
                     //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
-                    if(currentMessage!=null){
+                    if(!currentMessage.getUser().equals("BROADCAST")){
                         clientImplementation.sendMessage(currentMessage);
                     }
                     waiting = false;
