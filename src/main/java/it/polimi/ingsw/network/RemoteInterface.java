@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * its methods handle the remote connection beetwen Server and Client(the latter will not implements the Broadcast)
  */
 public interface RemoteInterface extends Remote {
-    void acceptRemoteClient( int remotePort, String remoteIPAddress) throws RemoteException;
+    void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException;
     void clientConnectionGuard() throws RemoteException;
     void remoteSendMessage(Event message) throws RemoteException;
     void remoteSetCurrEvent(Event message) throws RemoteException;
@@ -21,7 +21,7 @@ public interface RemoteInterface extends Remote {
 
     int getClientListNumber() throws  RemoteException;
     Event getCurrMessage() throws RemoteException;
-    int getPort() throws RemoteException;
+    int remoteGetPort() throws RemoteException;
     String getIPAddress() throws RemoteException;
     String getUser() throws RemoteException;
 }

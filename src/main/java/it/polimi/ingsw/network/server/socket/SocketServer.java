@@ -16,12 +16,20 @@ import java.util.logging.Logger;
 
 
 public class SocketServer extends Thread implements ServerInterface {
-    private ServerSocket serverSocket;
+    private ServerSocket serverSocket ;
+    private int serverPort= NetConfiguration.SOCKETSERVERPORTNUMBER;
     private CopyOnWriteArrayList<SocketServerThread> socketList = new CopyOnWriteArrayList<>();
     private boolean gameCouldStart = false;
     private boolean gameIsRunning = false;
 
+    @Override
+    public int getPort() {
+        return serverPort;
+    }
 
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort ;
+    }
 
     @Override
     public void run(){
@@ -65,8 +73,9 @@ public class SocketServer extends Thread implements ServerInterface {
     @Override
     public void runServer() {
 
+
         try{
-        serverSocket = new ServerSocket(NetConfiguration.SOCKETSERVERPORTNUMBER);
+        serverSocket = new ServerSocket(serverPort);
         }catch(IOException e){
             CustomLogger.logException(e);
         }
