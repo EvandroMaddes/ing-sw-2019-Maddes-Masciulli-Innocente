@@ -23,7 +23,7 @@ public class DeathManager {
     }
 
     public void manageKill(){
-        controller.getGameManager().collectGameBoardPoints(deadPlayer);
+        controller.getGameManager().collectPlayerBoardPoints(deadPlayer);
         updateGameTrack();
         deadPlayer.getPlayerBoard().addSkull();
         deadPlayer.getPlayerBoard().resetDamages();

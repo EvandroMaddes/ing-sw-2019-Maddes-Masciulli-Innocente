@@ -5,13 +5,11 @@ import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 public class Controller implements Observer {
-
     private GameManager gameManager;
     private Map<String, VirtualView> usersVirtualView;
 
