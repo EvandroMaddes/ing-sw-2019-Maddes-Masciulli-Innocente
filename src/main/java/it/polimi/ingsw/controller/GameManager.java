@@ -147,13 +147,13 @@ public class GameManager {
         }
 
         if (firstRoundPhase){
-            currentRound = new FirstRoundManager(controller, model,this, model.getPlayers().get(playerTurn));
+            currentRound = new FirstRoundManager(controller, model, model.getPlayers().get(playerTurn));
         }
         else if (finalFrenzyPhase){
-            currentRound = new FrenzyRoundManager(controller, model, this, model.getPlayers().get(playerTurn), firsPlayerPlayed);
+            currentRound = new FrenzyRoundManager(controller, model, model.getPlayers().get(playerTurn), firsPlayerPlayed);
         }
         else
-            currentRound = new RoundManager(controller, model, this, model.getPlayers().get(playerTurn));
+            currentRound = new RoundManager(controller, model, model.getPlayers().get(playerTurn));
 
         currentRound.manageRound();
     }

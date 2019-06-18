@@ -6,15 +6,19 @@ import it.polimi.ingsw.model.player.Player;
 
 public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundManager(Controller controller, GameModel model, GameManager gameManager, Player currentPlayer){
-        super(controller, model, gameManager, currentPlayer);
+    public FirstRoundManager(Controller controller, GameModel model, Player currentPlayer){
+        super(controller, model, currentPlayer);
+        setPhase(0);
     }
 
     @Override
     public void manageRound() {
-        getCurrentPlayer().addPowerUp((PowerUp)model.getGameboard().getPowerUpDeck().draw());
-        createDeathManager(model, getCurrentPlayer(), this);
-        getDeathManager().respawnPlayer();
-        super.manageRound();
+        if (getPhase() == 0) {
+            getCurrentPlayer().addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
+            createDeathManager(model, getCurrentPlayer(), this);
+            getDeathManager().respawnPlayer();
+        }
+        else
+            super.manageRound();
     }
 }

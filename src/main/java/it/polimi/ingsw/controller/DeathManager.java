@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
 
 public class DeathManager {
@@ -40,23 +41,21 @@ public class DeathManager {
     }
 
     public void spawn(String powerUp, CubeColour cardColour){
-        PowerUp chosenPowerUp = null;
-        for (PowerUp p: deadPlayer.getPowerUps()) {
-            if (powerUp.equals(p.getName()) && cardColour == p.getColour() ){
-                chosenPowerUp = p;
-                break;
-            }
-        }
+        PowerUp chosenPowerUp = Decoder.decodePowerUp(deadPlayer, powerUp, cardColour);
         for (SpawnSquare possibleSpawnSquare: model.getGameboard().getMap().getSpawnSquares()) {
             if (possibleSpawnSquare.getSquareColour().equals(chosenPowerUp.getColour().toString() ) ){
                 deadPlayer.setPosition(possibleSpawnSquare);
                 deadPlayer.discardPowerUp(chosenPowerUp);
             }
         }
+        deadPlayer.discardPowerUp(chosenPowerUp);
 
         if (deadPlayer.isDead()) {
             deadPlayer.invertDeathState();
             roundManager.manageDeadPlayers();
+        }
+        else{
+            controller.getGameManager().getCurrentRound().nextPhase();
         }
     }
 
