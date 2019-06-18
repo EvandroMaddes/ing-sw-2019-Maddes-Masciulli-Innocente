@@ -52,17 +52,17 @@ public class GameManagerTest {
     public void buildGameBoardTest(){
         GameManager gameManager = new GameManager(null, 0);
         Square[][] map = gameManager.getModel().getGameboard().getMap().getSquareMatrix();
-        Assert.assertEquals("grey", map[2][0].getSquareColour());
-        Assert.assertEquals("green", map[0][3].getSquareColour());
+        Assert.assertEquals("Grey", map[2][0].getSquareColour());
+        Assert.assertEquals("Green", map[0][3].getSquareColour());
 
         gameManager = new GameManager(null, 1);
         map = gameManager.getModel().getGameboard().getMap().getSquareMatrix();
-        Assert.assertEquals("grey", map[2][0].getSquareColour());
+        Assert.assertEquals("Grey", map[2][0].getSquareColour());
         Assert.assertNull(map[0][3]);
 
         gameManager = new GameManager(null, 2);
         map = gameManager.getModel().getGameboard().getMap().getSquareMatrix();
-        Assert.assertEquals("green", map[0][3].getSquareColour());
+        Assert.assertEquals("Green", map[0][3].getSquareColour());
         Assert.assertNull(map[2][0]);
 
         gameManager = new GameManager(null, 3);
