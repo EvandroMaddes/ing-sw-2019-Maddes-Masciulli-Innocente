@@ -147,13 +147,13 @@ public class GameManager {
         }
 
         if (firstRoundPhase){
-            currentRound = new FirstRoundManager(controller, model, model.getPlayers().get(playerTurn));
+            currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
         }
         else if (finalFrenzyPhase){
             currentRound = new FrenzyRoundManager(controller, model, model.getPlayers().get(playerTurn), firsPlayerPlayed);
         }
         else
-            currentRound = new RoundManager(controller, model, model.getPlayers().get(playerTurn));
+            currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
 
         currentRound.manageRound();
     }
@@ -296,5 +296,10 @@ public class GameManager {
     void endGame(){
         Player winner = calculateWinner();
         controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints()));
+    }
+
+    // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare
+    public void setCurrentRound(RoundManager roundManager){
+        this.currentRound = roundManager;
     }
 }

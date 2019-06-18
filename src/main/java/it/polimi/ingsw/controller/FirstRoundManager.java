@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
 public class FirstRoundManager extends RoundManager {
 
-    public FirstRoundManager(Controller controller, GameModel model, Player currentPlayer){
-        super(controller, model, currentPlayer);
+    public FirstRoundManager(Controller controller, Player currentPlayer){
+        super(controller, currentPlayer);
         setPhase(0);
     }
 

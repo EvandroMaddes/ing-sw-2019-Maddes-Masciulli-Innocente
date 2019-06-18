@@ -6,6 +6,6 @@ import it.polimi.ingsw.model.player.Player;
 public class FrenzyRoundManager extends RoundManager {
 
     public FrenzyRoundManager(Controller controller, GameModel model, Player currentPlayer, boolean afterFirstPlayer){
-        super(controller, model, currentPlayer);
+        super(controller, currentPlayer);
     }
 }

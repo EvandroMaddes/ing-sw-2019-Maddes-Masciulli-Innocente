@@ -1,9 +1,13 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.controller_view_event.AsActionPowerUpRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.RespawnRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.SpawnChoiceEvent;
+import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
+import it.polimi.ingsw.model.game_components.cards.power_ups.Teleporter;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;
@@ -42,18 +46,25 @@ public class FirstRoundManagerTest {
         Assert.assertEquals(2, player1.getPowerUps().size());
         Assert.assertEquals(0, player2.getPowerUps().size());
         Assert.assertNotNull(hashMap.get("Federico").getToRemoteView());
-        RespawnRequestEvent requestEvent = (RespawnRequestEvent) hashMap.get("Federico").getToRemoteView();
-        Assert.assertEquals(powerUp1.getName(), requestEvent.getPowerUpNames()[0]);
-        Assert.assertEquals(powerUp1.getColour(), requestEvent.getPowerUpColours()[0]);
-        Assert.assertEquals(powerUp2.getName(), requestEvent.getPowerUpNames()[1]);
-        Assert.assertEquals(powerUp2.getColour(), requestEvent.getPowerUpColours()[1]);
+        ControllerViewEvent requestEvent = (RespawnRequestEvent) hashMap.get("Federico").getToRemoteView();
+        Assert.assertEquals(2, ((RespawnRequestEvent)requestEvent).getPowerUpNames().length);
+        Assert.assertEquals(powerUp1.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(powerUp1.getColour(), ((RespawnRequestEvent) requestEvent).getPowerUpColours()[0]);
+        Assert.assertEquals(powerUp2.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[1]);
+        Assert.assertEquals(powerUp2.getColour(), ((RespawnRequestEvent)requestEvent).getPowerUpColours()[1]);
+        player1.discardPowerUp(powerUp2);
+        player1.addPowerUp(new Teleporter(CubeColour.Blue));
 
-        SpawnChoiceEvent choiceEvent = new SpawnChoiceEvent(player1.getUsername(), requestEvent.getPowerUpNames()[0], requestEvent.getPowerUpColours()[0]);
+        SpawnChoiceEvent choiceEvent = new SpawnChoiceEvent(player1.getUsername(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0], ((RespawnRequestEvent)requestEvent).getPowerUpColours()[0]);
         choiceEvent.performAction(controller);
         Assert.assertEquals(1, player1.getPowerUps().size());
-        Assert.assertEquals(requestEvent.getPowerUpNames()[1], player1.getPowerUps().get(0).getName());
-        Assert.assertEquals(requestEvent.getPowerUpColours()[1], player1.getPowerUps().get(0).getColour());
-        Assert.assertEquals(requestEvent.getPowerUpColours()[0].toString(), player1.getPosition().getSquareColour());
+        Assert.assertEquals("Teleporter", player1.getPowerUps().get(0).getName());
+        Assert.assertEquals(CubeColour.Blue, player1.getPowerUps().get(0).getColour());
+        Assert.assertEquals(((RespawnRequestEvent)requestEvent).getPowerUpColours()[0].toString(), player1.getPosition().getSquareColour());
 
+        requestEvent = (AsActionPowerUpRequestEvent) hashMap.get("Federico").getToRemoteView();
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestEvent).getPowerUpColours().length);
+        Assert.assertEquals("Teleporter", ((AsActionPowerUpRequestEvent)requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(CubeColour.Blue, ((AsActionPowerUpRequestEvent)requestEvent).getPowerUpColours()[0]);
     }
 }

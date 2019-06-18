@@ -30,10 +30,10 @@ public class ActionManager {
     private int chosenEffect;
     private boolean reloadPhase;
 
-    public ActionManager(Controller controller, GameModel model, RoundManager currentRoundManager) {
+    public ActionManager(Controller controller) {
         this.controller = controller;
-        this.model = model;
-        this.currentRoundManager = currentRoundManager;
+        this.model = controller.getGameManager().getModel();
+        this.currentRoundManager = controller.getGameManager().getCurrentRound();
         this.reloadPhase = false;
     }
 
@@ -483,7 +483,7 @@ public class ActionManager {
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
-            PowerUpRequestEvent message = new AsActionPowerUprequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
+            PowerUpRequestEvent message = new AsActionPowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
             controller.callView(message);
         }
         else

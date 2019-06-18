@@ -23,11 +23,11 @@ public class RoundManager {
     private DeathManager deathManager;
     private int phase;
 
-    public RoundManager(Controller controller, GameModel model, Player currentPlayer){
+    public RoundManager(Controller controller, Player currentPlayer){
         this.controller = controller;
         this.currentPlayer = currentPlayer;
         this.gameManager = controller.getGameManager();
-        this.model = model;
+        this.model = controller.getGameManager().getModel();
         phase = 1;
     }
 
@@ -39,18 +39,18 @@ public class RoundManager {
             case 1:
             case 3:
             case 5:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForPowerUpAsAction();
                 break;
             }
             case 2:
             case 4:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForAction();
                 break;
             }
             case 6:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForReload();
                 break;
             }
