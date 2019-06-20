@@ -43,8 +43,7 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);
@@ -60,8 +59,7 @@ public class Sledgehammer extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (intermediateEffect)
             performEffectTwoSecondStep(targets);
         else

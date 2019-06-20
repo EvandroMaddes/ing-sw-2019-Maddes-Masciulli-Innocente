@@ -116,11 +116,11 @@ public class MapTest {
         for (Square spawn:testedMap.getSpawnSquares()
         ) {
             if(spawn.getRow()==1 && spawn.getColumn()==0){
-                Assert.assertEquals("red",spawn.getSquareColour());
+                Assert.assertEquals("Red",spawn.getSquareColour());
             }else if(spawn.getRow()==0 && spawn.getColumn()==2){
-                Assert.assertEquals("blue",spawn.getSquareColour());
+                Assert.assertEquals("Blue",spawn.getSquareColour());
             }else if(spawn.getRow()==2 && spawn.getColumn()==3){
-                Assert.assertEquals("yellow",spawn.getSquareColour());
+                Assert.assertEquals("Yellow",spawn.getSquareColour());
             }
         }
     }

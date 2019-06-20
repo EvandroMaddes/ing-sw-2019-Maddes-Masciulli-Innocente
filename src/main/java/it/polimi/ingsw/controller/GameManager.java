@@ -16,8 +16,6 @@ import it.polimi.ingsw.model.player.PlayerBoard;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class GameManager {
 
@@ -34,7 +32,7 @@ public class GameManager {
     /**
      *
      */
-    public GameManager(Controller controller, int mapChoice){
+    GameManager(Controller controller, int mapChoice){
         this.controller = controller;
         playerTurn = -1;
         firstRoundPhase = true;
@@ -56,29 +54,45 @@ public class GameManager {
         Map map;
         switch(mapChoice){
             case 0:{
-                map = new Map("leftFirst","rightFirst" );
+                map = new Map(Map.BIG_LEFT,Map.BIG_RIGHT );
                 break;
             }
             case 1:{
-                map = new Map("leftFirst","rightSecond" );
+                map = new Map(Map.BIG_LEFT,Map.SMALL_RIGHT );
                 break; 
             }
             case 2:{
-                map = new Map("leftSecond","rightFirst" );
+                map = new Map(Map.SMALL_LEFT,Map.BIG_RIGHT );
                 break;
             }
             case 3:{
-                map = new Map("leftSecond","rightSecond" );
+                map = new Map(Map.SMALL_LEFT,Map.SMALL_RIGHT );
                 break;
             }
             default:{
                 throw new InvalidParameterException();
             }
         }
-        return new GameBoard(new KillShotTrack(),map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
+        return new GameBoard(new KillShotTrack(), map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
     }
 
-    public void characterSelect(){
+    private void refillMap(){
+        for(int x = 0; x < 3; x++){
+            for (int y = 0; y < 4; y++){
+                GameBoard gameBoard = getModel().getGameboard();
+                if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
+                    while (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
+                            !gameBoard.getWeaponDeck().getDeck().isEmpty())
+                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add((Weapon) gameBoard.getWeaponDeck().draw());
+                }
+                else if ( (gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
+                        !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
+                    ((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile((AmmoTile) gameBoard.getAmmoTilesDeck().draw());
+            }
+        }
+    }
+
+    void characterSelect(){
         if (getModel().getPlayers().size() < controller.getUsersVirtualView().size()){
             ArrayList<Character> availableCharacter = new ArrayList<>();
             availableCharacter.add(Character.BANSHEE);
@@ -118,7 +132,7 @@ public class GameManager {
      * finalFrenzyPhase - is enabled when the GameTrack end
      * firstPlayerPlayed - set to true only in the final frenzy, in the first player round
      */
-    public void newRound(){
+    void newRound(){
         refillMap();
 
         if(gameEnded())
@@ -133,22 +147,22 @@ public class GameManager {
         }
 
         if (firstRoundPhase){
-            currentRound = new FirstRoundManager(controller, model,this, model.getPlayers().get(playerTurn));
+            currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
         }
         else if (finalFrenzyPhase){
-            currentRound = new FrenzyRoundManager(controller, model, this, model.getPlayers().get(playerTurn), firsPlayerPlayed);
+            currentRound = new FrenzyRoundManager(controller, model, model.getPlayers().get(playerTurn), firsPlayerPlayed);
         }
         else
-            currentRound = new RoundManager(controller, model, this, model.getPlayers().get(playerTurn));
+            currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
 
         currentRound.manageRound();
     }
 
-    public boolean gameEnded(){
+    private boolean gameEnded(){
         return (model.getGameboard().getGameTrack()).checkEndTrack();
     }
 
-    public void setFinalFrenzyPhase() {
+    private void setFinalFrenzyPhase() {
         if (!finalFrenzyPhase){
             finalFrenzyPhase = true;
             lastPlayer = playerTurn;
@@ -156,27 +170,11 @@ public class GameManager {
         }
     }
 
-    private void refillMap(){
-        for(int x = 0; x < 4; x++){
-            for (int y = 0; y < 3; y++){
-                GameBoard gameBoard = controller.getGameManager().getModel().getGameboard();
-                if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
-                    if (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
-                        !gameBoard.getWeaponDeck().getDeck().isEmpty())
-                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add((Weapon) gameBoard.getWeaponDeck().draw());
-                }
-                else
-                    if (!((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
-                        ((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile((AmmoTile) gameBoard.getAmmoTilesDeck().draw());
-            }
-        }
-    }
-
     /**
      *
      * @return winner player. In case of draw, return null
      */
-    public Player calculateWinner() {
+    private Player calculateWinner() {
         giveEndGamePoints();
 
         Player winner = null;
@@ -209,19 +207,19 @@ public class GameManager {
         return currentRound;
     }
 
-    public int getPlayerTurn() {
+    int getPlayerTurn() {
         return playerTurn;
     }
 
-    public boolean isFinalFrenzyPhase() {
+    boolean isFinalFrenzyPhase() {
         return finalFrenzyPhase;
     }
 
-    public int getLastPlayer() {
+    int getLastPlayer() {
         return lastPlayer;
     }
 
-    public boolean isFirstRoundPhase() {
+    boolean isFirstRoundPhase() {
         return firstRoundPhase;
     }
 
@@ -242,12 +240,12 @@ public class GameManager {
         else
             playerList = getModel().getPlayers();
         for (Player p:playerList) {
-            collectGameBoardPoints(p);
+            collectPlayerBoardPoints(p);
         }
         model.getGameboard().getGameTrack().collectGameTrackPoints();
     }
 
-    public void collectGameBoardPoints (Player evaluatedPlayer){
+    void collectPlayerBoardPoints(Player evaluatedPlayer){
         ArrayList<Player> playersList;
         if (disconnectionManager != null)
             playersList = getDisconnectionManager().getGamePlayers();
@@ -262,27 +260,28 @@ public class GameManager {
 
         if (evaluatedPlayer.getPlayerBoard().getDamageAmount() == 0)
             return;
-        //aggiunge il punto della prima kill
+        //aggiunge il punto del primo danno
         evaluatedPlayer.getPlayerBoard().getDamageReceived()[0].getPlayer().addPoints(1);
 
         //aggiunge i punti in base a chi ha fatto più danni e al numero di teschi
-        for (DamageToken d: evaluatedPlayer.getPlayerBoard().getDamageReceived()) {
+        for (int j = 0; j < evaluatedPlayer.getPlayerBoard().getDamageAmount(); j++){
+            DamageToken d = evaluatedPlayer.getPlayerBoard().getDamageReceived()[j];
             int i = 0;
-            while (damageDealed[i] != 0 && damageDealer[i] != d.getPlayer())
+            while (damageDealed[i] != 0 && damageDealer[i] != d.getPlayer() )
                 i++;
             if (damageDealed[i] == 0)
                 damageDealer[i] = d.getPlayer();
             damageDealed[i]++;
         }
 
-        int max = 0;
-        for(int i = 0; i < damageDealed.length && damageDealed[i] > 0; i++){
-            for(int j = 0; j < damageDealed.length && damageDealed[j] > 0; j++) {
+        for(int i = 0; i < damageDealed.length && damageDealed[i] != 0; i++){
+            int max = 0;
+            for(int j = 0; j < damageDealed.length && damageDealed[j] != 0; j++) {
                 if (damageDealed[j] > max && damageDealed[j] <= 12)
                     max = damageDealed[j];
             }
             int currentMaxDamager = 0;
-            while (damageDealed[currentMaxDamager] != max)
+            while (damageDealed[currentMaxDamager] != max && damageDealed[currentMaxDamager] != 0)
                 currentMaxDamager++;
             damageDealed[currentMaxDamager] = 100;
 
@@ -293,7 +292,14 @@ public class GameManager {
         }
     }
 
-    public void endGame(){
-        controller.callView(new WinnerEvent(calculateWinner().getUsername(),calculateWinner().getPoints()));
+    // TODO: 2019-06-16 in caso di pareggio non si puo mandare null perche lancia NullPointerException
+    void endGame(){
+        Player winner = calculateWinner();
+        controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints()));
+    }
+
+    // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare
+    public void setCurrentRound(RoundManager roundManager){
+        this.currentRound = roundManager;
     }
 }

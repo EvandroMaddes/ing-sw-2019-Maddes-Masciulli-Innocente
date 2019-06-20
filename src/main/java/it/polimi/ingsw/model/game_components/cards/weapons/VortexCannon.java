@@ -49,8 +49,7 @@ public class VortexCannon extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -79,17 +78,16 @@ public class VortexCannon extends OneOptionalEffectWeapon {
     }
 
     private ControllerViewEvent getTargetEffectOneFirstStep(){
-        ArrayList<Square> possibleVortex = getOwner().getPosition().findVisibleSquare();
-        possibleVortex.remove(getOwner().getPosition());
+        ArrayList<Square> visibleSquare = getOwner().getPosition().findVisibleSquare();
+        ArrayList<Square> possibleVortex = new ArrayList<>();
+        visibleSquare.remove(getOwner().getPosition());
         boolean isLegal;
-        for (Square s:possibleVortex){
+        for (Square s:visibleSquare){
             isLegal = false;
-            for (int direction = 0; direction < 4; direction++){
-                if ( !s.getSquarePlayers().isEmpty() || (s.checkDirection(direction) && !s.getNextSquare(direction).getSquarePlayers().isEmpty()))
-                    isLegal = true;
-            }
-            if (!isLegal)
-                possibleVortex.remove(s);
+            if ( !s.getSquarePlayers().isEmpty() || hasOtherPlayersNext(s))
+                isLegal = true;
+            if (isLegal)
+                possibleVortex.add(s);
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleVortex), Encoder.encodeSquareTargetsY(possibleVortex));
     }
@@ -110,13 +108,13 @@ public class VortexCannon extends OneOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         int i = 0;
         while (i < 2 && i < targets.size()){
             move((Player)targets.get(i), vortex);
             damage((Player)targets.get(i), 1);
             getDamagedPlayer().add((Player)targets.get(0));
+            i++;
         }
         effectControlFlow(2);
     }
@@ -127,5 +125,11 @@ public class VortexCannon extends OneOptionalEffectWeapon {
         possibleTargets.addAll(vortex.getNextSquarePlayer());
         possibleTargets.remove(getFirstEffectTarget().get(0));
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 2);
+    }
+
+    private boolean hasOtherPlayersNext(Square square){
+        ArrayList<Player> nextPlayers = square.getNextSquarePlayer();
+        nextPlayers.remove(getOwner());
+        return !nextPlayers.isEmpty();
     }
 }

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.event.model_view_event.ModelViewEvent;
 import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
 import it.polimi.ingsw.model.board.GameBoard;
-import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.Observable;

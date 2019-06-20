@@ -9,7 +9,6 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
@@ -20,6 +19,7 @@ public class CLI extends RemoteView {
 
     private CLIDisplay display;
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
+    private static final String broadcastString = "BROADCAST";
 
     /**
      * Constructor:
@@ -57,7 +57,7 @@ public class CLI extends RemoteView {
      * @return the answer that will be sent to the server.
      */
     @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
+    public Event printUserNotification(UsernameModificationEvent usernameEvent) {
         String newUser = usernameEvent.getNewUser();
         Event returnedEvent;
         if(newUser.equals(usernameEvent.getUser())){
@@ -77,9 +77,9 @@ public class CLI extends RemoteView {
         }
         else{
             System.out.println("Username already connected, yours is now:\t"+newUser);
+
             returnedEvent = null;
         }
-        usernameEvent.performAction(clientImp);
         return returnedEvent;
     }
 
@@ -266,7 +266,7 @@ public class CLI extends RemoteView {
             }
 
         }
-        return new SpownChoiceEvent(getUser(), powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
+        return new SpawnChoiceEvent(getUser(), powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
     }
 
     /**
@@ -365,7 +365,7 @@ public class CLI extends RemoteView {
     @Override
     public Event winnerUpdate(String user, int point) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+" Player "+user+" win this game with "+point);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -505,7 +505,7 @@ public class CLI extends RemoteView {
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"New player joined the game:" + newPlayer+" with "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -529,7 +529,7 @@ public class CLI extends RemoteView {
             currElement = new CLIPrintableElement(false, color);
         }
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -542,7 +542,7 @@ public class CLI extends RemoteView {
     public Event removeAmmoTileUpdate(int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(false);
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -555,7 +555,7 @@ public class CLI extends RemoteView {
     public Event positionUpdate(Character currCharacter, int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter, mapCharacterNameColors.get(currCharacter));
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -588,7 +588,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(character).skullUpdate(skullNumber);
 
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -606,7 +606,7 @@ public class CLI extends RemoteView {
         }
         display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -620,7 +620,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
 
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -645,7 +645,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -668,7 +668,7 @@ public class CLI extends RemoteView {
                 display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]),column);
                 column = column+4;
             }
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
     /**
@@ -681,7 +681,7 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
         display.weaponsSpawnSquare(x, y, weapon);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(broadcastString);
     }
 
 
@@ -984,11 +984,10 @@ public class CLI extends RemoteView {
      *                   : availableChoice[2] = started game
      * @param startedLobbies Name of started game
      * @param waitingLobbies Games are going to begin
-     * @param startedLobbiesUsername name of players in game
      * @return event that contains player's choice
      */
     @Override
-    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
         int choice = 404;
         int lobbyChoice = 404;
         int userChoice= 404;
@@ -1025,9 +1024,7 @@ public class CLI extends RemoteView {
         if(choice == 2){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Started lobbies:");
             lobbyChoice= CLIHandler.arraylistPrintRead(startedLobbies);
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your username:");
-            userChoice = CLIHandler.arraylistPrintRead(startedLobbiesUsername);
-            messageChoice = new LobbyChoiceEvent(startedLobbiesUsername.get(userChoice),startedLobbies.get(lobbyChoice));
+            messageChoice = new LobbyChoiceEvent(getUser(), startedLobbies.get(lobbyChoice));
 
         }
         return messageChoice;

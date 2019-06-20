@@ -4,9 +4,16 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.network.server.WaitServer;
 
 public abstract class ViewServerEvent  extends Event {
-    public ViewServerEvent(String user) {
+    private boolean isNewGame;
+
+    public ViewServerEvent(String user, boolean isNewGame) {
         super(user);
+        this.isNewGame = isNewGame;
     }
 
-    public abstract void performAction(WaitServer server);
+    public boolean isNewGame() {
+        return isNewGame;
+    }
+
+    public abstract String performAction();
 }

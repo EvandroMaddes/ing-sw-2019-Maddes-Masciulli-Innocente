@@ -52,7 +52,7 @@ public class Player extends Observable {
         this.powerUps = new ArrayList<>();
         this.ammo = new ArrayList<>();
         this.firstPlayer = false;
-        this.dead = true;
+        this.dead = false;
         timesGetDamaged = 0;
         addAmmo(new AmmoCube(CubeColour.Red));
         addAmmo(new AmmoCube(CubeColour.Blue));

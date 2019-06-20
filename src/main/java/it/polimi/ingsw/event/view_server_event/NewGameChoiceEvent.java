@@ -5,11 +5,11 @@ import it.polimi.ingsw.network.server.WaitServer;
 public class NewGameChoiceEvent extends ViewServerEvent {
 
     public NewGameChoiceEvent(String user) {
-        super(user);
+        super(user, true);
     }
 
     @Override
-    public void performAction(WaitServer server) {
-        //todo crea una nuova partita
+    public String performAction() {
+        return getUser();
     }
 }

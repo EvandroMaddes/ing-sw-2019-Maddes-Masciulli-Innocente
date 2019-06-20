@@ -39,22 +39,23 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     @Override
     public void effectControlFlow(int effectUsed) {
         effectUsed--;
-        if (effectUsed == 0 && !intermediateEffectState)
+        if (effectUsed == 0 && !intermediateEffectState) {
             intermediateEffectState = true;
+            getUsableEffect()[2] = true;
+        }
         else if (effectUsed == 0){
             getUsableEffect()[0] = false;
-            getUsableEffect()[2] = true;
         }
         else if (effectUsed == 1)
             getUsableEffect()[1] = false;
-        else if (effectUsed == 2)
-            getUsableEffect()[2] = false;
+        else if (effectUsed == 2) {
+            updateUsableEffect(new boolean[]{false, false, false});
+        }
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -106,8 +107,7 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         move(getOwner(), (Square)targets.get(0));
         effectControlFlow(2);
     }
@@ -116,6 +116,11 @@ public class RocketLauncher extends TwoOptionalEffectWeapon {
     public ControllerViewEvent getTargetEffectTwo() {
         ArrayList<Square> possibleDestination = getOwner().getPosition().reachableInMoves(2);
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
+    }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost());
     }
 
     @Override

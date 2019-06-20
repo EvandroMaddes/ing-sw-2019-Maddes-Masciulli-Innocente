@@ -24,8 +24,7 @@ public class Heatseeker extends Weapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Nessun target selezionato");
+        checkEmptyTargets(targets);
         Player target = (Player) targets.get(0);
         damage(target, 3);
         getDamagedPlayer().add(target);
@@ -40,7 +39,7 @@ public class Heatseeker extends Weapon {
 
         Square topRightSquare = getOwner().getPosition();
 
-        while(topRightSquare.getRow() == 0 && ( topRightSquare.getColumn() == 3 || ( topRightSquare.getColumn() == 2 && topRightSquare.getNextSquare(2) == null ) ) ){
+        while(!(topRightSquare.getRow() == 0 && ( ( topRightSquare.getColumn() == 2 && topRightSquare.getNextSquare(2) == null ) || topRightSquare.getColumn() == 3 )) ){
             if (topRightSquare.getColumn() == 3)
                 topRightSquare = topRightSquare.getNextSquare(3);
             if (topRightSquare.getRow() != 0)
@@ -49,11 +48,11 @@ public class Heatseeker extends Weapon {
                 topRightSquare = topRightSquare.getNextSquare(2);
         }
 
-        while (topRightSquare.getRow() == 2 && ( topRightSquare.getColumn() == 0 || ( topRightSquare.getColumn() == 1 && topRightSquare.getNextSquare(3) == null ) ) ){
-            for (Player p: topRightSquare.getSquarePlayers()) {
-                if (!visiblePlayer.contains(p))
-                    notVisiblePlayer.add(p);
-            }
+        for (Player p: topRightSquare.getSquarePlayers()) {
+            if (!visiblePlayer.contains(p))
+                notVisiblePlayer.add(p);
+        }
+        while ( !(topRightSquare.getRow() == 2 && ( topRightSquare.getColumn() == 0 || ( topRightSquare.getColumn() == 1 && topRightSquare.getNextSquare(3) == null )) ) ){
             if (topRightSquare.getRow() == 0 && topRightSquare.getColumn() == 0)
                 topRightSquare = topRightSquare.getNextSquare(1);
             else if (topRightSquare.getRow() == 0)
@@ -64,6 +63,11 @@ public class Heatseeker extends Weapon {
                 topRightSquare = topRightSquare.getNextSquare(2);
             else
                 topRightSquare = topRightSquare.getNextSquare(3);
+
+            for (Player p: topRightSquare.getSquarePlayers()) {
+                if (!visiblePlayer.contains(p))
+                    notVisiblePlayer.add(p);
+            }
         }
 
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(notVisiblePlayer), 1);

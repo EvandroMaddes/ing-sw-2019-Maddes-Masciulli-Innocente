@@ -41,8 +41,7 @@ public class TractorBeam extends AlternateFireWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         if (!intermediateEffectState)
             performEffectOneFirstStep(targets);
         else
@@ -72,38 +71,27 @@ public class TractorBeam extends AlternateFireWeapon {
         ArrayList<Player> possibleTargets = new ArrayList<>();
         ArrayList<Square> possibleStartingSquare = getOwner().getPosition().findVisibleSquare();
         ArrayList<Square> notVisibleStartingSquare = new ArrayList<>();
-        for (Square visibleSqure:possibleStartingSquare){
-            for (Square notVisibleSquare: visibleSqure.reachableInMoves(2)){
-                if (!possibleStartingSquare.contains(notVisibleSquare))
+        for (Square visibleSquare:possibleStartingSquare){
+            for (Square notVisibleSquare: visibleSquare.reachableInMoves(2)){
+                if (!possibleStartingSquare.contains(notVisibleSquare) && !notVisibleStartingSquare.contains(notVisibleSquare))
                     notVisibleStartingSquare.add(notVisibleSquare);
             }
-
         }
-
-
         possibleStartingSquare.addAll(notVisibleStartingSquare);
         for (Square s:possibleStartingSquare)
         {
-            ArrayList<Player> squarePlayers = s.getSquarePlayers();
-            for (Player currTarget : squarePlayers) {
-                if(!possibleTargets.contains(currTarget)) {
-                    possibleTargets.add(currTarget);
-                }
-            }
-            while(possibleTargets.contains(getOwner())){
-                possibleTargets.remove(getOwner());
-            }
-            //possibleTargets.addAll(s.getSquarePlayers());
+            possibleTargets.addAll(s.getSquarePlayers());
         }
+        possibleTargets.remove(getOwner());
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
     }
 
     private ControllerViewEvent getTargetEffectOneSecondStep(){
         ArrayList<Square> possibleDestination = getFirstEffectTarget().get(0).getPosition().reachableInMoves(2);
-        ArrayList<Square> validDestination = getOwner().getPosition().findVisibleSquare();
+        ArrayList<Square> visibleSquare = getOwner().getPosition().findVisibleSquare();
         ArrayList<Square> possibleTargets = new ArrayList<>();
         for (Square s:possibleDestination){
-            if (validDestination.contains(s))
+            if (visibleSquare.contains(s))
                 possibleTargets.add(s);
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));
@@ -119,8 +107,7 @@ public class TractorBeam extends AlternateFireWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no targets");
+        checkEmptyTargets(targets);
         move((Player)targets.get(0), getOwner().getPosition());
         damage((Player)targets.get(0), 3);
         getDamagedPlayer().add((Player)targets.get(0));
@@ -138,7 +125,6 @@ public class TractorBeam extends AlternateFireWeapon {
                     possibleTargets.add(currTarget);
                 }
             }
-            //possibleTargets.addAll(s.getSquarePlayers());
         }
         while(possibleTargets.contains(getOwner())){
             possibleTargets.remove(getOwner());

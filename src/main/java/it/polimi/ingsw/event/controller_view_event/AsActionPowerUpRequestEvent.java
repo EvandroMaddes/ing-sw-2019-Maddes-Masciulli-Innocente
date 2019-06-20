@@ -4,9 +4,9 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.view.RemoteView;
 
-public class AsActionPowerUprequestEvent extends PowerUpRequestEvent {
+public class AsActionPowerUpRequestEvent extends PowerUpRequestEvent {
 
-    public AsActionPowerUprequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
+    public AsActionPowerUpRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
         super(user, powerUpNames, powerUpColours);
     }
 

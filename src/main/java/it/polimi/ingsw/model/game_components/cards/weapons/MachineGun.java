@@ -50,16 +50,15 @@ public class MachineGun extends TwoOptionalEffectWeapon {
             updateUsableEffect(new boolean[]{false, true, true});
         else if (effectUsed == 1 && getUsableEffect()[1])
             getUsableEffect()[effectUsed] = false;
-        else if (effectUsed == 2 && getUsableEffect()[2] && (thirdDamageDealed && extraDamageThirdEffect) )
+        else if (effectUsed == 2 && (thirdDamageDealed && ( extraDamageThirdEffect || getFirstEffectTarget().isEmpty() ) ||
+                extraDamageThirdEffect && targettablePlayer().isEmpty()) )
             getUsableEffect()[effectUsed] = false;
-        else
-            throw new IllegalArgumentException("ControlFlowError");
+
     }
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Targets empty list");
+        checkEmptyTargets(targets);
         for (int i = 0; i < targets.size() && i < 2; i++){
             damage((Player)targets.get(i), 1);
             getFirstEffectTarget().add((Player)targets.get(i));
@@ -70,29 +69,39 @@ public class MachineGun extends TwoOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectOne() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getOwner().getPosition().findVisiblePlayers()), 2);
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 2);
     }
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
-        damage((Player)targets.get(0), 1);
-        Player target = (Player)targets.get(0);
-        alreadyReDamagedTarget.add(target);
-        getFirstEffectTarget().remove(target);
+        if (getFirstEffectTarget().size() == 1){
+            damage(getFirstEffectTarget().get(0), 1);
+            alreadyReDamagedTarget.add(getFirstEffectTarget().get(0));
+            getFirstEffectTarget().remove(getFirstEffectTarget().get(0));
+        }
+        else {
+            checkEmptyTargets(targets);
+            damage((Player) targets.get(0), 1);
+            Player target = (Player) targets.get(0);
+            alreadyReDamagedTarget.add(target);
+            getFirstEffectTarget().remove(target);
+        }
         effectControlFlow(2);
     }
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getFirstEffectTarget()), 1);
+        if (getFirstEffectTarget().size() == 1)
+            return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getFirstEffectTarget()), -1);
+        else
+            return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(getFirstEffectTarget()), 1);
     }
 
     @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("Empty targets");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         if ( !extraDamageThirdEffect && getFirstEffectTarget().contains(target)) {
             damage(getFirstEffectTarget().get(0), 1);
@@ -118,6 +127,7 @@ public class MachineGun extends TwoOptionalEffectWeapon {
     public ControllerViewEvent getTargetEffectThree() {
         ArrayList<Player> visibleTargets;
         visibleTargets = getOwner().getPosition().findVisiblePlayers();
+        visibleTargets.remove(getOwner());
         visibleTargets.removeAll(alreadyReDamagedTarget);
         if(extraDamageThirdEffect)
             visibleTargets.removeAll(getFirstEffectTarget());
@@ -128,6 +138,14 @@ public class MachineGun extends TwoOptionalEffectWeapon {
             }
         }
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(visibleTargets), 1);
+    }
+
+    private ArrayList<Player> targettablePlayer(){
+        ArrayList<Player> targettablePlayer = getOwner().getPosition().findVisiblePlayers();
+        targettablePlayer.remove(getOwner());
+        targettablePlayer.removeAll(getFirstEffectTarget());
+        targettablePlayer.removeAll(alreadyReDamagedTarget);
+        return targettablePlayer;
     }
 
 }

@@ -3,10 +3,12 @@ package it.polimi.ingsw.model.game_components.cards;
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.weapons.Zx2;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractWeaponTest {
@@ -53,6 +55,18 @@ public class AbstractWeaponTest {
         Assert.assertEquals(3, actual.length);
         for (int i = 0; i < 3; i++) {
             Assert.assertFalse(actual[i]);
+        }
+    }
+
+    @Test
+    public void checkEmptyTargetTest(){
+        Zx2 zx2 = new Zx2();
+        ArrayList<Object> test = new ArrayList<>();
+        try{
+            zx2.performEffect(1, test);
+        }
+        catch (IllegalArgumentException e){
+            Assert.assertEquals("No targets found", e.getMessage());
         }
     }
 }

@@ -24,6 +24,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void setLoaded() {
+        super.setLoaded();
         updateUsableEffect(new boolean[]{true, true, false});
     }
 
@@ -40,8 +41,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectOne(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("No taregt");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getFirstEffectTarget().add(target);
@@ -58,8 +58,7 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
 
     @Override
     public void performEffectTwo(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no taregts");
+        checkEmptyTargets(targets);
         Square target = (Square) targets.get(0);
         move(getOwner(), target);
         effectControlFlow(2);
@@ -72,9 +71,13 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
     }
 
     @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1];
+    }
+
+    @Override
     public void performEffectThree(List<Object> targets) {
-        if (targets.isEmpty())
-            throw new IllegalArgumentException("no taregts");
+        checkEmptyTargets(targets);
         Player target = (Player)targets.get(0);
         damage(target, 2);
         getDamagedPlayer().add(target);
@@ -87,5 +90,10 @@ public class CyberBlade extends TwoOptionalEffectWeapon {
         possibleTargets.remove(getOwner());
         possibleTargets.remove(getFirstEffectTarget().get(0));
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+    }
+
+    @Override
+    public boolean isUsable() {
+        return isLoaded() && ( isUsableEffectTwo() || isUsableEffectOne() || isUsableEffectThree() );
     }
 }

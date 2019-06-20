@@ -62,8 +62,8 @@ public interface RemoteViewInterface {
    Event winnerUpdate(String user, int point);
 
    //folliwing method manage server-view even
-   Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername);
-
+   Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies);
+   Event printUserNotification(UsernameModificationEvent usernameEvent);
 
 
 
