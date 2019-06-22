@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController extends AbstractController{
 
-    private GUI gui;
+
     private String userString;
     private String connectionString;
     private String ipAddresString;
@@ -34,30 +34,26 @@ public class LoginController {
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
-        gui = new GUI();
-        gui.setStage((Stage)enterButton.getScene().getWindow());
+        setGui(new GUI());
+        getGui().setStage((Stage)enterButton.getScene().getWindow());
         System.out.println("IP= "+ipAddresString);
 
-        gui.gameInit(new String[]{userString,connectionString,ipAddresString});
+        getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
     }
 
 
     @FXML
     void usernameType(ActionEvent event) {
+        getGui().setUser(username.getText());
     }
 
     @FXML
     void connectionType(ActionEvent event) {
 
-
     }
     @FXML
     void ipType(ActionEvent event) {
-
+        sendChoice(null);
     }
 
-
-    public GUI getGui() {
-        return gui;
-    }
 }
