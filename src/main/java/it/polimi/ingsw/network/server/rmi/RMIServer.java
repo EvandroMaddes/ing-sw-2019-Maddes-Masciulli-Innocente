@@ -5,7 +5,6 @@ import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.utils.CustomTimer;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.RemoteInterface;
-import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.server.ServerInterface;
 import it.polimi.ingsw.utils.CustomLogger;
 
