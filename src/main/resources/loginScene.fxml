@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LoginController">
+   <children>
+      <VBox layoutY="65.0" prefHeight="400.0" prefWidth="602.0" spacing="20.0">
+         <children>
+            <Text fill="#fc7a00" strokeType="OUTSIDE" strokeWidth="0.0" text="ADRENALINE" textAlignment="CENTER" wrappingWidth="601.0078125">
+               <font>
+                  <Font name="Berlin Sans FB" size="64.0" />
+               </font>
+            </Text>
+            <VBox prefHeight="158.0" prefWidth="602.0" spacing="40.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select your username:" />
+                        <TextField fx:id="username" onAction="#usernameType" promptText="username" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select RMI or SOCKET:" />
+                        <TextField fx:id="connection" onAction="#connectionType" promptText="connection" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select server IP address:" textAlignment="CENTER" />
+                        <TextField fx:id="IPaddress" onAction="#ipType" promptText="IP addres" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterClick" text="ENTER">
+               <VBox.margin>
+                  <Insets left="260.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

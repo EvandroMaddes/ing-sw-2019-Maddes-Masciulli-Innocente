@@ -15,4 +15,8 @@ public class WinnerEvent extends ControllerViewEvent {
 
         return remoteView.winnerUpdate(getUser(),point);
     }
+
+    public int getPoint() {
+        return point;
+    }
 }

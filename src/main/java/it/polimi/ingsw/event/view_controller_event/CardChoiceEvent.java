@@ -1,6 +1,5 @@
 package it.polimi.ingsw.event.view_controller_event;
 
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 
 /**
  * @author Francesco Masciulli
@@ -19,6 +18,7 @@ public abstract class CardChoiceEvent extends ViewControllerEvent {
      */
     public CardChoiceEvent(String user, String card) {
         super(user);
+        this.card = card;
     }
 
     public String getCard() {

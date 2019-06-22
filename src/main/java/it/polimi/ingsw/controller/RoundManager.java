@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.EndRoundPowerUpRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
@@ -24,11 +23,11 @@ public class RoundManager {
     private DeathManager deathManager;
     private int phase;
 
-    public RoundManager(Controller controller, GameModel model, GameManager gameManager, Player currentPlayer){
+    public RoundManager(Controller controller, Player currentPlayer){
         this.controller = controller;
         this.currentPlayer = currentPlayer;
-        this.gameManager = gameManager;
-        this.model = model;
+        this.gameManager = controller.getGameManager();
+        this.model = controller.getGameManager().getModel();
         phase = 1;
     }
 
@@ -40,18 +39,18 @@ public class RoundManager {
             case 1:
             case 3:
             case 5:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForPowerUpAsAction();
                 break;
             }
             case 2:
             case 4:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForAction();
                 break;
             }
             case 6:{
-                actionManager = new ActionManager(controller, model, this);
+                actionManager = new ActionManager(controller);
                 actionManager.askForReload();
                 break;
             }
@@ -93,7 +92,7 @@ public class RoundManager {
     private void markDeadPlayer(){
         for (Player p: controller.getGameManager().getModel().getPlayers()){
             if (p.getPlayerBoard().getDamageAmount() > 10)
-                p.invertDeathState();
+                p.setDead();
         }
     }
 
@@ -129,11 +128,11 @@ public class RoundManager {
     private void endRoundPowerUpCheck(){
         Iterator iterator = controller.getGameManager().getModel().getPlayers().iterator();
         ArrayList<PowerUp> usablePowerUp = new ArrayList<>();
-        Player currentPlayer = null;
+        Player actualPlayer;
         while (iterator.hasNext() && usablePowerUp.isEmpty()){
-            currentPlayer = (Player)iterator.next();
-            if (currentPlayer.getTimesGetDamaged() > 0)
-                for (PowerUp p: currentPlayer.getPowerUps()){
+            actualPlayer = (Player)iterator.next();
+            if (actualPlayer.getTimesGetDamaged() > 0)
+                for (PowerUp p: actualPlayer.getPowerUps()){
                     if (p.whenToUse() == PowerUp.Usability.END_TURN)
                         usablePowerUp.add(p);
             }
@@ -162,5 +161,13 @@ public class RoundManager {
         for (Player p: controller.getGameManager().getModel().getPlayers()) {
             p.resetTimesGetDamaged();
         }
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    public int getPhase() {
+        return phase;
     }
 }

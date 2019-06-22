@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LobbyChioceController">
+   <children>
+      <AnchorPane fx:id="gameChoicePanel" layoutX="-1.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <VBox layoutX="222.0" layoutY="200.0" spacing="40.0">
+               <children>
+                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGameClick" text="NEW GAME" VBox.vgrow="ALWAYS" />
+                  <ComboBox fx:id="waitingLobbyComboBox" blendMode="MULTIPLY" onAction="#waitLobbyClick" promptText="waiting lobbies" />
+                  <ComboBox fx:id="startedLobbyComboBox" onAction="#startedLobbyClick" promptText="started lobbies" visibleRowCount="20" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </VBox>
+            <Text layoutX="57.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADRENALINE" textAlignment="CENTER" wrappingWidth="499.375">
+               <font>
+                  <Font size="64.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.9380952380952381">
+                     <stops>
+                        <Stop color="#ae3c02e8" />
+                        <Stop color="#626380" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

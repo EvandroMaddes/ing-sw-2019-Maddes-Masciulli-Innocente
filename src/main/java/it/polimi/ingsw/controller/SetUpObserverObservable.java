@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.board.GameBoard;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;
 
@@ -23,7 +22,8 @@ public class SetUpObserverObservable {
             // adding Squares
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 4; j++)
-                    model.getGameboard().getMap().getSquareMatrix()[i][j].addObserver(playersVirtualView.get(username));
+                    if (model.getGameboard().getMap().getSquareMatrix()[i][j] != null)
+                        model.getGameboard().getMap().getSquareMatrix()[i][j].addObserver(playersVirtualView.get(username));
             model.getGameboard().getGameTrack().addObserver(playersVirtualView.get(username));
             // adding GameModel
             model.addObserver(playersVirtualView.get(username));

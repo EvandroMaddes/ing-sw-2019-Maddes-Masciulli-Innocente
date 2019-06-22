@@ -23,15 +23,7 @@ public class WeaponDeck extends DeckManagement {
     public WeaponDeck() {
 
 
-        ArrayList<Object> deck = new ArrayList<Object>();
-        /*
-
-        JsonParser parser = new JsonParser();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("weapon.json");
-        Reader reader = new InputStreamReader(inputStream);
-        JsonElement rootElement = parser.parse(reader);
-        JsonObject currentWeapon = rootElement.getAsJsonObject().getAsJsonObject("LOCK RIFLE");
-        */
+        ArrayList<Object> deck = new ArrayList<>();
 
         deck.add(new LockRifle());
         deck.add(new Electroscythe());
