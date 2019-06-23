@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="319.0" style="-fx-background-color: #73807b;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MapCharacterController">
+   <children>
+      <VBox alignment="CENTER" layoutX="30.0" layoutY="1.0" prefHeight="335.0" prefWidth="283.0" spacing="40.0">
+         <children>
+            <ComboBox fx:id="mapComboBox" onAction="#mapComboBoxChoice" prefWidth="150.0" promptText="map" />
+            <ComboBox fx:id="characterComboBox" onAction="#characterComboBoxChoice" prefWidth="150.0" promptText="characters available" />
+            <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterButtonPress" style="-fx-background-color: #b7a2ff;" text="ENTER" textFill="#9e771d">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -17,12 +17,11 @@ public interface RemoteViewInterface {
     void fromVirtualView();
     String[] gameInit();
 
-    /**
-     * this method print the gameScreen after each ModelUpdate from Server
-     */
-   void printScreen();
-
-
+   /**
+    * this method handle the UsernameModification events
+    * @return the message returning to the server
+    */
+   Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp);
 
    //following methods manages Request event
    Event gameChoice();

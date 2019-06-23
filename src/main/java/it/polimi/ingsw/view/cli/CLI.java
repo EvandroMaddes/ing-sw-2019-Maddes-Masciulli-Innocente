@@ -492,7 +492,6 @@ public class CLI extends RemoteView {
     /**
      * Print screen updated
      */
-    @Override
     public void printScreen() {
         display.createDisplay();
         display.printDisplay();
