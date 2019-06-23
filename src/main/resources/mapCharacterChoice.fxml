@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,11 +10,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="319.0" style="-fx-background-color: #73807b;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MapCharacterController">
    <children>
-      <VBox alignment="CENTER" layoutX="30.0" layoutY="1.0" prefHeight="335.0" prefWidth="283.0" spacing="40.0">
+      <VBox alignment="CENTER" layoutX="32.0" layoutY="27.0" prefHeight="304.0" prefWidth="251.0" spacing="20.0" style="-fx-background-color: grey;">
          <children>
+            <Label text="solo primo giocatore" />
+            <Label prefHeight="34.0" prefWidth="251.0" style="-fx-background-color: grey;" text="Select map and character:" textFill="#46330e" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
             <ComboBox fx:id="mapComboBox" onAction="#mapComboBoxChoice" prefWidth="150.0" promptText="map" />
             <ComboBox fx:id="characterComboBox" onAction="#characterComboBoxChoice" prefWidth="150.0" promptText="characters available" />
-            <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterButtonPress" style="-fx-background-color: #b7a2ff;" text="ENTER" textFill="#9e771d">
+            <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterButtonPress" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #b7a2ff;" text="ENTER" textFill="#9e771d">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

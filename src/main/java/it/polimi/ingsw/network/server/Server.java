@@ -1,12 +1,16 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
+import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
@@ -30,6 +34,7 @@ public class Server extends Thread {
     private  Logger log = Logger.getLogger("ServerLogger");
 
     private String lobbyName;
+    private Controller lobbyController;
     private  ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private  ArrayList<String> activeClientList = new ArrayList<>();
     private  ArrayList<String> disconnectedClientList = new ArrayList<>();
@@ -42,6 +47,7 @@ public class Server extends Thread {
     private  CustomTimer gameTimer;
     private  Event message;
     private  boolean gameCouldStart = false;
+    int mapChoice = 404;
     //todo cercare cambio turno != cambio di contesto
     // private  String lastRoundPlayer =
 
@@ -77,7 +83,6 @@ public class Server extends Thread {
     }
 
 
-    //todo è vecchio, da modificare
 
 
     @Override
@@ -115,38 +120,12 @@ public class Server extends Thread {
                         while(message == null) {
                             message = currServer.listenMessage();
                         }
-                            VirtualView currentView = mapUserView.get(message.getUser());
-                            currentView.toController(message);
-                            setUpComplete = true;
-                            log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
-                            message = null;
+                        mapChoice = ((GameChoiceEvent)message).getMap();
+                        setUpComplete = true;
+                        log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
+                        message = null;
                     }
 
-
-                    //todo PROVA!!! Qui si prova due client connessi, NB ordine chiamate
-                    /*
-                    if(activeClientList.size()==2) {
-                        message = null;
-                        String currentUser = activeClientList.get(0);
-
-                         message = sendAndWaitNextMessage(new NewPlayerJoinedUpdateEvent("Giorgio", Character.BANSHEE));
-                        if (message == null) {
-                            message = new DisconnectedEvent(currentUser);
-                            disconnectClient(currentUser);
-                        }
-                        if(!message.getUser().equals("BROADCAST")){
-                                mapUserView.get(message.getUser()).toController(message);
-                        }
-                        else{
-                            for (VirtualView currView: virtualViewList) {
-                                currView.toController(message);
-                            }
-                        }
-                        log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
-
-                        }
-*/
-                    //todo FINE PROVA!!
 
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
                     if(activeClientList.size() > 2) {
@@ -161,6 +140,10 @@ public class Server extends Thread {
                             serverSocket.gameCouldStart();
                             gameCouldStart = true;
                             //todo istanzia controller e inizia computazione
+                            lobbyController = new Controller(mapUserView, mapChoice);
+                            for (VirtualView connectedPlayer: virtualViewList) {
+                                connectedPlayer.addObserver(lobbyController);
+                            }
                             log.info(lobbyName.concat(":\tGame could start; There are " + activeClientList.size() + " players\n"));
                         }
                     }
@@ -169,19 +152,20 @@ public class Server extends Thread {
                 }
 
 
-                //todo ora si gestisce il turno, il controller setta nextMessage
-                message = null;
 
-                Event nextMessage = findNextMessage();
 
                 //todo PROVA: ci entra sempre se la partita può iniziare
 
-
-                        nextMessage = new NewPlayerJoinedUpdateEvent("TESTING PLAYER RECONNECTION\n", Character.SPROG);
+                /*        nextMessage = new NewPlayerJoinedUpdateEvent("TESTING PLAYER RECONNECTION\n", Character.SPROG);
                         log.info("Testing player reconnection:");
+*/
 
                 //todo FINEPROVA
 
+
+                //todo ora si gestisce il turno, il controller setta nextMessage
+                message = null;
+                Event nextMessage = findNextMessage();
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
                 //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
@@ -189,20 +173,19 @@ public class Server extends Thread {
                 ArrayList<Event> disconnectedClients = ping();
 
 
-
                 if(disconnectedClients.isEmpty()) {
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
+                    if (message == null) {
+                        message = new DisconnectedEvent(currentUser);
+                        disconnectClient(currentUser);
+                    }
                     if (!message.getUser().equals("BROADCAST")) {
-                        if (message == null) {
-                            message = new DisconnectedEvent(currentUser);
-                            disconnectClient(currentUser);
-                        }
                         mapUserView.get(message.getUser()).toController(message);
                         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
-
                     }
 
+                    //lobbyController.update(mapUserView.get(message.getUser()), message);
                 }
                 else {
 
@@ -217,20 +200,6 @@ public class Server extends Thread {
                 //todo controllo se gioco terminato || dopo WinnerEvent??
                 shutDown=!gameCouldStart;
             }
-
-                /*
-                ////todo dopo ogni esec legge da input se richiesto QUIT però non terminano i client
-
-                log.info(lobbyName.concat(":\tType Quit for server shutdown\n"));
-                String inputCommand = reader.readLine();
-                if(inputCommand.equalsIgnoreCase("QUIT")) {
-                    shutDown=true;
-                }
-
-                 */
-
-
-
 
             serverRMI.shutDown();
             serverSocket.shutDown();
@@ -251,6 +220,7 @@ public class Server extends Thread {
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
+
         }
         else{
             ServerInterface server = mapUserServer.get(currentUser);
@@ -263,10 +233,10 @@ public class Server extends Thread {
 
     private  void cleanVirtualViews(boolean isBroadcast){
         for (VirtualView currentView: virtualViewList) {
-            if(isBroadcast){
+            if(isBroadcast&&currentView.getToRemoteView().getUser().equals("BROADCAST")){
                 currentView.setToRemoteView(null);
             }
-            else{
+            else if(!isBroadcast){
                 if(currentView.getToRemoteView()!=null){
                     currentView.setToRemoteView(null);
                 }
@@ -303,6 +273,9 @@ public class Server extends Thread {
                     virtualViewList.add(userView);
                     mapUserView.putIfAbsent(connectedUser, userView);
 
+                }
+                if(mapChoice!=404) {
+                    sendAndWaitNextMessage(new LobbySettingsEvent(connectedUser, mapChoice));
                 }
             }
             else{

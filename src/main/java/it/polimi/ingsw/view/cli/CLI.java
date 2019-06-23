@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
@@ -15,12 +16,11 @@ import it.polimi.ingsw.view.cli.graph.*;
 
 import java.util.*;
 
-//todo deve resettare i colori del terminale!
 public class CLI extends RemoteView {
 
     private CLIDisplay display;
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
-    private static final String broadcastString = "BROADCAST";
+    private static final String BROADCASTSTRING = "BROADCAST";
 
     /**
      * Constructor:
@@ -51,6 +51,16 @@ public class CLI extends RemoteView {
      */
     public Map<Character, String> getMapCharacterNameColors() {
         return mapCharacterNameColors;
+    }
+
+    @Override
+    public boolean isGameSet() {
+        if( getDisplay().getMap()!=null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -100,6 +110,20 @@ public class CLI extends RemoteView {
         }
         userInput[2] = CLIHandler.stringPrintAndRead("Insert the Server IP Address:");
         return userInput;
+    }
+
+    @Override
+    public void setGame(LobbySettingsEvent lobbySettings) {
+        display.setMap(new CLIMap(lobbySettings.getMapNumber()));
+        CLIGameTrack gameTrack = new CLIGameTrack();
+        gameTrack.createGameTrack();
+        display.setGameTrack(gameTrack);
+
+        CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("eva",Character.VIOLET,getMapCharacterNameColors());
+        CLIPlayerBoard player1 = new CLIPlayerBoard("raul",Character.D_STRUCT_OR,getMapCharacterNameColors());
+        CLIPlayerBoard player2 = new CLIPlayerBoard("lu",Character.DOZER,getMapCharacterNameColors());
+        CLIPlayerBoard player3 = new CLIPlayerBoard("fede",Character.SPROG,getMapCharacterNameColors());
+        CLIPlayerBoard player4 = new CLIPlayerBoard("fra",Character.VIOLET,getMapCharacterNameColors());
     }
 
     /**
@@ -154,13 +178,16 @@ public class CLI extends RemoteView {
 
                     map = CLIHandler.intRead();
                 }
+
                 display.setMap(new CLIMap(map));
+                CLIGameTrack gameTrack = new CLIGameTrack();
+                gameTrack.createGameTrack();
+                display.setGameTrack(gameTrack);
             } catch (IllegalArgumentException e) {
 
                 map = 404;
             }
         }
-
 
         GameChoiceEvent message = new GameChoiceEvent(getUser(), map, 0);//TODO cambiare messaggio:togliere scelta mdalità
         return message;
@@ -366,7 +393,7 @@ public class CLI extends RemoteView {
     @Override
     public Event winnerUpdate(String user, int point) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+" Player "+user+" win this game with "+point);
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -493,6 +520,7 @@ public class CLI extends RemoteView {
     /**
      * Print screen updated
      */
+    @Override
     public void printScreen() {
         display.createDisplay();
         display.printDisplay();
@@ -506,7 +534,7 @@ public class CLI extends RemoteView {
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"New player joined the game:" + newPlayer+" with "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -530,7 +558,7 @@ public class CLI extends RemoteView {
             currElement = new CLIPrintableElement(false, color);
         }
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -543,7 +571,7 @@ public class CLI extends RemoteView {
     public Event removeAmmoTileUpdate(int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(false);
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -556,7 +584,7 @@ public class CLI extends RemoteView {
     public Event positionUpdate(Character currCharacter, int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter, mapCharacterNameColors.get(currCharacter));
         display.getMap().updateResource(currElement, x, y);
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -589,7 +617,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(character).skullUpdate(skullNumber);
 
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -607,7 +635,7 @@ public class CLI extends RemoteView {
         }
         display.getPlayerBoard(currCharacter).gadgetsUpdate('P', powerUp);
 
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -621,7 +649,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
 
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -646,7 +674,7 @@ public class CLI extends RemoteView {
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('A', ammoString);
 
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -669,7 +697,7 @@ public class CLI extends RemoteView {
                 display.getGameTrack().removeSkull(skullNumber[i], mapCharacterNameColors.get(damageTokenNumber[i]),column);
                 column = column+4;
             }
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     /**
@@ -682,7 +710,7 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
         display.weaponsSpawnSquare(x, y, weapon);
-        return new UpdateChoiceEvent(broadcastString);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
 

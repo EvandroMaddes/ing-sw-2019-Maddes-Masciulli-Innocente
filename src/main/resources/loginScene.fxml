@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,14 +9,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LoginController">
+<AnchorPane prefHeight="374.0" prefWidth="602.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LoginController">
    <children>
-      <VBox layoutY="65.0" prefHeight="400.0" prefWidth="602.0" spacing="20.0">
+      <VBox prefHeight="388.0" prefWidth="602.0" spacing="20.0">
          <children>
-            <Text fill="#fc7a00" strokeType="OUTSIDE" strokeWidth="0.0" text="ADRENALINE" textAlignment="CENTER" wrappingWidth="601.0078125">
+            <Text fill="#fc7a00" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADRENALINE" textAlignment="CENTER" wrappingWidth="601.0078125">
                <font>
-                  <Font name="Berlin Sans FB" size="64.0" />
+                  <Font name="Berlin Sans FB" size="72.0" />
                </font>
+               <effect>
+                  <DropShadow blurType="TWO_PASS_BOX" height="29.65" radius="18.0325" spread="0.43" width="44.48" />
+               </effect>
             </Text>
             <VBox prefHeight="158.0" prefWidth="602.0" spacing="40.0">
                <children>
@@ -38,6 +42,9 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </VBox>
             <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterClick" text="ENTER">
                <VBox.margin>

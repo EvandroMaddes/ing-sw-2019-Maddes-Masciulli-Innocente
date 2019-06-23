@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -21,7 +22,9 @@ public interface RemoteViewInterface {
     * this method handle the UsernameModification events
     * @return the message returning to the server
     */
-   Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp);
+   void printScreen();
+   void setGame(LobbySettingsEvent lobbySettings);
+   boolean isGameSet();
 
    //following methods manages Request event
    Event gameChoice();

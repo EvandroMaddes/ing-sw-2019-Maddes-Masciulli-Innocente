@@ -28,7 +28,7 @@ public class CLIDisplay {
     public void createDisplay(){
         int size = playerBoard.size();
 
-        //GAMATRACK
+        //GAMETRACK
         for(int i=0; i<3;i++) {//ROW
             for (int j = 0; j < 32; j++) {//COLUMN
                 display[j][i] = gameTrack.getTrack()[j][i];
@@ -41,17 +41,18 @@ public class CLIDisplay {
                }
            }
             //PLAYERBOARD
-        for (int i=0;i<size;i++) {
+        if(!playerBoard.isEmpty()) {
+            for (int i = 0; i < size; i++) {
 
-            putPlayerBoard(i*10+21,2,playerBoard.get(i));
+                putPlayerBoard(i * 10 + 21, 2, playerBoard.get(i));
 
+            }
         }
-
 
         display[60][3]=Color.ANSI_GREEN.escape()+"S";
         display[61][3]=Color.ANSI_GREEN.escape()+"P";
-        display[62][3]=Color.ANSI_GREEN.escape()+"W";
-        display[63][3]=Color.ANSI_GREEN.escape()+"A";
+        display[62][3]=Color.ANSI_GREEN.escape()+"A";
+        display[63][3]=Color.ANSI_GREEN.escape()+"W";
         display[64][3]=Color.ANSI_GREEN.escape()+"N";
 
         display[66][3]=Color.ANSI_GREEN.escape()+"S";
@@ -184,12 +185,15 @@ public class CLIDisplay {
 
 
     public void printDisplay(){
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
         for(int i=0; i<ROW;i++) {//ROW
-            System.out.println(""+Color.ANSI_BLACK_BACKGROUND.escape());
+
             for (int j = 0; j < COLUMN; j++) {//COLUMN
                 System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+display[j][i]);
             }
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
         }
+        System.out.flush();
 
     }
 

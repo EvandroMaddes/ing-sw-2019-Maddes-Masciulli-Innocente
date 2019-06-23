@@ -29,13 +29,21 @@ public class LoginController extends AbstractController{
     @FXML
     private TextField username;
 
+    private String usernameString;
+
+    public Button getEnterButton() {
+        return enterButton;
+    }
+
     @FXML
     void enterClick(ActionEvent event) {
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
         setGui(new GUI());
-        getGui().setStage((Stage)enterButton.getScene().getWindow());
+        getGui().setUser(username.getText());
+
+        getGui().setPrimaryStage((Stage)enterButton.getScene().getWindow());
         System.out.println("IP= "+ipAddresString);
 
         getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
@@ -43,17 +51,20 @@ public class LoginController extends AbstractController{
 
 
     @FXML
-    void usernameType(ActionEvent event) {
-        getGui().setUser(username.getText());
+    void usernameType(ActionEvent event)        //todo username della GUI lo setto qui??
+    {
     }
 
     @FXML
     void connectionType(ActionEvent event) {
+        //check sulla correttezza dell'input oppure settarlo a default
 
     }
     @FXML
     void ipType(ActionEvent event) {
-        sendChoice(null);
+        //check sulla correttezza dell'input oppure settarlo a default
+
+        enterButton.setDisable(false);
     }
 
 }
