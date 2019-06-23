@@ -76,7 +76,7 @@ public class GameManager {
         return new GameBoard(new KillShotTrack(), map, new WeaponDeck(), new AmmoTilesDeck(), new PowerUpDeck());
     }
 
-    private void refillMap(){
+    public void refillMap(){
         for(int x = 0; x < 3; x++){
             for (int y = 0; y < 4; y++){
                 GameBoard gameBoard = getModel().getGameboard();

@@ -123,7 +123,7 @@ public class ActionManager {
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
             ArrayList<String> possibleGrabWeapons = new ArrayList<>();
             for (Weapon w:((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).getWeapons()) {
-                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getReloadCost())){
+                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getGrabCost())){
                     possibleGrabWeapons.add(w.getName());
                 }
             }
@@ -271,16 +271,12 @@ public class ActionManager {
             if (w.getName().equals(weaponChoice))
                 chosenWeapon = w;
         }
-        int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
-        if (chosenWeapon.getReloadCost()[0].getColour() == CubeColour.Red)
-            grabCost[0]--;
-        else if (chosenWeapon.getReloadCost()[0].getColour() == CubeColour.Yellow)
-            grabCost[1]--;
-        else
-            grabCost[2]--;
+        int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getGrabCost());
 
-        if (grabCost[0] + grabCost[1] + grabCost[2] == 0)
+        if (grabCost[0] + grabCost[1] + grabCost[2] == 0) {
+            ((SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
             manageWeaponLimit();
+        }
         else
             askForPowerUpAsAmmo(grabCost, PaymentRequestEvent.Context.WEAPON_GRAB);
     }
@@ -289,13 +285,7 @@ public class ActionManager {
      * Paga l'effetto scelto
      */
     public void payWeaponGrab(String[] powerUpsType, CubeColour[] powerUpsColour){
-        int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getEffectCost(chosenEffect));
-        if (chosenWeapon.getReloadCost()[0].getColour() == CubeColour.Red)
-            grabCost[0]--;
-        else if (chosenWeapon.getReloadCost()[0].getColour() == CubeColour.Yellow)
-            grabCost[1]--;
-        else
-            grabCost[2]--;
+        int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getGrabCost());
         payCost(grabCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
         ((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
         manageWeaponLimit();
@@ -312,7 +302,8 @@ public class ActionManager {
                 controller.callView(new WeaponDiscardRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), playerWeapons));
             }
         }
-        else currentRoundManager.nextPhase();
+        else
+            currentRoundManager.nextPhase();
     }
 
     /**
@@ -398,13 +389,14 @@ public class ActionManager {
         CubeColour[] powerUpColoursLite = Encoder.encodePowerUpColour(currentRoundManager.getCurrentPlayer().getPowerUps());
         int[] powerUpsColours = AmmoCube.getColoursByCubeColourArrayRYB(powerUpColoursLite);
         int[] minimalPowerUpNumberToUse;
-        if (!Arrays.equals(playerAmmo, AmmoCube.cubeDifference(playerAmmo, powerUpsColours)))
+        if (Arrays.equals(playerAmmo, AmmoCube.cubeDifference(playerAmmo, powerUpsColours))) {
             if (context == PaymentRequestEvent.Context.WEAPON_EFFECT)
                 payEffect(new String[]{}, new CubeColour[]{});
             else if (context == PaymentRequestEvent.Context.WEAPON_RELOAD)
                 payWeaponReload(new String[]{}, new CubeColour[]{});
             else if (context == PaymentRequestEvent.Context.WEAPON_GRAB)
                 payWeaponGrab(new String[]{}, new CubeColour[]{});
+        }
         else {
             minimalPowerUpNumberToUse = AmmoCube.cubeDifference(cost, playerAmmo);
             if (context == PaymentRequestEvent.Context.WEAPON_EFFECT) {

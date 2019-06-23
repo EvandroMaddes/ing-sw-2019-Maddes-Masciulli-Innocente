@@ -65,15 +65,16 @@ public class BasicSquare extends Square {
      * @param ammoTileCard card taht is drawed
      */
     public void replaceAmmoTile(AmmoTile ammoTileCard){
-        if(!checkAmmo())
-           ammo = ammoTileCard;
+        if(!checkAmmo()) {
+            ammo = ammoTileCard;
 
-        AmmoTileUpdateEvent message;
-        if (ammo.isPowerUpTile())
-            message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP" );
-        else
-            message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString() );
-        notifyObservers(message);//send to VirtualView
+            AmmoTileUpdateEvent message;
+            if (ammo.isPowerUpTile())
+                message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP");
+            else
+                message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString());
+            notifyObservers(message);//send to VirtualView
+        }
     }
 
     @Override

@@ -27,10 +27,11 @@ public class BaseActionValidator extends Validator {
      * @return all possible grabbable square
      */
     public ArrayList<Square> availableGrab(Controller controller){
-        ArrayList<Square> grabbableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 1);
-        for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
-                grabbableSquare.remove(currentSquare);
+        ArrayList<Square> reachableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 1);
+        ArrayList<Square> grabbableSquare = new ArrayList<>();
+        for (Square currentSquare: reachableSquare) {
+            if (currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
+                grabbableSquare.add(currentSquare);
         }
         return grabbableSquare;
     }
