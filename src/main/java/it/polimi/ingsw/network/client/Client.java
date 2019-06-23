@@ -11,9 +11,12 @@ import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.gui.GUI;
+import it.polimi.ingsw.view.gui.LoginMain;
+import javafx.application.Application;
 
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +28,7 @@ import java.util.logging.Logger;
 public class Client {
 
     private static Logger log = Logger.getLogger("ClientLogger");
+    private static LoginMain guiMain;
     public static void main(String[] args) {
 
         RemoteView remoteViewImplementation;
@@ -42,7 +46,12 @@ public class Client {
         }
 
           if(gameInterface.equalsIgnoreCase("GUI")){
-            remoteViewImplementation = new GUI();
+
+              LoginMain guiInterface = new LoginMain();
+              guiInterface.run();
+              remoteViewImplementation = guiInterface.getLoginController().getGui();
+
+
 
           }
           else{
@@ -189,19 +198,23 @@ public class Client {
                 try {
                     currentMessage = clientImplementation.listenMessage();
                     log.info("Listened message for:\t" + currentMessage.getUser());
-                    //todo i ModelUpdate, eseguendo performAction ritornano null, non un Event;
+                    //todo i ModelUpdate, eseguendo performAction ritornano null?, non un Event;
                     currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
                     //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
                     if(!currentMessage.getUser().equals("BROADCAST")){
                         clientImplementation.sendMessage(currentMessage);
                     }
+                    //todo
+                    if(remoteViewImplementation.isGameSet()){
+                        remoteViewImplementation.printScreen();
+                    }
+
                     waiting = false;
                 } catch (NullPointerException e) {
 
                     waiting = true;
                 }
                 catch (ClassCastException e){
-                    //la perform action del messaggio è chiamata all'interno di printUserModification();
                     Event returnedEvent = ((ServerClientEvent)currentMessage).performAction(clientImplementation,remoteViewImplementation);
                     if(returnedEvent != null){
                         clientImplementation.sendMessage(returnedEvent);
@@ -215,6 +228,7 @@ public class Client {
                     log.info("Server was disconnected!");
                 }
             }
+
 
             log.info("Message sent to Server");
         }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -30,7 +31,22 @@ public class GUI extends RemoteView  {
 
     private String prova;
 
-//TODO gestire l'inizializzazione di tutte le scene
+    //todo aggiunto per essere chiamato da client
+    @Override
+    public void printScreen() {
+
+    }
+
+    @Override
+    public void setGame(LobbySettingsEvent lobbySettings) {
+    }
+
+    @Override
+    public boolean isGameSet() {
+        return false;
+    }
+
+    //TODO gestire l'inizializzazione di tutte le scene
     public void setStage(Stage currentStage) {
         this.primaryStage=currentStage;
         currentStage.show();
@@ -131,11 +147,6 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
-        return null;
-    }
-
-    @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
         return null;
     }
 
@@ -274,7 +285,7 @@ public class GUI extends RemoteView  {
     }
 
 
-    @Override
+    //@Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername) {
 
         Event message;
@@ -309,6 +320,16 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
+        return null;
+    }
+
+    @Override
+    public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
+        return null;
+    }
+
+    @Override
+    public Event printUserNotification(UsernameModificationEvent usernameEvent) {
         return null;
     }
 }
