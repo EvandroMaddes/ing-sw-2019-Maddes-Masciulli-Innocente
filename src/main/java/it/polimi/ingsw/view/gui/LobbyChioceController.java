@@ -2,10 +2,14 @@ package it.polimi.ingsw.view.gui;
 
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
 import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
+import it.polimi.ingsw.model.player.Character;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -14,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public  class LobbyChioceController extends AbstractController{
@@ -29,14 +34,11 @@ public  class LobbyChioceController extends AbstractController{
         @FXML
         private ComboBox<String> startedLobbyComboBox ;
 
-        private  String choice = null;
+        private String choice;
 
 
-    public String getChoice() {
-        return choice;
-    }
 
-    public String setLobby(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies, ArrayList<String> startedLobbiesUsername ){
+    public String setLobby(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies ){
 
         //NEW GAME
         if(available[0]){
@@ -90,7 +92,7 @@ public  class LobbyChioceController extends AbstractController{
 
     public void newGameClick(){
 
-        getGui().sendMessage(choice);
+        sendChoice(new NewGameChoiceEvent(getGui().getUser()));
 
 
     }
@@ -101,7 +103,7 @@ public  class LobbyChioceController extends AbstractController{
 
         choice=waitingLobbyComboBox.getValue();
         waitingLobbyComboBox.setDisable(true);
-        getGui().sendMessage(choice);
+        sendChoice(new LobbyChoiceEvent(getGui().getUser(),choice));
 
     }
 
@@ -112,8 +114,7 @@ public  class LobbyChioceController extends AbstractController{
 
         choice=startedLobbyComboBox.getValue();
         startedLobbyComboBox.setDisable(true);
-        //todo mostare username
-        getGui().sendMessage(choice);
+       sendChoice(new LobbyChoiceEvent(getGui().getUser(),choice));
 
     }
 

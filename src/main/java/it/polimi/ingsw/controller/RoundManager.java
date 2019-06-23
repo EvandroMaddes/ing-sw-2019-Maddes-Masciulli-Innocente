@@ -100,13 +100,17 @@ public class RoundManager {
      * scroll every player and respown the first dead that he find
      */
     public void manageDeadPlayers(){
+        boolean deadPlayerFound = false;
         for (Player p: model.getPlayers()) {
             if (p.isDead()){
                 createDeathManager(model, p, this);
                 deathManager.manageKill();
+                deadPlayerFound = true;
                 break;
             }
         }
+        if (!deadPlayerFound)
+            nextPhase();
     }
 
     public ActionManager getActionManager() {

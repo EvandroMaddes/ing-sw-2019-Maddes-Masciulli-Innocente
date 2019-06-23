@@ -302,4 +302,9 @@ public class GameManager {
     public void setCurrentRound(RoundManager roundManager){
         this.currentRound = roundManager;
     }
+
+    // TODO: 2019-06-18 usato per i test
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
 }

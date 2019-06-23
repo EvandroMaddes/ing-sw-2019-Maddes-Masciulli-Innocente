@@ -2,6 +2,8 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
+import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
@@ -35,9 +37,10 @@ public class RoundManagerTest {
     }
 
     @Test
-    public void manageRoundTest(){
+    public void skipActionTest(){
         controller.getGameManager().setCurrentRound(new RoundManager(controller, player1));
         RoundManager roundManager = controller.getGameManager().getCurrentRound();
+        controller.getGameManager().setPlayerTurn(0);
         player1.addPowerUp(new TargetingScope(CubeColour.Blue));
         player1.setPosition(map[0][0]);
         roundManager.manageRound();
@@ -45,6 +48,18 @@ public class RoundManagerTest {
         Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
         Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
         Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+
+        ViewControllerEvent choiceEvent = new SkipActionChoiceEvent(player1.getUsername());
+        choiceEvent.performAction(controller);
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
+        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+
+        choiceEvent = new SkipActionChoiceEvent(player1.getUsername());
+        choiceEvent.performAction(controller);
+
+        roundManager = controller.getGameManager().getCurrentRound();
+        Assert.assertEquals(player2, roundManager.getCurrentPlayer());
     }
 }
-// TODO: 2019-06-18 completare oltre la fase 1 
+

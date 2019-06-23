@@ -10,6 +10,7 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
@@ -1170,4 +1171,10 @@ public class CLI extends RemoteView {
             }
         return choice;
         }
+
+    @Override
+    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
+        // TODO: 2019-06-23  
+        return null;
+    }
 }
