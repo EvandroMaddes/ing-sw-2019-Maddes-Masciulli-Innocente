@@ -41,6 +41,7 @@ public class LoginMain extends Application {
 
         primaryStage.setTitle("ADRENALINE");
         primaryStage.setScene(new Scene(root, 800, 560));
+        loginController.getEnterButton().setDisable(true);
         primaryStage.show();
 
     }

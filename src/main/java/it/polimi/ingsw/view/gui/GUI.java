@@ -27,6 +27,7 @@ public class GUI extends RemoteView  {
     private MapCharacterController mapCharacterController;
 
     private Stage primaryStage;
+    private Stage prevStage;
     private Stage lobbyStage;
     private Stage gameBoardStage;
     private Stage mapCharacterStage;
@@ -35,8 +36,9 @@ public class GUI extends RemoteView  {
 
 //TODO gestire l'inizializzazione di tutte le scene
     public void setStage(Stage currentStage) {
+        Platform.runLater(()->primaryStage.close());
         Platform.runLater(()->this.primaryStage=currentStage);
-        Platform.runLater(()->currentStage.show());
+        Platform.runLater(()->primaryStage.show());
 
     }
 
@@ -58,6 +60,7 @@ public class GUI extends RemoteView  {
         Parent username = null;
         Parent gameboard = null;
         Parent mapCharacter = null;
+
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameBoard.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/mapCharacterChoice.fxml"));
@@ -78,8 +81,6 @@ public class GUI extends RemoteView  {
         lobbyController.setGui(this);
         mapCharacterController.setGui(this);
 
-       // primaryStage.close();
-
         lobbyStage = new Stage();
         gameBoardStage = new Stage();
         mapCharacterStage = new Stage();
@@ -99,10 +100,11 @@ public class GUI extends RemoteView  {
         availableTestedCharacter.add(Character.D_STRUCT_OR);
         availableTestedCharacter.add(Character.DOZER);
         availableTestedCharacter.add(Character.VIOLET);
-        //metodoprova();
+        //Platform.runLater(()->metodoprova());
         //gameChoice();
         //characterChoice(availableTestedCharacter);
-        actionChoice(true);
+        System.out.println(gameBoardStage.isResizable());
+        Platform.runLater(()->actionChoice(true));
 
 
         return configuration;
@@ -142,6 +144,10 @@ public class GUI extends RemoteView  {
         System.out.println(choice.getUser());
         setToVirtualView(choice);
 
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     @Override
@@ -219,7 +225,7 @@ public class GUI extends RemoteView  {
         charctersName.add(availableCharacters.get(2).name());
         charctersName.add(availableCharacters.get(3).name());
         Platform.runLater(()->mapCharacterController.setCharacterComboBox(charctersName));
-        //setStage(mapCharacterStage);
+        setStage(mapCharacterStage);
 
         return null;
     }
@@ -258,10 +264,11 @@ public class GUI extends RemoteView  {
     public Event gameChoice() {
         Platform.runLater(()->mapCharacterController.getMapComboBox().setDisable(false));
         ArrayList<Integer> mapChoice = new ArrayList<Integer>();
+        mapChoice.add(0);
         mapChoice.add(1);
         mapChoice.add(2);
         mapChoice.add(3);
-
+        Platform.runLater(()->mapCharacterController.getEnterButton().setDisable(true));
         Platform.runLater(()->mapCharacterController.setMapComboBox(mapChoice));
         setStage(mapCharacterStage);
 
