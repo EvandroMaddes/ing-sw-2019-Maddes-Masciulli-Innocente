@@ -7,7 +7,6 @@ import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.RemoteInterface;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
-import sun.nio.ch.Net;
 
 import java.net.InetAddress;
 import java.rmi.RemoteException;
