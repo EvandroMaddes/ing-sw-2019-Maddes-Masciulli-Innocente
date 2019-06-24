@@ -144,6 +144,7 @@ public class Player extends Observable {
         if(getCubeColourNumber(ammo.getColour()) < 3)
             this.ammo.add(ammo);
         AmmoUpdateEvent message = new AmmoUpdateEvent(character, this.ammo );
+        setChanged();
         notifyObservers(message);
     }
 
@@ -154,6 +155,7 @@ public class Player extends Observable {
                 break;
             }
         }
+        setChanged();
         notifyObservers(new AmmoUpdateEvent(character, ammo));
     }
 
@@ -168,6 +170,7 @@ public class Player extends Observable {
         powerUp.setOwner(this);
         if (this.powerUps.size() < 3)
             this.powerUps.add(powerUp);
+        setChanged();
         notifyPowerUpChange();
     }
 
@@ -186,6 +189,7 @@ public class Player extends Observable {
 
     private void notifyPowerUpChange(){
         PlayerPowerUpUpdateEvent message = new PlayerPowerUpUpdateEvent(character, Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
+        setChanged();
         notifyObservers(message);
     }
 
@@ -196,6 +200,7 @@ public class Player extends Observable {
         }
 
         PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(messageWeapons, character);
+        setChanged();
         notifyObservers(message);
     }
 
