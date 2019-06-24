@@ -170,13 +170,13 @@ public class CLIDisplay {
 
                 //RED
         if (column==0 && row==1){
-            j=5;
+            j=62;
         }else //BLUE
             if (column==2 && row==0){
-            j=7;
+            j=64;
         }else //YELLOW
             if( column==3 && row==2){
-            j=9;
+            j=66;
         }
 
         for (int i =74; i<77; i++ ) {
