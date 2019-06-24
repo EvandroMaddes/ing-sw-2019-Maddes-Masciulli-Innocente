@@ -36,9 +36,9 @@ public class CLIPrintableElement {
     public CLIPrintableElement(boolean isPowerUp, String[] colors){
         Color[] colorPrint = new Color[3];
         for(int i=0; i<colors.length; i++) {
-            if (Color.ANSI_RED.name().contains("RED"))
+            if (colors[i].equalsIgnoreCase("red"))
                 colorPrint[i] = Color.ANSI_RED;
-            else if (Color.ANSI_YELLOW.name().contains("YELLOW"))
+            else if (colors[i].equalsIgnoreCase("yellow"))
                 colorPrint[i] = Color.ANSI_YELLOW;
             else colorPrint[i]= Color.ANSI_BLUE;
         }
@@ -49,7 +49,7 @@ public class CLIPrintableElement {
         else{
             resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape() + "A";
         }
-        //resource = resource + Color.RESET.escape();
+        resource = resource + Color.RESET.escape();
         isPlayer = false;
     }
     public CLIPrintableElement(String currentWeapon, String currentSpawnSquare){
