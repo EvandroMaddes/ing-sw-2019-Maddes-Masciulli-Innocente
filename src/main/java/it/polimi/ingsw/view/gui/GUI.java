@@ -120,7 +120,8 @@ public class GUI extends RemoteView  {
         //gameChoice();
         //characterChoice(availableTestedCharacter);
         System.out.println(gameBoardStage.isResizable());
-        Platform.runLater(()->actionChoice(true));
+        //todo passa alla prossima scena forse questo può essere thread
+        //Platform.runLater(()->actionChoice(true));
 
 
         return configuration;
