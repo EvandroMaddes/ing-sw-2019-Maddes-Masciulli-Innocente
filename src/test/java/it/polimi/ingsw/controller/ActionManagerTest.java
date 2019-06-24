@@ -1,10 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PositionGrabRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PositionMoveRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WeaponGrabRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.*;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
@@ -12,7 +9,9 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.power_ups.Teleporter;
 import it.polimi.ingsw.model.game_components.cards.weapons.Flamethrower;
 import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.game_components.cards.weapons.Whisper;
@@ -213,6 +212,26 @@ public class ActionManagerTest {
         Assert.assertEquals(0, player1.getCubeColourNumber(CubeColour.Blue));
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Yellow));
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Red));
+    }
+
+    @Test
+    public void teleporterTest(){
+        PowerUp teleporter = new Teleporter(CubeColour.Blue);
+        player1.addPowerUp(teleporter);
+        player1.setPosition(map[0][0]);
+        roundManager.manageRound();
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), teleporter.getName(), CubeColour.Blue);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(12, ((TeleporterTargetRequestEvent)requestMessage).getPossibleSquareX().length);
+        choiceMessage = new PowerUpSquareTargetChoiceEvent(player1.getUsername(), 2, 0);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(map[2][0], player1.getPosition());
+        Assert.assertEquals(0, player1.getPowerUps().size());
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
 }
