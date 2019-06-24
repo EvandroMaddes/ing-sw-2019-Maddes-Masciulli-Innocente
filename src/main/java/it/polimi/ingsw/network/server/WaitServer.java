@@ -36,7 +36,7 @@ public class WaitServer {
 
     public static void main(String[] args){
         try {
-
+            //todo deve disconnettere i client
             acceptingRMI = new RMIServer();
             acceptingSocket = new SocketServer();
             ((SocketServer)acceptingSocket).start();

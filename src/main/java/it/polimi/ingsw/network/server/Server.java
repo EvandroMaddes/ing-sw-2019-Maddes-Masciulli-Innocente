@@ -194,7 +194,7 @@ public class Server extends Thread {
 
                     }
 
-                //todo deve aspettare il controller
+
 
 
                 //todo controllo se gioco terminato || dopo WinnerEvent??
@@ -220,7 +220,7 @@ public class Server extends Thread {
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
             try{
-                sleep(100);
+                sleep(500);
             }catch (InterruptedException e){
                 CustomLogger.logException(e);
             }
@@ -250,7 +250,7 @@ public class Server extends Thread {
         }
     }
 
-    private  Event findNextMessage(){
+    private Event findNextMessage(){
         message = null;
 
         Event currMessage = virtualViewList.get(0).getModelUpdateQueue().poll();
