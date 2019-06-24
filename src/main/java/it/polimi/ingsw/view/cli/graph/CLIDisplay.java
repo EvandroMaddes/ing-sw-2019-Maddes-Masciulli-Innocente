@@ -14,7 +14,7 @@ public class CLIDisplay {
     private static final int ROW =77;
     private CLIMap map;
     private CLIGameTrack gameTrack;
-    private ArrayList<CLIPlayerBoard> playerBoard = new ArrayList<CLIPlayerBoard>();
+    private ArrayList<CLIPlayerBoard> playerBoard = new ArrayList<>();
     private String[][] display = new String[COLUMN][ROW];
 
     public CLIDisplay(){
@@ -25,6 +25,9 @@ public class CLIDisplay {
         }
     }
 
+    /**
+     * Create
+     */
     public void createDisplay(){
         int size = playerBoard.size();
 
