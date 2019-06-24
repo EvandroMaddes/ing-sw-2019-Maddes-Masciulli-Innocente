@@ -64,12 +64,13 @@ public class CLIMap {
                 rightSquares = allocateSemiMap(true, true, false);
                 break;
             case 1:
-                leftSquares = allocateSemiMap(false,false, true);
-                rightSquares = allocateSemiMap(true,true, true);
-                break;
-            case 2:
                 leftSquares = allocateSemiMap(true,false, true);
                 rightSquares = allocateSemiMap(false,true, true);
+                break;
+
+            case 2:
+                leftSquares = allocateSemiMap(false,false, true);
+                rightSquares = allocateSemiMap(true,true, true);
                 break;
             case 3:
                 leftSquares = allocateSemiMap(false,false, false);

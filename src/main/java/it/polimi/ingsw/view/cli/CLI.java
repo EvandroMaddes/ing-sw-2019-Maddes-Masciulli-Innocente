@@ -556,12 +556,12 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
-        String[] color = {fistColour, secondColour, null};
+        String[] color = {fistColour, secondColour, "PowerUp"};
         CLIPrintableElement currElement;
-        if (thirdColour.equals("POWERUP")) {
-
+        if (thirdColour.equalsIgnoreCase("POWERUP")) {
             currElement = new CLIPrintableElement(true, color);
-        } else {
+        }
+        else {
             color[2] = thirdColour;
             currElement = new CLIPrintableElement(false, color);
         }

@@ -219,6 +219,11 @@ public class Server extends Thread {
         if(toSend.getUser().equals("BROADCAST")){
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
+            try{
+                sleep(100);
+            }catch (InterruptedException e){
+                CustomLogger.logException(e);
+            }
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
 
         }

@@ -204,6 +204,7 @@ public class Client {
                     //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
                     if(!currentMessage.getUser().equals("BROADCAST")){
                         clientImplementation.sendMessage(currentMessage);
+                        log.info("Message sent to Server");
                     }
                     //todo
                     if(remoteViewImplementation.isGameSet()){
@@ -231,7 +232,7 @@ public class Client {
             }
 
 
-            log.info("Message sent to Server");
+
         }
 
         try {

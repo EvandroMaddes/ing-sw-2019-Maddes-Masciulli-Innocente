@@ -40,14 +40,17 @@ public class CLIPrintableElement {
                 colorPrint[i] = Color.ANSI_RED;
             else if (colors[i].equalsIgnoreCase("yellow"))
                 colorPrint[i] = Color.ANSI_YELLOW;
-            else colorPrint[i]= Color.ANSI_BLUE;
+            else if (colors[i].equalsIgnoreCase("blue"))
+                colorPrint[i]= Color.ANSI_BLUE;
+            else colorPrint[i] = Color.ANSI_WHITE;
         }
         resource = resource + colorPrint[0].escape()+"A"+ resource + colorPrint[1].escape() + "A";
         if(isPowerUp) {
-                    resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_WHITE.escape()+"P";
+                    resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape()+"P";
         }
         else{
             resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape() + "A";
+
         }
         resource = resource + Color.RESET.escape();
         isPlayer = false;
