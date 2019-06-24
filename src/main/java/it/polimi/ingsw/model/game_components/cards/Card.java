@@ -87,7 +87,6 @@ public abstract class Card implements BaseFightAction {
 
     /**
      * @param target is the player moved
-     * @param direction is the direction in which the player is moved
      *
      */
     @Override
