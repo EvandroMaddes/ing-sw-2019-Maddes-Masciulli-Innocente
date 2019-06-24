@@ -4,6 +4,8 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.model.board.BasicSquare;
+import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
@@ -28,7 +30,7 @@ public class RoundManagerTest {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
-        controller = new Controller(hashMap, 3);
+        controller = new Controller(hashMap, 0);
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.DOZER);
         controller.getGameManager().getModel().getPlayers().add(player1);
@@ -60,6 +62,20 @@ public class RoundManagerTest {
 
         roundManager = controller.getGameManager().getCurrentRound();
         Assert.assertEquals(player2, roundManager.getCurrentPlayer());
+    }
+
+    @Test
+    public void mapRefillTest(){
+        controller.getGameManager().newRound();
+        for (SpawnSquare s:controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares()) {
+            Assert.assertEquals(3, s.getWeapons().size());
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (!controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().contains(map[i][j]))
+                    Assert.assertTrue(((BasicSquare)map[i][j]).checkAmmo());
+            }
+        }
     }
 }
 

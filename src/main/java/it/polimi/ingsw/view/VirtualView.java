@@ -3,8 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 
-import java.util.Observer;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * todo O eventi girati al controller oppure girati alla remote view
@@ -22,6 +21,7 @@ public class VirtualView  extends Observable implements Observer{
     private String user;
     private Event toController;
     private Event toRemoteView;
+    private Queue<Event> modelUpdateQueue;
     private boolean playerConnected;
 
     /**
@@ -32,6 +32,7 @@ public class VirtualView  extends Observable implements Observer{
     {
         this.user = user;
         playerConnected = true;
+        modelUpdateQueue = new PriorityQueue<>();
     }
 
     /**
@@ -84,9 +85,7 @@ public class VirtualView  extends Observable implements Observer{
      */
     @Override
     public void update(Observable o, Object arg) {
-
-        setToRemoteView((Event)arg);
-
+        modelUpdateQueue.offer((Event) arg);
     }
 
 
