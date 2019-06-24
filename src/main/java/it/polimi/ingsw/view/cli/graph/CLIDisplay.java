@@ -32,63 +32,65 @@ public class CLIDisplay {
         int size = playerBoard.size();
 
         //GAMETRACK
-        for(int i=0; i<3;i++) {//ROW
+        for(int i=55; i<58;i++) {//ROW
             for (int j = 0; j < 32; j++) {//COLUMN
-                display[j][i] = gameTrack.getTrack()[j][i];
+                display[j][i] = gameTrack.getTrack()[j][i-55];
             }
         }
             //MAP
-           for(int i=3; i<20;i++) {//ROW
+           for(int i=60; i<77;i++) {//ROW
                for (int j = 3; j < 45; j++) {//COLUMN
-                   display[j][i] = map.getMap()[j-3][i-3];
+                   display[j][i] = map.getMap()[j-3][i-60];
                }
            }
             //PLAYERBOARD
         if(!playerBoard.isEmpty()) {
             for (int i = 0; i < size; i++) {
 
-                putPlayerBoard(i * 10 + 21, 2, playerBoard.get(i));
+                putPlayerBoard(i * 10, 2, playerBoard.get(i));
 
             }
         }
 
-        display[60][3]=Color.ANSI_GREEN.escape()+"S";
-        display[61][3]=Color.ANSI_GREEN.escape()+"P";
-        display[62][3]=Color.ANSI_GREEN.escape()+"A";
-        display[63][3]=Color.ANSI_GREEN.escape()+"W";
-        display[64][3]=Color.ANSI_GREEN.escape()+"N";
+        int a = 60;
 
-        display[66][3]=Color.ANSI_GREEN.escape()+"S";
-        display[67][3]=Color.ANSI_GREEN.escape()+"Q";
-        display[68][3]=Color.ANSI_GREEN.escape()+"U";
-        display[69][3]=Color.ANSI_GREEN.escape()+"A";
-        display[70][3]=Color.ANSI_GREEN.escape()+"R";
-        display[71][3]=Color.ANSI_GREEN.escape()+"E";
-        display[72][3]=Color.ANSI_GREEN.escape()+"=";
+        display[a][a]=Color.ANSI_GREEN.escape()+"S";
+        display[a+1][a]=Color.ANSI_GREEN.escape()+"P";
+        display[a+2][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+3][a]=Color.ANSI_GREEN.escape()+"W";
+        display[a+4][a]=Color.ANSI_GREEN.escape()+"N";
 
-        display[69][5]=Color.ANSI_RED.escape()+"R";
-        display[70][5]=Color.ANSI_RED.escape()+"E";
-        display[71][5]=Color.ANSI_RED.escape()+"D";
-        display[72][5]=Color.ANSI_RED.escape()+": ";
-        display[73][5]=Color.ANSI_GREEN.escape()+"*";
+        display[a+6][a]=Color.ANSI_GREEN.escape()+"S";
+        display[a+7][a]=Color.ANSI_GREEN.escape()+"Q";
+        display[a+8][a]=Color.ANSI_GREEN.escape()+"U";
+        display[a+9][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+10][a]=Color.ANSI_GREEN.escape()+"R";
+        display[a+11][a]=Color.ANSI_GREEN.escape()+"E";
+        display[a+12][a]=Color.ANSI_GREEN.escape()+"=";
 
-
-
-        display[69][7]=Color.ANSI_BLUE.escape()+"B";
-        display[70][7]=Color.ANSI_BLUE.escape()+"L";
-        display[71][7]=Color.ANSI_BLUE.escape()+"U";
-        display[72][7]=Color.ANSI_BLUE.escape()+": ";
-        display[73][7]=Color.ANSI_GREEN.escape()+"*";
+        display[a+9][a+2]=Color.ANSI_RED.escape()+"R";
+        display[a+10][a+2]=Color.ANSI_RED.escape()+"E";
+        display[a+11][a+2]=Color.ANSI_RED.escape()+"D";
+        display[a+12][a+2]=Color.ANSI_RED.escape()+": ";
+        display[a+13][a+2]=Color.ANSI_GREEN.escape()+"*";
 
 
-        display[66][9]=Color.ANSI_YELLOW.escape()+"Y";
-        display[67][9]=Color.ANSI_YELLOW.escape()+"E";
-        display[68][9]=Color.ANSI_YELLOW.escape()+"L";
-        display[69][9]=Color.ANSI_YELLOW.escape()+"L";
-        display[70][9]=Color.ANSI_YELLOW.escape()+"O";
-        display[71][9]=Color.ANSI_YELLOW.escape()+"W";
-        display[72][9]=Color.ANSI_YELLOW.escape()+": ";
-        display[73][9]=Color.ANSI_GREEN.escape()+"*";
+
+        display[a+9][a+4]=Color.ANSI_BLUE.escape()+"B";
+        display[a+10][a+4]=Color.ANSI_BLUE.escape()+"L";
+        display[a+11][a+4]=Color.ANSI_BLUE.escape()+"U";
+        display[a+12][a+4]=Color.ANSI_BLUE.escape()+": ";
+        display[a+13][a+4]=Color.ANSI_GREEN.escape()+"*";
+
+
+        display[a+6][a+6]=Color.ANSI_YELLOW.escape()+"Y";
+        display[a+7][a+6]=Color.ANSI_YELLOW.escape()+"E";
+        display[a+8][a+6]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+9][a+6]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+10][a+6]=Color.ANSI_YELLOW.escape()+"O";
+        display[a+11][a+6]=Color.ANSI_YELLOW.escape()+"W";
+        display[a+12][a+6]=Color.ANSI_YELLOW.escape()+": ";
+        display[a+13][a+6]=Color.ANSI_GREEN.escape()+"*";
 
 
 

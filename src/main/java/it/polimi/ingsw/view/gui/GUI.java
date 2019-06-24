@@ -78,7 +78,7 @@ public class GUI extends RemoteView  {
         Parent mapCharacter = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/lobbyScene.fxml"));
-        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameBoard.fxml"));
+        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/mapCharacterChoice.fxml"));
 
 
