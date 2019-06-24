@@ -48,7 +48,8 @@ public class Client {
           if(gameInterface.equalsIgnoreCase("GUI")){
 
               LoginMain guiInterface = new LoginMain();
-              guiInterface.run();
+              // TODO: 2019-06-23 fra mi ha detto di commentarlo momentaneamente
+              //guiInterface.run();
               remoteViewImplementation = guiInterface.getLoginController().getGui();
 
 

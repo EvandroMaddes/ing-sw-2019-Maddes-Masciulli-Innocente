@@ -237,6 +237,7 @@ public class Server extends Thread {
                 currentView.setToRemoteView(null);
             }
             else if(!isBroadcast){
+                //todo controlla se c'è un altra view con broadcast
                 if(currentView.getToRemoteView()!=null){
                     currentView.setToRemoteView(null);
                 }
