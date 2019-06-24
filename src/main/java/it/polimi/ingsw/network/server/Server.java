@@ -231,15 +231,15 @@ public class Server extends Thread {
         return returnedEvent;
     }
 
-    private  void cleanVirtualViews(boolean isBroadcast){
+    private  void cleanVirtualViews(boolean isBroadcast, Event toRemoveMessage){
         for (VirtualView currentView: virtualViewList) {
-            if(isBroadcast&&currentView.getToRemoteView().getUser().equals("BROADCAST")){
-                currentView.setToRemoteView(null);
+            if(isBroadcast){
+                currentView.getModelUpdateQueue().remove(toRemoveMessage);
             }
-            else if(!isBroadcast){
-                //todo controlla se c'è un altra view con broadcast
+            else {
                 if(currentView.getToRemoteView()!=null){
                     currentView.setToRemoteView(null);
+                    return;
                 }
             }
         }
@@ -247,11 +247,19 @@ public class Server extends Thread {
 
     private  Event findNextMessage(){
         message = null;
-        for (VirtualView currentView: virtualViewList) {
-            Event currMessage = currentView.getToRemoteView();
-            if(currMessage!=null){
-                cleanVirtualViews(currMessage.getUser().equals("BROADCAST"));
-                return currMessage;
+
+        Event currMessage = virtualViewList.get(0).getModelUpdateQueue().poll();
+        if(currMessage!=null){
+            cleanVirtualViews(true, currMessage);
+            return currMessage;
+        }
+        else{
+            for (VirtualView currentView: virtualViewList) {
+                currMessage = currentView.getToRemoteView();
+                if(currMessage!=null){
+                    cleanVirtualViews(false, currMessage);
+                    return currMessage;
+                }
             }
         }
         return null;
@@ -262,7 +270,7 @@ public class Server extends Thread {
     /**
      * This method, depending on gameCouldStart value, handle the incoming client connections
      */
-    private  void checkNewClient(){
+    private void checkNewClient(){
         if (activeClientList.size() != serverSocket.getClientList().size() + serverRMI.getClientList().size()) {
             if(!gameCouldStart) {
                 String connectedUser = updateMixedActiveClientList();

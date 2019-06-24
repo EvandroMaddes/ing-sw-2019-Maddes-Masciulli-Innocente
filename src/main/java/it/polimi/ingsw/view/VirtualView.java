@@ -32,7 +32,7 @@ public class VirtualView  extends Observable implements Observer{
     {
         this.user = user;
         playerConnected = true;
-        modelUpdateQueue = new PriorityQueue<>();
+        modelUpdateQueue = new LinkedList<>();
     }
 
     /**
@@ -51,7 +51,9 @@ public class VirtualView  extends Observable implements Observer{
         return toRemoteView;
     }
 
-
+    public Queue<Event> getModelUpdateQueue() {
+        return modelUpdateQueue;
+    }
 
     /**
      * send  a message to remote view: this method is NOT necessary because the attribute toRemoteView is set by model's calls()

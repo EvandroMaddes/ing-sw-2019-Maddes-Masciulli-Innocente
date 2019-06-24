@@ -164,6 +164,7 @@ public class Player extends Observable {
      */
     public void addPowerUp(PowerUp powerUp)
     {
+        powerUp.setOwner(this);
         if (this.powerUps.size() < 3)
             this.powerUps.add(powerUp);
         notifyPowerUpChange();
