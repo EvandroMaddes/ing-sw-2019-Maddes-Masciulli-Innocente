@@ -35,6 +35,7 @@ public class CLI extends RemoteView {
         mapCharacterNameColors.put(Character.VIOLET, Color.ANSI_PURPLE.escape());
         mapCharacterNameColors.put(Character.SPROG, Color.ANSI_GREEN.escape());
         display = new CLIDisplay();
+        //
     }
 
 
@@ -113,6 +114,10 @@ public class CLI extends RemoteView {
         return userInput;
     }
 
+    /**
+     *
+     * @param lobbySettings
+     */
     @Override
     public void setGame(LobbySettingsEvent lobbySettings) {
         display.setMap(new CLIMap(lobbySettings.getMapNumber()));
