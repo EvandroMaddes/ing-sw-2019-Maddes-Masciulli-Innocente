@@ -10,6 +10,7 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
@@ -534,6 +535,8 @@ public class CLI extends RemoteView {
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"New player joined the game:" + newPlayer+" with "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(characterChoice)+characterChoice.name());
+        CLIPlayerBoard player = new CLIPlayerBoard(newPlayer,characterChoice,mapCharacterNameColors);
+        display.setPlayerBoard(player);
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
@@ -1034,10 +1037,12 @@ public class CLI extends RemoteView {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "-select a started game option 2");
         }
 
-        while(!(choice>-1 && choice <3)){
+        do{
+
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select a corrent option:");
             choice = CLIHandler.intRead();
-        }
+
+        } while(choice<0 || choice>3 || !available[choice]);
 
         if(choice == 0){
             messageChoice =  new NewGameChoiceEvent(getUser());
