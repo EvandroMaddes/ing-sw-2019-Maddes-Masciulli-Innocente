@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginMain extends Application {
+public class LoginMain extends Application implements Runnable {
 
    private Parent root;
    private LoginController loginController;
@@ -20,6 +21,12 @@ public class LoginMain extends Application {
     public LoginController getLoginController() {
         return loginController;
     }
+
+    @Override
+    public void run() {
+        Application.launch(LoginMain.class);
+    }
+
 
     /**
      *
@@ -38,7 +45,6 @@ public class LoginMain extends Application {
             e.printStackTrace();
         }
         loginController = loginFxml.getController();
-
         primaryStage.setTitle("ADRENALINE");
         primaryStage.setScene(new Scene(root, 800, 560));
         loginController.getEnterButton().setDisable(true);

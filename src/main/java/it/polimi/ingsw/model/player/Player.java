@@ -128,7 +128,7 @@ public class Player extends Observable {
             this.position.removeCurrentPlayer(this);
         this.position = position;
         this.position.addCurrentPlayer(this);
-        PlayerPositionUpdateEvent message = new PlayerPositionUpdateEvent(character, position.getRow(), position.getColumn());
+        PlayerPositionUpdateEvent message = new PlayerPositionUpdateEvent(character, position.getColumn(), position.getRow());
         setChanged();
         notifyObservers(message);
     }

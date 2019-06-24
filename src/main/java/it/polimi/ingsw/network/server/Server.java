@@ -220,7 +220,7 @@ public class Server extends Thread {
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
             try{
-                sleep(500);
+                sleep(1000);
             }catch (InterruptedException e){
                 CustomLogger.logException(e);
             }
