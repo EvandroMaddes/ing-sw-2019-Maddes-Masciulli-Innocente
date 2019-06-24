@@ -52,6 +52,7 @@ public class ActionManagerTest {
         roundManager = controller.getGameManager().getCurrentRound();
         controller.getGameManager().setPlayerTurn(0);
         player1.setPosition(map[0][0]);
+        SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
     @Test
