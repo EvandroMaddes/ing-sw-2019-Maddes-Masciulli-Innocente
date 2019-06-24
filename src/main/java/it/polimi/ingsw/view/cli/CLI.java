@@ -496,7 +496,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
-
+        Event message;
         int chosenPowerUp = 404;
         while (chosenPowerUp<0 || chosenPowerUp>powerUpNames.length) {
             try {
@@ -504,17 +504,22 @@ public class CLI extends RemoteView {
                 for(int i=0;i<powerUpNames.length;i++){
                     System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
                 }
+                System.out.println("Skip Choice OPTION "+powerUpNames.length);
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select one powerUp:[option number]");
                 chosenPowerUp = CLIHandler.intRead();
-                if(chosenPowerUp<0 || chosenPowerUp>powerUpNames.length){
 
-                }
             } catch (IllegalArgumentException e) {
                 chosenPowerUp = 404;
             }
 
         }
-        return new PowerUpChoiceEvent(getUser(),powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
+        if (chosenPowerUp == powerUpNames.length){
+            message = new SkipActionChoiceEvent(getUser());
+        }
+        else {
+            message = new PowerUpChoiceEvent(getUser(),powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
+        }
+        return message;
     }
 
     /**
@@ -1172,9 +1177,4 @@ public class CLI extends RemoteView {
         return choice;
         }
 
-    @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
-        // TODO: 2019-06-23  
-        return null;
-    }
 }
