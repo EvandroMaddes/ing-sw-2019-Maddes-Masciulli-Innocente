@@ -208,7 +208,7 @@ public class CLI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
         int chosenAction = 404;
-        while (chosenAction <=1 || chosenAction>=5) {
+        while (chosenAction <1 || chosenAction>=5) {
             try {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+
                         "option 1 for MOVE"
@@ -561,10 +561,9 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
-        String[] color = {fistColour, secondColour, null};
+        String[] color =new String[] {fistColour, secondColour, null};
         CLIPrintableElement currElement;
-        if (thirdColour.equals("POWERUP")) {
-
+        if (thirdColour.equalsIgnoreCase("POWERUP")) {
             currElement = new CLIPrintableElement(true, color);
         } else {
             color[2] = thirdColour;
