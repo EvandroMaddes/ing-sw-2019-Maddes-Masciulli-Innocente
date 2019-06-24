@@ -471,7 +471,7 @@ public class ActionManager {
     public void askForPowerUpAsAction(){
         ArrayList<PowerUp> powerUps = new ArrayList<>();
         for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if (p.whenToUse() == PowerUp.Usability.AS_ACTION)
+            if (p.whenToUse() == PowerUp.Usability.AS_ACTION && !(controller.getGameManager().isFirstRoundPhase() && currentRoundManager.getCurrentPlayer() == controller.getGameManager().getModel().getPlayers().get(0) && p.getName().equals("Newton")))
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
@@ -491,6 +491,8 @@ public class ActionManager {
         else if (chosenPowerUp.getName().equals("Newton")){
             if (! (controller.getGameManager().isFirstRoundPhase() && controller.getGameManager().getModel().getPlayers().get(0) == currentRoundManager.getCurrentPlayer() ) )
                 askForPlayerTargetsNewton();
+            else
+                currentRoundManager.nextPhase();
         }
     }
 
@@ -517,7 +519,14 @@ public class ActionManager {
      *
      */
     private void askForPlayerTargetsNewton(){
-        controller.callView(new NewtonPlayerTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(controller.getGameManager().getModel().getPlayers()), 1));
+        ArrayList<Player> possiblePlayers = controller.getGameManager().getModel().getPlayers();
+        possiblePlayers.remove(currentRoundManager.getCurrentPlayer());
+        ArrayList<Player> onBoardPlayer = new ArrayList<>();
+        for (Player p: possiblePlayers) {
+            if (p.getPosition() != null)
+                onBoardPlayer.add(p);
+        }
+        controller.callView(new NewtonPlayerTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(onBoardPlayer), 1));
     }
 
     /**
