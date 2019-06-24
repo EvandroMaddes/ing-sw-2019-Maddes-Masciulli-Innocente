@@ -13,7 +13,6 @@ public class NewtonPlayerTargetChoiceEvent extends ViewControllerEvent {
         this.chosenTarget = chosenTarget;
     }
 
-
     @Override
     public void performAction(Controller controller) {
         Object target = Decoder.decodePlayerFromCharacter(chosenTarget, controller.getGameManager().getModel().getPlayers());

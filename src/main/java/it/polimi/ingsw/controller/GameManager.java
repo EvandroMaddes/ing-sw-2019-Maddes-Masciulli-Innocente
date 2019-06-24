@@ -306,5 +306,10 @@ public class GameManager {
     // TODO: 2019-06-18 usato per i test
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
+        setFirstRounPhase(false);
+    }
+
+    public void setFirstRounPhase(boolean firstRoundPhase){
+        this.firstRoundPhase = firstRoundPhase;
     }
 }
