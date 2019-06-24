@@ -489,10 +489,7 @@ public class ActionManager {
             askForTargetsTeleporter();
         }
         else if (chosenPowerUp.getName().equals("Newton")){
-            if (! (controller.getGameManager().isFirstRoundPhase() && controller.getGameManager().getModel().getPlayers().get(0) == currentRoundManager.getCurrentPlayer() ) )
                 askForPlayerTargetsNewton();
-            else
-                currentRoundManager.nextPhase();
         }
     }
 
