@@ -1172,9 +1172,5 @@ public class CLI extends RemoteView {
         return choice;
         }
 
-    @Override
-    public Event printUserNotification(UsernameModificationEvent usernameEvent, ClientInterface clientImp) {
-        // TODO: 2019-06-23  
-        return null;
-    }
+
 }
