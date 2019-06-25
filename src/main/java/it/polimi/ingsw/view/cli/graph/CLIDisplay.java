@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.cli.graph;
 
 import it.polimi.ingsw.model.player.Character;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
 
 
 
@@ -17,6 +15,9 @@ public class CLIDisplay {
     private ArrayList<CLIPlayerBoard> playerBoard = new ArrayList<>();
     private String[][] display = new String[COLUMN][ROW];
 
+    /**
+     *It fills in display with all white spaces
+     */
     public CLIDisplay(){
         for(int i=0; i<ROW;i++) {//ROW
             for (int j = 0; j < COLUMN; j++) {//COLUMN
@@ -26,7 +27,7 @@ public class CLIDisplay {
     }
 
     /**
-     * Create
+     * It puts in display: map, gameTrack and playerBoard and also some information
      */
     public void createDisplay(){
         int size = playerBoard.size();
@@ -60,47 +61,54 @@ public class CLIDisplay {
         display[a+3][a]=Color.ANSI_GREEN.escape()+"W";
         display[a+4][a]=Color.ANSI_GREEN.escape()+"N";
 
-        display[a+6][a]=Color.ANSI_GREEN.escape()+"S";
-        display[a+7][a]=Color.ANSI_GREEN.escape()+"Q";
-        display[a+8][a]=Color.ANSI_GREEN.escape()+"U";
-        display[a+9][a]=Color.ANSI_GREEN.escape()+"A";
-        display[a+10][a]=Color.ANSI_GREEN.escape()+"R";
-        display[a+11][a]=Color.ANSI_GREEN.escape()+"E";
-        display[a+12][a]=Color.ANSI_GREEN.escape()+"=";
+        display[a][a]=Color.ANSI_GREEN.escape()+"S";
+        display[a+1][a]=Color.ANSI_GREEN.escape()+"Q";
+        display[a+2][a]=Color.ANSI_GREEN.escape()+"U";
+        display[a+3][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+4][a]=Color.ANSI_GREEN.escape()+"R";
+        display[a+5][a]=Color.ANSI_GREEN.escape()+"E";
 
-        display[a+9][a+2]=Color.ANSI_RED.escape()+"R";
-        display[a+10][a+2]=Color.ANSI_RED.escape()+"E";
-        display[a+11][a+2]=Color.ANSI_RED.escape()+"D";
-        display[a+12][a+2]=Color.ANSI_RED.escape()+": ";
-        display[a+13][a+2]=Color.ANSI_GREEN.escape()+"*";
-
+        display[a][a+1]=Color.ANSI_RED.escape()+"R";
+        display[a+1][a+1]=Color.ANSI_RED.escape()+"E";
+        display[a+2][a+1]=Color.ANSI_RED.escape()+"D";
+        display[a+3][a+1]=Color.ANSI_RED.escape()+": ";
+        display[a+7][a+1]=Color.ANSI_GREEN.escape()+"*";
 
 
-        display[a+9][a+4]=Color.ANSI_BLUE.escape()+"B";
-        display[a+10][a+4]=Color.ANSI_BLUE.escape()+"L";
-        display[a+11][a+4]=Color.ANSI_BLUE.escape()+"U";
-        display[a+12][a+4]=Color.ANSI_BLUE.escape()+": ";
-        display[a+13][a+4]=Color.ANSI_GREEN.escape()+"*";
+
+        display[a][a+2]=Color.ANSI_BLUE.escape()+"B";
+        display[a+1][a+2]=Color.ANSI_BLUE.escape()+"L";
+        display[a+2][a+2]=Color.ANSI_BLUE.escape()+"U";
+        display[a+3][a+2]=Color.ANSI_BLUE.escape()+"E";
+        display[a+4][a+2]=Color.ANSI_BLUE.escape()+": ";
+        display[a+7][a+2]=Color.ANSI_GREEN.escape()+"*";
 
 
-        display[a+6][a+6]=Color.ANSI_YELLOW.escape()+"Y";
-        display[a+7][a+6]=Color.ANSI_YELLOW.escape()+"E";
-        display[a+8][a+6]=Color.ANSI_YELLOW.escape()+"L";
-        display[a+9][a+6]=Color.ANSI_YELLOW.escape()+"L";
-        display[a+10][a+6]=Color.ANSI_YELLOW.escape()+"O";
-        display[a+11][a+6]=Color.ANSI_YELLOW.escape()+"W";
-        display[a+12][a+6]=Color.ANSI_YELLOW.escape()+": ";
-        display[a+13][a+6]=Color.ANSI_GREEN.escape()+"*";
+        display[a][a+3]=Color.ANSI_YELLOW.escape()+"Y";
+        display[a+1][a+3]=Color.ANSI_YELLOW.escape()+"E";
+        display[a+2][a+3]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+3][a+3]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+4][a+3]=Color.ANSI_YELLOW.escape()+"O";
+        display[a+5][a+3]=Color.ANSI_YELLOW.escape()+"W";
+        display[a+6][a+3]=Color.ANSI_YELLOW.escape()+": ";
+        display[a+7][a+3]=Color.ANSI_GREEN.escape()+"*";
 
-
+        display[a][a+6] = Color.ANSI_GREEN.escape()+"MAP LEGEND";
+        display[a][a+7] = Color.ANSI_GREEN.escape()+"A : ammo";
+        display[a][a+8] = Color.ANSI_GREEN.escape()+"P : powerUp";
+        display[a][a+9] = Color.ANSI_BLUE.escape()+"B : BANSHEE";
+        display[a][a+10] = Color.ANSI_WHITE.escape()+"D : DOZER";
+        display[a][a+11] = Color.ANSI_YELLOW.escape()+"D : D_STRUCT_OR";
+        display[a][a+12] = Color.ANSI_GREEN.escape()+"S : SPROG";
+        display[a][a+13] = Color.ANSI_PURPLE.escape()+"V : VIOLET";
 
     }
 
     /**
-     * Add playerBoard on then display
-     * @param row
-     * @param column
-     * @param playerBoard
+     * Add playerBoard on the display
+     * @param row where add player board
+     * @param column where add player board
+     * @param playerBoard player board to add
      */
     private void putPlayerBoard(int row, int column, CLIPlayerBoard playerBoard) {
         for (int i =row; i < 10+row; i++) {//ROW
@@ -110,19 +118,27 @@ public class CLIDisplay {
         }
     }
 
+    /**
+     * getter
+     * @return MAP
+     */
     public CLIMap getMap() {
         return map;
     }
 
+    /**
+     * getter
+     * @return GAMETRACK
+     */
     public CLIGameTrack getGameTrack() {
         return gameTrack;
     }
 
 
     /**
-     * find the playerBoard of passed character
-     * @param currCharacter
-     * @return
+     * it finds the playerBoard of passed character
+     * @param currCharacter passed character
+     * @return one player board
      */
     public CLIPlayerBoard getPlayerBoard(Character currCharacter) {
         CLIPlayerBoard found = null;
@@ -138,20 +154,24 @@ public class CLIDisplay {
     }
 
     /**
-     * add one by one player to array
-     * @param newGameTrack
+     * setter
+     * @param newGameTrack GAMETRACK
      */
     public void setGameTrack(CLIGameTrack newGameTrack){
     this.gameTrack = newGameTrack;
     }
 
+    /**
+     * setter
+     * @param map MAP
+     */
     public void setMap(CLIMap map) {
         this.map = map;
     }
 
     /**
-     * add one by one player to array
-     * @param newPlayerBoard
+     * It adds one by one player to array
+     * @param newPlayerBoard player board to add
      */
     public void setPlayerBoard(CLIPlayerBoard newPlayerBoard) {
 
@@ -160,9 +180,9 @@ public class CLIDisplay {
 
     /**
      * Set available weapon on spawn square
-     * @param column
-     * @param row
-     * @param weapons
+     * @param column where set weapon
+     * @param row where set weapon
+     * @param weapons weapon to add
      */
     public void weaponsSpawnSquare(int column, int row, String[] weapons){
         int h=0;
@@ -170,16 +190,16 @@ public class CLIDisplay {
 
                 //RED
         if (column==0 && row==1){
-            j=62;
+            j=61;
         }else //BLUE
             if (column==2 && row==0){
-            j=64;
+            j=62;
         }else //YELLOW
             if( column==3 && row==2){
-            j=66;
+            j=63;
         }
 
-        for (int i =74; i<77; i++ ) {
+        for (int i =70; i<73; i++ ) {
             if(h<weapons.length && weapons[h]!=null) {
                 display[i][j] = Color.ANSI_GREEN.escape()+weapons[h]+" * ";
                 h++;
@@ -188,7 +208,9 @@ public class CLIDisplay {
     }
 
 
-
+    /**
+     * It prints on screen the display
+     */
     public void printDisplay(){
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
         for(int i=0; i<ROW;i++) {//ROW

@@ -10,8 +10,7 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.model.player.PlayerBoard;
-import it.polimi.ingsw.network.client.ClientInterface;
+
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
@@ -39,8 +38,8 @@ public class CLI extends RemoteView {
 
 
     /**
-     *
-     * @return
+     *getter
+     * @return DISPLAY
      */
     public CLIDisplay getDisplay() {
         return display;
@@ -54,6 +53,10 @@ public class CLI extends RemoteView {
         return mapCharacterNameColors;
     }
 
+    /**
+     * It checks if game is ready to start(display ready)
+     * @return game set or not
+     */
     @Override
     public boolean isGameSet() {
         if( getDisplay().getMap()!=null){
@@ -114,8 +117,8 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *
-     * @param lobbySettings
+     *setter
+     * @param lobbySettings contains information of map and gametrack
      */
     @Override
     public void setGame(LobbySettingsEvent lobbySettings) {
@@ -124,16 +127,12 @@ public class CLI extends RemoteView {
         gameTrack.createGameTrack();
         display.setGameTrack(gameTrack);
 
-        CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("eva",Character.VIOLET,getMapCharacterNameColors());
-        CLIPlayerBoard player1 = new CLIPlayerBoard("raul",Character.D_STRUCT_OR,getMapCharacterNameColors());
-        CLIPlayerBoard player2 = new CLIPlayerBoard("lu",Character.DOZER,getMapCharacterNameColors());
-        CLIPlayerBoard player3 = new CLIPlayerBoard("fede",Character.SPROG,getMapCharacterNameColors());
-        CLIPlayerBoard player4 = new CLIPlayerBoard("fra",Character.VIOLET,getMapCharacterNameColors());
+        // TODO: 24/06/2019 settare la playerBoard dello user
     }
 
     /**
      * user choice for character
-     * @param availableCharacters
+     * @param availableCharacters character available
      * @return event that contains player's choice
      */
     @Override
@@ -260,9 +259,9 @@ public class CLI extends RemoteView {
 
     /**
      *User choose square target for his selected effect
-     * @param possibleSquareX
-     * @param possibleSquareY
-     * @return
+     * @param possibleSquareX column of available square
+     * @param possibleSquareY row of available square
+     * @return event that contains player's choice
      */
     @Override
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
@@ -392,7 +391,7 @@ public class CLI extends RemoteView {
     /**
      * iT show whio whin the game and his point
      * @param user winner
-     * @param point
+     * @param point total winner's points
      * @return message notify the success of updating
      */
     @Override
@@ -403,7 +402,7 @@ public class CLI extends RemoteView {
 
     /**
      * User choose at least one effect for his own weapon
-     * @param availableWeaponEffects
+     * @param availableWeaponEffects effect available for selected weapon
      * @return event that contains player's choice
      */
     @Override
@@ -538,7 +537,8 @@ public class CLI extends RemoteView {
 
     /**
      * Every time one player joins the game it's notified to other player
-     * @param newPlayer
+     * @param newPlayer  new player username
+     * @param characterChoice new player character choose
      * @return message notify the success of updating
      */
     @Override
@@ -716,7 +716,7 @@ public class CLI extends RemoteView {
      * It replaces weapons on spawn square
      * @param x      coordinate (row)
      * @param y      coordinate(column)
-     * @param weapon
+     * @param weapon weapon to add
      * @return message notify the success of updating
      */
     @Override
@@ -729,7 +729,7 @@ public class CLI extends RemoteView {
 
     /**
      * user choose target of his power up
-     * @param availableTargets
+     * @param availableTargets character available to hit
      * @param numTarget max numeber of target
      * @return event that contains player's choice
      */
@@ -849,8 +849,8 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * Select how to pay when you can choose on item from ammo or powerUp
-     * @param usableAmmo
+     * it shows how to pay when player can choose one item from ammo or powerUp
+     * @param usableAmmo available ammo
      * @param powerUpsType list of power up's name available to use
      * @param powerUpsColour list of power up's colour available to use
      * @return event that contains player's choice
@@ -923,7 +923,7 @@ public class CLI extends RemoteView {
 
     /**
      * User choice a target character
-     * @param possibleTargets
+     * @param possibleTargets character available to hit
      * @return event that contains player's choice
      */
     @Override

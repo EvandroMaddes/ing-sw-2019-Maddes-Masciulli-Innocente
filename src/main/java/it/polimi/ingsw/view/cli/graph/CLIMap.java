@@ -14,7 +14,10 @@ public class CLIMap {
     private static final int MAXROW = 17;
     private String[][] map = new String[MAXCOLUMN][MAXROW];
 
-
+    /**
+     * getter
+     * @return MAP
+     */
     public String[][] getMap() {
         return map;
     }
@@ -49,9 +52,9 @@ public class CLIMap {
     }
 
     /**
-     * called by the constructor, depending on the mapNumber given
-     * @param mapNumber
-     * @return
+     * it's called by the constructor, it create the correct map by passed number
+     * @param mapNumber number of selected map
+     * @return list of square 
      */
     private ArrayList<CLISquare> allocateSquares(int mapNumber){
         ArrayList<CLISquare> cliSquares = new ArrayList<>();
@@ -90,6 +93,14 @@ public class CLIMap {
         return cliSquares;
     }
 
+    // TODO: 25/06/2019 chiedi a fra  
+    /**
+     *
+     * @param isFirst
+     * @param isRight
+     * @param isAlternatedOrder
+     * @return
+     */
     private ArrayList<CLISquare> allocateSemiMap(boolean isFirst, boolean isRight, boolean isAlternatedOrder){
         ArrayList<CLISquare> cliSquares = new ArrayList<>();
         CLISquare currSquare;
@@ -246,7 +257,7 @@ public class CLIMap {
     /**
      * this method insert in the map the right sequence of CLISquares, given in the ArrayList squares
      * the order follow the horizontal sequence of each map, constructed in the method allocateSquares()
-     * @param squares
+     * @param squares square to add
      */
     private void populateMap(ArrayList<CLISquare> squares){
         int currColumn;
@@ -268,7 +279,7 @@ public class CLIMap {
     }
 
 
-
+    // TODO: 25/06/2019 da eliminare?
     public void plot() {
 
         for (int row = 0; row < MAXROW; row++) {
@@ -280,6 +291,13 @@ public class CLIMap {
 
     }
 
+    // TODO: 25/06/2019 chiedi a fra 
+    /**
+     * 
+     * @param element 
+     * @param coordX column
+     * @param coordY row
+     */
     public void updateResource(CLIPrintableElement element,int coordX, int coordY){
         coordX = coordX * MAXSQUARECOLUMN + 2;
         coordY = coordY * MAXSQUAREROW + 2;
@@ -312,6 +330,10 @@ public class CLIMap {
 
     }
 
+    /**
+     * it remove one player from the map 
+     * @param player selected player
+     */
     public void removePlayer(String player){
         for (int i = 0; i < MAXCOLUMN; i++) {
             for (int j = 0; j < MAXROW; j++) {

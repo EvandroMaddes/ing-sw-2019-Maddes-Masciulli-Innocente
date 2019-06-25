@@ -9,6 +9,11 @@ import java.util.Scanner;
 public class CLIHandler {
     private static final Scanner inputScanner = new Scanner(System.in);
 
+    /**
+     * It prints one string and it reads from input buffer
+     * @param printedString string to print
+     * @return string typed
+     */
     public static String stringPrintAndRead(String printedString){
         String returnedString = "";
         System.out.flush();
@@ -20,6 +25,11 @@ public class CLIHandler {
         return returnedString;
     }
 
+
+    /**
+     * It print an array
+     * @param printedStrings array to print
+     */
     public static void arrayPrint(ArrayList<String> printedStrings){
 
         for (String currObject: printedStrings) {
@@ -35,9 +45,9 @@ public class CLIHandler {
 
     /**
      * this method prints an array of Square and read square selected by user
-     * @param X
-     * @param Y
-     * @return
+     * @param X column
+     * @param Y row
+     * @return square selected
      */
     public static int[] coordinatePrintAndRead(int X[], int Y[]){
         int index = 404;
@@ -64,9 +74,8 @@ public class CLIHandler {
     }
 
     /**
-     * this method reads an input number, the
-     *
-     * @return
+     * This method reads an input number
+     * @return integer selected
      */
     public static int intRead(){
         try {
@@ -102,10 +111,13 @@ public class CLIHandler {
         return choice;
     }
 
+    /**
+     * it reads an input string
+     * @return string typed
+     */
     public static String stringRead(){
-        String chosenString;
 
-        return chosenString = inputScanner.nextLine();
+        return inputScanner.nextLine();
 
 
     }

@@ -5,10 +5,17 @@ public class CLIGameTrack {
     private static final int MAXROW = 3;
     private String[][] track = new String[MAXCOLUMN][MAXROW];
 
+    /**
+     * getter
+     * @return TRACK
+     */
     public String[][] getTrack() {
         return track;
     }
 
+    /**
+     * It fill in track matrix
+     */
     public void createGameTrack(){
         for(int i=0; i<MAXROW; i++){
             for (int j=0; j<MAXCOLUMN; j++){
@@ -27,6 +34,12 @@ public class CLIGameTrack {
         }
     }
 
+    /**
+     * It remove skulls from Track
+     * @param damageToken number of damage token to add on track
+     * @param colorEscape Color of character who owns then skull
+     * @param column column of skull
+     */
     public void removeSkull(int damageToken, String colorEscape,int column){
           if(damageToken!=0) {
               if (track[column][1].contains("☠")) {
@@ -38,5 +51,6 @@ public class CLIGameTrack {
 
           }
     }
+
 
 }

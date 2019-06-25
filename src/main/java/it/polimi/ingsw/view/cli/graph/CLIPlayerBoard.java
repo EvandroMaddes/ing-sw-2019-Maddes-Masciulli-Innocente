@@ -15,6 +15,12 @@ public class CLIPlayerBoard {
     private static final int MAXROW2 = 12;
     private String[][] playerBoard = new String[MAXCOLUMN][MAXROW2];
 
+    /**
+     * constructor: it sets user, character map between character and color
+     * @param user username
+     * @param character character choose
+     * @param mapCharacterNameColors use to set the correct color escape
+     */
     public CLIPlayerBoard(String user, Character character, Map<Character, String> mapCharacterNameColors){
 
         this.character= character;
@@ -24,10 +30,25 @@ public class CLIPlayerBoard {
 
     }
 
+    /**
+     * getter
+     * @return PLAYERBOARD
+     */
+    public String[][] getPlayerBoard() {
+        return playerBoard;
+    }
+
+    /**
+     * getter
+     * @return CHARACTER
+     */
     public Character getCharacter() {
         return character;
     }
 
+    /**
+     * It create a new playerBoard
+     */
     private void createPlayerBoard() {
         String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(character);
         for (int i = 0; i < MAXCOLUMN; i++) {
@@ -90,30 +111,52 @@ public class CLIPlayerBoard {
 
     }
 
-    public void damageUpdate(int damage, Character hittingCharacter, int i){
-
-        String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(hittingCharacter);
-        while (damage>0 && i<MAXCOLUMN){
-             playerBoard[i][3]= currColorEscape + "¤";
-             damage--;
-
-        }
+    /**
+     * It updates number of damages on the playerBoard
+     * @param damage number of damage
+     * @param hittingCharacter Character who hits it (use to find correct color)
+     * @param x column
+     */
+    public void damageUpdate(int damage, Character hittingCharacter, int x){
+        countUpdate(damage,hittingCharacter,x,3);
 
     }
 
-    public void markUpdate (int mark, Character hittingCharacter, int i){
-        String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(hittingCharacter);
-        while (mark>0 && i<MAXCOLUMN){
+    /**
+     * It updates number of damages on the playerBoard
+     * @param mark number of damage
+     * @param hittingCharacter Character who hits it (use to find correct color)
+     * @param x column
+     */
+    public void markUpdate (int mark, Character hittingCharacter, int x){
+        countUpdate(mark,hittingCharacter,x,2);
+    }
 
-            playerBoard[i][2]= currColorEscape + "¤";
-            mark--;
+    /**
+     * it updates number of element of on passed
+     * @param toAdd number of gadgets to add
+     * @param hittingCharacter Character who hits it (use to find correct color)
+     * @param x column
+     * @param y row
+     */
+    private void countUpdate(int toAdd, Character hittingCharacter, int x, int y){
+        String currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(hittingCharacter);
+        while (toAdd>0 && toAdd<MAXCOLUMN){
+
+            playerBoard[x][y]= currColorEscape + "¤";
+            toAdd--;
 
         }
     }
 
 
-
-
+    /**
+     * it updates ammo, weapon and powerUp of one playerboards
+     * @param type A: ammo;
+     *             W: weapon;
+     *             P: powerUp;
+     * @param gadgets name of available gadjets of one playerBoard
+     */
     public void gadgetsUpdate(char type, String[] gadgets){
 
         boolean done = false;
@@ -145,22 +188,30 @@ public class CLIPlayerBoard {
 
         }
 
-    public void clean(int j){
+    /**
+     * it cleans (fill in with white space) passed row of the playerboard
+     * @param row selected row
+     */
+    public void clean(int row){
         int i=3;
-        if(j==2||j==3){
+        if(row==2||row==3){
             i=10;
         }
         for(int h=0;h<8;h++){
 
-            playerBoard[i][j] =Color.ANSI_BLACK_BACKGROUND.escape() + " ";
-            if(j==2||j==3){
+            playerBoard[i][row] = Color.ANSI_BLACK_BACKGROUND.escape() + " ";
+            if(row==2||row==3){
                 i=i+4;
             }else {
             i=i+2;}
         }
     }
 
-        public void skullUpdate(int skullNumber){
+    /**
+     * it updates nummber of skulls on playerBoard
+     * @param skullNumber number of skull
+     */
+    public void skullUpdate(int skullNumber){
         int i=3;
         for(int rep=0;rep<skullNumber;rep++){
              playerBoard[i][8] =Color.ANSI_RED.escape() + "☠";
@@ -169,8 +220,15 @@ public class CLIPlayerBoard {
         }
 
 
-    public String[][] getPlayerBoard() {
-        return playerBoard;
+    // TODO: 25/06/2019 da eliminare
+    public void printPlayerBoard(){
+        for (int row = 0; row < MAXROW2; row++) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
+            for (int column =0; column < MAXCOLUMN; column++) {
+                System.out.print(playerBoard[column][row]);
+            }
+        }
+
     }
 }
 
