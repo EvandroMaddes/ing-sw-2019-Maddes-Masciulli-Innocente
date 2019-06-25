@@ -37,11 +37,6 @@ public class Controller implements Observer {
     }
 
     public void callView(ControllerViewEvent message){
-        if (message.getUser().equals("BROADCAST")){
-            for (Player p: getGameManager().getModel().getPlayers()) {
-                usersVirtualView.get(p.getUsername()).callRemoteView(message);
-            }
-        }
         usersVirtualView.get(message.getUser()).callRemoteView(message);
     }
 
