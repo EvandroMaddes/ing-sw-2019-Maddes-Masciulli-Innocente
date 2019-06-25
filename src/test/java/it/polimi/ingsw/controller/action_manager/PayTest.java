@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.power_ups.TagbackGrenade;
-import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
 import it.polimi.ingsw.model.game_components.cards.weapons.PlasmaGun;
 import it.polimi.ingsw.model.game_components.cards.weapons.Whisper;
 import it.polimi.ingsw.model.player.Character;
