@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Federico Innocente
  */
 
-public class AmmoCube {
+public class AmmoCube implements Serializable {
 
     private CubeColour colour;
 

@@ -25,7 +25,7 @@ public class CLIPrintableElement {
      */
     public CLIPrintableElement(boolean isWeapon){
         if(!isWeapon){
-            resource = resource + "  " + "  " + "  ";
+            resource = resource + " " + " " + " ";
         }
         else{
             resource = " ";
