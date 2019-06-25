@@ -356,10 +356,7 @@ public class ActionManager {
     public void askForWeaponReloadPay(String weapon){
         chosenWeapon = Decoder.decodePlayerWeapon(currentRoundManager.getCurrentPlayer(), weapon);
         int[] reloadCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
-        if (reloadCost[0] + reloadCost[1] + reloadCost[2] == 0)
-            reloadWeapon();
-        else
-            askForPowerUpAsAmmo(reloadCost, PaymentRequestEvent.Context.WEAPON_RELOAD);
+        askForPowerUpAsAmmo(reloadCost, PaymentRequestEvent.Context.WEAPON_RELOAD);
     }
 
     /**
