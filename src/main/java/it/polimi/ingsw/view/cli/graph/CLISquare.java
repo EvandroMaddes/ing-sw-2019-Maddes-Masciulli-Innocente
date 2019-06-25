@@ -10,6 +10,11 @@ public class CLISquare {
 
     //todo aggiungere spawn/basic e coord porte(?), modificare è brutto muri separati!!!
 
+    /**
+     * constructor: it set color and property of one square(spawn square or not)
+     * @param color color of the square
+     * @param isSpawnSquare property of spawn
+     */
     public CLISquare(Color color, boolean isSpawnSquare){
         this.isSpawnSquare = isSpawnSquare;
         currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape()+color.escape();
@@ -36,6 +41,15 @@ public class CLISquare {
                 squareString[i][j] = currColorEscape + squareString[i][j];
             }
         }
+    }
+
+
+    /**
+     * getter:
+     * @return SQUARESTRING
+     */
+    public String[][] getSquareString() {
+        return squareString;
     }
 
     /**
@@ -176,10 +190,5 @@ public class CLISquare {
             }
         }
 
-    }
-
-
-    public String[][] getSquareString() {
-        return squareString;
     }
 }

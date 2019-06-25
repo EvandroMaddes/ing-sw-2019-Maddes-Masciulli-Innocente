@@ -1,11 +1,14 @@
 package it.polimi.ingsw.view.cli.graph;
 
 
-//sarà title
 public class Title {
-    //lunghezza titolo (20x 10 char, 5x 2 inizio/fine)
     private static final int LENGHT = 210;
     private static final int HEIGHT = 9;
+
+
+    /**
+     * It prints title "ADRENALINE"
+     */
     public static void printTitle(){
         String[] strings = new String[LENGHT];
         TitleCharacter[] title = new TitleCharacter[10];
@@ -18,7 +21,7 @@ public class Title {
         title[6] = new LTitleCharacter();
         title[7] = new ITitleCharacter();
         title[8] = new NTitleCharacter();
-        title[9] = new ATitleCharacter();
+        title[9] = new ETitleCharacter();
 
         for (int i = 0; i < HEIGHT; i++) {
             for (TitleCharacter currCharacter :title) {
@@ -38,7 +41,6 @@ public class Title {
 
                 System.out.print(" ");
             }
-            //todo attivare sfondo, su intellj diventa bianco
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape());
             System.out.println(title[0].getColor().escape() + strings[i]);
 

@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.cli.graph;
 
 import it.polimi.ingsw.model.player.Character;
 
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Its constructors allocate an AmmoTile or a Player representation by a string, depending on the arguments given
@@ -13,11 +11,35 @@ public class CLIPrintableElement {
     private boolean isPlayer;
 
 
+    /**
+     * constructor: it sets one player on the map
+     * @param player charcacter to set
+     * @param color color of his character
+     */
     public CLIPrintableElement(Character player, String color){
         char firstChar = player.name().charAt(0);
         resource =  resource+ color+firstChar;
         isPlayer = true;
     }
+
+
+
+    /**
+     * getter
+     * @return RESOURCE
+     */
+    public String getResource() {
+        return resource;
+    }
+
+    /**
+     * getter
+     * @return isPlayer
+     */
+    public boolean isPlayer() {
+        return isPlayer;
+    }
+
 
     /**
      * is called when an update require removing an ammotile or a weapon on the CLIMap
@@ -33,6 +55,11 @@ public class CLIPrintableElement {
 
     }
 
+    /**
+     * constructor: it sets ammoTile on one square
+     * @param isPowerUp if ammoTile contains one power up
+     * @param colors colors of ammoCube
+     */
     public CLIPrintableElement(boolean isPowerUp, String[] colors){
         Color[] colorPrint = new Color[3];
         for(int i=0; i<colors.length; i++) {
@@ -54,16 +81,5 @@ public class CLIPrintableElement {
         }
         resource = resource + Color.RESET.escape();
         isPlayer = false;
-    }
-    public CLIPrintableElement(String currentWeapon, String currentSpawnSquare){
-
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public boolean isPlayer() {
-        return isPlayer;
     }
 }
