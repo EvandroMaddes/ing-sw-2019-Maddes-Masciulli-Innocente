@@ -147,10 +147,12 @@ public class ActionManager {
             ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachableInMoves(1);
             controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
         }
-        else sendPossibleWeapons();
+        else
+            sendPossibleWeapons();
     }
 
-    public void managePreEffectShot(){
+    public void managePreEffectShot(int x, int y){
+        performMove(x,y);
         if (controller.getGameManager().isFinalFrenzyPhase() && !getUnloadedWeapon().isEmpty()){
             askForReload();
         }
@@ -166,7 +168,7 @@ public class ActionManager {
     /**
      * Manda le possibili armi
      */
-    public void sendPossibleWeapons(){
+    private void sendPossibleWeapons(){
         controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
     }
 
@@ -184,7 +186,7 @@ public class ActionManager {
     /**
      * manda i possibili effetti
      */
-    public void sendPossibleEffects() {
+    private void sendPossibleEffects() {
         boolean[] usableEffects = new boolean[3];
         for (int i = 0; i < 3; i++)
             usableEffects[i] = chosenWeapon.isUsableEffect(i + 1);
@@ -342,8 +344,10 @@ public class ActionManager {
             controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(possibleReload)));
             reloadPhase = true;
         }
-        else
+        else if (controller.getGameManager().getCurrentRound().getPhase() == 6 || controller.getGameManager().getCurrentRound().getCurrentPlayer().getNumberOfWeapons() == 0)
             currentRoundManager.nextPhase();
+        else
+            sendPossibleWeapons();
     }
 
     /**

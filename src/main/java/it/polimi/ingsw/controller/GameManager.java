@@ -132,7 +132,7 @@ public class GameManager {
      * finalFrenzyPhase - is enabled when the GameTrack end
      * firstPlayerPlayed - set to true only in the final frenzy, in the first player round
      */
-    void newRound(){
+    public void newRound(){
         refillMap();
 
         if(gameEnded())
@@ -149,9 +149,6 @@ public class GameManager {
         if (firstRoundPhase){
             currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
         }
-        else if (finalFrenzyPhase){
-            currentRound = new FrenzyRoundManager(controller, model, model.getPlayers().get(playerTurn), firsPlayerPlayed);
-        }
         else
             currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
 
@@ -162,12 +159,10 @@ public class GameManager {
         return (model.getGameboard().getGameTrack()).checkEndTrack();
     }
 
-    private void setFinalFrenzyPhase() {
-        if (!finalFrenzyPhase){
-            finalFrenzyPhase = true;
-            lastPlayer = playerTurn;
-            getModel().getGameboard().setFinalFrenzy();
-        }
+    public void setFinalFrenzyPhase() {
+        finalFrenzyPhase = true;
+        lastPlayer = playerTurn;
+        getModel().getGameboard().setFinalFrenzy();
     }
 
     /**
@@ -211,7 +206,7 @@ public class GameManager {
         return playerTurn;
     }
 
-    boolean isFinalFrenzyPhase() {
+    public boolean isFinalFrenzyPhase() {
         return finalFrenzyPhase;
     }
 
@@ -306,10 +301,10 @@ public class GameManager {
     // TODO: 2019-06-18 usato per i test
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
-        setFirstRounPhase(false);
+        setFirstRoundPhase(false);
     }
 
-    public void setFirstRounPhase(boolean firstRoundPhase){
+    public void setFirstRoundPhase(boolean firstRoundPhase){
         this.firstRoundPhase = firstRoundPhase;
     }
 }

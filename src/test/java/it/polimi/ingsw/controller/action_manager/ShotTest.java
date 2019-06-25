@@ -174,4 +174,18 @@ public class ShotTest {
         Assert.assertEquals(4, roundManager.getPhase());
         Assert.assertFalse(cyberblade.isLoaded());
     }
+
+    @Test
+    public void finalFrenzyShotTest(){
+      /*  player1.setPosition(map[0][0]);
+        player2.setPosition(map[0][1]);
+        player3.setPosition(map[1][0]);
+        Weapon lockRifle = new LockRifle();
+        player1.addWeapon(lockRifle);
+        controller.getGameManager().setFinalFrenzyPhase();
+        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+        roundManager.manageRound();
+
+        Event requestMessage = hashMap.get(player1.getUsername())*/
+    }
 }

@@ -10,6 +10,6 @@ public class ShotMoveChoiceEvent extends PositionChoiceEvent {
 
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().getActionManager().managePreEffectShot();
+        controller.getGameManager().getCurrentRound().getActionManager().managePreEffectShot(getPositionX(), getPositionY());
     }
 }
