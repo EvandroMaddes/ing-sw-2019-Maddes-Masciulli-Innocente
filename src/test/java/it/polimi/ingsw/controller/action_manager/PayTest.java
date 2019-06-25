@@ -7,11 +7,14 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.*;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.power_ups.TagbackGrenade;
+import it.polimi.ingsw.model.game_components.cards.weapons.Flamethrower;
 import it.polimi.ingsw.model.game_components.cards.weapons.PlasmaGun;
+import it.polimi.ingsw.model.game_components.cards.weapons.Railgun;
 import it.polimi.ingsw.model.game_components.cards.weapons.Whisper;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
@@ -113,5 +116,49 @@ public class PayTest {
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Yellow));
         Assert.assertEquals(3, player2.getPlayerBoard().getDamageAmount());
         Assert.assertTrue(plasmaGun.isLoaded());
+    }
+
+    @Test
+    public void reloadTest(){
+        Weapon railgun = new Railgun();
+        Weapon flamethrower = new Flamethrower();
+        player1.addWeapon(flamethrower);
+        player1.addWeapon(railgun);
+        railgun.setUnloaded();
+        flamethrower.setUnloaded();
+        PowerUp tagbackGrenade = new TagbackGrenade(CubeColour.Yellow);
+        player1.addPowerUp(tagbackGrenade);
+        player1.setPosition(map[0][0]);
+        player1.discardAmmo(new AmmoCube(CubeColour.Red));
+
+        roundManager.manageRound();
+        ViewControllerEvent choiceMessage = new SkipActionChoiceEvent(player1.getUsername());
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(6, roundManager.getPhase());
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((WeaponReloadRequestEvent)requestMessage).getWeapons().size());
+        Assert.assertTrue(((WeaponReloadRequestEvent)requestMessage).getWeapons().contains(railgun.getName()));
+
+        choiceMessage = new WeaponReloadChoiceEvent(player1.getUsername(), railgun.getName());
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertArrayEquals(new int[]{0,1,0}, ((WeaponReloadPaymentRequestEvent)requestMessage).getMinimumPowerUpRequest());
+        Assert.assertArrayEquals(new int[]{0,2,1}, ((WeaponReloadPaymentRequestEvent)requestMessage).getMaximumPowerUpRequest());
+        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpColours().length);
+        Assert.assertEquals(CubeColour.Yellow, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(tagbackGrenade.getName(), ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpNames()[0]);
+
+        choiceMessage = new WeaponReloadPaymentChoiceEvent(player1.getUsername(), new String[]{tagbackGrenade.getName()}, new CubeColour[]{CubeColour.Yellow});
+        choiceMessage.performAction(controller);
+
+        Assert.assertTrue(railgun.isLoaded());
+        Assert.assertEquals(0, player1.getPowerUps().size());
+        Assert.assertEquals(0, player1.getCubeColourNumber(CubeColour.Red));
+        Assert.assertEquals(0, player1.getCubeColourNumber(CubeColour.Blue));
+        Assert.assertEquals(0, player1.getCubeColourNumber(CubeColour.Yellow));
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
+        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
     }
 }
