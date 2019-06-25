@@ -47,6 +47,7 @@ public class BasicSquare extends Square {
            ammo = null;//remove ammo after it is grabbed
 
            AmmoTileUpdateEvent message = new AmmoTileUpdateEvent(false, getColumn(), getRow(), null, null, null);
+           setChanged();
            notifyObservers(message);
     }
 
@@ -73,6 +74,7 @@ public class BasicSquare extends Square {
                 message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), "POWERUP");
             else
                 message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString());
+            setChanged();
             notifyObservers(message);//send to VirtualView
         }
     }

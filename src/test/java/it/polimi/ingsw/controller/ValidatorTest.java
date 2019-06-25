@@ -1,6 +1,7 @@
-package it.polimi.ingsw.controller.validator;
+package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.validator.Validator;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.cards.Weapon;

@@ -187,9 +187,11 @@ public class ActionManager {
     public void sendPossibleEffects() {
         boolean[] usableEffects = new boolean[3];
         for (int i = 0; i < 3; i++)
-            usableEffects[i] = chosenWeapon.isUsableEffect(i);
-        if (Arrays.equals(usableEffects, new boolean[]{false, false, false}))
+            usableEffects[i] = chosenWeapon.isUsableEffect(i + 1);
+        if (Arrays.equals(usableEffects, new boolean[]{false, false, false})) {
+            chosenWeapon.setUnloaded();
             currentRoundManager.nextPhase();
+        }
         else
             controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
     }
@@ -430,7 +432,8 @@ public class ActionManager {
             else
                 cost[2]--;
         }
-        for (AmmoCube a:currentRoundManager.getCurrentPlayer().getAmmo()){
+        ArrayList<AmmoCube> playersAmmo = new ArrayList<>(currentRoundManager.getCurrentPlayer().getAmmo());
+        for (AmmoCube a:playersAmmo){
             if (a.getColour() == CubeColour.Red && cost[0] > 0){
                 currentRoundManager.getCurrentPlayer().discardAmmo(a);
                 cost[0]--;

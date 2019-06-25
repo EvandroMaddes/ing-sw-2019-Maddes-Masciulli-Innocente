@@ -15,7 +15,7 @@ import java.util.*;
  *
  */
 
-public class VirtualView  extends Observable implements Observer{
+public class VirtualView extends Observable implements Observer{
 
 
     private String user;

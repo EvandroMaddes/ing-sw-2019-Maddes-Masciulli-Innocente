@@ -41,7 +41,7 @@ public class FirstRoundManagerTest {
         PowerUpDeck powerUpDeck = controller.getGameManager().getModel().getGameboard().getPowerUpDeck();
         powerUp1 = (PowerUp) powerUpDeck.getDeck().get(0);
         powerUp2 = (PowerUp) powerUpDeck.getDeck().get(1);
-        controller.getGameManager().newRound();
+        controller.getGameManager().startGame();
         roundManager = (FirstRoundManager) controller.getGameManager().getCurrentRound();
     }
 

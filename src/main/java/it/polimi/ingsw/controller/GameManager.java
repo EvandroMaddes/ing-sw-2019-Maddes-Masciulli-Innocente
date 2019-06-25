@@ -120,7 +120,7 @@ public class GameManager {
         characterSelect();
     }
 
-    private void startGame(){
+    public void startGame(){
         SetUpObserverObservable.connect(getModel().getPlayers(), controller.getUsersVirtualView(), getModel());
         newRound();
     }
@@ -219,7 +219,7 @@ public class GameManager {
         return lastPlayer;
     }
 
-    boolean isFirstRoundPhase() {
+    public boolean isFirstRoundPhase() {
         return firstRoundPhase;
     }
 
