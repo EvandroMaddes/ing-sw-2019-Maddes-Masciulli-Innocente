@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.action_manager;
 
+import com.sun.xml.internal.ws.policy.AssertionSet;
 import it.polimi.ingsw.TestPattern;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RoundManager;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.weapons.CyberBlade;
+import it.polimi.ingsw.model.game_components.cards.weapons.Electroscythe;
 import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.game_components.cards.weapons.MachineGun;
 import it.polimi.ingsw.model.player.Character;
@@ -176,16 +178,47 @@ public class ShotTest {
     }
 
     @Test
-    public void finalFrenzyShotTest(){
-      /*  player1.setPosition(map[0][0]);
-        player2.setPosition(map[0][1]);
-        player3.setPosition(map[1][0]);
-        Weapon lockRifle = new LockRifle();
-        player1.addWeapon(lockRifle);
-        controller.getGameManager().setFinalFrenzyPhase();
-        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+    public void adrenalinicShotWithNoWeaponTest(){
+        player1.setPosition(map[0][0]);
+        player2.setPosition(map[1][0]);
+        player1.getPlayerBoard().addDamages(player2, 8);
         roundManager.manageRound();
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(3, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,1};
+        int[] expectedY = new int[]{0,1,0};
+        TestPattern.checkSquares(expectedX, expectedY, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX(), ((ShotMoveRequestEvent)requestMessage).getPossibleSquareY());
+        choiceMessage = new ShotMoveChoiceEvent(player1.getUsername(), 1,0);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(4, controller.getGameManager().getCurrentRound().getPhase());
+    }
 
-        Event requestMessage = hashMap.get(player1.getUsername())*/
+    @Test
+    public void adrenalinicShotWithWeaponTest(){
+        player1.setPosition(map[0][0]);
+        player2.setPosition(map[1][0]);
+        Weapon electroscythe = new Electroscythe();
+        player1.addWeapon(electroscythe);
+        player1.getPlayerBoard().addDamages(player2, 8);
+        roundManager.manageRound();
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(3, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,1};
+        int[] expectedY = new int[]{0,1,0};
+        TestPattern.checkSquares(expectedX, expectedY, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX(), ((ShotMoveRequestEvent)requestMessage).getPossibleSquareY());
+        choiceMessage = new ShotMoveChoiceEvent(player1.getUsername(), 1,0);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((WeaponRequestEvent)requestMessage).getWeapons().size());
+        Assert.assertTrue(((WeaponRequestEvent)requestMessage).getWeapons().contains(electroscythe.getName()));
     }
 }

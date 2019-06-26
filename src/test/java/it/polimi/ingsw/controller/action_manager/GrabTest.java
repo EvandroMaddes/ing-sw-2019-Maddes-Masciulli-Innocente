@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.action_manager;
 
+import it.polimi.ingsw.TestPattern;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RoundManager;
 import it.polimi.ingsw.controller.SetUpObserverObservable;
@@ -190,5 +191,20 @@ public class GrabTest {
         Assert.assertEquals(0, player1.getCubeColourNumber(CubeColour.Blue));
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Yellow));
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Red));
+    }
+
+    @Test
+    public void adrenalinicGrabTest(){
+        controller.getGameManager().refillMap();
+        player1.getPlayerBoard().addDamages(player2, 4);
+
+        roundManager.manageRound();
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 2);
+        choiceMessage.performAction(controller);
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(6, ((PositionGrabRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,0,1,1,2};
+        int[] expectedY = new int[]{0,1,2,0,1,0};
+        TestPattern.checkSquares(expectedX, expectedY, ((PositionGrabRequestEvent)requestMessage).getPossibleSquareX(), ((PositionGrabRequestEvent)requestMessage).getPossibleSquareY());
     }
 }
