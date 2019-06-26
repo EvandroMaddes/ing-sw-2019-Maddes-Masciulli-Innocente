@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginMain extends Application {
+public class LoginMain extends Application{
 
    private Parent root;
    private LoginController loginController;
-    private GUI gui = new GUI();
+   private static final GUI gui = new GUI();
 
     /**
      *
@@ -50,14 +50,14 @@ public class LoginMain extends Application {
     }
 
 
-    public GUI getGui() {
+    public static GUI getGui() {
         return gui;
     }
 
-    public void setGui(GUI gui) {
+    /*public void setGui(GUI gui) {
         this.gui = gui;
     }
-
+*/
     public static void main(String[] args) {
         launch(args);
     }
