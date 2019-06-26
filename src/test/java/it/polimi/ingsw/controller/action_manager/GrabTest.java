@@ -208,4 +208,6 @@ public class GrabTest {
         int[] expectedY = new int[]{1,2,0,1,0};
         TestPattern.checkSquares(expectedX, expectedY, ((PositionGrabRequestEvent)requestMessage).getPossibleSquareX(), ((PositionGrabRequestEvent)requestMessage).getPossibleSquareY());
     }
+
+
 }
