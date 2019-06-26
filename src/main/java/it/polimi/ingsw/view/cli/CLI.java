@@ -359,7 +359,7 @@ public class CLI extends RemoteView {
         int weaponSelected ;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to discard one weapon:");
         weaponSelected = CLIHandler.arraylistPrintRead(yourWeapons);
-        return new WeaponDiscardChoice(getUser(), yourWeapons.get(weaponSelected));
+        return new WeaponDiscardChoiceEvent(getUser(), yourWeapons.get(weaponSelected));
     }
 
     /**

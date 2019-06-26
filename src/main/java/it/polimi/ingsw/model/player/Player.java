@@ -307,6 +307,7 @@ public class Player extends Observable {
             i++;
         }
         ((SpawnSquare)position).getWeapons().add(weapons[i]);
+        weapon.setLoaded();
         weapons[i].setOwner(null);
         weapons[i] = null;
         numberOfWeapons--;
