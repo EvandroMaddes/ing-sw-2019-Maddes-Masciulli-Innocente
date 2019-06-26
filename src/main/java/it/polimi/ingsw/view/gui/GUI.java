@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class GUI extends RemoteView  {
 
     private LobbyChioceController lobbyController;
-    private UsernameController usernameController;
     private GameBoardController gameBoardController;
     private MapCharacterController mapCharacterController;
 
@@ -50,7 +49,6 @@ public class GUI extends RemoteView  {
         return false;
     }
 
-    //TODO gestire l'inizializzazione di tutte le scene
     public void setStage(Stage currentStage) {
         Platform.runLater(()->primaryStage.close());
         Platform.runLater(()->this.primaryStage=currentStage);
@@ -70,10 +68,9 @@ public class GUI extends RemoteView  {
         return new String[0];
     }
 
-    public String[] gameInit(String[] configuration){
+    public void gameInit(String[] configuration){
 
         Parent lobby = null;
-        Parent username = null;
         Parent gameboard = null;
         Parent mapCharacter = null;
 
@@ -110,21 +107,12 @@ public class GUI extends RemoteView  {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
 
-        ArrayList<Character> availableTestedCharacter = new ArrayList<>();
-        availableTestedCharacter.add(Character.SPROG);
-        availableTestedCharacter.add(Character.BANSHEE);
-        availableTestedCharacter.add(Character.D_STRUCT_OR);
-        availableTestedCharacter.add(Character.DOZER);
-        availableTestedCharacter.add(Character.VIOLET);
-        //Platform.runLater(()->metodoprova());
-        //gameChoice();
-        //characterChoice(availableTestedCharacter);
-        System.out.println(gameBoardStage.isResizable());
+        System.out.println(this.getUser()+1);
+        //Chiude la finestra e il metodo torna al loginController
+        primaryStage.close();
         //todo passa alla prossima scena forse questo può essere thread
         //Platform.runLater(()->actionChoice(true));
 
-
-        return configuration;
     }
 
     public void metodoprova(){

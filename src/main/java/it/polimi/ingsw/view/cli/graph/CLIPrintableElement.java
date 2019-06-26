@@ -13,7 +13,7 @@ public class CLIPrintableElement {
 
     /**
      * constructor: it sets one player on the map
-     * @param player charcacter to set
+     * @param player character to set
      * @param color color of his character
      */
     public CLIPrintableElement(Character player, String color){
