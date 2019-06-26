@@ -22,10 +22,11 @@ public class FinalFrenzyValidator extends Validator{
         else
             numberOfMoves = 3;
 
-        ArrayList<Square> grabbableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), numberOfMoves);
-        for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
-                grabbableSquare.remove(currentSquare);
+        ArrayList<Square> possibleSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), numberOfMoves);
+        ArrayList<Square> grabbableSquare = new ArrayList<>();
+        for (Square currentSquare: possibleSquare) {
+            if (currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
+                grabbableSquare.add(currentSquare);
         }
         return grabbableSquare;
     }

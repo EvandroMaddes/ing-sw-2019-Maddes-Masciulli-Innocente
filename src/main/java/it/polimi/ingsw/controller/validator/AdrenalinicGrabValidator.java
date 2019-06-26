@@ -13,10 +13,11 @@ public class AdrenalinicGrabValidator extends BaseActionValidator {
      * @return all possible grabbable square
      */
     public ArrayList<Square> availableGrab(Controller controller){
-        ArrayList<Square> grabbableSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 2);
-        for (Square currentSquare: grabbableSquare) {
-            if (!currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
-                grabbableSquare.remove(currentSquare);
+        ArrayList<Square> possibleSquare = reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 2);
+        ArrayList<Square> grabbableSquare = new ArrayList<>();
+        for (Square currentSquare: possibleSquare) {
+            if (currentSquare.isGrabbable(controller.getGameManager().getCurrentRound().getCurrentPlayer()))
+                grabbableSquare.add(currentSquare);
         }
         return grabbableSquare;
     }

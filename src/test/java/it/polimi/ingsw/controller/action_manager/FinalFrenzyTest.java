@@ -7,8 +7,8 @@ import it.polimi.ingsw.controller.SetUpObserverObservable;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.*;
 import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
@@ -106,6 +106,54 @@ public class FinalFrenzyTest {
         //ricevi richiesta arma
         requestMessage = hashMap.get(player3.getUsername()).getToRemoteView();
         Assert.assertEquals(1, ((WeaponRequestEvent)requestMessage).getWeapons().size());
+    }
 
+    @Test
+    public void firstPlayerFinalFrenzyGrabTest(){
+        controller.getGameManager().setPlayerTurn(2);
+        player1.setPosition(map[0][0]);
+        controller.getGameManager().newRound();
+        roundManager = controller.getGameManager().getCurrentRound();
+        Assert.assertEquals(player1, roundManager.getCurrentPlayer());
+        Assert.assertTrue(controller.getGameManager().isFirsPlayerPlayed());
+        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
+        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 2);
+        ((BasicSquare)map[0][1]).grabAmmoTile(player2);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(8, ((PositionGrabRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,1,1,2,0,1,2};
+        int[] expectedY = new int[]{0,2,0,1,0,3,2,1};
+        TestPattern.checkSquares(expectedX, expectedY, ((PositionGrabRequestEvent)requestMessage).getPossibleSquareX(), ((PositionGrabRequestEvent)requestMessage).getPossibleSquareY());
+    }
+
+    @Test
+    public void beforeFirstPlayerFinalFrenzyMoveTest() {
+        controller.getGameManager().setPlayerTurn(1);
+        player3.setPosition(map[0][0]);
+        controller.getGameManager().newRound();
+        roundManager = controller.getGameManager().getCurrentRound();
+        Assert.assertEquals(player3, roundManager.getCurrentPlayer());
+        Assert.assertFalse(controller.getGameManager().isFirsPlayerPlayed());
+        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+        Event requestMessage = hashMap.get(player3.getUsername()).getToRemoteView();
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[1]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player3.getUsername(), 1);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player3.getUsername()).getToRemoteView();
+        Assert.assertEquals(11, ((PositionMoveRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,0,1,1,1,2,0,1,2,2};
+        int[] expectedY = new int[]{0,1,2,0,1,3,0,3,2,1,2};
+        TestPattern.checkSquares(expectedX, expectedY, ((PositionMoveRequestEvent)requestMessage).getPossibleSquareX(), ((PositionMoveRequestEvent)requestMessage).getPossibleSquareY());
+        choiceMessage = new MoveChoiceEvent(player3.getUsername(),2,2);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(map[2][2], player3.getPosition());
+        Assert.assertEquals(4, controller.getGameManager().getCurrentRound().getPhase());
     }
 }
