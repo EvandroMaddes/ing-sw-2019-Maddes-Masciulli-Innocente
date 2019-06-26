@@ -59,7 +59,6 @@ public class DeckTest {
     @Test
     public void reshuffleAmmoTileDeckTest(){
         AmmoTilesDeck ammoTilesDeck1 = new AmmoTilesDeck();
-        AmmoTilesDeck ammoTilesDeck2 = new AmmoTilesDeck();
         for (int i = 0; i < 36; i++) {
             AmmoTile ammoTile = (AmmoTile) ammoTilesDeck1.draw();
             ammoTilesDeck1.discardCard(ammoTile);
