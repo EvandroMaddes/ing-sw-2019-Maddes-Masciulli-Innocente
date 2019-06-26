@@ -82,8 +82,11 @@ public class GameManager {
                 GameBoard gameBoard = getModel().getGameboard();
                 if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
                     while (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
-                            !gameBoard.getWeaponDeck().getDeck().isEmpty())
-                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add((Weapon) gameBoard.getWeaponDeck().draw());
+                            !gameBoard.getWeaponDeck().getDeck().isEmpty()) {
+                        Weapon newWeapon = (Weapon) gameBoard.getWeaponDeck().draw();
+                        if (newWeapon != null)
+                            ((SpawnSquare) gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add(newWeapon);
+                    }
                 }
                 else if ( (gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
                         !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())

@@ -38,7 +38,7 @@ public class AbstractWeaponTest {
     }
 
     @Test
-    public void enableEffectsTEst(){
+    public void enableEffectsTest(){
         boolean[] expected = new boolean[]{true, false, false};
         boolean[] actual = weapon1.getEffectsEnable();
         Assert.assertEquals(3, actual.length);
