@@ -70,7 +70,7 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-        
+
          GUI gui = new GUI();
         LoginMain mainGUI = new LoginMain();
         Application.launch(mainGUI.getClass());
