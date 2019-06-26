@@ -11,6 +11,7 @@ import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
@@ -141,8 +142,10 @@ public class Server extends Thread {
                             gameCouldStart = true;
                             //todo istanzia controller e inizia computazione
                             lobbyController = new Controller(mapUserView, mapChoice);
+                            GameModel model = lobbyController.getGameManager().getModel();
                             for (VirtualView connectedPlayer: virtualViewList) {
                                 connectedPlayer.addObserver(lobbyController);
+                                model.addObserver(connectedPlayer);
                             }
                             log.info(lobbyName.concat(":\tGame could start; There are " + activeClientList.size() + " players\n"));
                         }

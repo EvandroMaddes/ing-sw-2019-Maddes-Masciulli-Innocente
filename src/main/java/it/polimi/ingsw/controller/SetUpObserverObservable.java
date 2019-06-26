@@ -26,7 +26,7 @@ public class SetUpObserverObservable {
                         model.getGameboard().getMap().getSquareMatrix()[i][j].addObserver(playersVirtualView.get(username));
             model.getGameboard().getGameTrack().addObserver(playersVirtualView.get(username));
             // adding GameModel
-            model.addObserver(playersVirtualView.get(username));
+//            model.addObserver(playersVirtualView.get(username));
         }
     }
 }
