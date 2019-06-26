@@ -30,6 +30,7 @@ public class GameManagerTest {
     private GameBoard gameBoard;
     private Player player1;
     private Player player2;
+    private Player player3;
     private Square[][] map;
     private GameModel model;
 
@@ -45,6 +46,7 @@ public class GameManagerTest {
         map = gameBoard.getMap().getSquareMatrix();
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.DOZER);
+        player3 = new Player("Evandro", Character.VIOLET);
         gameManager.getModel().getPlayers().add(player1);
         gameManager.getModel().getPlayers().add(player2);
     }
@@ -214,6 +216,7 @@ public class GameManagerTest {
     public void calculateWinnerDrawCaseTest(){
         player1.addPoints(1);
         player2.addPoints(1);
+        ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
         controller.getGameManager().endGame();
         for (Player p: controller.getGameManager().getModel().getPlayers()) {
             Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
