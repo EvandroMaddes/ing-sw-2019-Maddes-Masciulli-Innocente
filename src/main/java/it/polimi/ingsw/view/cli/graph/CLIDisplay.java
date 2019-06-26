@@ -95,7 +95,7 @@ public class CLIDisplay {
 
         display[a][a+6] = Color.ANSI_GREEN.escape()+"MAP LEGEND";
         display[a][a+7] = Color.ANSI_GREEN.escape()+"A : ammo";
-        display[a][a+8] = Color.ANSI_GREEN.escape()+"P : powerUp";
+        display[a][a+8] = Color.ANSI_WHITE.escape()+"P : powerUp";
         display[a][a+9] = Color.ANSI_BLUE.escape()+"B : BANSHEE";
         display[a][a+10] = Color.ANSI_WHITE.escape()+"D : DOZER";
         display[a][a+11] = Color.ANSI_YELLOW.escape()+"D : D_STRUCT_OR";
