@@ -5,10 +5,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RoundManager;
 import it.polimi.ingsw.controller.SetUpObserverObservable;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.PositionGrabRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WeaponDiscardRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WeaponGrabRequestEvent;
+import it.polimi.ingsw.event.controller_view_event.*;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
@@ -17,6 +14,7 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
 import it.polimi.ingsw.model.game_components.cards.weapons.*;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
@@ -272,6 +270,45 @@ public class GrabTest {
         Assert.assertEquals(3, player1.getCubeColourNumber(CubeColour.Blue));
         Assert.assertEquals(2, player1.getCubeColourNumber(CubeColour.Yellow));
         Assert.assertEquals(3, player1.getCubeColourNumber(CubeColour.Red));
+    }
+
+    @Test
+    public void grabWeaponWithPowerUp(){
+        Weapon lockRifle = new LockRifle();
+        Weapon flameThrower = new Flamethrower();
+        Weapon whisper = new Whisper();
+        controller.getGameManager().refillMap();
+        ((SpawnSquare)map[1][0]).getWeapons().clear();
+        ((SpawnSquare)map[1][0]).getWeapons().add(lockRifle);
+        ((SpawnSquare)map[1][0]).getWeapons().add(flameThrower);
+        ((SpawnSquare)map[1][0]).getWeapons().add(whisper);
+        player1.addPowerUp(new TargetingScope(CubeColour.Blue));
+        player1.addPowerUp(new TargetingScope(CubeColour.Yellow));
+
+        roundManager.manageRound();
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 2);
+        choiceMessage.performAction(controller);
+
+        choiceMessage = new GrabChoiceEvent(player1.getUsername(), 1,0);
+        choiceMessage.performAction(controller);
+
+        choiceMessage = new WeaponGrabChoiceEvent(player1.getUsername(), whisper.getName());
+        choiceMessage.performAction(controller);
+
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertArrayEquals(new int[]{0,0,0}, ((WeaponGrabPaymentRequestEvent)requestMessage).getMinimumPowerUpRequest());
+        Assert.assertEquals(2, ((WeaponGrabPaymentRequestEvent)requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(CubeColour.Blue, ((WeaponGrabPaymentRequestEvent)requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(CubeColour.Yellow, ((WeaponGrabPaymentRequestEvent)requestMessage).getPowerUpColours()[1]);
+        choiceMessage = new WeaponGrabPaymentChoiceEvent(player1.getUsername(), new String[]{"TargetingScope", "TargetingScope"},new CubeColour[]{CubeColour.Yellow, CubeColour.Blue} );
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(1, player1.getNumberOfWeapons());
+        Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Yellow));
+        Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Blue));
+        Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Red));
+        Assert.assertEquals(whisper, player1.getWeapons()[0]);
+        Assert.assertEquals(0, player1.getPowerUps().size());
+        Assert.assertEquals(4, controller.getGameManager().getCurrentRound().getPhase());
     }
 
 
