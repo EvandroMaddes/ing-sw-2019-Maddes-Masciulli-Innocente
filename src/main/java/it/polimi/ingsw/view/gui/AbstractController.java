@@ -12,6 +12,7 @@ public abstract class AbstractController {
     public GUI getGui() {
         return gui;
     }
+
     public void sendChoice(Event choice){
         gui.sendMessage(choice);
     }
