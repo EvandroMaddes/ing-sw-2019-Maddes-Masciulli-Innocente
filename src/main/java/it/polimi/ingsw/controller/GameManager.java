@@ -175,26 +175,28 @@ public class GameManager {
     private Player calculateWinner() {
         giveEndGamePoints();
 
-        Player winner = null;
         boolean draw = false;
+        Player winner = null;
+        int winningPoints = 0;
         for (Player p : model.getPlayers()) {
-            if(winner == null || p.getPoints() > winner.getPoints() ) {
+            if(p.getPoints() > winningPoints) {
                 winner = p;
+                winningPoints = p.getPoints();
                 draw = false;
             }
-            else if (p.getPoints() == winner.getPoints()){
-                for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()){
-                    if (d.getPlayer() == winner)
-                        break;
-                    else if (d.getPlayer() == p){
-                        winner = p;
-                        draw = true;
-                        break;
+            else if (p.getPoints() == winningPoints){
+                boolean tockenFound = false;
+                for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()) {
+                    if (!tockenFound && (d.getPlayer() == winner || d.getPlayer() == p)) {
+                        winner = d.getPlayer();
+                        tockenFound = true;
                     }
                 }
+                if (!tockenFound)
+                    draw = true;
             }
         }
-        if (!draw)
+        if (!draw && winner != null)
             return winner;
         else{
             return null;
@@ -290,10 +292,13 @@ public class GameManager {
         }
     }
 
-    // TODO: 2019-06-16 in caso di pareggio non si puo mandare null perche lancia NullPointerException
-    void endGame(){
+    public void endGame(){
         Player winner = calculateWinner();
-        controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints()));
+        if (winner != null)
+            controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints(), false));
+        else
+            for (Player p: controller.getGameManager().getModel().getPlayers())
+                controller.callView(new WinnerEvent(p.getUsername(), 0, true));
     }
 
     // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare

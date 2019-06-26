@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
@@ -200,4 +201,23 @@ public class GameManagerTest {
         Assert.assertEquals(22, ((WinnerEvent)hashMap.get(player4.getUsername()).getToRemoteView()).getPoint());
     }
 
+    @Test
+    public void calculateWinnerDrawCaseWithNoPointsTest(){
+        controller.getGameManager().endGame();
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
+            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+        }
+    }
+
+    @Test
+    public void calculateWinnerDrawCaseTest(){
+        player1.addPoints(1);
+        player2.addPoints(1);
+        controller.getGameManager().endGame();
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
+            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+        }
+    }
 }
