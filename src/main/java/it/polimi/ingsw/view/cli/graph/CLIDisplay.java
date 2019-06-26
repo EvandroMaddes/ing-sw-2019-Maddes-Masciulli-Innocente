@@ -61,12 +61,12 @@ public class CLIDisplay {
         display[a+3][a]=Color.ANSI_GREEN.escape()+"W";
         display[a+4][a]=Color.ANSI_GREEN.escape()+"N";
 
-        display[a][a]=Color.ANSI_GREEN.escape()+"S";
-        display[a+1][a]=Color.ANSI_GREEN.escape()+"Q";
-        display[a+2][a]=Color.ANSI_GREEN.escape()+"U";
-        display[a+3][a]=Color.ANSI_GREEN.escape()+"A";
-        display[a+4][a]=Color.ANSI_GREEN.escape()+"R";
-        display[a+5][a]=Color.ANSI_GREEN.escape()+"E";
+        display[a+6][a]=Color.ANSI_GREEN.escape()+"S";
+        display[a+7][a]=Color.ANSI_GREEN.escape()+"Q";
+        display[a+8][a]=Color.ANSI_GREEN.escape()+"U";
+        display[a+9][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+10][a]=Color.ANSI_GREEN.escape()+"R";
+        display[a+11][a]=Color.ANSI_GREEN.escape()+"E";
 
         display[a][a+1]=Color.ANSI_RED.escape()+"R";
         display[a+1][a+1]=Color.ANSI_RED.escape()+"E";
