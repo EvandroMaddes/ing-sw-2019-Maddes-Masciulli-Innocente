@@ -16,6 +16,9 @@ import java.rmi.RemoteException;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Is the main Game Server, handles the incoming connection from new clients and redirects them to the chosen Lobby
+ */
 public class Server {
 
     private static Logger log = Logger.getLogger("ServerLogger");
@@ -74,6 +77,10 @@ public class Server {
     }
 
 
+    /**
+     * When a new client reaches the server, a WelcomeEvent is created and sent
+     * @param incomingUser is the client username
+     */
     private static void welcomeUser(String incomingUser){
         boolean[] availableChoices = {true, false, false};
         if(!waitingLobby.isEmpty()){
@@ -97,6 +104,10 @@ public class Server {
 
     }
 
+    /**
+     * If requested by a client, starts a new lobby and redirect to this the client who created it
+     * @param user is the creator's username
+     */
     private static void startNewGame(String user){
         Lobby newLobby;
         newLobby = new Lobby();
@@ -107,12 +118,22 @@ public class Server {
         reconnectClient(user, newLobby);
     }
 
+    /**
+     * If requested by a client, it redirect the requesting client to the selected lobby
+     * @param lobbyID is the chosen lobby ID ("CreatorName".concat("'s lobby"))
+     * @param user is the joining client username
+     */
     private static void joinLobby(String lobbyID, String user){
         Lobby returnedLobby;
             returnedLobby = findLobbyByID(lobbyID);
             reconnectClient(user,returnedLobby);
     }
 
+    /**
+     * It find, given a lobbyID, the respectively Lobby
+     * @param lobbyID is the searched lobby ID ("CreatorName".concat("'s lobby"))
+     * @return the Lobby that has the given lobbyID
+     */
     private static Lobby findLobbyByID(String lobbyID){
         for (Lobby currLobby: activeLobbies) {
             if(currLobby.getLobbyName().equals(lobbyID)){
@@ -122,6 +143,11 @@ public class Server {
         return null;
     }
 
+    /**
+     * Redirect a client from the Server to the given Lobby
+     * @param username is the Client username
+     * @param lobby is the Lobby on which the client will be redirected
+     */
     private static void reconnectClient(String username, Lobby lobby){
         int portNumber;
         ServerInterface currServer;
@@ -138,7 +164,10 @@ public class Server {
         handledUsers--;
         
     }
-    
+
+    /**
+     * Removes all the disconnected users, so a reconnecting client could reconnect with its old username
+     */
     private static void cleanConnectedUsers(){
         for (Lobby currLobby: activeLobbies) {
             connectedUsers.removeAll(currLobby.getDisconnectedClientList());
@@ -156,6 +185,9 @@ public class Server {
         mapUserServer.put(currUser,serverImplementation);
     }
 
+    /**
+     * Update the activeLobbies List, moving the Lobby with a begun match from the waitingLobby List.
+     */
     private static void updateStartedLobbies(){
         for (Lobby currLobby: activeLobbies) {
             if(currLobby.isGameCouldStart()){
@@ -167,7 +199,7 @@ public class Server {
     }
 
     /**
-     * This method, depending on gameCouldStart value, handle the incoming client connections
+     * This method, depending on gameCouldStart value, handle the incoming client connections.
      * @return true if there is a new client connection
      */
     private static String checkNewClient(){

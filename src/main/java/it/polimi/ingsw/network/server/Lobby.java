@@ -31,7 +31,8 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- *
+ * Is the Lobby implementation
+ * @author Francesco Masciulli
  */
 public class Lobby extends Thread {
     private  Logger log = Logger.getLogger("ServerLogger");
@@ -67,6 +68,11 @@ public class Lobby extends Thread {
         return disconnectedClientList;
     }
 
+    /**
+     * Called by the Server when a new Lobby is created: depending on the parameters set RMI and Socket ports and starts them
+     * @param lobbyName is the lobby creator's username
+     * @param aliveLobbies is the number of already created lobbies
+     */
     public void setLobby(String lobbyName, int aliveLobbies){
         this.lobbyName = lobbyName+"'s lobby";
         portRMI = NetConfiguration.RMISERVERPORTNUMBER+6*aliveLobbies+1;
@@ -86,8 +92,10 @@ public class Lobby extends Thread {
     }
 
 
-
-
+    /**
+     * Is the Thread run() implementation:
+     * it start the already allocated and set RMI/Socket servers and handle the network from the beginning to the end of the Game;
+     */
     @Override
     public void run() {
 
@@ -142,7 +150,7 @@ public class Lobby extends Thread {
                             serverRMI.gameCouldStart();
                             serverSocket.gameCouldStart();
                             gameCouldStart = true;
-                            //todo istanzia controller e inizia computazione
+                            //istanzia controller e inizia computazione
                             lobbyController = new Controller(mapUserView, mapChoice);
                             GameModel model = lobbyController.getGameManager().getModel();
                             for (VirtualView connectedPlayer: virtualViewList) {
@@ -168,7 +176,7 @@ public class Lobby extends Thread {
                 //todo FINEPROVA
 
 
-                //todo ora si gestisce il turno, il controller setta nextMessage
+                // ora si gestisce il turno, il controller ha settato nextMessage
                 message = null;
                 Event nextMessage = findNextMessage();
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
@@ -213,10 +221,18 @@ public class Lobby extends Thread {
     }
 
 
+
     public  boolean isGameCouldStart() {
         return gameCouldStart;
     }
 
+    /**
+     * Send the message that has to be sent, depending on its type:
+     * the ControllerViewEvent message is sent to the respectively user and wait for an answer (the listenMessage return a DisconnectedUserEvent if the RoundTimer elapses);
+     * the broadcast message is sent to everyone and is returned directly an UpdateChoiceEvent
+     * @param toSend is the message that must be sent
+     * @return the answer message
+     */
     private Event sendAndWaitNextMessage(Event toSend){
         String currentUser = toSend.getUser();
         Event returnedEvent = null;
@@ -241,6 +257,11 @@ public class Lobby extends Thread {
         return returnedEvent;
     }
 
+    /**
+     * it clean eventually messages that were already sent (are more than one if Broadcast)
+     * @param isBroadcast is true if was a Broadcast message
+     * @param toRemoveMessage is the sent message
+     */
     private  void cleanVirtualViews(boolean isBroadcast, Event toRemoveMessage){
         for (VirtualView currentView: virtualViewList) {
             if(isBroadcast){
@@ -255,6 +276,11 @@ public class Lobby extends Thread {
         }
     }
 
+    /**
+     * Iterate on the VirtualViews and find the message that will be sent:
+     * if is Broadcast, and this messages have higher priority than the Controller-View ones, it is dequed from all the Views
+     * @return
+     */
     private Event findNextMessage(){
         message = null;
 
