@@ -246,7 +246,7 @@ public class Server extends Thread {
             }
             else {
                 if(currentView.getToRemoteView()!=null){
-                    currentView.setToRemoteView(null);
+                    currentView.callRemoteView(null);
                     return;
                 }
             }
