@@ -28,7 +28,7 @@ public class PlayerBoard extends Observable implements Serializable{
 
 
     public PlayerBoard(Character character) {
-        damageReceived = new DamageToken[12];
+        damageReceived = new DamageToken[11];
         damageAmount = 0;
         skullsNumber = 0;
         marks = new ArrayList<>();
@@ -73,7 +73,7 @@ public class PlayerBoard extends Observable implements Serializable{
     public void addDamages( Player player, int numberOfDamage )
     {
 
-        while (damageAmount < MAX_DAMAGE && numberOfDamage > 0)
+        while (damageAmount < MAX_DAMAGE - 1 && numberOfDamage > 0)
         {
             damageAmount++;
             damageReceived[damageAmount-1] = new DamageToken(player);

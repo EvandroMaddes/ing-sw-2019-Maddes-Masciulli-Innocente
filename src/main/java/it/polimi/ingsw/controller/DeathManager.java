@@ -36,7 +36,7 @@ public class DeathManager {
      * when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
-        deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
+        deadPlayer.getPowerUps().add((PowerUp) model.getGameboard().getPowerUpDeck().draw());
         controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), Encoder.encodePowerUpsType(deadPlayer.getPowerUps()), Encoder.encodePowerUpColour(deadPlayer.getPowerUps())));
     }
 
@@ -62,14 +62,10 @@ public class DeathManager {
     private void updateGameTrack(){
         GameTrack gameTrack = controller.getGameManager().getModel().getGameboard().getGameTrack();
         if (gameTrack.getSkullBox() > 0) {
-            if (deadPlayer.getPlayerBoard().getDamageAmount() == 12) {
-                gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 2;
-                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 2);
-            } else {
-                gameTrack.getTokenSequence()[8 - gameTrack.getSkullBox()] = 1;
-                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[10], 1);
-            }
-            gameTrack.removeSkull();
+            if (deadPlayer.getPlayerBoard().getDamageAmount() == 11)
+                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[9], 2);
+            else
+                gameTrack.evaluateDamage(deadPlayer.getPlayerBoard().getDamageReceived()[9], 1);
         }
     }
 
