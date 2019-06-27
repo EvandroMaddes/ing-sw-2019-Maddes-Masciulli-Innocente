@@ -37,14 +37,6 @@ public class VirtualView extends Observable implements Observer{
 
     /**
      *
-     * @param toRemoteView
-     */
-    public void setToRemoteView(Event toRemoteView) {
-        this.toRemoteView = toRemoteView;
-    }
-
-    /**
-     *
      * @return
      */
     public Event getToRemoteView() {
@@ -53,18 +45,6 @@ public class VirtualView extends Observable implements Observer{
 
     public Queue<Event> getModelUpdateQueue() {
         return modelUpdateQueue;
-    }
-
-    /**
-     * send  a message to remote view: this method is NOT necessary because the attribute toRemoteView is set by model's calls()
-     */
-    public void toRemoteView(){
-
-        //todo metodi che dal server inviano al client;
-        // essendo interna al server ritorna toRemoteView
-        // che è stato girato dal model
-        // vedi callRemoteViwe (è quella chiamata dal controller)
-
     }
 
     /**

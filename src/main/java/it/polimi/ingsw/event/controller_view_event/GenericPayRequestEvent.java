@@ -20,4 +20,16 @@ public class GenericPayRequestEvent extends ControllerViewEvent {
     public Event performAction(RemoteView remoteView) {
         return remoteView.genericPaymentChoice(usableAmmo,powerUpsType,powerUpsColour);
     }
+
+    public boolean[] getUsableAmmo() {
+        return usableAmmo;
+    }
+
+    public String[] getPowerUpsType() {
+        return powerUpsType;
+    }
+
+    public CubeColour[] getPowerUpsColour() {
+        return powerUpsColour;
+    }
 }

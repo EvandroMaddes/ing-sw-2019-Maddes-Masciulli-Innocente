@@ -186,7 +186,7 @@ public class ActionManager {
     /**
      * manda i possibili effetti
      */
-    private void sendPossibleEffects() {
+    public void sendPossibleEffects() {
         boolean[] usableEffects = new boolean[3];
         for (int i = 0; i < 3; i++)
             usableEffects[i] = chosenWeapon.isUsableEffect(i + 1);
@@ -426,6 +426,7 @@ public class ActionManager {
     public void payCost(int[] cost, List<PowerUp> powerUps){
         for (PowerUp p: powerUps) {
             currentRoundManager.getCurrentPlayer().discardPowerUp(p);
+            model.getGameboard().getPowerUpDeck().discardCard(p);
             if (p.getColour() == CubeColour.Red)
                 cost[0]--;
             else if (p.getColour() == CubeColour.Yellow)
@@ -549,6 +550,7 @@ public class ActionManager {
      */
     public void endPowerUpPhase(){
         currentRoundManager.getCurrentPlayer().discardPowerUp(chosenPowerUp);
+        model.getGameboard().getPowerUpDeck().discardCard(chosenPowerUp);
         controller.getGameManager().getCurrentRound().nextPhase();
     }
 
@@ -558,7 +560,7 @@ public class ActionManager {
 
     public void performTargetingScopeEffect(Character target){
         Player decodedTarget = Decoder.decodePlayerFromCharacter(target, controller.getGameManager().getModel().getPlayers());
-        chosenWeapon.damage(decodedTarget, 1);
+        chosenPowerUp.performEffect(decodedTarget);
         decodedTarget.removeOneTimesGetDamaged();
         sendPossibleEffects();
     }
