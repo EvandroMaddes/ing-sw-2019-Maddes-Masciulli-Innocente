@@ -138,7 +138,7 @@ public class GameManager {
     public void newRound(){
         refillMap();
 
-        if(gameEnded())
+        if(gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
         playerTurn++;
