@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * @author Francesco Masciulli
  * This interface is implemented by RMIServer and RMIClient
- * its methods handle the remote connection beetwen Server and Client(the latter will not implements the Broadcast)
+ * its methods handle the remote connection beetwen Lobby and Client(the latter will not implements the Broadcast)
  */
 public interface RemoteInterface extends Remote {
     void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException;

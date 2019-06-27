@@ -10,6 +10,10 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * This class implements a SocketThread for each client connected with this technology
+ * @author Francesco Masciulli
+ */
 public class SocketServerThread extends Thread implements  NetworkHandler {
     private Socket client;
     private String clientUser;
@@ -39,6 +43,10 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
         this.clientUser = clientUser;
     }
 
+    /**
+     * Getter method
+     * @return true if the client is connected
+     */
     public boolean isConnected(){
         try {
             if (connected) {
@@ -51,24 +59,44 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
         return connected;
     }
+
+    /**
+     * Handle the thread's disconnection process
+     */
     public synchronized void disconnect(){
         currMessage = new DisconnectedEvent(getClientUser());
         connected=false;
     }
 
+    /**
+     * Getter method
+     * @return the last listened Event
+     */
     public Event getCurrMessage() {
         return currMessage;
     }
 
+    /**
+     * Getter method
+     * @return the username of the client connected with this thread
+     */
     public String getClientUser() {
         return clientUser;
     }
 
+    /**
+     * Getter method
+     * @return the connected Socket
+     */
     public Socket getClient() {
         return client;
     }
 
 
+    /**
+     * Is the Thread's run implementation:
+     * while the client is connected, it continues with the messages listening
+     */
     @Override
     public void run() {
        while(!isInterrupted()){
@@ -81,6 +109,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
        }
 
     }
+
     private synchronized void waitServer(){
         try{
             interrupt();
@@ -96,6 +125,9 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
         kill();
     }
 
+    /**
+     * This method, which is called from a client disconnection, kill the SocketThread
+     */
     public synchronized void  kill(){
         alive = false;
         interrupt();
