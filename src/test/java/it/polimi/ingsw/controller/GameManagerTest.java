@@ -218,8 +218,9 @@ public class GameManagerTest {
 
     @Test
     public void calculateWinnerDrawCaseTest(){
-        player1.addPoints(1);
-        player2.addPoints(1);
+        controller.getGameManager().setPlayerTurn(0);
+        player1.addPoints(9);
+        player2.addPoints(9);
         ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
         controller.getGameManager().endGame();
         for (Player p: controller.getGameManager().getModel().getPlayers()) {
