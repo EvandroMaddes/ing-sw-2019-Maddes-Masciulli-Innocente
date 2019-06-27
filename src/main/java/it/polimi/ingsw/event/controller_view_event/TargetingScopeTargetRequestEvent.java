@@ -19,4 +19,8 @@ public class TargetingScopeTargetRequestEvent extends ControllerViewEvent {
 
         return remoteView.targetingScopeTargetChoice(possibleTargets);
     }
+
+    public ArrayList<Character> getPossibleTargets() {
+        return possibleTargets;
+    }
 }

@@ -186,7 +186,7 @@ public class ActionManager {
     /**
      * manda i possibili effetti
      */
-    private void sendPossibleEffects() {
+    public void sendPossibleEffects() {
         boolean[] usableEffects = new boolean[3];
         for (int i = 0; i < 3; i++)
             usableEffects[i] = chosenWeapon.isUsableEffect(i + 1);

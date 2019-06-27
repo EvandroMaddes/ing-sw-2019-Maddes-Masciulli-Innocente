@@ -945,9 +945,9 @@ public class CLI extends RemoteView {
         Event selected = null;
         if(choice.equalsIgnoreCase("Y")) {
             PowerUpChoiceEvent message = (PowerUpChoiceEvent) powerUpChoice(powerUpNames, powerUpColours);
-             selected = new WhileActionPowerUpChoiceEvent(getUser(), message.getCard(), message.getPowerUpColour());
+             selected = new WhileActionPowerUpChoiceEvent(getUser(), true, message.getCard(), message.getPowerUpColour());
         }else {
-            selected = new WhileActionPowerUpChoiceEvent(getUser(),null,null);
+            selected = new WhileActionPowerUpChoiceEvent(getUser(), false, null,null);
         }
 
           return selected;
