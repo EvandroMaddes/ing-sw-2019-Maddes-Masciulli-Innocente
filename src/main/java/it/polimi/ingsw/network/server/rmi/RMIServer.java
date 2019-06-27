@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 /**
  * This class is the RMIServer implementation
+ * @author Francesco Masciulli
  */
 public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteInterface, ServerInterface {
     private CopyOnWriteArrayList<RemoteInterface> clientList;
@@ -34,10 +35,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     private boolean gameCouldStart = false;
     private boolean gameCouldTerminate = false;
 
-    @Override
-    public int getPort() {
-        return portRMI;
-    }
 
     /**
      * @throws RemoteException
@@ -88,6 +85,19 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         return clientUserList;
     }
 
+    /**
+     * Getter method
+     * @return the port on which the RMIServer is exported
+     */
+    @Override
+    public int getPort() {
+        return portRMI;
+    }
+
+
+    /**
+     * This method clear the DisconnectedEventList after that the Lobby save it
+     */
     public void cleanDisconnectedEventList(){
         for (Event currEvent : disconnectedClients) {
             clientUserOrder.remove(getClientList().indexOf(currEvent.getUser()));
@@ -95,6 +105,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         disconnectedClients.clear();
     }
 
+    /**
+     * This method clean the DisconnectedEvent relative for a player
+     * @param user is the player Username
+     */
     public void cleanDisconnectedEventList(String user){
         for (Event currEvent : disconnectedClients) {
             if(currEvent.getUser().equals(user)){
