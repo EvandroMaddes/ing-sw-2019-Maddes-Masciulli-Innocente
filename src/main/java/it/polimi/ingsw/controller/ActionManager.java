@@ -560,7 +560,7 @@ public class ActionManager {
 
     public void performTargetingScopeEffect(Character target){
         Player decodedTarget = Decoder.decodePlayerFromCharacter(target, controller.getGameManager().getModel().getPlayers());
-        chosenWeapon.damage(decodedTarget, 1);
+        chosenPowerUp.performEffect(decodedTarget);
         decodedTarget.removeOneTimesGetDamaged();
         sendPossibleEffects();
     }
