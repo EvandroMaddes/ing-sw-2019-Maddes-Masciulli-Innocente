@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.event.model_view_event.WeaponUpdateEvent;
-import it.polimi.ingsw.model.game_components.cards.Card;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
