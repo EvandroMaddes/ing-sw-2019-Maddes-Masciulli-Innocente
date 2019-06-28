@@ -319,7 +319,7 @@ public class Lobby extends Thread {
 
                 }
                 if(mapChoice!=404) {
-                    sendAndWaitNextMessage(new LobbySettingsEvent(connectedUser, mapChoice));
+                    mapUserServer.get(connectedUser).sendMessage(new LobbySettingsEvent(connectedUser, mapChoice));
                 }
             }
             else{
