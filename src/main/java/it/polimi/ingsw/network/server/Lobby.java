@@ -178,13 +178,13 @@ public class Lobby extends Thread {
 
                 // ora si gestisce il turno, il controller ha settato nextMessage
                 message = null;
+                Event nextMessage = findNextMessage();
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
                 //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
                 //TODO chiama ping solo se currUser != vecchioUser
                 ArrayList<Event> disconnectedClients = ping();
                 if(disconnectedClients.isEmpty()) {
-                    Event nextMessage = findNextMessage();
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
                     if (message == null) {
@@ -239,7 +239,6 @@ public class Lobby extends Thread {
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
             try{
-                //todo
                 sleep(1000);
             }catch (InterruptedException e){
                 CustomLogger.logException(e);
@@ -398,7 +397,7 @@ public class Lobby extends Thread {
         disconnectedClientList.add(user);
         message = mapUserServer.get(user).disconnectClient(user);
         mapUserServer.remove(user);
-        //mapUserView.get(user).toController(message);
+        mapUserView.get(user).toController(message);
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
     }
