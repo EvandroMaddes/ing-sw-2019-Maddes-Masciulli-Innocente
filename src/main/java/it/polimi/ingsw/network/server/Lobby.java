@@ -236,14 +236,14 @@ public class Lobby extends Thread {
         Event returnedEvent = null;
         log.info(lobbyName.concat(":\tSending message to:\t"+currentUser+"\n"));
         if(toSend.getUser().equals("BROADCAST")){
-            serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
-            try{
+            serverRMI.sendBroadcast(toSend);
+           /* try{
                 //todo
-                sleep(1000);
+                sleep(1);
             }catch (InterruptedException e){
                 CustomLogger.logException(e);
-            }
+            }*/
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
 
         }
