@@ -1,4 +1,6 @@
 package it.polimi.ingsw.view.gui;
+import it.polimi.ingsw.network.client.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,16 +8,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class LoginController extends AbstractController{
-
-    private LoginMain principale;
     private String userString;
     private String connectionString;
     private String ipAddresString;
+    @FXML
+    private AnchorPane anchorPanel;
+
     @FXML
     private Button enterButton;
 
@@ -46,12 +50,14 @@ public class LoginController extends AbstractController{
         }
         getGui().setUser(username.getText());
         //Ho provate a ripasare la gui al loginMain
-        principale.setGui(getGui());
         getGui().setPrimaryStage((Stage)enterButton.getScene().getWindow());
         System.out.println("IP= "+ipAddresString);
         System.out.println(2);
-        getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
+        getGui().initialize();
+
+        //getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
     }
+
 
     @FXML
     void usernameType(ActionEvent event)        //todo username della GUI lo setto qui??
@@ -70,7 +76,4 @@ public class LoginController extends AbstractController{
         enterButton.setDisable(false);
     }
 
-    public void setPrincipale(LoginMain principale) {
-        this.principale = principale;
-    }
 }

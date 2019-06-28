@@ -52,10 +52,10 @@ public class Client {
 
           if(gameInterface.equalsIgnoreCase("GUI")){
 
-              //todo spostata prova della gui solo se interfaccia è gui; dovrebbe andare, remoteViewImpl ha user giusto
-              Application.launch(LoginMain.class);
-              remoteViewImplementation= LoginMain.getGui();
-
+              LoginMain guiInterface = null;//todo sostituire al null new LoginMain();
+              // TODO: 2019-06-23 fra mi ha detto di commentarlo momentaneamente
+              //guiInterface.run();
+              remoteViewImplementation = guiInterface.getLoginController().getGui();
 
 
 
@@ -70,10 +70,15 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-        /*
+
+         GUI gui = new GUI();
+        LoginMain mainGUI = new LoginMain();
+        Application.launch(mainGUI.getClass());
+        //continua l'esecuzione dopo aver chiuso la finestra ma non stampa lo user :(
+        gui = mainGUI.getLoginController().getGui();
 
        System.out.println(gui.getUser());
-
+        /*
        boolean[] available=new boolean[3];
         available[0]=true;
         available[1]=false;
@@ -94,9 +99,15 @@ public class Client {
         name.add("name2");
         name.add("name3");
 
+        String[] powerUp = {"Teleporter","Newton"};
 
+        CubeColour[] colours = {CubeColour.Red,CubeColour.Yellow};
+        int[] min = {1,1,2};
+        int[] max = {3,3,3};
         CLI currentView = (CLI)remoteViewImplementation;
-        CLIDisplay display = currentView.getDisplay();
+        currentView.weaponGrabPaymentChoice(powerUp,colours,min, max);
+
+        /*        CLIDisplay display = currentView.getDisplay();
 
         CLIPlayerBoard testPlayerboard = new CLIPlayerBoard("user", Character.BANSHEE, currentView.getMapCharacterNameColors());
         display.setPlayerBoard(testPlayerboard);
@@ -121,9 +132,7 @@ public class Client {
 
 
         display.createDisplay();
-        display.weaponsSpawnSquare(0,1,coloredPowerUp);
-        display.weaponsSpawnSquare(2,0,weapon);
-        display.weaponsSpawnSquare(3,2,weapon);
+        currentView.weaponReplaceUpdate(0,1,coloredPowerUp);
 
         currentView.positionUpdate(Character.BANSHEE,0,1);
 

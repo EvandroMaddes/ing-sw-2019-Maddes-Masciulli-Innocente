@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,10 +18,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 
-public class GUI extends RemoteView  {
+public class GUI extends RemoteView implements Runnable{
 
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
@@ -32,7 +34,6 @@ public class GUI extends RemoteView  {
     private Stage gameBoardStage;
     private Stage mapCharacterStage;
 
-    private String prova;
 
     //todo aggiunto per essere chiamato da client
     @Override
@@ -50,10 +51,20 @@ public class GUI extends RemoteView  {
     }
 
     public void setStage(Stage currentStage) {
-        Platform.runLater(()->primaryStage.close());
-        Platform.runLater(()->this.primaryStage=currentStage);
+        primaryStage.close();
+        primaryStage = currentStage;
+        /*
+        if(primaryStage.isShowing()) {
+            primaryStage.close();
+        }
+         */
+        System.out.println("setScene");
         Platform.runLater(()->primaryStage.show());
+    }
 
+    public void nextStage(){
+        Platform.runLater(()->prevStage = primaryStage);
+        Platform.runLater(()->prevStage.close());
     }
 
 
@@ -68,7 +79,7 @@ public class GUI extends RemoteView  {
         return new String[0];
     }
 
-    public void gameInit(String[] configuration){
+    public void initialize(){
 
         Parent lobby = null;
         Parent gameboard = null;
@@ -107,9 +118,10 @@ public class GUI extends RemoteView  {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
 
-        System.out.println(this.getUser()+1);
+        System.out.println("fine configurazione GUI");
         //Chiude la finestra e il metodo torna al loginController
-        primaryStage.close();
+        Platform.runLater(()->primaryStage.close());
+        Platform.runLater(()->setStage(lobbyStage));
         //todo passa alla prossima scena forse questo può essere thread
         //Platform.runLater(()->actionChoice(true));
 
@@ -277,9 +289,9 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event actionChoice(boolean fireEnable) {
+        System.out.println(322222);
         Platform.runLater(()->gameBoardController.getFireButton().setDisable(!fireEnable));
-        setStage(gameBoardStage);
-
+        Platform.runLater(()->setStage(gameBoardStage));
         return null;
     }
 
@@ -359,5 +371,10 @@ public class GUI extends RemoteView  {
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         return null;
+    }
+
+    @Override
+    public void run() {
+        primaryStage.show();
     }
 }
