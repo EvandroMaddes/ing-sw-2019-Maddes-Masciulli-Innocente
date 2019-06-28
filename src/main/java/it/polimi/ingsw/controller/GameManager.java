@@ -77,16 +77,21 @@ public class GameManager {
     }
 
     public void refillMap(){
+
         for(int x = 0; x < 3; x++){
             for (int y = 0; y < 4; y++){
                 GameBoard gameBoard = getModel().getGameboard();
                 if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
+                    ArrayList<Weapon> newSpawnSquareWeapons = new ArrayList<>();
                     while (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
+                            newSpawnSquareWeapons.size() < 3 &&
                             !gameBoard.getWeaponDeck().getDeck().isEmpty()) {
                         Weapon newWeapon = (Weapon) gameBoard.getWeaponDeck().draw();
                         if (newWeapon != null)
-                            ((SpawnSquare) gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add(newWeapon);
+                            newSpawnSquareWeapons.add(newWeapon);
                     }
+                    if (!newSpawnSquareWeapons.isEmpty())
+                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).addWeapon(newSpawnSquareWeapons);
                 }
                 else if ( (gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
                         !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
@@ -137,12 +142,14 @@ public class GameManager {
      */
     public void newRound(){
         refillMap();
+        if (lastPlayer > getModel().getPlayers().size())
+            lastPlayer = getModel().getPlayers().size();
 
         if(gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
         playerTurn++;
-        if (playerTurn == model.getPlayers().size()) {
+        if (playerTurn >= model.getPlayers().size()) {
             firstRoundPhase = false;
             playerTurn = 0;
             if (finalFrenzyPhase)
