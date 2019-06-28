@@ -104,6 +104,7 @@ public class CLIDisplay {
 
     }
 
+
     /**
      * Add playerBoard on the display
      * @param row where add player board
@@ -200,7 +201,9 @@ public class CLIDisplay {
         }
 
         for (int i =70; i<73; i++ ) {
+            display[i][j] = " ";
             if(h<weapons.length && weapons[h]!=null) {
+
                 display[i][j] = Color.ANSI_GREEN.escape()+weapons[h]+" * ";
                 h++;
             }

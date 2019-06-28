@@ -781,14 +781,14 @@ public class CLI extends RemoteView {
     public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         Event message;
         int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
-        String[] nameSelected = new String[maximumPowerUpRequest.length];
-        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        String[] nameSelected = new String[index.length];
+        CubeColour[] colourSelected = new CubeColour[index.length];
         if(index ==null){
             message = new WeaponEffectPaymentChoiceEvent(getUser(),null,null);
         }else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
-                colourSelected[i] = colourSelected[index[i]];
+                colourSelected[i] = powerUpColours[index[i]];
             }
             message = new WeaponEffectPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
@@ -807,15 +807,17 @@ public class CLI extends RemoteView {
     public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         Event message;
         int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
-        String[] nameSelected = new String[maximumPowerUpRequest.length];
-        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        String[] nameSelected = new String[index.length];
+        CubeColour[] colourSelected = new CubeColour[index.length];
         if(index ==null){
             message = new WeaponGrabPaymentChoiceEvent(getUser(),null,null);
         }else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
-                colourSelected[i] = colourSelected[index[i]];
+                colourSelected[i] = powerUpColours[index[i]];
             }
+            System.out.println(index[0]);
+            System.out.println(index[1]);
             message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
         return message;
@@ -833,15 +835,15 @@ public class CLI extends RemoteView {
     public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         Event message;
         int[] index = payment(powerUpNames,powerUpColours,minimumPowerUpRequest,maximumPowerUpRequest);
-        String[] nameSelected = new String[maximumPowerUpRequest.length];
-        CubeColour[] colourSelected = new CubeColour[maximumPowerUpRequest.length];
+        String[] nameSelected = new String[index.length];
+        CubeColour[] colourSelected = new CubeColour[index.length];
 
         if(index ==null){
             message = new WeaponReloadPaymentChoiceEvent(getUser(),null,null);
         }else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
-                colourSelected[i] = colourSelected[index[i]];
+                colourSelected[i] = powerUpColours[index[i]];
             }
             message = new WeaponReloadPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
@@ -1083,7 +1085,7 @@ public class CLI extends RemoteView {
      * @return index of powerUp selected
      */
     private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
-        int[] selected = new int[powerUpNames.length];
+        ArrayList<Integer> selected = new ArrayList<Integer>() ;
         int index ;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"It's time to pay...");
         String choice = answerControl();
@@ -1092,7 +1094,7 @@ public class CLI extends RemoteView {
 
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Minimum powerUP request: \n");
             colourPowerUpRequest(minimumPowerUpRequest);
-            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "\nMax powerUP request: ");
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Max powerUP request:\n ");
             colourPowerUpRequest(maximumPowerUpRequest);
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
 
@@ -1100,7 +1102,7 @@ public class CLI extends RemoteView {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
             }
 
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select your powerUp:[type" +
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select from your powerUp:[type" +
                     "404 to terminate]");
             for (int i = 0; i < powerUpNames.length; i++) {
                 index = 600;
@@ -1123,7 +1125,7 @@ public class CLI extends RemoteView {
                             i--;
 
                         }else {
-                            selected[i] = index;
+                            selected.add(index);
                             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select another power Up or type 404 to terminate");
                         }
                     }
@@ -1132,7 +1134,13 @@ public class CLI extends RemoteView {
         }
         else if(choice.equals("N"))
             selected = null;
-        return selected;
+
+        int[] indexChoose = new int[selected.size()];
+        for (int i =0; i< selected.size();i++) {
+            indexChoose[i] = selected.get(i);
+
+        }
+        return indexChoose;
     }
 
     /**
