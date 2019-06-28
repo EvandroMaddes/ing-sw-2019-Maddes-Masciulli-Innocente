@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,11 +17,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 
-public class GUI extends RemoteView implements Runnable{
+public class GUI extends RemoteView  {
 
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
@@ -34,6 +32,7 @@ public class GUI extends RemoteView implements Runnable{
     private Stage gameBoardStage;
     private Stage mapCharacterStage;
 
+    private String prova;
 
     //todo aggiunto per essere chiamato da client
     @Override
@@ -371,10 +370,5 @@ public class GUI extends RemoteView implements Runnable{
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         return null;
-    }
-
-    @Override
-    public void run() {
-        primaryStage.show();
     }
 }

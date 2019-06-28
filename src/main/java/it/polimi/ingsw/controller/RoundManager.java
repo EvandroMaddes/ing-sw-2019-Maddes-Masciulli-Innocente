@@ -132,7 +132,7 @@ public class RoundManager {
     private void endRoundPowerUpCheck(){
         Iterator iterator = controller.getGameManager().getModel().getPlayers().iterator();
         ArrayList<PowerUp> usablePowerUp = new ArrayList<>();
-        Player actualPlayer;
+        Player actualPlayer = null;
         while (iterator.hasNext() && usablePowerUp.isEmpty()){
             actualPlayer = (Player)iterator.next();
             if (actualPlayer.getTimesGetDamaged() > 0)
@@ -142,7 +142,7 @@ public class RoundManager {
             }
         }
         if (!usablePowerUp.isEmpty())
-            askForEndRoundPowerUp(currentPlayer, usablePowerUp);
+            askForEndRoundPowerUp(actualPlayer, usablePowerUp);
         else
             nextPhase();
     }
