@@ -880,7 +880,7 @@ public class CLI extends RemoteView {
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape()+"BLUE option 2\t");
         }
         if (usableAmmo[0] == false && usableAmmo[1] == false && usableAmmo[2] ==false){
-            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"no ammo in your bag =(");
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"no ammo in your bag");
         }
 
 
@@ -1089,33 +1089,11 @@ public class CLI extends RemoteView {
         String choice = answerControl();
 
         if (choice.equalsIgnoreCase("Y")) {
-            System.out.print(Color.ANSI_GREEN.escape() + "Minimum powerUP request: ");
-            for (int i = 0; i < minimumPowerUpRequest.length; i++) {
 
-                if (minimumPowerUpRequest[i] == 0) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
-                }else if (minimumPowerUpRequest[i] == 1){
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
-
-                }
-                else if (minimumPowerUpRequest[i] == 2) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
-                }
-            }
-
-            System.out.print(Color.ANSI_GREEN.escape() + "\nMax powerUP request: ");
-            for (int i = 0; i < maximumPowerUpRequest.length; i++) {
-
-                if (maximumPowerUpRequest[i] == 0) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape() + " RED");
-                }else if (maximumPowerUpRequest[i] == 1){
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape() + " YELLOW");
-
-                }
-                else if (maximumPowerUpRequest[i] == 2) {
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape() + " BLUE");
-                }
-            }
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Minimum powerUP request: \n");
+            colourPowerUpRequest(minimumPowerUpRequest);
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "\nMax powerUP request: ");
+            colourPowerUpRequest(maximumPowerUpRequest);
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+"\n");
 
             for(int i=0;i<powerUpNames.length;i++){
@@ -1141,11 +1119,12 @@ public class CLI extends RemoteView {
                         i=powerUpNames.length;
                     }else {
                         if(index<0 || index>=powerUpNames.length){
-                            System.out.print("Invalid choice \n");
+                            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Invalid choice \n");
                             i--;
 
                         }else {
                             selected[i] = index;
+                            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select another power Up or type 404 to terminate");
                         }
                     }
                 }
@@ -1173,6 +1152,24 @@ public class CLI extends RemoteView {
         return colourEscape;
     }
 
+    /**
+     * it prints request of power up
+     * @param powerUpRequest pos 0-RED
+     *                      pos 1-YELLOW
+     *                      pos 2-BLUE
+     */
+    private void colourPowerUpRequest(int[] powerUpRequest) {
+    if (powerUpRequest[0] != 0) {
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_RED.escape() + powerUpRequest[0] + " RED\n");
+    }
+    if (powerUpRequest[1] != 0) {
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_YELLOW.escape() + powerUpRequest[1] + " YELLOW\n");
+
+    }
+    if (powerUpRequest[2] != 0) {
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_BLUE.escape() + powerUpRequest[2] + " BLUE\n");
+    }
+}
     /**
      * It checks if imput is equals to Y or N
      * @return user choice

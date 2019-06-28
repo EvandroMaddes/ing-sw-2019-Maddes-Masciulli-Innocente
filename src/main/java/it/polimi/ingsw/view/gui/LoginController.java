@@ -46,7 +46,7 @@ public class LoginController extends AbstractController{
         }
         getGui().setUser(username.getText());
         //Ho provate a ripasare la gui al loginMain
-        //principale.setGui(getGui());
+        principale.setGui(getGui());
         getGui().setPrimaryStage((Stage)enterButton.getScene().getWindow());
         System.out.println("IP= "+ipAddresString);
         System.out.println(2);
