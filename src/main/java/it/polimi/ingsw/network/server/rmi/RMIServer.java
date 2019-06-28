@@ -327,7 +327,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public synchronized void  clientConnectionGuard() throws RemoteException {
         for (RemoteInterface currClient : clientList) {
             try {
-
                 currClient.clientConnectionGuard();
             }catch (RemoteException disconnected){
                 String disconnectedUser = clientUserOrder.get(clientList.indexOf(currClient));
@@ -370,6 +369,11 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
         for (RemoteInterface client : clientList) {
             client.remoteSetCurrEvent(message);
+            try{
+                wait(200);
+            } catch (InterruptedException e){
+                CustomLogger.logException(e);
+            }
 
         }
     }
