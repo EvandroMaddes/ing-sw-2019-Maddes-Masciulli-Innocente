@@ -15,6 +15,6 @@ public class DisconnectedEvent extends ViewControllerEvent {
 
     @Override
     public void performAction(Controller controller) {
-        //todo mette in lista disconessi nel controller
+        controller.getGameManager().getDisconnectionManager().removePlayer(getUser());
     }
 }

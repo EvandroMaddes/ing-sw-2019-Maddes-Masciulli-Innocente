@@ -91,7 +91,7 @@ public class RoundManager {
 
     private void markDeadPlayer(){
         for (Player p: controller.getGameManager().getModel().getPlayers()){
-            if (p.getPlayerBoard().getDamageAmount() > 10)
+            if (p.getPlayerBoard().getDamageAmount() >= 10)
                 p.setDead();
         }
     }

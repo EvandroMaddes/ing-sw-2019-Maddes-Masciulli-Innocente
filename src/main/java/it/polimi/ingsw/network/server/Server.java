@@ -57,22 +57,6 @@ public class Server {
             if(!incomingUser.isEmpty()) {
                 welcomeUser(incomingUser);
             }
-
-
-
-            if(connectedUsers.size()>0){
-                log.info("Type Quit for server shutdown\n");
-                try{
-                    String inputCommand = reader.readLine();
-                    if(inputCommand.equalsIgnoreCase("QUIT")) {
-                        shutDown=true;
-                    }
-                }catch (IOException exc){
-                    shutDown = false;
-                }
-            }
-
-
         }
     }
 

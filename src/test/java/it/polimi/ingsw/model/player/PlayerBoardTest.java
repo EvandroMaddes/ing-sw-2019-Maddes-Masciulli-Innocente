@@ -31,14 +31,13 @@ public class PlayerBoardTest {
     @Test
     public void testDamageAndMark(){
         testedPlayerBoard.addMarks(testPlayer,4);
+        Assert.assertEquals(3, testedPlayerBoard.getMarks().size());
         testedPlayerBoard.addDamages(testPlayer,10);
-        Assert.assertTrue(testedPlayerBoard.checkAdrenalinicGrab()&&testedPlayerBoard.checkAdrenalinicShot());
+        Assert.assertTrue(testedPlayerBoard.checkAdrenalinicGrab() && testedPlayerBoard.checkAdrenalinicShot());
         DamageToken[] damageToken = testedPlayerBoard.getDamageReceived();
-        DamageToken currToken = damageToken[0];
         int tokenNumber = 0;
-        while(currToken !=null && tokenNumber < 11  ){
-            Assert.assertEquals(testPlayer,currToken.getPlayer());
-            currToken= damageToken[tokenNumber];
+        while(tokenNumber < 11  ){
+            Assert.assertEquals(testPlayer,damageToken[tokenNumber].getPlayer());
             tokenNumber++;
         }
         Assert.assertEquals(11, tokenNumber);

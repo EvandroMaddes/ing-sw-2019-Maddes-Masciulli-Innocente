@@ -58,4 +58,9 @@ public class SpawnSquare extends Square {
           setChanged();
           notifyObservers(message);
      }
+
+     public void addWeapon(ArrayList<Weapon> weapons){
+          this.weapons.addAll(weapons);
+          notifyObservers(new WeaponUpdateEvent(getColumn(), getRow(), Encoder.encodeWeaponsIntoArray(weapons)));
+     }
 }
