@@ -78,6 +78,36 @@ public class PowerUpTest {
     }
 
     @Test
+    public void teleporter2Test(){
+        controller = new Controller(hashMap, 1);
+        controller.getGameManager().getModel().getPlayers().add(player1);
+        controller.getGameManager().getModel().getPlayers().add(player2);
+        controller.getGameManager().getModel().getPlayers().add(player3);
+        map = controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix();
+        controller.getGameManager().setCurrentRound(new RoundManager(controller, player1));
+        roundManager = controller.getGameManager().getCurrentRound();
+        controller.getGameManager().setPlayerTurn(0);
+        player1.setPosition(map[0][2]);
+        SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
+        PowerUp teleporter = new Teleporter(CubeColour.Blue);
+        player1.addPowerUp(teleporter);
+        player1.setPosition(map[0][0]);
+        roundManager.manageRound();
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), teleporter.getName(), CubeColour.Blue);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(11, ((TeleporterTargetRequestEvent)requestMessage).getPossibleSquareX().length);
+        choiceMessage = new PowerUpSquareTargetChoiceEvent(player1.getUsername(), 2, 0);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(map[2][0], player1.getPosition());
+        Assert.assertEquals(0, player1.getPowerUps().size());
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
+    }
+
+    @Test
     public void newtonTest(){
         PowerUp newton = new Newton(CubeColour.Blue);
         player1.addPowerUp(newton);

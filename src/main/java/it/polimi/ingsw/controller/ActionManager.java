@@ -511,7 +511,8 @@ public class ActionManager {
         ArrayList<Square> possibleDestination = new ArrayList<>();
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 4; j++){
-                possibleDestination.add(controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j]);
+                if (controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j] != null)
+                    possibleDestination.add(controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j]);
             }
         }
         controller.callView(new TeleporterTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
