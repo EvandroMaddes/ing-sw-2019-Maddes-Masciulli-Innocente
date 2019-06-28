@@ -1,8 +1,11 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
@@ -29,6 +32,7 @@ public class GameManagerTest {
     private GameBoard gameBoard;
     private Player player1;
     private Player player2;
+    private Player player3;
     private Square[][] map;
     private GameModel model;
 
@@ -37,6 +41,7 @@ public class GameManagerTest {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
+        hashMap.put("Evandro", new VirtualView("Evandro"));
         controller = new Controller(hashMap, 3);
         gameManager = controller.getGameManager();
         gameBoard = gameManager.getModel().getGameboard();
@@ -44,8 +49,10 @@ public class GameManagerTest {
         map = gameBoard.getMap().getSquareMatrix();
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.DOZER);
+        player3 = new Player("Evandro", Character.VIOLET);
         gameManager.getModel().getPlayers().add(player1);
         gameManager.getModel().getPlayers().add(player2);
+        gameManager.getModel().getPlayers().add(player3);
     }
 
     @Test
@@ -200,4 +207,62 @@ public class GameManagerTest {
         Assert.assertEquals(22, ((WinnerEvent)hashMap.get(player4.getUsername()).getToRemoteView()).getPoint());
     }
 
+    @Test
+    public void calculateWinnerDrawCaseWithNoPointsTest(){
+        controller.getGameManager().endGame();
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
+            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+        }
+    }
+
+    @Test
+    public void calculateWinnerDrawCaseTest(){
+        controller.getGameManager().setPlayerTurn(0);
+        player1.addPoints(9);
+        player2.addPoints(9);
+        ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
+        controller.getGameManager().endGame();
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
+            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+        }
+    }
+
+    @Test
+    public void giveEndGamePointsTest(){
+        player1.getPlayerBoard().addDamages(player2, 3);
+        player1.getPlayerBoard().addDamages(player3, 1);
+        player2.getPlayerBoard().addDamages(player1, 1);
+        player2.getPlayerBoard().addDamages(player2, 1);
+        controller.getGameManager().setPlayerTurn(0);
+        controller.getGameManager().newRound();
+        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        Assert.assertFalse(controller.getGameManager().isFinalFrenzyPhase());
+        while (controller.getGameManager().getModel().getGameboard().getGameTrack().getSkullBox() > 0)
+            controller.getGameManager().getModel().getGameboard().getGameTrack().removeSkull();
+        ViewControllerEvent choiceMessage = new SkipActionChoiceEvent(player2.getUsername());
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        //now start final frenzy mode
+        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+        //skip player3 round
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        //skip player1 round
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        //skip player2 round
+        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
+        Assert.assertTrue(controller.getGameManager().isFirsPlayerPlayed());
+
+        Assert.assertEquals(9, player1.getPoints());
+        Assert.assertEquals(15, player2.getPoints());
+        Assert.assertEquals(6, player3.getPoints());
+        Event requestEvent = hashMap.get(player2.getUsername()).getToRemoteView();
+        Assert.assertEquals(15, ((WinnerEvent)requestEvent).getPoint());
+    }
 }

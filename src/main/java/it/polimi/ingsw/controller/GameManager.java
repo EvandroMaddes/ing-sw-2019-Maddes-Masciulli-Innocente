@@ -77,13 +77,21 @@ public class GameManager {
     }
 
     public void refillMap(){
+
         for(int x = 0; x < 3; x++){
             for (int y = 0; y < 4; y++){
                 GameBoard gameBoard = getModel().getGameboard();
                 if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
+                    ArrayList<Weapon> newSpawnSquareWeapons = new ArrayList<>();
                     while (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
-                            !gameBoard.getWeaponDeck().getDeck().isEmpty())
-                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().add((Weapon) gameBoard.getWeaponDeck().draw());
+                            newSpawnSquareWeapons.size() < 3 &&
+                            !gameBoard.getWeaponDeck().getDeck().isEmpty()) {
+                        Weapon newWeapon = (Weapon) gameBoard.getWeaponDeck().draw();
+                        if (newWeapon != null)
+                            newSpawnSquareWeapons.add(newWeapon);
+                    }
+                    if (!newSpawnSquareWeapons.isEmpty())
+                        ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).addWeapon(newSpawnSquareWeapons);
                 }
                 else if ( (gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
                         !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
@@ -134,12 +142,14 @@ public class GameManager {
      */
     public void newRound(){
         refillMap();
+        if (lastPlayer > getModel().getPlayers().size())
+            lastPlayer = getModel().getPlayers().size();
 
-        if(gameEnded())
+        if(gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
         playerTurn++;
-        if (playerTurn == model.getPlayers().size()) {
+        if (playerTurn >= model.getPlayers().size()) {
             firstRoundPhase = false;
             playerTurn = 0;
             if (finalFrenzyPhase)
@@ -172,26 +182,28 @@ public class GameManager {
     private Player calculateWinner() {
         giveEndGamePoints();
 
-        Player winner = null;
         boolean draw = false;
+        Player winner = null;
+        int winningPoints = 0;
         for (Player p : model.getPlayers()) {
-            if(winner == null || p.getPoints() > winner.getPoints() ) {
+            if(p.getPoints() > winningPoints) {
                 winner = p;
+                winningPoints = p.getPoints();
                 draw = false;
             }
-            else if (p.getPoints() == winner.getPoints()){
-                for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()){
-                    if (d.getPlayer() == winner)
-                        break;
-                    else if (d.getPlayer() == p){
-                        winner = p;
-                        draw = true;
-                        break;
+            else if (p.getPoints() == winningPoints){
+                boolean tockenFound = false;
+                for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()) {
+                    if (!tockenFound && (d.getPlayer() == winner || d.getPlayer() == p)) {
+                        winner = d.getPlayer();
+                        tockenFound = true;
                     }
                 }
+                if (!tockenFound)
+                    draw = true;
             }
         }
-        if (!draw)
+        if (!draw && winner != null)
             return winner;
         else{
             return null;
@@ -287,10 +299,13 @@ public class GameManager {
         }
     }
 
-    // TODO: 2019-06-16 in caso di pareggio non si puo mandare null perche lancia NullPointerException
-    void endGame(){
+    public void endGame(){
         Player winner = calculateWinner();
-        controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints()));
+        if (winner != null)
+            controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints(), false));
+        else
+            for (Player p: controller.getGameManager().getModel().getPlayers())
+                controller.callView(new WinnerEvent(p.getUsername(), 0, true));
     }
 
     // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare

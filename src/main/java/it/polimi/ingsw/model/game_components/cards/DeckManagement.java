@@ -39,22 +39,17 @@ public abstract class DeckManagement {
 
     /**
      *
-     * @return the first Deck element, if is not empty, or the following exception
-     * @throws IndexOutOfBoundsException if the deck is an empty ArrayList it must be handled by the calling method
+     * @return the first Deck element, if is not empty, or the following exception, null if the deck is empty
      */
-
-    //Da controllare il caso in cui verrà passata l'eccezione e le sottoclassi la casteranno
-    public Object draw() throws IndexOutOfBoundsException{
-        Object drawnCard = new Object();
-        try {
+    public Object draw() {
+        Object drawnCard;
+        if (deck.isEmpty())
+            return null;
+        else {
             drawnCard = deck.get(0);
             deck.remove(0);
             return drawnCard;
         }
-        catch(IndexOutOfBoundsException emptyDeckException){
-            return  emptyDeckException;
-        }
-
     }
 
 

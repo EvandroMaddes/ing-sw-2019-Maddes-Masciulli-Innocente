@@ -37,11 +37,10 @@ public class AmmoTilesDeck extends DeckManagement {
      */
     @Override
     public Object draw() {
-        AmmoTile drawnCard = (AmmoTile)super.draw();
         if(getDeck().isEmpty()) {
             reshuffle();
         }
-        return drawnCard;
+        return super.draw();
     }
 
     /**

@@ -14,7 +14,10 @@ import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
-
+/**
+ * This class is the implementation of the MultiThreading SocketServer
+ * @author Francesco Masciulli
+ */
 public class SocketServer extends Thread implements ServerInterface {
     private ServerSocket serverSocket ;
     private int serverPort= NetConfiguration.SOCKETSERVERPORTNUMBER;
@@ -22,15 +25,27 @@ public class SocketServer extends Thread implements ServerInterface {
     private boolean gameCouldStart = false;
     private boolean gameIsRunning = false;
 
+    /**
+     * Getter method
+     * @return the port on which the server is started
+     */
     @Override
     public int getPort() {
         return serverPort;
     }
 
+    /**
+     * Setter method
+     * @param serverPort is the port number, depending on the Lobby utilization
+     */
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort ;
     }
 
+    /**
+     * Thread's run() implementation:
+     * it wait the end of the match, accepting new client
+     */
     @Override
     public void run(){
         runServer();
@@ -44,6 +59,10 @@ public class SocketServer extends Thread implements ServerInterface {
     }
 
 
+    /**
+     * Iterates on the SocketThreads, returning a list of string
+     * @return an ArrayList with the usernames.
+     */
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
         Iterator iterator = socketList.iterator();
@@ -54,11 +73,19 @@ public class SocketServer extends Thread implements ServerInterface {
         return clientUserList;
     }
 
+    /**
+     * Set gameCouldStart TRUE.
+     */
     @Override
     public void gameCouldStart() {
         gameCouldStart=true;
     }
 
+    /**
+     * In case of a username change, this method update the SocketServerThread's client
+     * @param username is the old username, that must be changed;
+     * @param newUser is the new username, that is set;
+     */
     @Override
     public void updateUsername(String username, String newUser) {
         for (int i = socketList.size()-1; i >=0 ; i--) {
@@ -70,10 +97,12 @@ public class SocketServer extends Thread implements ServerInterface {
         }
     }
 
+
+    /**
+     * This ServerInterface's implementation start the server
+     */
     @Override
     public void runServer() {
-
-
         try{
         serverSocket = new ServerSocket(serverPort);
         }catch(IOException e){
@@ -84,6 +113,10 @@ public class SocketServer extends Thread implements ServerInterface {
 
     }
 
+    /**
+     * If the match isn't started, accept new connections
+     * if the match is running, it handle
+     */
     @Override
     public void acceptClient() {
         if (socketList.size()==5) {
@@ -102,13 +135,21 @@ public class SocketServer extends Thread implements ServerInterface {
         }
     }
 
+    /**
+     * Sends the message to each client connected
+     * @param message is the Event that must be sent.
+     */
     @Override
     public void sendBroadcast(Event message) {
         for (SocketServerThread currThread: socketList) {
             currThread.sendMessage(message);
         }
     }
-    //todo non si arresta run() prima che si chiudano i socket a seguito di Server.disconnect(), da controllare;
+
+    /**
+     * This method shutDown the server
+     */
+    //todo non si arresta run() prima che si chiudano i socket a seguito di Lobby.disconnect(), da controllare;
     @Override
     public void shutDown() {
         for (SocketServerThread currThread: socketList) {
@@ -118,6 +159,10 @@ public class SocketServer extends Thread implements ServerInterface {
         }
     }
 
+    /**
+     * Send the given message with the respectively ServerSocketThread, find with the username.
+     * @param message is the Event that must be sent
+     */
     @Override
     public void sendMessage(Event message) {
 
@@ -177,6 +222,10 @@ public class SocketServer extends Thread implements ServerInterface {
         return null;
     }
 
+    /**
+     * Call isConnected on each thread, eventually saving the relative DisconnectedClientEvent
+     * @return all of the DisconnectedClientEvents of this round
+     */
     @Override
     public synchronized   ArrayList<Event> ping(){
         ArrayList<Event> currentDisconnectedClients = new ArrayList<>();

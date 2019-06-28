@@ -52,18 +52,4 @@ public class WeaponDeck extends DeckManagement {
 
     }
 
-    public Weapon findWeapon(String weapon){
-        Weapon weaponFind = null;
-
-        for (Object currWeapon:getDeck()
-             ) {
-            if (((Weapon)currWeapon).getName().equals(weapon)){
-
-                weaponFind = ((Weapon)currWeapon);
-            }
-
-        }
-        return weaponFind;
-    }
-
 }

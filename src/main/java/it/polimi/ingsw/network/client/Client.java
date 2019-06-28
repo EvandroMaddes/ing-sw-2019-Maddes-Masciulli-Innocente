@@ -28,13 +28,13 @@ import java.util.logging.Logger;
  * @author Francesco Masciulli
  * It's the Client main class, it will start a connection to the server and handle the game
  * todo verrà richiesta, all'avvio, solo la scelta per l'interfaccia di gioco, il resto da view
- * todo interfaccia client può avere metodo disconnect client, connectClient è chiamato dal costruttore
+ * todo interfaccia network client deve avere metodo disconnect client, connectClient è chiamato dal costruttore
  */
 public class Client {
 
     private static Logger log = Logger.getLogger("ClientLogger");
     private static LoginMain guiMain;
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         RemoteView remoteViewImplementation;
         ClientInterface clientImplementation = null;
@@ -52,10 +52,10 @@ public class Client {
 
           if(gameInterface.equalsIgnoreCase("GUI")){
 
-              LoginMain guiInterface = null;//todo sostituire al null new LoginMain();
-              // TODO: 2019-06-23 fra mi ha detto di commentarlo momentaneamente
-              //guiInterface.run();
-              remoteViewImplementation = guiInterface.getLoginController().getGui();
+              //todo spostata prova della gui solo se interfaccia è gui; dovrebbe andare, remoteViewImpl ha user giusto
+              Application.launch(LoginMain.class);
+              remoteViewImplementation= LoginMain.getGui();
+
 
 
 
@@ -70,15 +70,10 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
-
-         GUI gui = new GUI();
-        LoginMain mainGUI = new LoginMain();
-        Application.launch(mainGUI.getClass());
-        //continua l'esecuzione dopo aver chiuso la finestra ma non stampa lo user :(
-        gui = mainGUI.getLoginController().getGui();
+        /*
 
        System.out.println(gui.getUser());
-        /*
+
        boolean[] available=new boolean[3];
         available[0]=true;
         available[1]=false;
@@ -178,7 +173,7 @@ public class Client {
         }
     }
     catch(Exception e){
-        log.warning("Can't reach the Server!!\n\nClosing the app..");
+        log.warning("Can't reach the Lobby!!\n\nClosing the app..");
         CustomLogger.logException(e);
     }
 
@@ -196,7 +191,7 @@ public class Client {
                     //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
                     if(!currentMessage.getUser().equals("BROADCAST")){
                         clientImplementation.sendMessage(currentMessage);
-                        log.info("Message sent to Server");
+                        log.info("Message sent to Lobby");
                     }
                     //todo
                     if(remoteViewImplementation.isGameSet()){
@@ -219,12 +214,12 @@ public class Client {
                     waiting = false;
                     connected = false;
                     CustomLogger.logException(e);
-                    log.info("Server was disconnected!");
+                    log.info("Lobby was disconnected!");
                 }
             }
 
 
-            log.info("Message sent to Server");
+            log.info("Message sent to Lobby");
         }
 
         try {

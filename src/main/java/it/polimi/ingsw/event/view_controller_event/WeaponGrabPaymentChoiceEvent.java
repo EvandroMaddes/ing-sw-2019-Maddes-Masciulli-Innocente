@@ -11,6 +11,6 @@ public class WeaponGrabPaymentChoiceEvent extends PowerUpListChoiceEvent {
 
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().getActionManager().payWeaponReload(getPowerUpType(), getPowerUpColour());
+        controller.getGameManager().getCurrentRound().getActionManager().payWeaponGrab(getPowerUpType(), getPowerUpColour());
     }
 }

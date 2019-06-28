@@ -32,11 +32,10 @@ public class PowerUpDeck extends DeckManagement {
      */
     @Override
     public Object draw() {
-        PowerUp drawnCard = (PowerUp)super.draw();
         if(getDeck().isEmpty()) {
             reshuffle();
         }
-        return drawnCard;
+        return super.draw();
     }
 
     /**
@@ -56,14 +55,14 @@ public class PowerUpDeck extends DeckManagement {
     public PowerUpDeck(){
 
 
-        ArrayList<Object> deck = new ArrayList<Object>();
+        ArrayList<Object> deck = new ArrayList<>();
 
         addPowerupColour(deck,CubeColour.Blue);
         addPowerupColour(deck,CubeColour.Yellow);
         addPowerupColour(deck,CubeColour.Red);
 
 
-         Collections.shuffle(deck);
+        Collections.shuffle(deck);
         this.setDeck(deck);
 
     }
