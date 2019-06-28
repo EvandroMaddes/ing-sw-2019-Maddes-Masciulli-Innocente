@@ -36,7 +36,7 @@ public class DeathManager {
      * when the player send the square choice, controller call spawn()
      */
     public void respawnPlayer() {
-        deadPlayer.getPowerUps().add((PowerUp) model.getGameboard().getPowerUpDeck().draw());
+        deadPlayer.addPowerUp((PowerUp) model.getGameboard().getPowerUpDeck().draw());
         controller.callView(new RespawnRequestEvent(deadPlayer.getUsername(), Encoder.encodePowerUpsType(deadPlayer.getPowerUps()), Encoder.encodePowerUpColour(deadPlayer.getPowerUps())));
     }
 
