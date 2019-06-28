@@ -11,16 +11,11 @@ import it.polimi.ingsw.model.player.Player;
 public class TargetingScope extends PowerUp {
 
     public TargetingScope(CubeColour colour) {
-        super(colour, "TargetingScope");
+        super(colour, "TargetingScope", Usability.WHILE_ACTION);
     }
 
     @Override
     public void performEffect(Object target) {
         damage((Player)target, 1);
-    }
-
-    @Override
-    public Usability whenToUse() {
-        return Usability.WHILE_ACTION;
     }
 }

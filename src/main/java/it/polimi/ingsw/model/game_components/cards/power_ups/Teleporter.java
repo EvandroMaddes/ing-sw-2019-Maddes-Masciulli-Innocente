@@ -11,16 +11,11 @@ import it.polimi.ingsw.model.game_components.cards.PowerUp;
 public class Teleporter extends PowerUp {
 
     public Teleporter(CubeColour colour) {
-        super(colour, "Teleporter");
+        super(colour, "Teleporter", Usability.AS_ACTION);
     }
 
     @Override
     public void performEffect(Object target) {
             move(getOwner(), (Square)target);
-    }
-
-    @Override
-    public Usability whenToUse() {
-        return Usability.AS_ACTION;
     }
 }

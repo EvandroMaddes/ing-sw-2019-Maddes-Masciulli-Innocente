@@ -17,7 +17,7 @@ public class Newton extends PowerUp {
     private Player targetPlayer;
 
     public Newton(CubeColour colour) {
-        super(colour, "Newton");
+        super(colour, "Newton", Usability.AS_ACTION);
         targetPlayer = null;
     }
 
@@ -42,10 +42,4 @@ public class Newton extends PowerUp {
         }
         return new NewtonTargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
     }
-
-    @Override
-    public Usability whenToUse() {
-        return Usability.AS_ACTION;
-    }
-
 }
