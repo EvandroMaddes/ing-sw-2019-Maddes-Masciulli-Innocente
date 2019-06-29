@@ -20,6 +20,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 
 
+import java.net.ConnectException;
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -160,7 +162,7 @@ public class Client {
         serverIPAddress = userInput[2];
 
 
-
+        boolean connected = false;
     try {
         if (connectionType.equalsIgnoreCase(NetConfiguration.ConnectionType.RMI.name())) {
 
@@ -170,13 +172,15 @@ public class Client {
         } else {
             clientImplementation = new SocketClient(user, serverIPAddress);
         }
+        connected = true;
     }
-    catch(Exception e){
-        log.warning("Can't reach the Lobby!!\n\nClosing the app..");
+    catch(ConnectException| RemoteException e){
+        log.warning("Can't reach the Lobby!\nClosing the app..");
         CustomLogger.logException(e);
+
     }
 
-        boolean connected = true;
+
 
         //todo sempre connected finchè non si sconnette il server
         while(connected) {
@@ -219,13 +223,16 @@ public class Client {
 
         try {
             clientImplementation.disconnectClient();
-        } catch (Exception e){
-            CustomLogger.logException(e);
+        }catch (NullPointerException nullPointer){
+            log.warning("Client implementation doesn't exist, nothing to disconnect..");
         }
-
-
-
-
+        catch (Exception closingException){
+            log.warning("Can't close correctly the client connection!");
+            CustomLogger.logException(closingException);
+        }
+        finally {
+            log.info("Please, try again restarting the game.");
+        }
 
     }
 
