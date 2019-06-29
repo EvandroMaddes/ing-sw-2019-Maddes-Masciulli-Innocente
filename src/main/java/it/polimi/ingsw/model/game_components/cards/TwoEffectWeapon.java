@@ -30,7 +30,7 @@ public abstract class TwoEffectWeapon extends Weapon {
     }
 
     public boolean isUsableEffectTwo(){
-        return getEffectsEnable()[1] && getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && !((TargetPlayerRequestEvent) getTargetEffectOne()).getPossibleTargets().isEmpty();
+        return getEffectsEnable()[1] && getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && !((TargetPlayerRequestEvent) getTargetEffectTwo()).getPossibleTargets().isEmpty();
     }
 
     public abstract ControllerViewEvent getTargetEffectTwo();

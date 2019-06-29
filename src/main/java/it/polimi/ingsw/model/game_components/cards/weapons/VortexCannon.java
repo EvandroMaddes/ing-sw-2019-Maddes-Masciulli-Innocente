@@ -121,7 +121,8 @@ public class VortexCannon extends OneOptionalEffectWeapon {
 
     @Override
     public ControllerViewEvent getTargetEffectTwo() {
-        ArrayList<Player> possibleTargets = vortex.getSquarePlayers();
+        ArrayList<Player> possibleTargets = new ArrayList<>();
+        possibleTargets.addAll(vortex.getSquarePlayers());
         possibleTargets.addAll(vortex.getNextSquarePlayer());
         possibleTargets.remove(getFirstEffectTarget().get(0));
         return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 2);

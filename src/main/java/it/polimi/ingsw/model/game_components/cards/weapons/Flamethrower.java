@@ -134,4 +134,9 @@ public class Flamethrower extends AlternateFireWeapon {
         }
         return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));
     }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && ((TargetSquareRequestEvent)getTargetEffectTwo()).getPossibleTargetsY().length != 0;
+    }
 }
