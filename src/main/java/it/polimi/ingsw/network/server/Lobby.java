@@ -5,14 +5,11 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.event.model_view_event.NewPlayerJoinedUpdateEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -23,7 +20,6 @@ import it.polimi.ingsw.view.VirtualView;
 
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.rmi.RemoteException;
@@ -141,10 +137,10 @@ public class Lobby extends Thread {
                     //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
                     if(activeClientList.size() > 2) {
                         if(gameTimer==null){
-                            gameTimer = new CustomTimer(NetConfiguration.STARTGAMETIMER);
+                            gameTimer = new CustomTimer(NetConfiguration.startGameTimer);
                             gameTimer.start();
                             log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in "
-                                    + NetConfiguration.STARTGAMETIMER+" seconds.\n"));
+                                    + NetConfiguration.startGameTimer +" seconds.\n"));
                         }
                         else if(!gameTimer.isAlive()) {
                             serverRMI.gameCouldStart();
@@ -236,8 +232,8 @@ public class Lobby extends Thread {
         Event returnedEvent = null;
         log.info(lobbyName.concat(":\tSending message to:\t"+currentUser+"\n"));
         if(toSend.getUser().equals("BROADCAST")){
-            serverSocket.sendBroadcast(toSend);
             serverRMI.sendBroadcast(toSend);
+            serverSocket.sendBroadcast(toSend);
            /* try{
                 //todo
                 sleep(1);

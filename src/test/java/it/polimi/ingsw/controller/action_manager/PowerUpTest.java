@@ -78,7 +78,7 @@ public class PowerUpTest {
     }
 
     @Test
-    public void teleporter2Test(){
+    public void teleporterOnMediumMapTest(){
         controller = new Controller(hashMap, 1);
         controller.getGameManager().getModel().getPlayers().add(player1);
         controller.getGameManager().getModel().getPlayers().add(player2);
@@ -140,6 +140,52 @@ public class PowerUpTest {
         choiceMessage.performAction(controller);
 
         Assert.assertEquals(map[0][2], player2.getPosition());
+        Assert.assertEquals(0, player1.getPowerUps().size());
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
+    }
+
+    @Test
+    public void newtonTestOnSmallMap(){
+        controller = new Controller(hashMap, 3);
+        controller.getGameManager().getModel().getPlayers().add(player1);
+        controller.getGameManager().getModel().getPlayers().add(player2);
+        controller.getGameManager().getModel().getPlayers().add(player3);
+        map = controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix();
+        controller.getGameManager().setCurrentRound(new RoundManager(controller, player1));
+        roundManager = controller.getGameManager().getCurrentRound();
+        controller.getGameManager().setPlayerTurn(0);
+        SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
+        PowerUp newton = new Newton(CubeColour.Blue);
+        player1.addPowerUp(newton);
+        player1.setPosition(map[1][0]);
+        player2.setPosition(map[1][3]);
+        Assert.assertFalse(controller.getGameManager().isFirstRoundPhase());
+        roundManager.manageRound();
+        Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(newton.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), newton.getName(), CubeColour.Blue);
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(1, ((NewtonPlayerTargetRequestEvent)requestMessage).getPossibleTargets().size());
+        choiceMessage = new NewtonPlayerTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
+        choiceMessage.performAction(controller);
+        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
+        Assert.assertEquals(3, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{2,1,1};
+        int[] expectedY = new int[]{3,2,1};
+        for (int i = 0; i < 3; i++) {
+            boolean check = false;
+            for (int j = 0; j < 3; j++) {
+                if (expectedX[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareY()[j])
+                    check = true;
+            }
+            Assert.assertTrue(check);
+        }
+        choiceMessage = new PowerUpSquareTargetChoiceEvent(player1.getUsername(), 2, 3);
+        choiceMessage.performAction(controller);
+
+        Assert.assertEquals(map[2][3], player2.getPosition());
         Assert.assertEquals(0, player1.getPowerUps().size());
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }

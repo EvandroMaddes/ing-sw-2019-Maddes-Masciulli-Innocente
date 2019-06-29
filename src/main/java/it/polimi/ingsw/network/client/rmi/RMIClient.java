@@ -8,8 +8,11 @@ import it.polimi.ingsw.network.RemoteInterface;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
 
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
+import java.rmi.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
@@ -35,7 +38,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      * we need the RemoteException in the constructor
      * @throws RemoteException
      */
-    public RMIClient(String user, int port, String serverIPAddress) throws RemoteException{
+    public RMIClient(String user, int port, String serverIPAddress) throws RemoteException, ConnectException{
         super(port);
         this.port= port;
         this.user=user;
@@ -112,20 +115,27 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
      * calling the method on the server to add the Remote reference to this last created registry;
      */
     @Override
-    public void connectClient() {
+    public void connectClient() throws ConnectException {
         bindName = "RMIClient:"+clientIPAddress+":"+port;
-        try {
 
+        try {
             acceptRemoteClient(serverPort, serverIPAddress, "RMIServer:"+serverPort);
-            RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
+        }
+        catch(RemoteException unknownHost){
+            disconnectClient();
+            throw new ConnectException("Couldn't reach the server!");
+        }
+
+        try {
+            RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 0);
             Registry clientRegistry = LocateRegistry.createRegistry(port);
-            clientRegistry.rebind(bindName,clientStub);
-            server.acceptRemoteClient(port,clientIPAddress,bindName);
+            clientRegistry.rebind(bindName, clientStub);
+            server.acceptRemoteClient(port, clientIPAddress, bindName);
             //run();
         }
         catch (ExportException alreadyExported){
             try {
-                UnicastRemoteObject.unexportObject(this,false);
+                disconnectClient();
                 //int clientNumber = server.getClientListNumber()+1;
                 RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
                 Registry clientRegistry = LocateRegistry.createRegistry(port);
@@ -134,19 +144,25 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
             }
             catch(Exception exc){
                 CustomLogger.logException(exc);
+                throw new ConnectException("Couldn't reach the server!");
             }
         }
         catch(RemoteException exc){
             CustomLogger.logException(exc);
+            throw new ConnectException("Couldn't reach the server!");
+
         }
 
     }
 
     @Override
-    public void disconnectClient() throws Exception {
-            //clientRegistry.unbind(bindName);
-
-        unexportObject(this, false);
+    public void disconnectClient(){
+    try {
+        UnicastRemoteObject.unexportObject(this, false);
+    }
+    catch(NoSuchObjectException exc){
+        return;
+    }
     }
 
 
@@ -174,6 +190,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
            server = (RemoteInterface) serverRegistry.lookup(bindName);
        }catch (Exception e){
            CustomLogger.logException(e);
+           throw new RemoteException(e.getMessage());
        }
     }
 

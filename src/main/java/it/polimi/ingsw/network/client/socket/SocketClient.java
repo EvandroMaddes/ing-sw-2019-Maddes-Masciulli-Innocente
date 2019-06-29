@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -21,7 +22,7 @@ public class SocketClient implements NetworkHandler, ClientInterface {
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
 
-   public SocketClient(String user, String serverIPAddress){
+   public SocketClient(String user, String serverIPAddress) throws ConnectException{
         this.user=user;
         this.serverIPAddress=serverIPAddress;
         this.serverPort = NetConfiguration.SOCKETSERVERPORTNUMBER;
@@ -44,7 +45,7 @@ public class SocketClient implements NetworkHandler, ClientInterface {
     }
 
     @Override
-    public synchronized void connectClient(){
+    public synchronized void connectClient() throws ConnectException{
 
         try{
             clientSocket = new Socket(serverIPAddress, serverPort);
@@ -54,6 +55,7 @@ public class SocketClient implements NetworkHandler, ClientInterface {
             outputStream.flush();
         }catch(Exception e){
             CustomLogger.logException(e);
+            throw new ConnectException("Couldn't reach the server!");
         }
     }
 

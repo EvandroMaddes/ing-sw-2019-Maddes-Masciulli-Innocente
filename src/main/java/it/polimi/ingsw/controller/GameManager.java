@@ -84,7 +84,7 @@ public class GameManager {
                 if (gameBoard.getMap().getSpawnSquares().contains(gameBoard.getMap().getSquareMatrix()[x][y])){
                     ArrayList<Weapon> newSpawnSquareWeapons = new ArrayList<>();
                     while (((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
-                            newSpawnSquareWeapons.size() < 3 &&
+                            newSpawnSquareWeapons.size() + ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).getWeapons().size() < 3 &&
                             !gameBoard.getWeaponDeck().getDeck().isEmpty()) {
                         Weapon newWeapon = (Weapon) gameBoard.getWeaponDeck().draw();
                         if (newWeapon != null)
@@ -93,7 +93,7 @@ public class GameManager {
                     if (!newSpawnSquareWeapons.isEmpty())
                         ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).addWeapon(newSpawnSquareWeapons);
                 }
-                else if ( (gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
+                else if ((gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
                         !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
                     ((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile((AmmoTile) gameBoard.getAmmoTilesDeck().draw());
             }

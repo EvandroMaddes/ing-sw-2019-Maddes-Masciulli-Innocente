@@ -244,7 +244,7 @@ public class CLI extends RemoteView {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"Select one weapon to reload or type other to skip action.");
 
         reloadableWeapons.add("Skip action ");
-        selected = CLIHandler.arrayListPrintRead(reloadableWeapons);
+        selected = CLIHandler.arraylistPrintRead(reloadableWeapons);
 
 
         Event message;
@@ -358,7 +358,7 @@ public class CLI extends RemoteView {
     public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
         int weaponSelected ;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to discard one weapon:");
-        weaponSelected = CLIHandler.arrayListPrintRead(yourWeapons);
+        weaponSelected = CLIHandler.arraylistPrintRead(yourWeapons);
         return new WeaponDiscardChoiceEvent(getUser(), yourWeapons.get(weaponSelected));
     }
 
@@ -371,7 +371,7 @@ public class CLI extends RemoteView {
     public Event weaponChoice(ArrayList<String> availableWeapons) {
         int weaponSelected;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to fire ");
-        weaponSelected = CLIHandler.arrayListPrintRead(availableWeapons);
+        weaponSelected = CLIHandler.arraylistPrintRead(availableWeapons);
         return new WeaponChoiceEvent(getUser(), availableWeapons.get(weaponSelected));
     }
 
@@ -383,8 +383,8 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
         int weaponSelected;
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to grab ");
-        weaponSelected = CLIHandler.arrayListPrintRead(availableWeapon);
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to garb ");
+        weaponSelected = CLIHandler.arraylistPrintRead(availableWeapon);
         return new WeaponGrabChoiceEvent(getUser(), availableWeapon.get(weaponSelected));
     }
 
@@ -411,15 +411,15 @@ public class CLI extends RemoteView {
         int first= 404, second=404 , third = 404;
         Event message;
 
-        if(availableWeaponEffects[0]){
+        if(availableWeaponEffects[0] == true){
              first = 0;
         }
 
-        if(availableWeaponEffects[1]){
+        if(availableWeaponEffects[1] == true){
              second = 1;
         }
 
-        if(availableWeaponEffects[2]){
+        if(availableWeaponEffects[2] == true){
              third = 2;
         }
 
@@ -428,11 +428,11 @@ public class CLI extends RemoteView {
 
         for (int i = 0; i < availableWeaponEffects.length; i++) // print only available effects
         {
-            if ( availableWeaponEffects[i]) {
+            if ( availableWeaponEffects[i] == true) {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "effect " + i);
             }
         }
-        while (!(effectChoice == first || effectChoice == second || effectChoice == third)) {
+        while (!(effectChoice == first || effectChoice ==second || effectChoice== third)) {
             try {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select at least one effect[number]");
 
@@ -443,7 +443,6 @@ public class CLI extends RemoteView {
                 effectChoice = 404;
             }
         }
-        effectChoice++;
             message = new WeaponEffectChioceEvent(getUser(), effectChoice);
 
         return message;
@@ -1062,14 +1061,14 @@ public class CLI extends RemoteView {
 
         if(choice == 1){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Waiting lobbies:");
-            lobbyChoice=CLIHandler.arrayListPrintRead(waitingLobbies);
+            lobbyChoice=CLIHandler.arraylistPrintRead(waitingLobbies);
             messageChoice = new LobbyChoiceEvent(getUser(),waitingLobbies.get(lobbyChoice));
 
         }
 
         if(choice == 2){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "\n-Started lobbies:");
-            lobbyChoice= CLIHandler.arrayListPrintRead(startedLobbies);
+            lobbyChoice= CLIHandler.arraylistPrintRead(startedLobbies);
             messageChoice = new LobbyChoiceEvent(getUser(), startedLobbies.get(lobbyChoice));
 
         }
