@@ -103,6 +103,7 @@ public class CLIDisplay {
         display[a][a+11] = Color.ANSI_YELLOW.escape()+"D : D_STRUCT_OR";
         display[a][a+12] = Color.ANSI_GREEN.escape()+"S : SPROG";
         display[a][a+13] = Color.ANSI_PURPLE.escape()+"V : VIOLET";
+        
 
     }
 

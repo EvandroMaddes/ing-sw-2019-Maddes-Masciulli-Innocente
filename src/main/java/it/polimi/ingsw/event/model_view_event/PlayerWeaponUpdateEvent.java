@@ -27,6 +27,6 @@ public class PlayerWeaponUpdateEvent extends ModelViewEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.playerWeaponUpdate(getCurrCharacter(),getPlayerWeapon());
+        return remoteView.playerWeaponUpdate(getCurrCharacter(),getPlayerWeapon(), loadedWeapons);
     }
 }

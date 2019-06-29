@@ -364,7 +364,7 @@ public class GUI extends RemoteView  {
     }
 
     @Override
-    public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
+    public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
         return null;
     }
 
