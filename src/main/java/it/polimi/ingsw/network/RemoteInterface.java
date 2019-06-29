@@ -15,7 +15,10 @@ public interface RemoteInterface extends Remote {
     void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException;
     void clientConnectionGuard() throws RemoteException;
     void remoteSendMessage(Event message) throws RemoteException;
-    void remoteSetCurrEvent(Event message) throws RemoteException;
+
+    void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException;
+    void remoteCleanCurrEvent() throws RemoteException;
+    Event remoteGetCurrEvent() throws RemoteException;
     void remoteSendBroadcast(Event message) throws RemoteException;
     Event remoteListenMessage() throws RemoteException;
 

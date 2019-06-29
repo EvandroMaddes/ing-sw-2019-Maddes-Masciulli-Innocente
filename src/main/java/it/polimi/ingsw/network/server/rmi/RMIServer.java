@@ -344,14 +344,22 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public synchronized void remoteSendMessage(Event message) throws RemoteException {
+        currMessage = message;
         for (int i = clientList.size() - 1; i >= 0; i--) {
             RemoteInterface currentClient = clientList.get(i);
 
             if (currentClient.getUser().equals(message.getUser())) {
-                (clientList.get(i)).remoteSetCurrEvent(message);
+                (clientList.get(i)).remoteSetCurrEvent(this);
+                remoteCleanCurrEvent();
                 return;
             }
         }
+    }
+
+
+    @Override
+    public void remoteCleanCurrEvent() throws RemoteException {
+        currMessage = null;
     }
 
     /**
@@ -360,8 +368,18 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      * @throws RemoteException
      */
     @Override
-    public void remoteSetCurrEvent(Event message) throws RemoteException {
-        this.currMessage = message;
+    public synchronized void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException {
+        try{
+            while(currMessage!=null) wait(50);
+        }catch (InterruptedException exc){
+            CustomLogger.logException(exc);
+        }
+        currMessage = remoteImplementation.getCurrMessage();
+    }
+
+    @Override
+    public Event remoteGetCurrEvent() throws RemoteException {
+        return currMessage;
     }
 
     /**
@@ -371,20 +389,19 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
+        currMessage = message;
         for (RemoteInterface client : clientList) {
-            client.remoteSetCurrEvent(message);
-            try{
-                wait(300);
-            } catch (InterruptedException e){
-                CustomLogger.logException(e);
-            }
+            client.remoteSetCurrEvent(this);
         }
+        remoteCleanCurrEvent();
     }
 
     @Override
     public synchronized Event remoteListenMessage() throws RemoteException {
         Event listenedMessage = currMessage;
-        currMessage = null;
+        if (currMessage != null){
+            currMessage = null;
+        }
         return listenedMessage;
     }
 
@@ -404,6 +421,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         Logger log = Logger.getLogger("Logger");
         log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.roundTimer + " seconds.\n");
         while (currEvent == null&&timer.isAlive()) {
+
             try {
                 currEvent = remoteListenMessage();
 

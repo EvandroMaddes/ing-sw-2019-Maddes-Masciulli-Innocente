@@ -19,7 +19,7 @@ import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 
 
-public class RMIClient extends UnicastRemoteObject implements ClientInterface, NetworkHandler, RemoteInterface, Runnable{
+public class RMIClient extends UnicastRemoteObject implements ClientInterface, NetworkHandler, RemoteInterface{
     private transient RemoteInterface server;
     //private transient Registry clientRegistry;
     //private transient Registry serverRegistry;
@@ -200,13 +200,31 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     }
 
     @Override
-    public void remoteSetCurrEvent(Event message) throws RemoteException {
-        currMessage=message;
+    public void remoteCleanCurrEvent() throws RemoteException {
+        currMessage = null;
+    }
+
+    @Override
+    public synchronized void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException {
+        try{
+            while(currMessage!=null) wait(50);
+        }catch (InterruptedException exc){
+            CustomLogger.logException(exc);
+        }
+
+        currMessage=remoteImplementation.getCurrMessage();
+    }
+
+    @Override
+    public Event remoteGetCurrEvent() throws RemoteException {
+        return currMessage;
     }
 
     @Override
     public void remoteSendMessage(Event message) throws RemoteException{
-            server.remoteSetCurrEvent(message);
+            currMessage = message;
+            server.remoteSetCurrEvent(this);
+            remoteCleanCurrEvent();
             //server.remoteListenMessage();
     }
 
@@ -231,7 +249,9 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     @Override
     public Event remoteListenMessage() throws RemoteException{
         Event listenedMessage = currMessage;
-        currMessage= null;
+        if(currMessage != null) {
+            currMessage = null;
+        }
         return listenedMessage;
     }
 
@@ -261,11 +281,5 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         }catch (RemoteException rmtException){
             return new ErrorEvent(user);
         }
-    }
-
-    //todo NON SERVE THREAD??
-    @Override
-    public void run() {
-
     }
 }
