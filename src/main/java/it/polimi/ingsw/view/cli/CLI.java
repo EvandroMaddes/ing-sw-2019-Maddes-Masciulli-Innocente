@@ -243,7 +243,7 @@ public class CLI extends RemoteView {
         int selected ;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"Select one weapon to reload or type other to skip action.");
 
-        reloadableWeapons.add("Skip action ");
+        reloadableWeapons.add("Skip action");
         selected = CLIHandler.arraylistPrintRead(reloadableWeapons);
 
 
