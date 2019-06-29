@@ -816,8 +816,7 @@ public class CLI extends RemoteView {
                 nameSelected[i] = powerUpNames[index[i]];
                 colourSelected[i] = powerUpColours[index[i]];
             }
-            System.out.println(index[0]);
-            System.out.println(index[1]);
+           
             message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
         return message;
