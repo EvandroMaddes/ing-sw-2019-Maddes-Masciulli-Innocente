@@ -94,7 +94,7 @@ public class CLIHandler {
      * @param available ArrayList to print
      * @return index of element selected
      */
-    public static int arrayListPrintRead(ArrayList<String> available){
+    public static int arraylistPrintRead(ArrayList<String> available){
         int choice = 404;
         int i=0;
         for (String current:available
