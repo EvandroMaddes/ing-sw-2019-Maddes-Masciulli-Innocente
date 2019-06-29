@@ -7,16 +7,17 @@ import it.polimi.ingsw.view.RemoteView;
 public class PlayerWeaponUpdateEvent extends ModelViewEvent {
     private String[] playerWeapon;
     private Character currCharacter;
-    private boolean[] load;
+    private boolean[] loadedWeapons;
 
     public Character getCurrCharacter() {
         return currCharacter;
     }
 
-    public PlayerWeaponUpdateEvent(String[] playerWeapon, Character currCharacter) {
+    public PlayerWeaponUpdateEvent(String[] playerWeapon, Character currCharacter, boolean[] loadedWeapons) {
         super();
         this.playerWeapon = playerWeapon;
         this.currCharacter = currCharacter;
+        this.loadedWeapons = loadedWeapons;
     }
 
     public String[] getPlayerWeapon() {
@@ -26,7 +27,6 @@ public class PlayerWeaponUpdateEvent extends ModelViewEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.playerWeaponUpdate(getCurrCharacter(),getPlayerWeapon(),load);
+        return remoteView.playerWeaponUpdate(getCurrCharacter(),getPlayerWeapon(), loadedWeapons);
     }
-
 }
