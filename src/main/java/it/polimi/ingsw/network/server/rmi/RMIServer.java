@@ -364,6 +364,11 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         this.currMessage = message;
     }
 
+    /**
+     * This method set, on each RemoteClient, the current message and wait for 100 milliSeconds between each setting
+     * @param message is the Event that must be sent
+     * @throws RemoteException if couldn't reach the server
+     */
     @Override
     public synchronized void remoteSendBroadcast(Event message) throws RemoteException {
         for (RemoteInterface client : clientList) {
