@@ -48,7 +48,7 @@ public class Map {
         JsonObject right = rootElement.getAsJsonObject().getAsJsonObject(selectedRightMap);
 
         //creation of the left part
-        ArrayList<Square> squares = new ArrayList<Square>();
+        ArrayList<Square> squares = new ArrayList<>();
 
         Square square0 = new BasicSquare(0, 0);
         squares.add(0, square0);
@@ -60,7 +60,7 @@ public class Map {
         getSpawnSquares().add(square1);
 
         Square square2;
-        if (selectedLeftMap == "leftFirst") {
+        if (selectedLeftMap.equals(BIG_LEFT)) {
 
             square2 = new BasicSquare(2, 0);
         }else { square2 = null;}
@@ -90,7 +90,6 @@ public class Map {
         squaresMatrix[0][2] = square6;
         getSpawnSquares().add(square6);
 
-
         Square square7 = new BasicSquare(1, 2);
         squares.add(square7);
         squaresMatrix[1][2] = square7;
@@ -100,7 +99,7 @@ public class Map {
         squaresMatrix[2][2] = square8;
 
         Square square9;
-        if (selectedRightMap == "rightFirst") {
+        if (selectedRightMap.equals(BIG_RIGHT)) {
             square9 = new BasicSquare(0, 3);
 
         }else{square9=null;}
@@ -124,6 +123,9 @@ public class Map {
         addPropertyNearSquares(squares,left,i-1,-1);
         addPropertyReachable(squares,right,(squares.size()-1),i-1);
         addPropertyReachable(squares,left,i-1,-1);
+
+        if (selectedRightMap.equals(SMALL_RIGHT))
+            square7.setSquareColour(square4.getSquareColour());
 
         return squaresMatrix;
 

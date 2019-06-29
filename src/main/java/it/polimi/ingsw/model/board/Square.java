@@ -268,6 +268,9 @@ public abstract class Square extends Observable {
         ArrayList<Square> toCheckSquare = new ArrayList<>();
         ArrayList<String> visibleRoomColours = new ArrayList<>();
         visibleRoomColours.add(this.getSquareColour());
+
+
+
         for (int i = 0; i < 4; i++){
             if ( this.checkDirection(i) && !visibleRoomColours.contains(this.getNextSquare(i).getSquareColour()))
                 visibleRoomColours.add(this.getNextSquare(i).getSquareColour());

@@ -65,4 +65,28 @@ public class WhisperTest {
         Assert.assertEquals(1, player5.getPlayerBoard().getMarks().size());
         Assert.assertFalse(whisper.isUsable());
     }
+
+    @Test
+    public void effectTestOnSmallMap(){
+        Map gameMap = new Map(Map.SMALL_LEFT, Map.SMALL_RIGHT);
+        map = gameMap.getSquareMatrix();
+        player1.setPosition(map[1][0]);
+        player2.setPosition(map[1][2]);
+
+        ControllerViewEvent message = whisper.getTargetEffect(1);
+        ArrayList<Character> expectedTargets = new ArrayList<>();
+        expectedTargets.add(player2.getCharacter());
+
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
+        for (Character c:expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        }
+
+        ArrayList<Object> target = new ArrayList<>();
+        target.add(player2);
+        whisper.performEffect(1, target);
+        Assert.assertEquals(3, player2.getPlayerBoard().getDamageAmount());
+        Assert.assertEquals(1, player2.getPlayerBoard().getMarks().size());
+        Assert.assertFalse(whisper.isUsable());
+    }
 }
