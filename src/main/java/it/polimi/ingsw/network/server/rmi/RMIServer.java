@@ -350,7 +350,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
             if (currentClient.getUser().equals(message.getUser())) {
                 (clientList.get(i)).remoteSetCurrEvent(message);
                 return;
-                //clientList.get(i).remoteListenMessage();
             }
         }
     }
@@ -370,11 +369,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         for (RemoteInterface client : clientList) {
             client.remoteSetCurrEvent(message);
             try{
-                wait(200);
+                wait(100);
             } catch (InterruptedException e){
                 CustomLogger.logException(e);
             }
-
         }
     }
 
@@ -396,10 +394,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public Event listenMessage() {
         Event currEvent = null;
-        CustomTimer timer = new CustomTimer(NetConfiguration.ROUNDTIMER);
+        CustomTimer timer = new CustomTimer(NetConfiguration.roundTimer);
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.ROUNDTIMER + " seconds.\n");
+        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.roundTimer + " seconds.\n");
         while (currEvent == null&&timer.isAlive()) {
             try {
                 currEvent = remoteListenMessage();

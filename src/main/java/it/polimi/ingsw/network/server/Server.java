@@ -8,9 +8,9 @@ import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
+import it.polimi.ingsw.view.cli.CLIHandler;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -23,7 +23,7 @@ public class Server {
 
     private static Logger log = Logger.getLogger("ServerLogger");
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+    private static Scanner scanner = new Scanner(reader);
 
     private static final int startPortNumber = NetConfiguration.RMISERVERPORTNUMBER;
     private static boolean shutDown = false;
@@ -38,18 +38,51 @@ public class Server {
 
     public static void main(String[] args){
         try {
+            boolean isSetted = false;
+            int gameTimerValue;
+            while(!isSetted){
+                log.info("Please, setUp the ServerConfiguration:\n\tinsert the StartGameTimer value [in seconds]");
+                try {
+                     gameTimerValue = scanner.nextInt();
+                    scanner.nextLine();
+
+                } catch (Exception e){
+                    scanner.nextLine();
+                    gameTimerValue = -1;
+                }
+                if(gameTimerValue > 0){
+                    NetConfiguration.setStartGameTimer(gameTimerValue);
+                    isSetted=true;
+                }
+            }
+            isSetted = false;
+            while(!isSetted){
+                log.info("Now, please, insert the RoundTimer value [in seconds]");
+                try {
+                    gameTimerValue = scanner.nextInt();
+                    scanner.nextLine();
+
+                } catch (Exception e){
+                    scanner.nextLine();
+                    gameTimerValue = -1;
+                }
+                if(gameTimerValue > 0){
+                    NetConfiguration.setRoundTimer(gameTimerValue);
+                    isSetted=true;
+                }
+            }
+
+
             //todo deve disconnettere i client
             acceptingRMI = new RMIServer();
             acceptingSocket = new SocketServer();
             ((SocketServer)acceptingSocket).start();
             Thread rmiThread = new Thread((RMIServer)acceptingRMI);
             rmiThread.start();
-            log.info("Lobby ready to accept clients\n");
+            log.info("Server ready to accept clients\n");
         } catch(RemoteException e){
             CustomLogger.logException(e);
         }
-
-
         while(!shutDown){
 
             cleanConnectedUsers();
@@ -58,6 +91,7 @@ public class Server {
                 welcomeUser(incomingUser);
             }
         }
+
     }
 
 

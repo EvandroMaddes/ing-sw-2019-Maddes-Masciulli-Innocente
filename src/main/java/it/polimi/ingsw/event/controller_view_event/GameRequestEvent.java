@@ -11,8 +11,9 @@ public class GameRequestEvent extends ControllerViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-
-        return  remoteView.gameChoice();
+        Event message = remoteView.gameChoice();
+        remoteView.printScreen();
+        return  message;
 
     }
 }

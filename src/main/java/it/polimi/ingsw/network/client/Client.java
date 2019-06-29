@@ -185,17 +185,16 @@ public class Client {
                 try {
                     currentMessage = clientImplementation.listenMessage();
                     log.info("Listened message for:\t" + currentMessage.getUser());
-                    //todo i ModelUpdate, eseguendo performAction ritornano null?, non un Event;
-                    currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
-                    //todo if currentMessage != null invia al server, dopo deve tornare in questo ciclo??
-                    if(!currentMessage.getUser().equals("BROADCAST")){
-                        clientImplementation.sendMessage(currentMessage);
-                        log.info("Message sent to Lobby");
-                    }
-                    //todo
-                    if(remoteViewImplementation.isGameSet()){
+                    if(remoteViewImplementation.isGameSet()&&!currentMessage.getUser().equals("BROADCAST")){
                         remoteViewImplementation.printScreen();
                     }
+                    //todo i ModelUpdate, eseguendo performAction ritornano null?, non un Event;
+                    currentMessage = ((ClientEvent)currentMessage).performAction(remoteViewImplementation);
+                    //invia il messaggio solo se non è Update -> BROADCAST
+                    if(!currentMessage.getUser().equals("BROADCAST")){
+                        clientImplementation.sendMessage(currentMessage);
+                    }
+
 
                     waiting = false;
                 } catch (NullPointerException e) {
@@ -216,9 +215,6 @@ public class Client {
                     log.info("Lobby was disconnected!");
                 }
             }
-
-
-            log.info("Message sent to Lobby");
         }
 
         try {
