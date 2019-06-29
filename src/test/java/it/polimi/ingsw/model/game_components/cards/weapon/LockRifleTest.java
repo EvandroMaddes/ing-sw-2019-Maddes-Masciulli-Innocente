@@ -30,14 +30,14 @@ public class LockRifleTest {
         player3 = new Player("Evandro", Character.DOZER);
         player4 = new Player("Chiara", Character.VIOLET);
         player1.addWeapon(lockRifle);
-        player1.setPosition(map[0][3]);
-        player2.setPosition(map[2][2]);
-        player3.setPosition(map[0][3]);
-        player4.setPosition(map[0][0]);
     }
 
     @Test
     public void isUsableTest(){
+        player1.setPosition(map[0][3]);
+        player2.setPosition(map[2][2]);
+        player3.setPosition(map[0][3]);
+        player4.setPosition(map[0][0]);
         Assert.assertTrue(lockRifle.isUsable());
         Assert.assertTrue(lockRifle.isUsableEffect(1));
         Assert.assertFalse(lockRifle.isUsableEffect(2));
@@ -45,6 +45,10 @@ public class LockRifleTest {
 
     @Test
     public void effectOneThanTwoTest(){
+        player1.setPosition(map[0][3]);
+        player2.setPosition(map[2][2]);
+        player3.setPosition(map[0][3]);
+        player4.setPosition(map[0][0]);
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent)lockRifle.getTargetEffect(1);
         Assert.assertEquals(2, message.getPossibleTargets().size());
         Assert.assertTrue(message.getPossibleTargets().contains(player2.getCharacter()));
@@ -67,6 +71,27 @@ public class LockRifleTest {
         lockRifle.performEffect(2,target);
         Assert.assertEquals(1, player3.getPlayerBoard().getMarks().size());
         Assert.assertEquals(0, player3.getPlayerBoard().getDamageAmount());
+        Assert.assertFalse(lockRifle.isUsable());
+    }
+
+    @Test
+    public void effectOneNotUsableEffectTwoTest(){
+        player1.setPosition(map[1][0]);
+        player2.setPosition(map[1][0]);
+        Assert.assertTrue(lockRifle.isUsable());
+        Assert.assertTrue(lockRifle.isUsableEffect(1));
+        Assert.assertFalse(lockRifle.isUsableEffect(2));
+        TargetPlayerRequestEvent message = (TargetPlayerRequestEvent)lockRifle.getTargetEffect(1);
+        Assert.assertEquals(1, message.getPossibleTargets().size());
+        Assert.assertTrue(message.getPossibleTargets().contains(player2.getCharacter()));
+
+        ArrayList<Object> target = new ArrayList<>();
+        target.add(player2);
+        lockRifle.performEffect(1, target);
+        Assert.assertEquals(2, player2.getPlayerBoard().getDamageAmount());
+        Assert.assertEquals(1, player2.getPlayerBoard().getMarks().size());
+        Assert.assertFalse(lockRifle.isUsableEffect(1));
+        Assert.assertFalse(lockRifle.isUsableEffect(2));
         Assert.assertFalse(lockRifle.isUsable());
     }
 }

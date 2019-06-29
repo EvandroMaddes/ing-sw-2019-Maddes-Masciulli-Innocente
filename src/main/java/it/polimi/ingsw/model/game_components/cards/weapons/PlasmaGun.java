@@ -83,6 +83,11 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
     }
 
     @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && ((TargetSquareRequestEvent)getTargetEffectTwo()).getPossibleTargetsY().length != 0;
+    }
+
+    @Override
     public void performEffectThree(List<Object> targets) {
         damage(getFirstEffectTarget().get(0), 1);
         getDamagedPlayer().add(getFirstEffectTarget().get(0));
