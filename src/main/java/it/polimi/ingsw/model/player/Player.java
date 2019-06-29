@@ -201,7 +201,7 @@ public class Player extends Observable {
         notifyObservers(message);
     }
 
-    private void notifyWeaponsChange(){
+    public void notifyWeaponsChange(){
         String[] messageWeapons = new String[numberOfWeapons];
         for (int i = 0; i < numberOfWeapons; i++){
             messageWeapons[i] = weapons[i].getName();

@@ -50,6 +50,7 @@ public abstract class Weapon extends Card {
 
     public void setUnloaded(){
         this.loaded = false;
+        getOwner().notifyWeaponsChange();
     }
 
     /**
@@ -58,6 +59,8 @@ public abstract class Weapon extends Card {
     public void setLoaded(){
         this.loaded = true;
         setUsableEffect();
+        if (getOwner() != null)
+            getOwner().notifyWeaponsChange();
     }
 
     public void updateUsableEffect(boolean[] newUsableEffect){
