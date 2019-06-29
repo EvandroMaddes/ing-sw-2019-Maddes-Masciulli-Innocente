@@ -121,9 +121,9 @@ public class ShotTest {
         player3.setPosition(map[1][0]);
         Weapon cyberblade = new CyberBlade();
         Weapon machineGun = new MachineGun();
-        machineGun.setUnloaded();
         player1.addWeapon(machineGun);
         player1.addWeapon(cyberblade);
+        machineGun.setUnloaded();
         player1.getAmmo().clear();
 
         roundManager.manageRound();

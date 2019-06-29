@@ -209,10 +209,10 @@ public class GrabTest {
         controller.getGameManager().setPlayerTurn(2);
         player1.setPosition(map[0][0]);
         Weapon lockRifle = new LockRifle();
-        lockRifle.setUnloaded();
         player1.addWeapon(lockRifle);
         player1.addWeapon(new MachineGun());
         player1.addWeapon(new PlasmaGun());
+        lockRifle.setUnloaded();
         player1.addAmmo(new AmmoCube(CubeColour.Yellow));
         player1.addAmmo(new AmmoCube(CubeColour.Yellow));
         player1.addAmmo(new AmmoCube(CubeColour.Red));

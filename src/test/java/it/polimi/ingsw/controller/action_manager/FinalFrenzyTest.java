@@ -61,9 +61,9 @@ public class FinalFrenzyTest {
         player2.setPosition(map[0][0]);
         player3.setPosition(map[0][0]);
         Weapon lockRifle = new LockRifle();
-        lockRifle.setUnloaded();
         Weapon electroscythe = new Electroscythe();
         player3.addWeapon(lockRifle);
+        lockRifle.setUnloaded();
         player1.addWeapon(electroscythe);
         PowerUp tagbackGrenade = new TagbackGrenade(CubeColour.Blue);
         player3.addPowerUp(tagbackGrenade);

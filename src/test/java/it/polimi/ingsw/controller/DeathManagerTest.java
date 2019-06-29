@@ -126,9 +126,5 @@ public class DeathManagerTest {
         Assert.assertEquals(3, player3.getPowerUps().size());
         Assert.assertFalse(player2.getPowerUps().contains(teleporter));
         Assert.assertEquals(map[2][3], player3.getPosition());
-        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
-        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
-
-
     }
 }
