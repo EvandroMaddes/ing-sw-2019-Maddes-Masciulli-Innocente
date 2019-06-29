@@ -658,7 +658,13 @@ public class CLI extends RemoteView {
      * @return message notify the success of updating
      */
     @Override
-    public Event playerWeaponUpdate(Character currCharacter, String[] weapons) {
+    public Event playerWeaponUpdate(Character currCharacter, String[] weapons,boolean[] load) {
+        for (int i=0; i<load.length; i++){
+            if (load[i]){
+                weapons[i] = Color.ANSI_GREEN.escape()+weapons[i];
+            }else
+                weapons[i] = Color.ANSI_RED.escape()+weapons[i];
+        }
 
         display.getPlayerBoard(currCharacter).gadgetsUpdate('W', weapons);
 
