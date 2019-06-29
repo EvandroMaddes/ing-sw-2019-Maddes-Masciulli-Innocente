@@ -165,15 +165,23 @@ public class Player extends Observable {
      *
      * add the powerUp into the player reserve
      */
-    public void addPowerUp(PowerUp powerUp)
-    {
-        powerUp.setOwner(this);
-        if (this.powerUps.size() < 3)
+    public void addPowerUp(PowerUp powerUp) {
+        if (this.powerUps.size() < 3) {
+            powerUp.setOwner(this);
             this.powerUps.add(powerUp);
-        setChanged();
-        notifyPowerUpChange();
+            setChanged();
+            notifyPowerUpChange();
+        }
     }
 
+    public void addSpawnPowerUp(PowerUp powerUp){
+        if (this.powerUps.size() < 4) {
+            powerUp.setOwner(this);
+            this.powerUps.add(powerUp);
+            setChanged();
+            notifyPowerUpChange();
+        }
+    }
     /**
      *
      * @param weapon
