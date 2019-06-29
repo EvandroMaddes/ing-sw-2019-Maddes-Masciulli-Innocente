@@ -37,6 +37,7 @@ public class PlayerBoard extends Observable implements Serializable{
 
     private void notifyViews(){
         PlayerBoardUpdateEvent message = new PlayerBoardUpdateEvent(character, skullsNumber, Encoder.encodeDamageTokenList(marks), Encoder.encodeDamagesTokenArray(damageReceived, damageAmount));
+        setChanged();
         notifyObservers(message);
     }
 
