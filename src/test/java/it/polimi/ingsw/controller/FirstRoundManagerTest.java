@@ -41,24 +41,23 @@ public class FirstRoundManagerTest {
         PowerUpDeck powerUpDeck = controller.getGameManager().getModel().getGameboard().getPowerUpDeck();
         powerUp1 = (PowerUp) powerUpDeck.getDeck().get(0);
         powerUp2 = (PowerUp) powerUpDeck.getDeck().get(1);
-        controller.getGameManager().startGame();
-        roundManager = (FirstRoundManager) controller.getGameManager().getCurrentRound();
     }
 
     @Test
     public void firstRoundSetupTest(){
+        controller.getGameManager().startGame();
+        roundManager = (FirstRoundManager) controller.getGameManager().getCurrentRound();
         Assert.assertEquals(player1, roundManager.getCurrentPlayer());
         Assert.assertEquals(2, player1.getPowerUps().size());
         Assert.assertEquals(0, player2.getPowerUps().size());
         Assert.assertNotNull(hashMap.get("Federico").getToRemoteView());
         ControllerViewEvent requestEvent = (RespawnRequestEvent) hashMap.get("Federico").getToRemoteView();
         Assert.assertEquals(2, ((RespawnRequestEvent)requestEvent).getPowerUpNames().length);
-        Assert.assertEquals(powerUp1.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0]);
-        Assert.assertEquals(powerUp1.getColour(), ((RespawnRequestEvent) requestEvent).getPowerUpColours()[0]);
-        Assert.assertEquals(powerUp2.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[1]);
-        Assert.assertEquals(powerUp2.getColour(), ((RespawnRequestEvent)requestEvent).getPowerUpColours()[1]);
-        player1.discardPowerUp(powerUp2);
+        Assert.assertEquals(2, player1.getPowerUps().size());
+        player1.discardPowerUp(player1.getPowerUps().get(1));
+        Assert.assertEquals(1, player1.getPowerUps().size());
         player1.addPowerUp(new Teleporter(CubeColour.Blue));
+        Assert.assertEquals(2, player1.getPowerUps().size());
 
         SpawnChoiceEvent choiceEvent = new SpawnChoiceEvent(player1.getUsername(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0], ((RespawnRequestEvent)requestEvent).getPowerUpColours()[0]);
         choiceEvent.performAction(controller);
@@ -75,11 +74,13 @@ public class FirstRoundManagerTest {
 
     @Test
     public void firstRoundNewtonTest(){
-        ControllerViewEvent requestEvent = (RespawnRequestEvent) hashMap.get("Federico").getToRemoteView();
-        player1.discardPowerUp(powerUp2);
+        controller.getGameManager().startGame();
+        roundManager = (FirstRoundManager) controller.getGameManager().getCurrentRound();
+        RespawnRequestEvent requestEvent = (RespawnRequestEvent) hashMap.get("Federico").getToRemoteView();
+        player1.discardPowerUp(player1.getPowerUps().get(1));
         player1.addPowerUp(new Newton(CubeColour.Blue));
 
-        SpawnChoiceEvent choiceEvent = new SpawnChoiceEvent(player1.getUsername(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0], ((RespawnRequestEvent)requestEvent).getPowerUpColours()[0]);
+        SpawnChoiceEvent choiceEvent = new SpawnChoiceEvent(player1.getUsername(), requestEvent.getPowerUpNames()[0], requestEvent.getPowerUpColours()[0]);
         choiceEvent.performAction(controller);
         Assert.assertEquals(1, player1.getPowerUps().size());
         Assert.assertEquals("Newton", player1.getPowerUps().get(0).getName());
