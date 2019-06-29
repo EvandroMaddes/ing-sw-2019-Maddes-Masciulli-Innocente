@@ -94,7 +94,7 @@ public class CLIHandler {
      * @param available ArrayList to print
      * @return index of element selected
      */
-    public static int arraylistPrintRead(ArrayList<String> available){
+    public static int arrayListPrintRead(ArrayList<String> available){
         int choice = 404;
         int i=0;
         for (String current:available
@@ -106,7 +106,6 @@ public class CLIHandler {
             System.out.flush();
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select one option:");
             choice=CLIHandler.intRead();
-
         }
         return choice;
     }

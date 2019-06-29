@@ -44,6 +44,7 @@ public class LoginController extends AbstractController{
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
+        getGui().setLoginController(this);
 
         if(getGui()==null){
             System.out.println("serveGUI");
@@ -54,7 +55,6 @@ public class LoginController extends AbstractController{
         System.out.println("IP= "+ipAddresString);
         System.out.println(2);
         getGui().initialize();
-
         //getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
     }
 

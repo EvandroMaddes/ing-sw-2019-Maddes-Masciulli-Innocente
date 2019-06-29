@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 
@@ -25,6 +26,7 @@ public class GUI extends RemoteView  {
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
     private MapCharacterController mapCharacterController;
+    private LoginController loginController;
 
     private Stage primaryStage;
     private Stage prevStage;
@@ -78,6 +80,10 @@ public class GUI extends RemoteView  {
         return new String[0];
     }
 
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
+    }
+
     public void initialize(){
 
         Parent lobby = null;
@@ -87,6 +93,7 @@ public class GUI extends RemoteView  {
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/mapCharacterChoice.fxml"));
+
 
 
         try {
@@ -118,10 +125,9 @@ public class GUI extends RemoteView  {
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
 
         System.out.println("fine configurazione GUI");
-        //Chiude la finestra e il metodo torna al loginController
-        Platform.runLater(()->primaryStage.close());
-        Platform.runLater(()->setStage(lobbyStage));
-        //todo passa alla prossima scena forse questo può essere thread
+
+        //Chiude la finestra e il metodo torna al loginControlle
+        // todo passa alla prossima scena forse questo può essere thread
         //Platform.runLater(()->actionChoice(true));
 
     }
@@ -289,8 +295,8 @@ public class GUI extends RemoteView  {
     @Override
     public Event actionChoice(boolean fireEnable) {
         System.out.println(322222);
+        Platform.runLater(()->loginController.showStage(gameBoardStage));
         Platform.runLater(()->gameBoardController.getFireButton().setDisable(!fireEnable));
-        Platform.runLater(()->setStage(gameBoardStage));
         return null;
     }
 

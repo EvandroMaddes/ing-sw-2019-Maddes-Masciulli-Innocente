@@ -14,8 +14,7 @@ public class WeaponGrabRequestEvent extends WeaponRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        //todo chiama il metodo della view che gestisce la scelta, quest'ultimo ritornerà un messaggio; da cambiare return
-        //todo sarà return remoteView.metodoGiusto();
+
         return remoteView.weaponGrabChoice(getWeapons());
     }
 }

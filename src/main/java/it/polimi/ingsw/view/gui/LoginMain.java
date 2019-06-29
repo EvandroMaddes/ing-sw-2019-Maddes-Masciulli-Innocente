@@ -47,8 +47,7 @@ public class LoginMain extends Application{
         loginController.setGui(gui);
 
         primaryStage.setScene(new Scene(root, 800, 560));
-        Platform.runLater(()->primaryStage.show());
-
+        primaryStage.show();
     }
 
 
@@ -109,5 +108,6 @@ public class LoginMain extends Application{
 
     }
 */
+
 }
 

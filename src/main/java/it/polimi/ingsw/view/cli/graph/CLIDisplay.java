@@ -21,7 +21,7 @@ public class CLIDisplay {
     public CLIDisplay(){
         for(int i=0; i<ROW;i++) {//ROW
             for (int j = 0; j < COLUMN; j++) {//COLUMN
-                display[j][i] = Color.ANSI_BLACK_BACKGROUND.escape()+" ";
+                display[j][i] = Color.ANSI_BLACK_BACKGROUND.escape()+"";
             }
         }
     }
@@ -39,7 +39,7 @@ public class CLIDisplay {
             }
         }
             //MAP
-           for(int i=60; i<77;i++) {//ROW
+           for(int i=60; i<ROW;i++) {//ROW
                for (int j = 3; j < 45; j++) {//COLUMN
                    display[j][i] = map.getMap()[j-3][i-60];
                }
@@ -49,49 +49,51 @@ public class CLIDisplay {
             for (int i = 0; i < size; i++) {
 
                 putPlayerBoard(i * 10, 2, playerBoard.get(i));
-
             }
         }
 
+        for (int i=60; i<ROW; i++){
+                display[45][i] =Color.ANSI_BLACK_BACKGROUND.escape()+"             ";
+        }
+
         int a = 60;
-
         display[a][a]=Color.ANSI_GREEN.escape()+"S";
-        display[a+1][a]=Color.ANSI_GREEN.escape()+"P";
-        display[a+2][a]=Color.ANSI_GREEN.escape()+"A";
-        display[a+3][a]=Color.ANSI_GREEN.escape()+"W";
-        display[a+4][a]=Color.ANSI_GREEN.escape()+"N";
+        display[a+51][a]=Color.ANSI_GREEN.escape()+"P";
+        display[a+52][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+53][a]=Color.ANSI_GREEN.escape()+"W";
+        display[a+54][a]=Color.ANSI_GREEN.escape()+"N";
 
-        display[a+6][a]=Color.ANSI_GREEN.escape()+"S";
-        display[a+7][a]=Color.ANSI_GREEN.escape()+"Q";
-        display[a+8][a]=Color.ANSI_GREEN.escape()+"U";
-        display[a+9][a]=Color.ANSI_GREEN.escape()+"A";
-        display[a+10][a]=Color.ANSI_GREEN.escape()+"R";
-        display[a+11][a]=Color.ANSI_GREEN.escape()+"E";
+        display[a+56][a]=Color.ANSI_GREEN.escape()+"S";
+        display[a+57][a]=Color.ANSI_GREEN.escape()+"Q";
+        display[a+58][a]=Color.ANSI_GREEN.escape()+"U";
+        display[a+59][a]=Color.ANSI_GREEN.escape()+"A";
+        display[a+60][a]=Color.ANSI_GREEN.escape()+"R";
+        display[a+61][a]=Color.ANSI_GREEN.escape()+"E";
 
-        display[a][a+1]=Color.ANSI_RED.escape()+"R";
-        display[a+1][a+1]=Color.ANSI_RED.escape()+"E";
-        display[a+2][a+1]=Color.ANSI_RED.escape()+"D";
-        display[a+3][a+1]=Color.ANSI_RED.escape()+": ";
-        display[a+7][a+1]=Color.ANSI_GREEN.escape()+"*";
-
-
-
-        display[a][a+2]=Color.ANSI_BLUE.escape()+"B";
-        display[a+1][a+2]=Color.ANSI_BLUE.escape()+"L";
-        display[a+2][a+2]=Color.ANSI_BLUE.escape()+"U";
-        display[a+3][a+2]=Color.ANSI_BLUE.escape()+"E";
-        display[a+4][a+2]=Color.ANSI_BLUE.escape()+": ";
-        display[a+7][a+2]=Color.ANSI_GREEN.escape()+"*";
+        display[a+50][a+1]=Color.ANSI_RED.escape()+"R";
+        display[a+51][a+1]=Color.ANSI_RED.escape()+"E";
+        display[a+52][a+1]=Color.ANSI_RED.escape()+"D";
+        display[a+53][a+1]=Color.ANSI_RED.escape()+": ";
+        display[a+57][a+1]=Color.ANSI_GREEN.escape()+"*";
 
 
-        display[a][a+3]=Color.ANSI_YELLOW.escape()+"Y";
-        display[a+1][a+3]=Color.ANSI_YELLOW.escape()+"E";
-        display[a+2][a+3]=Color.ANSI_YELLOW.escape()+"L";
-        display[a+3][a+3]=Color.ANSI_YELLOW.escape()+"L";
-        display[a+4][a+3]=Color.ANSI_YELLOW.escape()+"O";
-        display[a+5][a+3]=Color.ANSI_YELLOW.escape()+"W";
-        display[a+6][a+3]=Color.ANSI_YELLOW.escape()+": ";
-        display[a+7][a+3]=Color.ANSI_GREEN.escape()+"*";
+
+        display[a+50][a+2]=Color.ANSI_BLUE.escape()+"B";
+        display[a+51][a+2]=Color.ANSI_BLUE.escape()+"L";
+        display[a+52][a+2]=Color.ANSI_BLUE.escape()+"U";
+        display[a+53][a+2]=Color.ANSI_BLUE.escape()+"E";
+        display[a+54][a+2]=Color.ANSI_BLUE.escape()+": ";
+        display[a+57][a+2]=Color.ANSI_GREEN.escape()+"*";
+
+
+        display[a+30][a+3]=Color.ANSI_YELLOW.escape()+"Y";
+        display[a+31][a+3]=Color.ANSI_YELLOW.escape()+"E";
+        display[a+32][a+3]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+33][a+3]=Color.ANSI_YELLOW.escape()+"L";
+        display[a+34][a+3]=Color.ANSI_YELLOW.escape()+"O";
+        display[a+35][a+3]=Color.ANSI_YELLOW.escape()+"W";
+        display[a+36][a+3]=Color.ANSI_YELLOW.escape()+": ";
+        display[a+37][a+3]=Color.ANSI_GREEN.escape()+"*";
 
         display[a][a+6] = Color.ANSI_GREEN.escape()+"MAP LEGEND";
         display[a][a+7] = Color.ANSI_GREEN.escape()+"A : ammo";
@@ -200,8 +202,8 @@ public class CLIDisplay {
             j=63;
         }
 
-        for (int i =70; i<73; i++ ) {
-            display[i][j] = " ";
+        for (int i =120; i<123; i++ ) {
+            display[i][j] = "";
             if(h<weapons.length && weapons[h]!=null) {
 
                 display[i][j] = Color.ANSI_GREEN.escape()+weapons[h]+" * ";

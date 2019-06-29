@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 
 public abstract class AbstractController {
     private GUI gui;
@@ -15,5 +17,10 @@ public abstract class AbstractController {
 
     public void sendChoice(Event choice){
         gui.sendMessage(choice);
+    }
+
+    public void showStage(Stage stage){
+    stage.show();
+    System.out.println("shoew");
     }
 }
