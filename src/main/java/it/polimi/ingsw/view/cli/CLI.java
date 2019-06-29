@@ -443,6 +443,7 @@ public class CLI extends RemoteView {
                 effectChoice = 404;
             }
         }
+            effectChoice++;
             message = new WeaponEffectChioceEvent(getUser(), effectChoice);
 
         return message;
@@ -816,7 +817,7 @@ public class CLI extends RemoteView {
                 nameSelected[i] = powerUpNames[index[i]];
                 colourSelected[i] = powerUpColours[index[i]];
             }
-           
+
             message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
         return message;
