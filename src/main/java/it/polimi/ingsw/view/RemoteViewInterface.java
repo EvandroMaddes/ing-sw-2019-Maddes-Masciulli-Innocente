@@ -59,7 +59,7 @@ public interface RemoteViewInterface {
    Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages);
    Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color);
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
-   Event playerWeaponUpdate(Character currCharacter, String[] weapons);
+   Event playerWeaponUpdate(Character currCharacter, String[] weapons,boolean[] load);
    Event gameTrackSkullUpdate(Character[] killerCharacter,int[] skullNumber);
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
    Event winnerUpdate(String user, int point);
