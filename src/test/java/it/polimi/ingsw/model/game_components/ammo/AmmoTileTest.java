@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
+import it.polimi.ingsw.model.game_components.cards.power_ups.TagbackGrenade;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
@@ -42,11 +43,14 @@ public class AmmoTileTest {
     @Test
     public void testPowerUpTile(){
         Assert.assertTrue(testedPowerUpTile.isPowerUpTile());
+        testedPowerUpTile.setPowerUp(new TagbackGrenade(CubeColour.Blue));
         testedPowerUpTile.pickAmmo(testedPlayer);
         Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[0].getColour()));
         Assert.assertEquals(2, testedPlayer.getCubeColourNumber(testedCubeTile.getAmmoCubes()[1].getColour()));
         Assert.assertEquals(5, testedPlayer.getCubeColourNumber(CubeColour.Yellow)
-                +testedPlayer.getCubeColourNumber(CubeColour.Red)+testedPlayer.getCubeColourNumber(CubeColour.Yellow));
+                + testedPlayer.getCubeColourNumber(CubeColour.Red)+testedPlayer.getCubeColourNumber(CubeColour.Yellow));
+        Assert.assertEquals(1, testedPlayer.getPowerUps().size());
+        Assert.assertEquals("TagbackGrenade", testedPlayer.getPowerUps().get(0).getName());
         System.out.println("Tested PowerUpTile");
     }
 }

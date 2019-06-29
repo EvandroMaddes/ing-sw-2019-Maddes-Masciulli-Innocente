@@ -5,10 +5,7 @@ import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
-import it.polimi.ingsw.model.game_components.cards.AmmoTilesDeck;
-import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
+import it.polimi.ingsw.model.game_components.cards.*;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
@@ -94,8 +91,12 @@ public class GameManager {
                         ((SpawnSquare)gameBoard.getMap().getSquareMatrix()[x][y]).addWeapon(newSpawnSquareWeapons);
                 }
                 else if ((gameBoard.getMap().getSquareMatrix()[x][y] != null) &&
-                        !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo())
-                    ((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile((AmmoTile) gameBoard.getAmmoTilesDeck().draw());
+                        !((BasicSquare)gameBoard.getMap().getSquareMatrix()[x][y]).checkAmmo()) {
+                    AmmoTile newAmmoTile = (AmmoTile) gameBoard.getAmmoTilesDeck().draw();
+                    if (newAmmoTile.isPowerUpTile())
+                        newAmmoTile.setPowerUp((PowerUp) getModel().getGameboard().getPowerUpDeck().draw());
+                    ((BasicSquare) gameBoard.getMap().getSquareMatrix()[x][y]).replaceAmmoTile(newAmmoTile);
+                }
             }
         }
     }

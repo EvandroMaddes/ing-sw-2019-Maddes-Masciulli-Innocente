@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game_components.ammo;
 
+import it.polimi.ingsw.model.game_components.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
 
@@ -12,10 +13,12 @@ import it.polimi.ingsw.model.player.Player;
 public class AmmoTile {
 
     private AmmoCube[] ammoCubes;
+    private PowerUp powerUp;
     private boolean isPowerUpTile;
 
     public AmmoTile(AmmoCube firstAmmo, AmmoCube secondAmmo, AmmoCube thirdAmmo, boolean isPowerUpTile)
-    {   this.isPowerUpTile = isPowerUpTile;
+    {
+        this.isPowerUpTile = isPowerUpTile;
         if (!isPowerUpTile)
         {
             ammoCubes = new  AmmoCube[3];
@@ -26,6 +29,10 @@ public class AmmoTile {
         }
         ammoCubes[0] = firstAmmo;
         ammoCubes[1] = secondAmmo;
+    }
+
+    public void setPowerUp(PowerUp powerUp){
+        this.powerUp = powerUp;
     }
 
     /**
@@ -60,6 +67,8 @@ public class AmmoTile {
             player.addAmmo(ammoCubes[1]);
         if ((!isPowerUpTile)&&player.getCubeColourNumber(ammoCubes[2].getColour()) <3)
                 player.addAmmo(ammoCubes[2]);
+        else if (isPowerUpTile)
+            player.addPowerUp(powerUp);
 
     }
 

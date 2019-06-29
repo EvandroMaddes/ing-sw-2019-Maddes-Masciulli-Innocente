@@ -245,7 +245,7 @@ public class Player extends Observable {
      */
     public void discardPowerUp(PowerUp powerUp)
     {
-        powerUps.remove(powerUp);
+        this.powerUps.remove(powerUp);
         powerUp.setOwner(null);
         notifyPowerUpChange();
     }
