@@ -509,8 +509,8 @@ public class CLI extends RemoteView {
                 for(int i=0;i<powerUpNames.length;i++){
                     System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpColours[i].toString())+powerUpNames[i]+" OPTION "+i);
                 }
-                System.out.println("Skip Choice OPTION "+powerUpNames.length);
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select one powerUp:[option number]");
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape().concat(Color.ANSI_GREEN.escape().concat("Skip Choice OPTION "+powerUpNames.length)));
+                System.out.println("Select one powerUp:[option number]");
                 chosenPowerUp = CLIHandler.intRead();
 
             } catch (IllegalArgumentException e) {
