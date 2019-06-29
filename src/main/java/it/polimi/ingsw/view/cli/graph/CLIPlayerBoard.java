@@ -101,6 +101,9 @@ public class CLIPlayerBoard {
         playerBoard[2][5] = "︻┳═一 WEAPONS: ";
         playerBoard[2][6] = "♦ POWERUP: ";
         playerBoard[2][7] = "■ AMMO AVAILABLE: ";
+        playerBoard[4][7]= Color.ANSI_RED.escape()+"█";
+        playerBoard[6][7]= Color.ANSI_YELLOW.escape()+"█";
+        playerBoard[8][7]= Color.ANSI_BLUE.escape()+"█";
         playerBoard[2][8] = "✞ SKULLS: ";
 
             for (int i = 0; i < MAXCOLUMN; i++) {

@@ -10,16 +10,11 @@ import it.polimi.ingsw.model.player.Player;
 public class TagbackGrenade extends PowerUp {
 
     public TagbackGrenade(CubeColour colour) {
-        super(colour, "TagbackGrenade");
+        super(colour, "TagbackGrenade", Usability.END_TURN);
     }
 
     @Override
     public void performEffect(Object target) {
-        mark((Player)target, 1);
-    }
-
-    @Override
-    public Usability whenToUse() {
-        return Usability.END_TURN;
+        mark((Player) target, 1);
     }
 }

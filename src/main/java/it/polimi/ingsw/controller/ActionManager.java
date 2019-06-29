@@ -389,7 +389,16 @@ public class ActionManager {
 
     private void askForPowerUpAsAmmo(int[] cost, PaymentRequestEvent.Context context) {
         int[] playerAmmo = AmmoCube.getColoursByListRYB(currentRoundManager.getCurrentPlayer().getAmmo());
-        CubeColour[] powerUpColoursLite = Encoder.encodePowerUpColour(currentRoundManager.getCurrentPlayer().getPowerUps());
+        ArrayList<PowerUp> possiblePowerUp = new ArrayList<>();
+        for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
+            if ( (p.getColour() == CubeColour.Red && cost[0] > 0) ||
+                    (p.getColour() == CubeColour.Yellow && cost[1] > 0) ||
+                    (p.getColour() == CubeColour.Blue && cost[2] > 0) )
+                possiblePowerUp.add(p);
+
+
+        }
+        CubeColour[] powerUpColoursLite = Encoder.encodePowerUpColour(possiblePowerUp);
         int[] powerUpsColours = AmmoCube.getColoursByCubeColourArrayRYB(powerUpColoursLite);
         int[] minimalPowerUpNumberToUse;
         if (Arrays.equals(playerAmmo, AmmoCube.cubeDifference(playerAmmo, powerUpsColours))) {
@@ -404,19 +413,19 @@ public class ActionManager {
             minimalPowerUpNumberToUse = AmmoCube.cubeDifference(cost, playerAmmo);
             if (context == PaymentRequestEvent.Context.WEAPON_EFFECT) {
                 EffectPaymentRequestEvent message = new EffectPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
-                        Encoder.encodePowerUpsType(currentRoundManager.getCurrentPlayer().getPowerUps()),
+                        Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
                 controller.callView(message);
             }
             else if (context == PaymentRequestEvent.Context.WEAPON_RELOAD) {
                 WeaponReloadPaymentRequestEvent message = new WeaponReloadPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
-                        Encoder.encodePowerUpsType(currentRoundManager.getCurrentPlayer().getPowerUps()),
+                        Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
                 controller.callView(message);
             }
             else if (context == PaymentRequestEvent.Context.WEAPON_GRAB) {
                 WeaponGrabPaymentRequestEvent message = new WeaponGrabPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
-                        Encoder.encodePowerUpsType(currentRoundManager.getCurrentPlayer().getPowerUps()),
+                        Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
                 controller.callView(message);
             }
