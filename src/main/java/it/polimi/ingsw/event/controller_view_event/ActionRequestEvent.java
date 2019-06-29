@@ -17,8 +17,8 @@ public class ActionRequestEvent extends ControllerViewEvent {
     }
 
     public boolean isFireEnable() {
-        // TODO: 2019-06-07
-        return /*fireEnable*/ false;
+
+        return usableActions[2];
     }
 
     public boolean[] getUsableActions() {
