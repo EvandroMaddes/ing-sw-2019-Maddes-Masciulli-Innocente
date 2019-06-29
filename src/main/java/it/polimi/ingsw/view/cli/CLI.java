@@ -383,7 +383,7 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
         int weaponSelected;
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to garb ");
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You choose to grab ");
         weaponSelected = CLIHandler.arraylistPrintRead(availableWeapon);
         return new WeaponGrabChoiceEvent(getUser(), availableWeapon.get(weaponSelected));
     }
@@ -816,8 +816,6 @@ public class CLI extends RemoteView {
                 nameSelected[i] = powerUpNames[index[i]];
                 colourSelected[i] = powerUpColours[index[i]];
             }
-            System.out.println(index[0]);
-            System.out.println(index[1]);
             message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
         return message;
