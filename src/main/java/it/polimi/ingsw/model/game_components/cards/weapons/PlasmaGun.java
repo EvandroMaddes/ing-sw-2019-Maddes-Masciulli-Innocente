@@ -35,8 +35,10 @@ public class PlasmaGun extends TwoOptionalEffectWeapon {
     @Override
     public void effectControlFlow(int effectUsed) {
         effectUsed--;
-        if (effectUsed == 0 )
-            updateUsableEffect(new boolean[]{false, true, true});
+        if (effectUsed == 0 ) {
+            getUsableEffect()[0] = false;
+            getUsableEffect()[2] = true;
+        }
         else if (effectUsed == 1 && !getUsableEffect()[0])
             updateUsableEffect(new boolean[]{false,false,false});
         else if (effectUsed == 1)
