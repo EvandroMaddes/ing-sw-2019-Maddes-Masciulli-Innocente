@@ -31,6 +31,10 @@ public class AmmoTile {
         ammoCubes[1] = secondAmmo;
     }
 
+    /**
+     * Called when the tile is placed on board, set it's PowerUp
+     * @param powerUp is the powerUp associated with the tile
+     */
     public void setPowerUp(PowerUp powerUp){
         this.powerUp = powerUp;
     }
@@ -53,11 +57,10 @@ public class AmmoTile {
 
 
     /**
+     * if a player haven't pass the limit on 3 ammo cube for each color, grab all the possible AmmoCubes,
+     * if is a PowerUpTile he'll grab from a vector containing 2 elements and the powerUp
      *
      * @param player is the player that grab the AmmoTiles
-     *
-     * if a player haven't pass the limit on 3 ammo cube for each color, grab all the possible AmmoCubes,
-     * if is a PowerUpTile he'll grab from a vector containing 2 elements
      */
     public void pickAmmo(Player player)
     {
