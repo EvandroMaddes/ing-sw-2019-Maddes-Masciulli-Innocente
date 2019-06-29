@@ -374,7 +374,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         for (RemoteInterface client : clientList) {
             client.remoteSetCurrEvent(message);
             try{
-                wait(100);
+                wait(300);
             } catch (InterruptedException e){
                 CustomLogger.logException(e);
             }
