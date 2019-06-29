@@ -3,15 +3,16 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
-import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
+import it.polimi.ingsw.model.game_components.cards.weapons.ShockWave;
+import it.polimi.ingsw.model.game_components.cards.weapons.Shotgun;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
@@ -264,5 +265,53 @@ public class GameManagerTest {
         Assert.assertEquals(6, player3.getPoints());
         Event requestEvent = hashMap.get(player2.getUsername()).getToRemoteView();
         Assert.assertEquals(15, ((WinnerEvent)requestEvent).getPoint());
+    }
+
+    @Test
+    public void refillSpawnSquareTest(){
+        controller.getGameManager().setPlayerTurn(2);
+        player1.setPosition(map[0][0]);
+        player2.setPosition(map[1][0]);
+        Weapon lockRifle = new LockRifle();
+        Weapon shotgun = new Shotgun();
+        Weapon shockWave = new ShockWave();
+        ArrayList<Weapon> addedWeapon = new ArrayList<>();
+        player1.addAmmo(new AmmoCube(CubeColour.Red));
+        player1.addAmmo(new AmmoCube(CubeColour.Red));
+        player1.addAmmo(new AmmoCube(CubeColour.Blue));
+        player1.addAmmo(new AmmoCube(CubeColour.Blue));
+        player1.addAmmo(new AmmoCube(CubeColour.Yellow));
+        player1.addAmmo(new AmmoCube(CubeColour.Yellow));
+        addedWeapon.add(lockRifle);
+        addedWeapon.add(shockWave);
+        addedWeapon.add(shotgun);
+        ((SpawnSquare)map[1][0]).addWeapon(addedWeapon);
+        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        controller.getGameManager().newRound();
+        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
+        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 2);
+        choiceMessage.performAction(controller);
+        choiceMessage = new GrabChoiceEvent(player1.getUsername(), 1, 0);
+        choiceMessage.performAction(controller);
+        choiceMessage = new WeaponGrabChoiceEvent(player1.getUsername(), lockRifle.getName());
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(2, ((SpawnSquare)map[1][0]).getWeapons().size());
+        Assert.assertFalse(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        choiceMessage = new SkipActionChoiceEvent(player1.getUsername());
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
+        Assert.assertFalse(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
     }
 }
