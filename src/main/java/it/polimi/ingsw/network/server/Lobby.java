@@ -182,7 +182,7 @@ public class Lobby extends Thread {
                         message = new DisconnectedEvent(currentUser);
                         disconnectClient(currentUser);
                     }
-                    if (!message.getUser().equals("BROADCAST")) {
+                    else if (!message.getUser().equals("BROADCAST")) {
                         mapUserView.get(message.getUser()).toController(message);
                         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
                     }
