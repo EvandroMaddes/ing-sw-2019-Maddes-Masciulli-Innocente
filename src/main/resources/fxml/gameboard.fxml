@@ -20,12 +20,12 @@
                      <children>
                         <ImageView fitHeight="90.0" fitWidth="417.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@bluePlayerBoard.png" />
+                              <Image url="@../playerBoard/bluePlayerBoard.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="90.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@greyPlayerBoard.png" />
+                              <Image url="@../playerBoard/greyPlayerBoard.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -34,12 +34,12 @@
                      <children>
                         <ImageView fitHeight="516.0" fitWidth="351.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@left1map.png" />
+                              <Image url="@../map/left2map.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="522.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="517.0" fitWidth="364.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@right1map.png" />
+                              <Image url="@../map/right1map.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -48,12 +48,12 @@
                      <children>
                         <ImageView fitHeight="90.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@greenPlayerBoard.png" />
+                              <Image url="@../playerBoard/greenPlayerBoard.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="90.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@yellowPlayerBoard.png" />
+                              <Image url="@../playerBoard/yellowPlayerBoard.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -159,7 +159,7 @@
                <children>
                   <ImageView fitHeight="98.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@violetPlayerBoard.png" />
+                        <Image url="@../playerBoard/violetPlayerBoard.png" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="55.0" prefWidth="423.0" spacing="20.0" style="-fx-background-color: black;">
@@ -208,17 +208,17 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/AD_weapons_IT_022.png" />
+                              <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/AD_weapons_IT_023.png" />
+                              <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/AD_weapons_IT_024.png" />
+                              <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -230,17 +230,17 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0210.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0211.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0212.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                </children>
@@ -249,17 +249,17 @@
                <children>
                   <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0210.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0211.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0212.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                </children>
@@ -268,17 +268,17 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0210.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0211.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@cards/AD_weapons_IT_0212.png" />
+                        <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
                </children>

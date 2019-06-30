@@ -50,7 +50,7 @@ public class Map {
 
         Square [][] squaresMatrix = new Square[3][4];
         JsonParser parser = new JsonParser();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("map.json");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/map.json");
         Reader reader = new InputStreamReader(inputStream);
         JsonElement rootElement = parser.parse(reader);
         JsonObject left = rootElement.getAsJsonObject().getAsJsonObject(selectedLeftMap);
