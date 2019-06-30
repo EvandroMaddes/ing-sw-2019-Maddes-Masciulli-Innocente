@@ -165,7 +165,7 @@ public class GameManager {
             getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
             playerTurn--;
             if (playerTurn < 0)
-                playerTurn = model.getPlayers().size();
+                playerTurn = model.getPlayers().size() - 1;
             if (model.getPlayers().size() >= 3)
                 newRound();
             else

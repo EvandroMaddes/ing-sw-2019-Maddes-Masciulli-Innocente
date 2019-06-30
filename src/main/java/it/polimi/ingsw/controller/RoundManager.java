@@ -130,18 +130,18 @@ public class RoundManager {
     }
 
     private void endRoundPowerUpCheck(){
-        Iterator iterator = controller.getGameManager().getModel().getPlayers().iterator();
+        Iterator<Player> iterator = controller.getGameManager().getModel().getPlayers().iterator();
         ArrayList<PowerUp> usablePowerUp = new ArrayList<>();
         Player actualPlayer = null;
         while (iterator.hasNext() && usablePowerUp.isEmpty()){
-            actualPlayer = (Player)iterator.next();
+            actualPlayer = iterator.next();
             if (actualPlayer.getTimesGetDamaged() > 0 && !gameManager.getDisconnectionManager().getDisconnectingQueue().contains(actualPlayer))
                 for (PowerUp p: actualPlayer.getPowerUps()){
                     if (p.whenToUse() == PowerUp.Usability.END_TURN)
                         usablePowerUp.add(p);
             }
         }
-        if (!usablePowerUp.isEmpty() && actualPlayer != null)
+        if (actualPlayer != null && !usablePowerUp.isEmpty())
             askForEndRoundPowerUp(actualPlayer, usablePowerUp);
         else
             nextPhase();
