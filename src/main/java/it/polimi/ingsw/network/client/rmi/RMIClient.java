@@ -30,6 +30,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
     private String serverIPAddress;
     private int serverPort;
     private Event currMessage;
+    private boolean connected = false;
 
 
 
@@ -53,6 +54,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
         connectClient();
     }
 
+
+    @Override
+    public boolean isConnected() {
+        return connected;
+    }
 
     @Override
     public void reconnectClient() {
@@ -131,6 +137,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
             Registry clientRegistry = LocateRegistry.createRegistry(port);
             clientRegistry.rebind(bindName, clientStub);
             server.acceptRemoteClient(port, clientIPAddress, bindName);
+            connected = true;
             //run();
         }
         catch (ExportException alreadyExported){
@@ -141,6 +148,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
                 Registry clientRegistry = LocateRegistry.createRegistry(port);
                 clientRegistry.rebind(bindName,clientStub);
                 server.acceptRemoteClient(port,clientIPAddress,bindName);
+                connected = true;
             }
             catch(Exception exc){
                 CustomLogger.logException(exc);
@@ -157,12 +165,13 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
 
     @Override
     public void disconnectClient(){
-    try {
-        UnicastRemoteObject.unexportObject(this, false);
-    }
-    catch(NoSuchObjectException exc){
-        return;
-    }
+        try {
+            connected = false;
+            UnicastRemoteObject.unexportObject(this, false);
+        }
+        catch(NoSuchObjectException exc){
+            return;
+        }
     }
 
 
@@ -269,7 +278,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, N
             remoteSendMessage(message);
         }
         catch(RemoteException rmtException){
-
+            disconnectClient();
         }
     }
 

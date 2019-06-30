@@ -31,7 +31,6 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
             inputStream = new ObjectInputStream(client.getInputStream());
             while(clientUser == null){
                 clientUser = inputStream.readUTF();
-
             }
 
         }catch(IOException e){
@@ -144,6 +143,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
             outputStream.flush();
         }catch(Exception e){
             CustomLogger.logException(e);
+            disconnect();
         }
 
     }

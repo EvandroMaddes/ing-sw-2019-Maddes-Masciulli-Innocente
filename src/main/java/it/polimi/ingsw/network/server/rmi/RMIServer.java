@@ -232,6 +232,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         for (RemoteInterface currClient: clientList) {
             try{
                 if(currClient.getUser().equals(user)){
+                    clientUserOrder.remove(clientList.indexOf(currClient));
                     clientList.remove(currClient);
                 }
 

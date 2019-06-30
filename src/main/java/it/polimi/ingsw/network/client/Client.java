@@ -184,7 +184,8 @@ public class Client {
 
         //todo sempre connected finchè non si sconnette il server
         while(connected) {
-            boolean waiting = true;
+            boolean waiting = clientImplementation.isConnected();
+
             while (waiting) {
                 try {
                     currentMessage = clientImplementation.listenMessage();
@@ -218,6 +219,7 @@ public class Client {
                     CustomLogger.logException(e);
                     log.info("Lobby was disconnected!");
                 }
+                connected = clientImplementation.isConnected();
             }
         }
 

@@ -9,6 +9,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * @author Francesco Masciulli
@@ -21,6 +22,7 @@ public class SocketClient implements NetworkHandler, ClientInterface {
     private Socket clientSocket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
+    private boolean connected = false;
 
    public SocketClient(String user, String serverIPAddress) throws ConnectException{
         this.user=user;
@@ -28,6 +30,10 @@ public class SocketClient implements NetworkHandler, ClientInterface {
         this.serverPort = NetConfiguration.SOCKETSERVERPORTNUMBER;
         connectClient();
    }
+
+    public boolean isConnected() {
+        return connected;
+    }
 
     @Override
     public void reconnectClient() {
@@ -53,6 +59,7 @@ public class SocketClient implements NetworkHandler, ClientInterface {
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
             outputStream.writeUTF(user);
             outputStream.flush();
+            connected = true;
         }catch(Exception e){
             CustomLogger.logException(e);
             throw new ConnectException("Couldn't reach the server!");
@@ -61,7 +68,8 @@ public class SocketClient implements NetworkHandler, ClientInterface {
 
     @Override
     public void disconnectClient() throws Exception {
-       clientSocket.close();
+       connected = false;
+        clientSocket.close();
 
     }
 
@@ -80,9 +88,10 @@ public class SocketClient implements NetworkHandler, ClientInterface {
             try {
                 message = (Event) inputStream.readObject();
             }
-            catch (EOFException serverShutDown){
+            catch (EOFException| SocketException serverShutDown){
                 try {
                     disconnectClient();
+
                 }catch (Exception e){
                     CustomLogger.logException(e);
                 }
@@ -101,6 +110,12 @@ public class SocketClient implements NetworkHandler, ClientInterface {
             outputStream.flush();
         }catch(Exception e){
             CustomLogger.logException(e);
+            try {
+                disconnectClient();
+
+            }catch (Exception disconnectionException){
+                CustomLogger.logException(disconnectionException);
+            }
         }
     }
 
