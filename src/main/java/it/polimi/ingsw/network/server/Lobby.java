@@ -11,6 +11,7 @@ import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -174,6 +175,7 @@ public class Lobby extends Thread {
                 ArrayList<Event> disconnectedClients = ping();
                 if(disconnectedClients.isEmpty()) {
                     Event nextMessage = findNextMessage();
+
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
                     if (message == null) {
@@ -230,7 +232,7 @@ public class Lobby extends Thread {
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
 
         }
-        else if(mapUserServer.containsKey(toSend.getUser())){
+        else{
             ServerInterface server = mapUserServer.get(currentUser);
             server.sendMessage(toSend);
             returnedEvent = server.listenMessage();
@@ -360,8 +362,9 @@ public class Lobby extends Thread {
        if(!currentDisconnectedClients.isEmpty()){
            log.info(lobbyName.concat(currentDisconnectedClients.size()+" disconnected clients in this turn!\n"));
            for (Event currEvent: currentDisconnectedClients) {
-
-                   disconnectClient(currEvent.getUser());
+                message = currEvent;
+                disconnectClient(currEvent.getUser());
+                message = null;
            }
        }
        serverRMI.cleanDisconnectedEventList();
@@ -380,7 +383,7 @@ public class Lobby extends Thread {
         disconnectedClientList.add(user);
         message = mapUserServer.get(user).disconnectClient(user);
         mapUserServer.remove(user);
-        //mapUserView.get(user).toController(message);
+        mapUserView.get(user).toController(message);
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
     }
