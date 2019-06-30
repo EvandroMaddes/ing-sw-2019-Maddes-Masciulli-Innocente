@@ -1,6 +1,6 @@
 package it.polimi.ingsw.event.model_view_event;
 
-public abstract class PositionUpdateEvent extends ModelViewEvent {
+public abstract class PositionUpdateEvent extends ModelViewBroadcastEvent {
     private int positionX;
     private int positionY;
 

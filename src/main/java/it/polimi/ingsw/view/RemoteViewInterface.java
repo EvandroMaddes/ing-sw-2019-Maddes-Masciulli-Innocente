@@ -23,7 +23,7 @@ public interface RemoteViewInterface {
     * @return the message returning to the server
     */
    void printScreen();
-   void setGame(LobbySettingsEvent lobbySettings);
+   void setGame(int mapNumber);
    boolean isGameSet();
 
    //following methods manages Request event

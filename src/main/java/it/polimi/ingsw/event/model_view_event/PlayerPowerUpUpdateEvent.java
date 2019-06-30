@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
-public class PlayerPowerUpUpdateEvent extends ModelViewEvent {
+public class PlayerPowerUpUpdateEvent extends ModelViewBroadcastEvent {
     private String[] powerUps;
     private CubeColour[] colours;
     private Character currCharacter;

@@ -25,7 +25,7 @@ public class CustomTimer extends Thread {
         try {
             TimeUnit.SECONDS.sleep(gameWaitingTime);
         }catch (InterruptedException e){
-            CustomLogger.logException(e);
+            interrupt();
         }
         interrupt();
     }

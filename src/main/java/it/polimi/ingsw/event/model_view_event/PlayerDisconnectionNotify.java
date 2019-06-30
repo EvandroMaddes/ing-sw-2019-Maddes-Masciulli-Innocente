@@ -4,7 +4,7 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
-public class PlayerDisconnectionNotify extends ModelViewEvent {
+public class PlayerDisconnectionNotify extends ModelViewBroadcastEvent {
     Character disconnectedCharacter;
 
     public PlayerDisconnectionNotify(Character disconnectedCharacter) {

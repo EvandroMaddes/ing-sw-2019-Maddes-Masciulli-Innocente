@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.RemoteView;
  * represent a GameTrack Update, when a player is killed
  *  or  (DominationMod) when a SpawnSquare is damaged
  */
-public class KillShotTrackUpdateEvent extends ModelViewEvent {
+public class KillShotTrackUpdateEvent extends ModelViewBroadcastEvent {
     private Character[] damageTokens;
     private int[] sequence;
 

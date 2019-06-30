@@ -7,7 +7,7 @@ import it.polimi.ingsw.view.RemoteView;
 /**
  * Quando si connette un nuovo giocatore, viene mostrato a tutti i client connessi;
  */
-public class NewPlayerJoinedUpdateEvent extends ModelViewEvent {
+public class NewPlayerJoinedUpdateEvent extends ModelViewBroadcastEvent {
 
     String newPlayer;
     Character characterChoice;

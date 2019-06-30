@@ -38,6 +38,8 @@ public class GUI extends RemoteView  {
 
     private String prova;
 
+
+
     //todo aggiunto per essere chiamato da client
     @Override
     public void printScreen() {
@@ -45,7 +47,7 @@ public class GUI extends RemoteView  {
     }
 
     @Override
-    public void setGame(LobbySettingsEvent lobbySettings) {
+    public void setGame(int mapNumber) {
     }
 
     @Override

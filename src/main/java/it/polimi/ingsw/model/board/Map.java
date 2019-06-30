@@ -17,11 +17,20 @@ public class Map {
     public static final String BIG_RIGHT = "rightFirst";
     public static final String SMALL_RIGHT = "rightSecond";
 
-    private ArrayList<SpawnSquare> spawnSquares = new ArrayList<SpawnSquare>();
+    private ArrayList<SpawnSquare> spawnSquares = new ArrayList<>();
     private Square[][] squareMatrix;
+    private int chosenMap;
 
     public Map(String leftMap, String rightMap) {
         this.squareMatrix = createGround(leftMap, rightMap);
+        if (leftMap.equals(BIG_LEFT) && rightMap.equals(BIG_RIGHT))
+            chosenMap = 0;
+        else if (leftMap.equals(BIG_LEFT))
+            chosenMap = 2;
+        else if (leftMap.equals(SMALL_LEFT) && rightMap.equals(BIG_RIGHT))
+            chosenMap = 1;
+        else
+            chosenMap = 3;
     }
 
 
@@ -227,5 +236,9 @@ public class Map {
 
     public ArrayList<SpawnSquare> getSpawnSquares() {
         return spawnSquares;
+    }
+
+    public int getChosenMap() {
+        return chosenMap;
     }
 }

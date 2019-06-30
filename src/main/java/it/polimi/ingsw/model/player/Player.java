@@ -207,12 +207,12 @@ public class Player extends Observable {
             messageWeapons[i] = weapons[i].getName();
         }
 
-        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(messageWeapons, character, getLoadedWeapons());
+        PlayerWeaponUpdateEvent message = new PlayerWeaponUpdateEvent(character, messageWeapons, getLoadedWeapons());
         setChanged();
         notifyObservers(message);
     }
 
-    private boolean[] getLoadedWeapons(){
+    public boolean[] getLoadedWeapons(){
         boolean[] loadedWeapons = new boolean[numberOfWeapons];
         for (int i = 0; i < numberOfWeapons; i++) {
             loadedWeapons[i] = weapons[i].isLoaded();
