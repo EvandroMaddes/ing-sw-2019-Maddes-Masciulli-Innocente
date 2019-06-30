@@ -2,16 +2,13 @@ package it.polimi.ingsw.event.model_view_event;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.view.RemoteView;
-
-import java.util.ArrayList;
 
 /**
  * @author Francesco Masciulli
  * represent the PlayerBoard Update after a damage, a mark or a death
  */
-public class PlayerBoardUpdateEvent extends ModelViewEvent {
+public class PlayerBoardUpdateEvent extends ModelViewBroadcastEvent {
 
     private int skullNumber;
     private Character[] marks;

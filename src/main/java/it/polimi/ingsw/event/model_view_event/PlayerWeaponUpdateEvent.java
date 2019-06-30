@@ -4,7 +4,7 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
-public class PlayerWeaponUpdateEvent extends ModelViewEvent {
+public class PlayerWeaponUpdateEvent extends ModelViewBroadcastEvent {
     private String[] playerWeapon;
     private Character currCharacter;
     private boolean[] loadedWeapons;

@@ -22,7 +22,7 @@ public class LobbySettingsEvent extends ServerClientEvent {
 
     @Override
     public Event performAction(ClientInterface clientImplementation, RemoteView remoteView) {
-        remoteView.setGame(this);
+        remoteView.setGame(mapNumber);
         remoteView.printScreen();
         return null;
     }

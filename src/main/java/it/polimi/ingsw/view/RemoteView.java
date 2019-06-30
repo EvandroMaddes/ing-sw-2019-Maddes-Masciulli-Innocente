@@ -1,10 +1,6 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.ModelViewEvent;
-
-import java.util.Observable;
-import java.util.Observer;
 
 public abstract class RemoteView implements RemoteViewInterface{
 

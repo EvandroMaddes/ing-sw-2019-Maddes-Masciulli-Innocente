@@ -67,7 +67,9 @@ public class VirtualView extends Observable implements Observer{
      */
     @Override
     public void update(Observable o, Object arg) {
-        modelUpdateQueue.offer((Event) arg);
+        if(((Event)arg).getUser().equals("BROADCAST")||((Event) arg).getUser().equals(user)) {
+            modelUpdateQueue.offer((Event) arg);
+        }
     }
 
 

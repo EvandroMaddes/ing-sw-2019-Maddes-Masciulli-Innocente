@@ -259,7 +259,7 @@ public class Lobby extends Thread {
      */
     private  void cleanVirtualViews(boolean isBroadcast, Event toRemoveMessage){
         for (VirtualView currentView: virtualViewList) {
-            if(isBroadcast){
+            if(isBroadcast&&currentView.getModelUpdateQueue().contains(toRemoveMessage)){
                 currentView.getModelUpdateQueue().remove(toRemoveMessage);
             }
             else {
@@ -278,23 +278,24 @@ public class Lobby extends Thread {
      */
     private Event findNextMessage(){
         message = null;
-
-        Event currMessage = virtualViewList.get(0).getModelUpdateQueue().poll();
-        if(currMessage!=null){
-            cleanVirtualViews(true, currMessage);
-            return currMessage;
+        Event currMessage;
+        for (VirtualView currView: virtualViewList) {
+            currMessage = currView.getModelUpdateQueue().poll();
+            if(currMessage!=null){
+                cleanVirtualViews(true, currMessage);
+                return currMessage;
+            }
         }
-        else{
-            for (VirtualView currentView: virtualViewList) {
-                currMessage = currentView.getToRemoteView();
-                if(currMessage!=null){
-                    cleanVirtualViews(false, currMessage);
-                    return currMessage;
-                }
+        for (VirtualView currentView: virtualViewList) {
+            currMessage = currentView.getToRemoteView();
+            if(currMessage!=null){
+                cleanVirtualViews(false, currMessage);
+                return currMessage;
             }
         }
         return null;
     }
+
 
 
 

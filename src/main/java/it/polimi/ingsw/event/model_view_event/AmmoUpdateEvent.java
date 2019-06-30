@@ -8,7 +8,7 @@ import it.polimi.ingsw.view.RemoteView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmmoUpdateEvent extends ModelViewEvent {
+public class AmmoUpdateEvent extends ModelViewBroadcastEvent {
     private ArrayList<AmmoCube> ammo;
     private Character currCharacter;
     public AmmoUpdateEvent(Character currCharacter, List<AmmoCube> ammo) {

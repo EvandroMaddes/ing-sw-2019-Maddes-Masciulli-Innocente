@@ -117,18 +117,17 @@ public class CLI extends RemoteView {
     }
 
     /**
-     *setter
+     * setter
      * @param lobbySettings contains information of map and gametrack
      */
     @Override
-    public void setGame(LobbySettingsEvent lobbySettings) {
-        display.setMap(new CLIMap(lobbySettings.getMapNumber()));
+    public void setGame(int mapNumber) {
+        display.setMap(new CLIMap(mapNumber));
         CLIGameTrack gameTrack = new CLIGameTrack();
         gameTrack.createGameTrack();
         display.setGameTrack(gameTrack);
-
-        // TODO: 24/06/2019 settare la playerBoard dello user
     }
+
 
     /**
      * user choice for character
