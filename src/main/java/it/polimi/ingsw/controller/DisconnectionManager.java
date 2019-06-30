@@ -11,16 +11,25 @@ public class DisconnectionManager {
     private Controller controller;
     private ArrayList<Player> disconnectedPlayers;
     private ArrayList<Player> gamePlayers;
-
+    private ArrayList<Player> disconnectingQueue;
 
     public DisconnectionManager(Controller controller) {
         this.controller = controller;
         disconnectedPlayers = new ArrayList<>();
+        disconnectingQueue = new ArrayList<>();
         gamePlayers = controller.getGameManager().getModel().getPlayers();
     }
 
-    public void removePlayer(String username){
+    public void disconnectionManage(String username){
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
+        if (controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer)
+            disconnectingQueue.add(disconnectedPlayer);
+        else
+            removePlayer(disconnectedPlayer);
+    }
+
+    public void removePlayer(Player disconnectedPlayer){
+        disconnectingQueue.remove(disconnectedPlayer);
         controller.getGameManager().getModel().getPlayers().remove(disconnectedPlayer);
         this.disconnectedPlayers.add(disconnectedPlayer);
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();
@@ -28,6 +37,8 @@ public class DisconnectionManager {
         controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getCharacter()));
         if (controller.getGameManager().getModel().getPlayers().size() < 3)
             controller.getGameManager().endGame();
+        else
+            controller.getGameManager().newRound();
     }
 
     public void reconnectPlayer(String username){
@@ -41,5 +52,13 @@ public class DisconnectionManager {
 
     public ArrayList<Player> getGamePlayers() {
         return gamePlayers;
+    }
+
+    public ArrayList<Player> getDisconnectedPlayers() {
+        return disconnectedPlayers;
+    }
+
+    public ArrayList<Player> getDisconnectingQueue() {
+        return disconnectingQueue;
     }
 }

@@ -135,13 +135,13 @@ public class RoundManager {
         Player actualPlayer = null;
         while (iterator.hasNext() && usablePowerUp.isEmpty()){
             actualPlayer = (Player)iterator.next();
-            if (actualPlayer.getTimesGetDamaged() > 0)
+            if (actualPlayer.getTimesGetDamaged() > 0 && !gameManager.getDisconnectionManager().getDisconnectingQueue().contains(actualPlayer))
                 for (PowerUp p: actualPlayer.getPowerUps()){
                     if (p.whenToUse() == PowerUp.Usability.END_TURN)
                         usablePowerUp.add(p);
             }
         }
-        if (!usablePowerUp.isEmpty())
+        if (!usablePowerUp.isEmpty() && actualPlayer != null)
             askForEndRoundPowerUp(actualPlayer, usablePowerUp);
         else
             nextPhase();

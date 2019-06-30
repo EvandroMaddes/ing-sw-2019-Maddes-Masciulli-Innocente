@@ -157,13 +157,20 @@ public class GameManager {
                 firsPlayerPlayed = true;
         }
 
-        if (firstRoundPhase){
-            currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
+        if (getDisconnectionManager().getDisconnectingQueue().contains(model.getPlayers().get(playerTurn))){
+            getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
+            playerTurn--;
+            if (model.getPlayers().size() >= 3)
+                newRound();
         }
-        else
-            currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
 
-        currentRound.manageRound();
+        else {
+            if (firstRoundPhase) {
+                currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
+            } else
+                currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
+            currentRound.manageRound();
+        }
     }
 
     private boolean gameEnded(){
