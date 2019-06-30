@@ -12,8 +12,12 @@ public class PlayerReconnectionNotify extends ModelViewBroadcastEvent {
         this.reconnectedCharacter = reconnectedCharacter;
     }
 
+    public Character getReconnectedCharacter() {
+        return reconnectedCharacter;
+    }
+
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.playerReconnectionNotify(getUser(),getReconnectedCharacter());
     }
 }

@@ -546,6 +546,12 @@ public class CLI extends RemoteView {
         display.printDisplay();
     }
 
+    @Override
+    public Event playerReconnectionNotify(String user, Character character) {
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+user+" reconnected: "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(character)+character.name().concat(" is back in the arena!"));
+        return new UpdateChoiceEvent(BROADCASTSTRING);
+    }
+
     /**
      * Every time one player joins the game it's notified to other player
      * @param newPlayer  new player username

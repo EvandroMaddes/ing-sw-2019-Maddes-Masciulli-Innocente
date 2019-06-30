@@ -384,4 +384,9 @@ public class GUI extends RemoteView  {
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         return null;
     }
+
+    @Override
+    public Event playerReconnectionNotify(String user, Character character) {
+        return null;
+    }
 }

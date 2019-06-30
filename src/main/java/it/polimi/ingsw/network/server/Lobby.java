@@ -187,8 +187,9 @@ public class Lobby extends Thread {
                 ArrayList<Event> disconnectedClients = ping();
                 if(disconnectedClients.isEmpty()) {
                     Event nextMessage = findNextMessage();
+                    try {
+                        String currentUser = nextMessage.getUser();
 
-                    String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
                     if (message == null ) {
                         message = new DisconnectedEvent(currentUser);
@@ -198,12 +199,15 @@ public class Lobby extends Thread {
                         try {
                             mapUserView.get(message.getUser()).toController(message);
                             log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
-                            // TODO: 2019-06-30 Prova a togliere ClassCast-> è se torna un UpdateChoice dopo ReconnectionEvent 
+                            
                         }catch(ClassCastException exc){
                             message = null;
                         }
                     }
-
+                    }catch (NullPointerException noNewMessage){
+                        gameCouldStart = false;
+                        break;
+                    }
                     //lobbyController.update(mapUserView.get(message.getUser()), message);
                 }
                 else {
@@ -218,6 +222,7 @@ public class Lobby extends Thread {
 
                 //todo controllo se gioco terminato || dopo WinnerEvent??
                 shutDown=!gameCouldStart;
+
             }
 
             serverRMI.shutDown();
@@ -298,6 +303,7 @@ public class Lobby extends Thread {
                 return currMessage;
             }
         }
+
         return null;
     }
 
