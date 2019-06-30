@@ -74,11 +74,13 @@ public class GameModel extends Observable{
                 if (this.getGameboard().getMap().getSpawnSquares().contains(this.getGameboard().getMap().getSquareMatrix()[i][j]))
                     reconnectionEvent.addEvent(new WeaponUpdateEvent(i,j, Encoder.encodeWeaponsIntoArray(((SpawnSquare)this.getGameboard().getMap().getSquareMatrix()[i][j]).getWeapons())));
                 else {
-                    AmmoTile ammoTile = ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[i][j]).getAmmo();
-                    if (ammoTile.isPowerUpTile())
-                        reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), "POWERUP"));
-                    else
-                        reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), ammoTile.getAmmoCubes()[2].toString()));
+                    if (this.getGameboard().getMap().getSquareMatrix()[i][j] != null && ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[i][j]).checkAmmo()) {
+                        AmmoTile ammoTile = ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[i][j]).getAmmo();
+                        if (ammoTile.isPowerUpTile())
+                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), "POWERUP"));
+                        else
+                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), ammoTile.getAmmoCubes()[2].toString()));
+                    }
                 }
             }
 
