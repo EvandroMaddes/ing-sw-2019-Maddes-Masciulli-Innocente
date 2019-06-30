@@ -14,7 +14,6 @@ public class PlayerDisconnectionNotify extends ModelViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-09
-        return null;
+        return remoteView.positionUpdate(disconnectedCharacter,404,404);//404 is used to remove one player from the map
     }
 }
