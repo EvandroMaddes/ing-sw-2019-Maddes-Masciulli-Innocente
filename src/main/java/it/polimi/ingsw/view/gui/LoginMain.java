@@ -15,7 +15,6 @@ public class LoginMain extends Application{
    private Parent root;
    private LoginController loginController;
    private static final GUI gui = new GUI();
-   private static final Client client = new Client();
 
     /**
      *
@@ -31,7 +30,7 @@ public class LoginMain extends Application{
      * @throws Exception
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         FXMLLoader loginFxml = new FXMLLoader(getClass().getResource("/loginScene.fxml"));
 
@@ -41,23 +40,19 @@ public class LoginMain extends Application{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         loginController = loginFxml.getController();
-
         loginController.setGui(gui);
-
         primaryStage.setScene(new Scene(root, 800, 560));
         primaryStage.show();
     }
-
 
     public static GUI getGui() {
         return gui;
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void guiMain() {
+        launch();
     }
 
 

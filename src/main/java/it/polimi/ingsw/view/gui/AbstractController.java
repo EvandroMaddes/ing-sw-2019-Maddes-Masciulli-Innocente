@@ -2,10 +2,12 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public abstract class AbstractController {
     private GUI gui;
+    private Stage primaryStage;
 
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -19,8 +21,12 @@ public abstract class AbstractController {
         gui.sendMessage(choice);
     }
 
-    public void showStage(Stage stage){
-    stage.show();
-    System.out.println("shoew");
+    public void showScene(Scene scene){
+    primaryStage.setScene(scene);
+    primaryStage.show();
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }

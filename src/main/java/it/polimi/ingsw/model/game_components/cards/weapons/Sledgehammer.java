@@ -17,7 +17,7 @@ public class Sledgehammer extends AlternateFireWeapon {
     private boolean intermediateEffect;
 
     public Sledgehammer() {
-        super(CubeColour.Yellow, "SLDGEHAMMER",
+        super(CubeColour.Yellow, "SLEDGEHAMMER",
                 new AmmoCube[]{new AmmoCube(CubeColour.Yellow)},
                 new AmmoCube[]{new AmmoCube(CubeColour.Red)});
     }
