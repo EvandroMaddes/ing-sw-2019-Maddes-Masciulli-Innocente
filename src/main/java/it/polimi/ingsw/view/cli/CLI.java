@@ -1061,7 +1061,7 @@ public class CLI extends RemoteView {
 
         do{
 
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select a corrent option:");
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select a correct option:");
             choice = CLIHandler.intRead();
 
         } while(choice<0 || choice>3 || !available[choice]);
@@ -1098,12 +1098,12 @@ public class CLI extends RemoteView {
     private int[] payment(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest){
         ArrayList<Integer> selected = new ArrayList<Integer>() ;
         int index ;
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"It's time to pay...");
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape() +"It's time to pay:");
         String choice = answerControl();
 
         if (choice.equalsIgnoreCase("Y")) {
 
-            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Minimum powerUP request: \n");
+            System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Minimum powerUP request:\n");
             colourPowerUpRequest(minimumPowerUpRequest);
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+ "Max powerUP request:\n ");
             colourPowerUpRequest(maximumPowerUpRequest);
@@ -1155,7 +1155,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * it found color by name
+     * it finds color by name
      * @param colourString name of colour
      * @return colour escape
      */
@@ -1174,8 +1174,8 @@ public class CLI extends RemoteView {
     /**
      * it prints request of power up
      * @param powerUpRequest pos 0-RED
-     *                      pos 1-YELLOW
-     *                      pos 2-BLUE
+     *                       pos 1-YELLOW
+     *                       pos 2-BLUE
      */
     private void colourPowerUpRequest(int[] powerUpRequest) {
     if (powerUpRequest[0] != 0) {
@@ -1190,7 +1190,7 @@ public class CLI extends RemoteView {
     }
 }
     /**
-     * It checks if imput is equals to Y or N
+     * It checks if input is equals to Y or N
      * @return user choice
      */
         private String answerControl(){
