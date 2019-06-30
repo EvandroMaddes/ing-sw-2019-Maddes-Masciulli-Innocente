@@ -32,7 +32,7 @@ public class DisconnectionManager {
                 defaultSetupDisconnection(username);
             }
         }
-        
+
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
         if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
             disconnectingQueue.add(disconnectedPlayer);
