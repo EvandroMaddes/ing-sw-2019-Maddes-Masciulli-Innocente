@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
+import it.polimi.ingsw.event.server_view_event.ServerClientEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
@@ -11,16 +13,25 @@ import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 
+import it.polimi.ingsw.network.client.ClientInterface;
+import it.polimi.ingsw.network.client.rmi.RMIClient;
+import it.polimi.ingsw.network.client.socket.SocketClient;
+import it.polimi.ingsw.utils.CustomLogger;
+import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
+import java.net.ConnectException;
+import java.rmi.RemoteException;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class CLI extends RemoteView {
 
     private CLIDisplay display;
     private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
     private static final String BROADCASTSTRING = "BROADCAST";
+
 
     /**
      * Constructor:
@@ -118,7 +129,7 @@ public class CLI extends RemoteView {
 
     /**
      * setter
-     * @param lobbySettings contains information of map and gametrack
+     * @param mapNumber is the map chosen
      */
     @Override
     public void setGame(int mapNumber) {

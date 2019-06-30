@@ -36,6 +36,8 @@ public class GUI extends RemoteView  {
 
     private String prova;
 
+
+
     //todo aggiunto per essere chiamato da client
     @Override
     public void printScreen() {
