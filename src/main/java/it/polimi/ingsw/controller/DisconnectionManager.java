@@ -75,6 +75,8 @@ public class DisconnectionManager {
         disconnectedPlayers.add(newPlayer);
         newPlayer.setPosition(controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().get(0));
         newPlayer.getPosition().getSquarePlayers().remove(newPlayer);
+        if (!gamePlayers.contains(newPlayer))
+            gamePlayers.add(newPlayer);
     }
 
     public void removePlayer(Player disconnectedPlayer){
@@ -82,7 +84,10 @@ public class DisconnectionManager {
         controller.getGameManager().getModel().getPlayers().remove(disconnectedPlayer);
         this.disconnectedPlayers.add(disconnectedPlayer);
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();
-        controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[disconnectedPlayer.getPosition().getRow()][disconnectedPlayer.getPosition().getColumn()].removeCurrentPlayer(disconnectedPlayer);
+        if (disconnectedPlayer.getPosition() == null) {
+            disconnectedPlayer.setPosition(controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[0][1]);
+            controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[disconnectedPlayer.getPosition().getRow()][disconnectedPlayer.getPosition().getColumn()].removeCurrentPlayer(disconnectedPlayer);
+        }
         controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getCharacter()));
         if (controller.getGameManager().getModel().getPlayers().size() < 3)
             controller.getGameManager().endGame();
