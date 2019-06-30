@@ -67,5 +67,5 @@ public class DisconnectionManagerTest {
         Assert.assertTrue(map[0][2].getSquarePlayers().contains(player3));
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
-    
+
 }

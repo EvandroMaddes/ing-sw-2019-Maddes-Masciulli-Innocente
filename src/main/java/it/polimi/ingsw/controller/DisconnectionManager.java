@@ -22,8 +22,11 @@ public class DisconnectionManager {
 
     public void disconnectionManage(String username){
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
-        if (controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer)
+        if (controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
             disconnectingQueue.add(disconnectedPlayer);
+            if (controller.getGameManager().getCurrentRound().getPhase() == 7)
+                controller.getGameManager().getCurrentRound().manageRound();
+        }
         else
             removePlayer(disconnectedPlayer);
     }
@@ -42,12 +45,24 @@ public class DisconnectionManager {
     }
 
     public void reconnectPlayer(String username){
-        Player reconnectedPlayer = Decoder.decodePlayerFromUsername(username, disconnectedPlayers);
-        controller.getGameManager().getModel().getPlayers().add(reconnectedPlayer);
-        disconnectedPlayers.remove(reconnectedPlayer);
-        controller.getUsersVirtualView().get(username).setPlayerConnected();
-        controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[reconnectedPlayer.getPosition().getRow()][reconnectedPlayer.getPosition().getColumn()].addCurrentPlayer(reconnectedPlayer);
-        controller.getGameManager().getModel().notifyObservers(new PlayerReconnectionNotify(reconnectedPlayer.getCharacter()));
+        Player reconnectedPlayer;
+        boolean playerInRemoveQueue = false;
+        for (Player p: disconnectingQueue) {
+            if (p.getUsername().equals(username))
+                playerInRemoveQueue = true;
+        }
+        if(playerInRemoveQueue){
+            reconnectedPlayer = Decoder.decodePlayerFromUsername(username, disconnectingQueue);
+            disconnectingQueue.remove(reconnectedPlayer);
+        }
+        else {
+            reconnectedPlayer = Decoder.decodePlayerFromUsername(username, disconnectedPlayers);
+            controller.getGameManager().getModel().getPlayers().add(reconnectedPlayer);
+            disconnectedPlayers.remove(reconnectedPlayer);
+            controller.getUsersVirtualView().get(username).setPlayerConnected();
+            controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[reconnectedPlayer.getPosition().getRow()][reconnectedPlayer.getPosition().getColumn()].addCurrentPlayer(reconnectedPlayer);
+            controller.getGameManager().getModel().notifyObservers(new PlayerReconnectionNotify(reconnectedPlayer.getCharacter()));
+        }
     }
 
     public ArrayList<Player> getGamePlayers() {
