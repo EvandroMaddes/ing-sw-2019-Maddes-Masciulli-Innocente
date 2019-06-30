@@ -174,6 +174,7 @@ public class Lobby extends Thread {
                 ArrayList<Event> disconnectedClients = ping();
                 if(disconnectedClients.isEmpty()) {
                     Event nextMessage = findNextMessage();
+
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
                     if (message == null) {
@@ -230,7 +231,7 @@ public class Lobby extends Thread {
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
 
         }
-        else if(mapUserServer.containsKey(toSend.getUser())){
+        else{
             ServerInterface server = mapUserServer.get(currentUser);
             server.sendMessage(toSend);
             returnedEvent = server.listenMessage();
@@ -380,7 +381,7 @@ public class Lobby extends Thread {
         disconnectedClientList.add(user);
         message = mapUserServer.get(user).disconnectClient(user);
         mapUserServer.remove(user);
-        //mapUserView.get(user).toController(message);
+        mapUserView.get(user).toController(message);
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
     }
