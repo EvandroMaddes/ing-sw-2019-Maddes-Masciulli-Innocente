@@ -58,7 +58,7 @@ public class GameManager {
             }
             case 1:{
                 map = new Map(Map.BIG_LEFT,Map.SMALL_RIGHT );
-                break; 
+                break;
             }
             case 2:{
                 map = new Map(Map.SMALL_LEFT,Map.BIG_RIGHT );

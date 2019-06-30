@@ -57,7 +57,7 @@ public class DecoderTest {
 
     @Test
     public void decodeSquareTest(){
-        Map map = new Map("leftFirst", "rightSecond");
+        Map map = new Map(Map.BIG_LEFT, Map.SMALL_RIGHT);
         int toDecodeX = 2;
         int toDecodeY = 1;
         Square expectedSquare = map.getSquareMatrix()[toDecodeX][toDecodeY];

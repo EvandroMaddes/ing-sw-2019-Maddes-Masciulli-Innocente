@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 public class ReconnectionSettingsEvent extends ModelViewEvent {
 
-    private ArrayList<ClientEvent>  reconnectionSettingsEvents =new ArrayList();
+    private ArrayList<ClientEvent>  reconnectionSettingsEvents;
+
     public ReconnectionSettingsEvent(String user) {
         super(user);
+        reconnectionSettingsEvents = new ArrayList<>();
     }
 
     public void addEvent(ClientEvent toAdd){

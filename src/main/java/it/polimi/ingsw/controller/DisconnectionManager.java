@@ -108,6 +108,7 @@ public class DisconnectionManager {
             controller.getUsersVirtualView().get(username).setPlayerConnected();
             controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[reconnectedPlayer.getPosition().getRow()][reconnectedPlayer.getPosition().getColumn()].addCurrentPlayer(reconnectedPlayer);
             controller.getGameManager().getModel().notifyObservers(new PlayerReconnectionNotify(reconnectedPlayer.getCharacter()));
+            controller.getGameManager().getModel().reconnectionSetting(username, gamePlayers);
         }
     }
 

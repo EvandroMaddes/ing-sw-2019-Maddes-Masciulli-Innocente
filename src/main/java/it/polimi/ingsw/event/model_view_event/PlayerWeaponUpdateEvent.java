@@ -13,7 +13,7 @@ public class PlayerWeaponUpdateEvent extends ModelViewBroadcastEvent {
         return currCharacter;
     }
 
-    public PlayerWeaponUpdateEvent(String[] playerWeapon, Character currCharacter, boolean[] loadedWeapons) {
+    public PlayerWeaponUpdateEvent(Character currCharacter, String[] playerWeapon, boolean[] loadedWeapons) {
         super();
         this.playerWeapon = playerWeapon;
         this.currCharacter = currCharacter;
