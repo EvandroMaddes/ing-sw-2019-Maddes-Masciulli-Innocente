@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.model_view_event.PlayerDisconnectionNotify;
 import it.polimi.ingsw.event.model_view_event.PlayerReconnectionNotify;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
 
@@ -12,15 +13,26 @@ public class DisconnectionManager {
     private ArrayList<Player> disconnectedPlayers;
     private ArrayList<Player> gamePlayers;
     private ArrayList<Player> disconnectingQueue;
+    private boolean[] availableCharacter;
 
     public DisconnectionManager(Controller controller) {
         this.controller = controller;
         disconnectedPlayers = new ArrayList<>();
         disconnectingQueue = new ArrayList<>();
         gamePlayers = controller.getGameManager().getModel().getPlayers();
+        availableCharacter = new boolean[]{true, true, true, true, true};
     }
 
     public void disconnectionManage(String username){
+        if (controller.getGameManager().getCurrentRound() == null){
+            boolean isInGamePlayers = containsPlayer(username, gamePlayers);
+            boolean isInDisconnectedPlayers = containsPlayer(username, disconnectedPlayers);
+            boolean isInDisconnectingQueue = containsPlayer(username, disconnectingQueue);
+            if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue){
+                defaultSetupDisconnection(username);
+            }
+        }
+
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
         if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
             disconnectingQueue.add(disconnectedPlayer);
@@ -29,6 +41,40 @@ public class DisconnectionManager {
         }
         else
             removePlayer(disconnectedPlayer);
+    }
+
+    private boolean containsPlayer(String username, ArrayList<Player> playerList){
+        boolean containsPlayer = false;
+        for (Player p:playerList) {
+            if(p.getUsername().equals(username))
+                containsPlayer = true;
+            switch (p.getCharacter()){
+                case D_STRUCT_OR:{ availableCharacter[0] = false; break;}
+                case SPROG:{ availableCharacter[1] = false; break;}
+                case DOZER:{ availableCharacter[2] = false; break;}
+                case BANSHEE:{ availableCharacter[3] = false; break;}
+                case VIOLET:{ availableCharacter[4] = false; break;}
+            }
+        }
+        return containsPlayer;
+    }
+
+    private void defaultSetupDisconnection(String username){
+        Character defaultCharacter;
+        if (availableCharacter[0])
+            defaultCharacter = Character.D_STRUCT_OR;
+        else if (availableCharacter[1])
+            defaultCharacter = Character.SPROG;
+        else if (availableCharacter[2])
+            defaultCharacter = Character.DOZER;
+        else if (availableCharacter[3])
+            defaultCharacter = Character.BANSHEE;
+        else
+            defaultCharacter = Character.VIOLET;
+        Player newPlayer = new Player(username, defaultCharacter);
+        disconnectedPlayers.add(newPlayer);
+        newPlayer.setPosition(controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().get(0));
+        newPlayer.getPosition().getSquarePlayers().remove(newPlayer);
     }
 
     public void removePlayer(Player disconnectedPlayer){

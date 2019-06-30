@@ -162,8 +162,9 @@ public class GameManager {
             playerTurn--;
             if (model.getPlayers().size() >= 3)
                 newRound();
+            else
+                endGame();
         }
-
         else {
             if (firstRoundPhase) {
                 currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));

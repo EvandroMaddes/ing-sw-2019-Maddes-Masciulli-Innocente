@@ -52,7 +52,7 @@ public class DisconnectionManagerTest {
     }
 
     @Test
-    public void disconnectionOnAnotherROundTest(){
+    public void disconnectionOnAnotherRoundTest(){
         Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
         Assert.assertEquals(map[0][2], player3.getPosition());
         controller.getGameManager().newRound();
