@@ -119,6 +119,8 @@ public  class LobbyChioceController extends AbstractController{
     }
 
 
-
+    public AnchorPane getGameChoicePanel() {
+        return gameChoicePanel;
+    }
 }
 

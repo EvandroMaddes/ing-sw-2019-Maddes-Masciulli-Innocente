@@ -44,14 +44,16 @@ public class LoginController extends AbstractController{
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
-        getGui().setLoginController(this);
+        // getGui().setLoginController(this);
 
         if(getGui()==null){
             System.out.println("serveGUI");
         }
+        //setGui(new GUI());
         getGui().setUser(username.getText());
-        //Ho provate a ripasare la gui al loginMain
         getGui().setPrimaryStage((Stage)enterButton.getScene().getWindow());
+        setPrimaryStage((Stage)enterButton.getScene().getWindow());
+
         System.out.println("IP= "+ipAddresString);
         System.out.println(2);
         getGui().initialize();

@@ -54,10 +54,11 @@ public class Client {
 
           if(gameInterface.equalsIgnoreCase("GUI")){
 
-              //todo spostata prova della gui solo se interfaccia è gui; dovrebbe andare, remoteViewImpl ha user giusto
-              Application.launch(LoginMain.class);
-              remoteViewImplementation= LoginMain.getGui();
-
+               // new Thread(){public void run(){
+                    LoginMain.guiMain();
+               // }}.start();
+                remoteViewImplementation = LoginMain.getGui();
+                remoteViewImplementation.actionChoice(true);
 
           }
           else{
@@ -70,6 +71,8 @@ public class Client {
          * !!!!!PROVA
          * !!!
          */
+
+
         /*
        boolean[] available=new boolean[3];
         available[0]=true;

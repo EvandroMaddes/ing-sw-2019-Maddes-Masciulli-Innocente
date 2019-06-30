@@ -34,6 +34,8 @@ public class GUI extends RemoteView  {
     private Stage gameBoardStage;
     private Stage mapCharacterStage;
 
+    private Scene gameboardScene;
+
     private String prova;
 
     //todo aggiunto per essere chiamato da client
@@ -93,9 +95,6 @@ public class GUI extends RemoteView  {
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/mapCharacterChoice.fxml"));
-
-
-
         try {
             lobby = lobbyFxml.load();
             gameboard = gameBoardFxml.load();
@@ -110,11 +109,16 @@ public class GUI extends RemoteView  {
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
         mapCharacterController.setGui(this);
-
+/*
         lobbyStage = new Stage();
+        lobbyStage = ((Stage)lobbyController.getScene().getWindow());
+        setPrimaryStage((Stage)enterButton.getScene().getWindow());
+
         gameBoardStage = new Stage();
         mapCharacterStage = new Stage();
+*/
 
+         gameboardScene = new Scene(gameboard,800,560);
 
         lobbyStage.setScene(new Scene(lobby, 800, 560));
         gameBoardStage.setScene(new Scene(gameboard,800,560));
@@ -128,7 +132,6 @@ public class GUI extends RemoteView  {
 
         //Chiude la finestra e il metodo torna al loginControlle
         // todo passa alla prossima scena forse questo può essere thread
-        //Platform.runLater(()->actionChoice(true));
 
     }
 
@@ -294,9 +297,11 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event actionChoice(boolean fireEnable) {
-        System.out.println(322222);
-        Platform.runLater(()->loginController.showStage(gameBoardStage));
-        Platform.runLater(()->gameBoardController.getFireButton().setDisable(!fireEnable));
+        System.out.println("action choice");
+        Platform.runLater(()->{loginController.showScene(gameboardScene);
+        System.out.println("run later");
+        gameBoardController.getFireButton().setDisable(!fireEnable);}
+        );
         return null;
     }
 
