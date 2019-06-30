@@ -110,10 +110,13 @@ public class Server {
         ViewServerEvent message = null;
         ServerInterface currServer = mapUserServer.get(incomingUser);
         currServer.sendMessage(new WelcomeEvent(incomingUser, availableChoices, waitingLobby,startedLobby));
-        while(message == null) {
-            message = (ViewServerEvent) currServer.listenMessage();
+        message = (ViewServerEvent) currServer.listenMessage();
+        if(message == null){
+            currServer.disconnectClient(incomingUser);
+            handledUsers--;
+            log.warning("Disconnected client");
         }
-        if(message.isNewGame()){
+        else if(message.isNewGame()){
             startNewGame(message.performAction());
         }
         else{
