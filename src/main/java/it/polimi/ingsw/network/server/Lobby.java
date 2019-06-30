@@ -2,15 +2,18 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
 import it.polimi.ingsw.event.model_view_event.PlayerDisconnectionNotify;
 import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
+import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
@@ -111,22 +114,31 @@ public class Lobby extends Thread {
                 //Aggiorna il numero di client connessi e li mappa verso il server giusto, allocando una VirtualView
                 //Gestione dell'inizializzazione della partita
                 while(!gameCouldStart){
-                    checkNewClient();
+                    ArrayList<Event> disconnectedClients = ping();
+                    if(disconnectedClients.isEmpty()){
+                        if (activeClientList.size() <= 2) {
 
-                    if(!activeClientList.isEmpty()&&!setUpComplete){
-                        String firstUser = activeClientList.get(0);
-                        ServerInterface currServer = mapUserServer.get(firstUser);
-                        currServer.sendMessage(new GameRequestEvent(firstUser));
-                        log.info(lobbyName.concat(":\tSending message to:\t"+firstUser+"\n"));
-                        while(message == null) {
-                            message = currServer.listenMessage();
+                            if (gameTimer != null) {
+                                gameTimer.interrupt();
+                                log.info("GameTimer stopped!");
+                            }
+                            gameTimer = null;
                         }
-                        mapChoice = ((GameChoiceEvent)message).getMap();
-                        setUpComplete = true;
-                        log.info(lobbyName.concat("\tListened message from:\t" + message.getUser()+"\n"));
-                        message = null;
+                        checkNewClient();
+                        if (!activeClientList.isEmpty() && !setUpComplete) {
+                            String firstUser = activeClientList.get(0);
+                            ServerInterface currServer = mapUserServer.get(firstUser);
+                            currServer.sendMessage(new GameRequestEvent(firstUser));
+                            log.info(lobbyName.concat(":\tSending message to:\t" + firstUser + "\n"));
+                            while (message == null) {
+                                message = currServer.listenMessage();
+                            }
+                            mapChoice = ((GameChoiceEvent) message).getMap();
+                            setUpComplete = true;
+                            log.info(lobbyName.concat("\tListened message from:\t" + message.getUser() + "\n"));
+                            message = null;
+                        }
                     }
-
 
 
                     if(activeClientList.size() > 2) {
@@ -178,7 +190,7 @@ public class Lobby extends Thread {
 
                     String currentUser = nextMessage.getUser();
                     message = sendAndWaitNextMessage(nextMessage);
-                    if (message == null) {
+                    if (message == null ) {
                         message = new DisconnectedEvent(currentUser);
                         disconnectClient(currentUser);
                     }
@@ -303,7 +315,9 @@ public class Lobby extends Thread {
 
                 }
                 if(mapChoice!=404) {
-                    mapUserServer.get(connectedUser).sendMessage(new LobbySettingsEvent(connectedUser, mapChoice));
+                    if(mapUserServer.containsKey(connectedUser)) {
+                        mapUserServer.get(connectedUser).sendMessage(new LobbySettingsEvent(connectedUser, mapChoice));
+                    }
                 }
             }
             else{
@@ -383,7 +397,9 @@ public class Lobby extends Thread {
         disconnectedClientList.add(user);
         message = mapUserServer.get(user).disconnectClient(user);
         mapUserServer.remove(user);
-        mapUserView.get(user).toController(message);
+        if(isGameCouldStart()){
+            mapUserView.get(user).toController(message);
+        }
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
     }
