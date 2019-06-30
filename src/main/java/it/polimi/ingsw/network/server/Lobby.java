@@ -195,8 +195,13 @@ public class Lobby extends Thread {
                         disconnectClient(currentUser);
                     }
                     else if (!message.getUser().equals("BROADCAST")) {
-                        mapUserView.get(message.getUser()).toController(message);
-                        log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
+                        try {
+                            mapUserView.get(message.getUser()).toController(message);
+                            log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
+                            // TODO: 2019-06-30 Prova a togliere ClassCast-> è se torna un UpdateChoice dopo ReconnectionEvent 
+                        }catch(ClassCastException exc){
+                            message = null;
+                        }
                     }
 
                     //lobbyController.update(mapUserView.get(message.getUser()), message);

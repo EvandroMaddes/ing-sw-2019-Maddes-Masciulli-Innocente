@@ -25,6 +25,7 @@ public class ReconnectionSettingsEvent extends ModelViewEvent {
         for (ClientEvent currUpdate: reconnectionSettingsEvents) {
             currUpdate.performAction(remoteView);
         }
-        return new UpdateChoiceEvent("BROADCAST");
+        remoteView.printScreen();
+        return new UpdateChoiceEvent(getUser());
     }
 }

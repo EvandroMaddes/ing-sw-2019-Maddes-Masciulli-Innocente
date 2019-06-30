@@ -14,6 +14,6 @@ public class ReconnectionMapUpdate extends ModelViewBroadcastEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
         remoteView.setGame(mapNumber);
-        return null;
+        return new UpdateChoiceEvent("BROADCAST");
     }
 }

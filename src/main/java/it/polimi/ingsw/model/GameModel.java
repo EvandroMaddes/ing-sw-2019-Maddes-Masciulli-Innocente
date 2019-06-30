@@ -59,6 +59,7 @@ public class GameModel extends Observable{
         reconnectionEvent.addEvent(new KillShotTrackUpdateEvent( (Encoder.encodeDamageTokenList(((KillShotTrack)this.getGameboard().getGameTrack()).getTokenTrack())), this.getGameboard().getGameTrack().getTokenSequence()) );
         for (Player currentPlayer: players) {
             PlayerBoard playerBoard = currentPlayer.getPlayerBoard();
+            reconnectionEvent.addEvent(new NewPlayerJoinedUpdateEvent(currentPlayer.getUsername(),currentPlayer.getCharacter()));
             reconnectionEvent.addEvent(new PlayerBoardUpdateEvent(currentPlayer.getCharacter(), playerBoard.getSkullsNumber(), Encoder.encodeDamageTokenList(playerBoard.getMarks()), Encoder.encodeDamagesTokenArray(playerBoard.getDamageReceived(), playerBoard.getDamageAmount())));
         }
         for (Player currentPlayer: players) {
@@ -69,17 +70,19 @@ public class GameModel extends Observable{
             }
             reconnectionEvent.addEvent(new PlayerWeaponUpdateEvent(currentPlayer.getCharacter(), messageWeapons, currentPlayer.getLoadedWeapons()));
         }
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (this.getGameboard().getMap().getSpawnSquares().contains(this.getGameboard().getMap().getSquareMatrix()[i][j]))
-                    reconnectionEvent.addEvent(new WeaponUpdateEvent(i,j, Encoder.encodeWeaponsIntoArray(((SpawnSquare)this.getGameboard().getMap().getSquareMatrix()[i][j]).getWeapons())));
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (this.getGameboard().getMap().getSpawnSquares().contains(this.getGameboard().getMap().getSquareMatrix()[row][column]))
+                    reconnectionEvent.addEvent(new WeaponUpdateEvent(column,row, Encoder.encodeWeaponsIntoArray(((SpawnSquare)this.getGameboard().getMap().getSquareMatrix()[row][column]).getWeapons())));
                 else {
-                    if (this.getGameboard().getMap().getSquareMatrix()[i][j] != null && ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[i][j]).checkAmmo()) {
-                        AmmoTile ammoTile = ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[i][j]).getAmmo();
+                    if (this.getGameboard().getMap().getSquareMatrix()[row][column] != null && ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[row][column]).checkAmmo()) {
+                        AmmoTile ammoTile = ((BasicSquare) this.getGameboard().getMap().getSquareMatrix()[row][column]).getAmmo();
                         if (ammoTile.isPowerUpTile())
-                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), "POWERUP"));
+                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, column, row, ammoTile.getAmmoCubes()[0].getColour().name(),
+                                    ammoTile.getAmmoCubes()[1].getColour().name(), "POWERUP"));
                         else
-                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, i, j, ammoTile.getAmmoCubes()[0].toString(), ammoTile.getAmmoCubes()[1].toString(), ammoTile.getAmmoCubes()[2].toString()));
+                            reconnectionEvent.addEvent(new AmmoTileUpdateEvent(true, column, row, ammoTile.getAmmoCubes()[0].getColour().name(),
+                                    ammoTile.getAmmoCubes()[1].getColour().name(), ammoTile.getAmmoCubes()[2].getColour().name()));
                     }
                 }
             }
