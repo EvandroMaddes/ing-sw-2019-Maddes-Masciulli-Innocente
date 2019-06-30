@@ -94,4 +94,26 @@ public class LockRifleTest {
         Assert.assertFalse(lockRifle.isUsableEffect(2));
         Assert.assertFalse(lockRifle.isUsable());
     }
+
+    @Test
+    public void effectOneOnSmallBoard(){
+        Map gameMap = new Map(Map.SMALL_LEFT, Map.SMALL_RIGHT);
+        map = gameMap.getSquareMatrix();
+        player1.setPosition(map[1][2]);
+        player2.setPosition(map[1][2]);
+        player3.setPosition(map[0][0]);
+        TargetPlayerRequestEvent message = (TargetPlayerRequestEvent)lockRifle.getTargetEffect(1);
+        Assert.assertEquals(2, message.getPossibleTargets().size());
+        Assert.assertTrue(message.getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertTrue(message.getPossibleTargets().contains(player3.getCharacter()));
+
+        ArrayList<Object> target = new ArrayList<>();
+        target.add(player2);
+        lockRifle.performEffect(1, target);
+        Assert.assertEquals(2, player2.getPlayerBoard().getDamageAmount());
+        Assert.assertEquals(1, player2.getPlayerBoard().getMarks().size());
+        Assert.assertFalse(lockRifle.isUsableEffect(1));
+        Assert.assertTrue(lockRifle.isUsableEffect(2));
+
+    }
 }
