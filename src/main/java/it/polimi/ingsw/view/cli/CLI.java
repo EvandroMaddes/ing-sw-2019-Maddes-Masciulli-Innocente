@@ -589,14 +589,19 @@ public class CLI extends RemoteView {
 
     /**
      * @param currCharacter modified player position
-     * @param x row
-     * @param y column
+     * @param x row: if sets at 404, players to be removed
+     * @param y column: if sets at 404, players to be removed
      * @return message notify the success of updating
      */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
+
         CLIPrintableElement currElement = new CLIPrintableElement(currCharacter, mapCharacterNameColors.get(currCharacter));
-        display.getMap().updateResource(currElement, x, y);
+        if(x==404 && y== 404){
+            display.getMap().removePlayer(currElement.getResource());
+        } else{
+            display.getMap().updateResource(currElement, x, y);
+        }
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
