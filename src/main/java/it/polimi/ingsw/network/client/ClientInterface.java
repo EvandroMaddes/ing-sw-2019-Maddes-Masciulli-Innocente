@@ -14,4 +14,5 @@ public interface ClientInterface extends NetworkHandler {
     void changeUsername(String user, String newUsername);
     void setServerPort(int serverPort);
     void reconnectClient();
+    boolean isConnected();
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.model_view_event.PlayerDisconnectionNotify;
 import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
@@ -94,14 +95,6 @@ public class Lobby extends Thread {
      */
     @Override
     public void run() {
-
-            /*serverRMI = new RMIServer(portRMI);
-            serverSocket = new SocketServer();
-            serverSocket.setServerPort(portSocket);
-            serverSocket.start();
-            Thread rmiThread = new Thread(serverRMI);
-            rmiThread.start();
-*/
             serverSocket.start();
             Thread rmiThread = new Thread(serverRMI);
             rmiThread.start();
@@ -134,7 +127,7 @@ public class Lobby extends Thread {
                     }
 
 
-                    //todo aggiungere parsing tempo da command line, ora da NetConfiguration.java
+
                     if(activeClientList.size() > 2) {
                         if(gameTimer==null){
                             gameTimer = new CustomTimer(NetConfiguration.startGameTimer);
@@ -234,18 +227,11 @@ public class Lobby extends Thread {
         if(toSend.getUser().equals("BROADCAST")){
             serverRMI.sendBroadcast(toSend);
             serverSocket.sendBroadcast(toSend);
-           /* try{
-                //todo
-                sleep(1);
-            }catch (InterruptedException e){
-                CustomLogger.logException(e);
-            }*/
             returnedEvent = new UpdateChoiceEvent("BROADCAST");
 
         }
-        else{
+        else if(mapUserServer.containsKey(toSend.getUser())){
             ServerInterface server = mapUserServer.get(currentUser);
-
             server.sendMessage(toSend);
             returnedEvent = server.listenMessage();
         }
