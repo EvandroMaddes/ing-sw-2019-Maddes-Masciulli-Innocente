@@ -259,7 +259,7 @@ public class Lobby extends Thread {
      */
     private  void cleanVirtualViews(boolean isBroadcast, Event toRemoveMessage){
         for (VirtualView currentView: virtualViewList) {
-            if(isBroadcast&&currentView.getModelUpdateQueue().contains(toRemoveMessage)){
+            if(isBroadcast){
                 currentView.getModelUpdateQueue().remove(toRemoveMessage);
             }
             else {
