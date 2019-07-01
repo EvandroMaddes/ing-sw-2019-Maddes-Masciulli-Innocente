@@ -280,7 +280,7 @@ public class CLIMap {
 
 
     /**
-     * Set a CLIPrintableElement on the map's square identified by the coordinates (of it on the mapMatrix) 
+     * Set a CLIPrintableElement on the map's square identified by the coordinates (of it on the mapMatrix)
      * @param element is the update element
      * @param coordX column is the Square's column
      * @param coordY row is the Square's row
