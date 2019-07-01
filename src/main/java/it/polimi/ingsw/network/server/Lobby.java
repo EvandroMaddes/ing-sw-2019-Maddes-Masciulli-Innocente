@@ -402,7 +402,9 @@ public class Lobby extends Thread {
     private  void disconnectClient(String user){
         activeClientList.remove(user);
         disconnectedClientList.add(user);
-        message = mapUserServer.get(user).disconnectClient(user);
+        if (mapUserServer.containsKey(user)) {
+            message = mapUserServer.get(user).disconnectClient(user);
+        }
         mapUserServer.remove(user);
         if(isGameCouldStart()){
             mapUserView.get(user).toController(message);

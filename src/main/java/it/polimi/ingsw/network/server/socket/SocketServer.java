@@ -56,6 +56,7 @@ public class SocketServer extends Thread implements ServerInterface {
         while(gameIsRunning){
             acceptClient();
         }
+
     }
 
 
@@ -104,6 +105,7 @@ public class SocketServer extends Thread implements ServerInterface {
     @Override
     public void runServer() {
         try{
+
         serverSocket = new ServerSocket(serverPort);
         }catch(IOException e){
             CustomLogger.logException(e);
@@ -130,7 +132,7 @@ public class SocketServer extends Thread implements ServerInterface {
 
                 socketList.add(clientSocketThread);
             } catch (IOException e) {
-                CustomLogger.logException(e);
+                gameIsRunning=false;
             }
         }
     }
@@ -155,7 +157,12 @@ public class SocketServer extends Thread implements ServerInterface {
         for (SocketServerThread currThread: socketList) {
 
             currThread.disconnect();
+        }
+        try{
             gameIsRunning= false;
+            serverSocket.close();
+        }catch (IOException ioExc){
+            CustomLogger.logException(ioExc);
         }
     }
 
