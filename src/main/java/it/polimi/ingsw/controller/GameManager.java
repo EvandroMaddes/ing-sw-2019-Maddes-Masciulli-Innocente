@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
@@ -161,7 +160,7 @@ public class GameManager {
         }
         currentPlayer = model.getPlayers().get(playerTurn);
 
-        if (getDisconnectionManager().getDisconnectingQueue().contains(model.getPlayers().get(playerTurn))){
+        if (getDisconnectionManager().getDisconnectingQueue().contains(currentPlayer)){
             getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
             playerTurn--;
             if (playerTurn < 0)
@@ -192,11 +191,11 @@ public class GameManager {
 
     /**
      *
-     * @return winner player. In case of draw, return null
      */
-    private Player calculateWinner() {
+    private String calculateWinner() {
         giveEndGamePoints();
 
+        ArrayList<Player> drawPlayers = new ArrayList<>();
         boolean draw = false;
         Player winner = null;
         int winningPoints = 0;
@@ -207,21 +206,36 @@ public class GameManager {
                 draw = false;
             }
             else if (p.getPoints() == winningPoints){
+                drawPlayers.clear();
+                if (winner != null)
+                    drawPlayers.add(winner);
                 boolean tockenFound = false;
                 for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()) {
                     if (!tockenFound && (d.getPlayer() == winner || d.getPlayer() == p)) {
                         winner = d.getPlayer();
                         tockenFound = true;
+                        drawPlayers.clear();
                     }
+                    else if (!drawPlayers.contains(d.getPlayer()))
+                        drawPlayers.add(d.getPlayer());
                 }
                 if (!tockenFound)
                     draw = true;
             }
         }
         if (!draw && winner != null)
-            return winner;
+            return winner.getCharacter().toString() + " (" + winner.getUsername() + ") win with " + winner.getPoints() + " points!";
         else{
-            return null;
+            String drawMessage;
+            drawMessage = "Draw ";
+            if (!drawPlayers.isEmpty()) {
+                drawMessage = drawMessage.concat("of ");
+                for (Player p : drawPlayers) {
+                    drawMessage = drawMessage.concat(p.getCharacter().toString() + " (" + p.getUsername() + "), ");
+                }
+                drawMessage= drawMessage.concat("with " + drawPlayers.get(0).getPoints() + " points");
+            }
+            return drawMessage;
         }
     }
 
@@ -315,12 +329,9 @@ public class GameManager {
     }
 
     public void endGame(){
-        Player winner = calculateWinner();
-        if (winner != null)
-            controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints(), false));
-        else
-            for (Player p: controller.getGameManager().getModel().getPlayers())
-                controller.callView(new WinnerEvent(p.getUsername(), 0, true));
+        String endGameMessage = calculateWinner();
+        controller.gameOff();
+        model.endGame(endGameMessage);
     }
 
     public void setCurrentRound(RoundManager roundManager){

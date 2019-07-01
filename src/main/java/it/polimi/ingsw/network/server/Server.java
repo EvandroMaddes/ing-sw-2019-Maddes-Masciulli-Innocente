@@ -12,6 +12,7 @@ import it.polimi.ingsw.view.cli.CLIHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.logging.Logger;
@@ -86,6 +87,7 @@ public class Server {
         while(!shutDown){
 
             cleanConnectedUsers();
+            updateStartedLobbies();
             String incomingUser = checkNewClient();
             if(!incomingUser.isEmpty()) {
                 welcomeUser(incomingUser);
@@ -101,15 +103,21 @@ public class Server {
      */
     private static void welcomeUser(String incomingUser){
         boolean[] availableChoices = {true, false, false};
+        ArrayList<String> availableStartedLobbies = new ArrayList<>();
         if(!waitingLobby.isEmpty()){
             availableChoices[1] = true;
         }
         if(!startedLobby.isEmpty()){
-            availableChoices[2] = true;
+            for (Lobby currLobby: activeLobbies) {
+                if(!currLobby.getDisconnectedClientList().isEmpty()){
+                    availableChoices[2] = true;
+                    availableStartedLobbies.add(currLobby.getLobbyName());
+                }
+            }
         }
         ViewServerEvent message = null;
         ServerInterface currServer = mapUserServer.get(incomingUser);
-        currServer.sendMessage(new WelcomeEvent(incomingUser, availableChoices, waitingLobby,startedLobby));
+        currServer.sendMessage(new WelcomeEvent(incomingUser, availableChoices, waitingLobby,availableStartedLobbies));
         message = (ViewServerEvent) currServer.listenMessage();
         if(message == null){
             currServer.disconnectClient(incomingUser);
@@ -210,21 +218,26 @@ public class Server {
      * Update the activeLobbies List, moving the Lobby with a begun match from the waitingLobby List.
      */
     private static void updateStartedLobbies(){
+        ArrayList<Lobby> removingActiveLobbies = new ArrayList<>();
         for (Lobby currLobby: activeLobbies) {
-            if(currLobby.isGameCouldStart()){
-                if(waitingLobby.remove(currLobby.getLobbyName())) {
+            if(currLobby.isGameCouldStart()&& waitingLobby.remove(currLobby.getLobbyName())){
                     startedLobby.add(currLobby.getLobbyName());
-                }
+            }
+            if(currLobby.isShutDown()&&!waitingLobby.contains(currLobby.getLobbyName())){
+                startedLobby.remove(currLobby.getLobbyName());
+                removingActiveLobbies.add(currLobby);
+                connectedUsers.removeAll(currLobby.getActiveClientList());
             }
         }
+        activeLobbies.removeAll(removingActiveLobbies);
     }
+
 
     /**
      * This method, depending on gameCouldStart value, handle the incoming client connections.
      * @return true if there is a new client connection
      */
     private static String checkNewClient(){
-        updateStartedLobbies();
         String connectedUser = "";
         if (handledUsers < acceptingSocket.getClientList().size() + acceptingRMI.getClientList().size()) {
             handledUsers = acceptingSocket.getClientList().size() + acceptingRMI.getClientList().size();

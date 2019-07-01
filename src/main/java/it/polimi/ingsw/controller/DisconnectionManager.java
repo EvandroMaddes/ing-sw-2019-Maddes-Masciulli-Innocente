@@ -30,17 +30,18 @@ public class DisconnectionManager {
             boolean isInDisconnectingQueue = containsPlayer(username, disconnectingQueue);
             if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue){
                 defaultSetupDisconnection(username);
+                controller.getGameManager().characterSelect();
             }
         }
-
-        Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
-        if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
-            disconnectingQueue.add(disconnectedPlayer);
-            if (controller.getGameManager().getCurrentRound().getPhase() == 7)
-                controller.getGameManager().getCurrentRound().manageRound();
+        else {
+            Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
+            if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
+                disconnectingQueue.add(disconnectedPlayer);
+                if (controller.getGameManager().getCurrentRound().getPhase() == 7)
+                    controller.getGameManager().getCurrentRound().manageRound();
+            } else
+                removePlayer(disconnectedPlayer);
         }
-        else
-            removePlayer(disconnectedPlayer);
     }
 
     private boolean containsPlayer(String username, ArrayList<Player> playerList){

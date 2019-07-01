@@ -15,6 +15,7 @@ import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -52,9 +53,8 @@ public class Lobby extends Thread {
     private  CustomTimer gameTimer;
     private  Event message;
     private  boolean gameCouldStart = false;
+    private boolean shutDown = false;
     int mapChoice = 404;
-    //todo cercare cambio turno != cambio di contesto
-    // private  String lastRoundPlayer =
 
 
     public int getPortRMI() {
@@ -104,7 +104,7 @@ public class Lobby extends Thread {
             rmiThread.start();
             log.info(lobbyName.concat(":\tReady to accept clients\n"));
 
-            boolean shutDown = false;
+
             boolean setUpComplete = false;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -166,18 +166,6 @@ public class Lobby extends Thread {
 
                 }
 
-
-
-
-                //todo PROVA: ci entra sempre se la partita può iniziare
-
-                /*        nextMessage = new NewPlayerJoinedUpdateEvent("TESTING PLAYER RECONNECTION\n", Character.SPROG);
-                        log.info("Testing player reconnection:");
-*/
-
-                //todo FINEPROVA
-
-
                 // ora si gestisce il turno, il controller ha settato nextMessage
                 message = null;
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
@@ -205,7 +193,9 @@ public class Lobby extends Thread {
                         }
                     }
                     }catch (NullPointerException noNewMessage){
+
                         gameCouldStart = false;
+                        shutDown = true;
                         break;
                     }
                     //lobbyController.update(mapUserView.get(message.getUser()), message);
@@ -224,17 +214,22 @@ public class Lobby extends Thread {
                 shutDown=!gameCouldStart;
 
             }
-
             serverRMI.shutDown();
             serverSocket.shutDown();
             log.info(lobbyName.concat("\t: ShutDown\n"));
 
     }
 
-
+    public ArrayList<String> getActiveClientList() {
+        return activeClientList;
+    }
 
     public  boolean isGameCouldStart() {
         return gameCouldStart;
+    }
+
+    public boolean isShutDown() {
+        return shutDown;
     }
 
     /**
@@ -361,6 +356,7 @@ public class Lobby extends Thread {
                     String connectedUsername = user;
                     user = listenedMessage.getUser();
                     serverImplementation.updateUsername(connectedUsername, user);
+                    mapUserServer.remove(connectedUsername);
                     mapUserServer.put(user,serverImplementation);
                     mapUserView.get(listenedMessage.getUser()).toController(listenedMessage);
                     disconnectedClientList.remove(user);

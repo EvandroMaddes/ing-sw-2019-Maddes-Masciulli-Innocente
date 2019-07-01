@@ -1,8 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
+import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
@@ -54,6 +53,7 @@ public class GameManagerTest {
         gameManager.getModel().getPlayers().add(player1);
         gameManager.getModel().getPlayers().add(player2);
         gameManager.getModel().getPlayers().add(player3);
+        SetUpObserverObservable.connect(model.getPlayers(), hashMap, model);
     }
 
     @Test
@@ -166,6 +166,7 @@ public class GameManagerTest {
 
     @Test
     public void endGameTest(){
+        controller = new Controller(hashMap, 3);
         hashMap.put("Evandro", new VirtualView("Evandro"));
         hashMap.put("Test1", new VirtualView("Test1"));
         hashMap.put("Test2", new VirtualView("Test2"));
@@ -198,22 +199,35 @@ public class GameManagerTest {
         gameTrack.evaluateDamage(new DamageToken(player3), 1);
         gameTrack.evaluateDamage(new DamageToken(player4), 2);
         Assert.assertTrue(gameTrack.checkEndTrack());
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            hashMap.get(p.getUsername()).getModelUpdateQueue().clear();
+        }
         gameManager.endGame();
         Assert.assertEquals(19, player1.getPoints());
         Assert.assertEquals(14, player2.getPoints());
         Assert.assertEquals(13, player3.getPoints());
         Assert.assertEquals(22, player4.getPoints());
         Assert.assertEquals(0, player5.getPoints());
-        Assert.assertNotNull(hashMap.get(player4.getUsername()).getToRemoteView());
-        Assert.assertEquals(22, ((WinnerEvent)hashMap.get(player4.getUsername()).getToRemoteView()).getPoint());
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("BANSHEE (Test1) win with 22 points!", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        }
     }
 
     @Test
     public void calculateWinnerDrawCaseWithNoPointsTest(){
+        controller = new Controller(hashMap, 3);
+        hashMap.put("Evandro", new VirtualView("Evandro"));
+        hashMap.put("Test1", new VirtualView("Test1"));
+        hashMap.put("Test2", new VirtualView("Test2"));
+        Player player3 = new Player("Evandro", Character.D_STRUCT_OR);
+        Player player4 = new Player("Test1", Character.BANSHEE);
+        Player player5 = new Player("Test2", Character.VIOLET);
+        model.addPlayer(player3);
+        model.addPlayer(player4);
+        model.addPlayer(player5);
         controller.getGameManager().endGame();
         for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
-            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+            Assert.assertEquals("Draw ", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
@@ -225,8 +239,7 @@ public class GameManagerTest {
         ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
         controller.getGameManager().endGame();
         for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Event winnerMessage = hashMap.get(p.getUsername()).getToRemoteView();
-            Assert.assertTrue(((WinnerEvent)winnerMessage).isDraw());
+            Assert.assertEquals("Draw of SPROG (Federico), VIOLET (Evandro), with 9 points", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
@@ -256,6 +269,9 @@ public class GameManagerTest {
         //skip player2 round
         Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
         choiceMessage.performAction(controller);
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            hashMap.get(p.getUsername()).getModelUpdateQueue().clear();
+        }
         choiceMessage.performAction(controller);
         Assert.assertTrue(controller.getGameManager().isFinalFrenzyPhase());
         Assert.assertTrue(controller.getGameManager().isFirsPlayerPlayed());
@@ -263,8 +279,10 @@ public class GameManagerTest {
         Assert.assertEquals(9, player1.getPoints());
         Assert.assertEquals(15, player2.getPoints());
         Assert.assertEquals(6, player3.getPoints());
-        Event requestEvent = hashMap.get(player2.getUsername()).getToRemoteView();
-        Assert.assertEquals(15, ((WinnerEvent)requestEvent).getPoint());
+
+        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("DOZER (Francesco) win with 15 points!", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        }
     }
 
     @Test

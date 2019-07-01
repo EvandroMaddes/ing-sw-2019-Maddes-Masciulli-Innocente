@@ -64,7 +64,7 @@ public interface RemoteViewInterface {
    Event gameTrackSkullUpdate(Character[] killerCharacter,int[] skullNumber);
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
    Event winnerUpdate(String user, int point);
-   Event playerReconnectionNotify(String user, Character character);
+   Event playerReconnectionNotify(String user, Character character, boolean disconnected);
 
    //folliwing method manage server-view even
    Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies);

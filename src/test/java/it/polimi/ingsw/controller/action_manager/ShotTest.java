@@ -183,17 +183,7 @@ public class ShotTest {
         player1.getPlayerBoard().addDamages(player2, 8);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
-        ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
-        choiceMessage.performAction(controller);
-        requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(3, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{0,0,1};
-        int[] expectedY = new int[]{0,1,0};
-        TestPattern.checkSquares(expectedX, expectedY, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX(), ((ShotMoveRequestEvent)requestMessage).getPossibleSquareY());
-        choiceMessage = new ShotMoveChoiceEvent(player1.getUsername(), 1,0);
-        choiceMessage.performAction(controller);
-        Assert.assertEquals(4, controller.getGameManager().getCurrentRound().getPhase());
+        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
     }
 
     @Test

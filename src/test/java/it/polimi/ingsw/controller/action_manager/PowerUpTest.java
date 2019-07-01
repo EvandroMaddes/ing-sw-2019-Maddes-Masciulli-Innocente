@@ -125,12 +125,12 @@ public class PowerUpTest {
         choiceMessage = new NewtonPlayerTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(4, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{0,0,1,2};
-        int[] expectedY = new int[]{1,2,0,0};
-        for (int i = 0; i < 4; i++) {
+        Assert.assertEquals(5, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0,0,0,1,2};
+        int[] expectedY = new int[]{0,1,2,0,0};
+        for (int i = 0; i < 5; i++) {
             boolean check = false;
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 5; j++) {
                 if (expectedX[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareY()[j])
                     check = true;
             }
@@ -171,12 +171,12 @@ public class PowerUpTest {
         choiceMessage = new NewtonPlayerTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(3, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{2,1,1};
-        int[] expectedY = new int[]{3,2,1};
-        for (int i = 0; i < 3; i++) {
+        Assert.assertEquals(4, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{1,2,1,1};
+        int[] expectedY = new int[]{3,3,2,1};
+        for (int i = 0; i < 4; i++) {
             boolean check = false;
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 4; j++) {
                 if (expectedX[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareY()[j])
                     check = true;
             }

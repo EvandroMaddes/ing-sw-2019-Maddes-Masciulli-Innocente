@@ -21,9 +21,10 @@ public class UsernameModificationEvent extends ServerClientEvent{
 
     @Override
     public Event performAction(ClientInterface clientImplementation, RemoteView remoteView) {
+        Event returnedEvent = remoteView.printUserNotification(this);
         clientImplementation.changeUsername(getUser(), getNewUser());
         remoteView.setUser(newUser);
-        return remoteView.printUserNotification(this);
+        return returnedEvent;
 
     }
 
