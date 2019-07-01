@@ -33,6 +33,7 @@ public class Newton extends PowerUp {
 
     public ControllerViewEvent getTargets() {
         ArrayList<Square> possibleDestination = new ArrayList<>();
+        possibleDestination.add(targetPlayer.getPosition());
         for (int direction = 0; direction < 4; direction++) {
             if (targetPlayer.getPosition().checkDirection(direction)) {
                 possibleDestination.add(targetPlayer.getPosition().getNextSquare(direction));
