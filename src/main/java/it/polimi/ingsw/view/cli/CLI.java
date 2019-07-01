@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
-import it.polimi.ingsw.event.server_view_event.ServerClientEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
 import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
@@ -12,19 +9,9 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
-
-import it.polimi.ingsw.network.client.ClientInterface;
-import it.polimi.ingsw.network.client.rmi.RMIClient;
-import it.polimi.ingsw.network.client.socket.SocketClient;
-import it.polimi.ingsw.utils.CustomLogger;
-import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
-
-import java.net.ConnectException;
-import java.rmi.RemoteException;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class CLI extends RemoteView {
 
@@ -634,8 +621,8 @@ public class CLI extends RemoteView {
         display.getPlayerBoard(character).clean(2);//MARKS
         display.getPlayerBoard(character).clean(3);//DAMAGE
        // display.getPlayerBoard(character).clean(5);//WEAPON
-       // display.getPlayerBoard(character).clean(6);//POWERUP
-       // display.getPlayerBoard(character).clean(7);//AMMO
+        // display.getPlayerBoard(character).clean(6);//POWERUP
+       //  display.getPlayerBoard(character).clean(7);//AMMO
         display.getPlayerBoard(character).clean(8);//SKULL
         int j=10;
         for (int i=0; i<marks.length;i++) {
@@ -887,25 +874,21 @@ public class CLI extends RemoteView {
     @Override
     public Event genericPaymentChoice(boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour) {
         int payChoice= 404 ;
-        int validSelection = 1;
         boolean[] ammoChoice = {false,false,false};
         String powerUpChoice = null;
         CubeColour colourChoice = null;
 
         System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"You have follow ammo: \n");
-        if (usableAmmo[0]==true){
+        if (usableAmmo[0]){
             //RED
-            validSelection=0;
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_RED.escape()+"RED option 0\t");
         }
-        if (usableAmmo[1]==true){
+        if (usableAmmo[1]){
             //YELLOW
-            validSelection=1;
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_YELLOW.escape()+"YELLOW option 1\t");
         }
-        if (usableAmmo[2] == true){
+        if (usableAmmo[2]){
             //BLUE
-            validSelection=2;
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_BLUE.escape()+"BLUE option 2\t");
         }
         if (usableAmmo[0] == false && usableAmmo[1] == false && usableAmmo[2] ==false){
@@ -927,19 +910,27 @@ public class CLI extends RemoteView {
                 System.out.flush();
 
                 payChoice = CLIHandler.intRead();
-                if ((payChoice != validSelection && payChoice<3) || payChoice >= powerUpsType.length + 3) {
+                if (payChoice<0 || payChoice>(2+powerUpsType.length)){
                     System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "no item for this option");
                     payChoice = 404;
-
                 }
+                if (-1<payChoice && payChoice<3 ){
+                    if (!usableAmmo[payChoice]){
+                        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "no item for this option");
+                        payChoice = 404;
+                    }
+                }
+
             } catch (IllegalArgumentException e) {
                 payChoice = 404;
             }
         }
-            if (payChoice == validSelection ){
-                ammoChoice[payChoice] = true;
-                powerUpChoice = null;
-                colourChoice = null;
+            if (-1<payChoice && payChoice<3 ){
+                if (usableAmmo[payChoice]){
+                 ammoChoice[payChoice] = true;
+                 powerUpChoice = null;
+                 colourChoice = null;
+                }
             }
             else {
                 powerUpChoice = powerUpsType[payChoice-3];
