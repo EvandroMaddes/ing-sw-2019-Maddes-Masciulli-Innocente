@@ -320,7 +320,12 @@ public class CLIMap {
                 tempCoordY = tempCoordY + 1;
             }
         }
-        else{
+        else if(!element.getResource().contains("A")){
+            map[coordX+1][coordY] = " ";
+            map[coordX+3][coordY] = " ";
+            map[coordX+5][coordY] = " ";
+        }
+        else {
             String completeString = element.getResource();
             int resourceLenght = completeString.indexOf('A');
             map[coordX+1][coordY]= completeString.substring(0,resourceLenght+1);
