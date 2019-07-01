@@ -525,6 +525,21 @@ public class CLI extends RemoteView {
     }
 
     /**
+     * todo
+     *
+     * @param possibleSquareX
+     * @param possibleSquareY
+     * @return
+     */
+    @Override
+    public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
+        System.out.println("Select one square before shooting:");
+        PositionChoiceEvent message =(PositionChoiceEvent) positionMoveChoice(possibleSquareX,possibleSquareY);
+        Event choice = new ShotMoveChoiceEvent(getUser(), message.getPositionX(),message.getPositionY());
+        return choice;
+    }
+
+    /**
      * Print screen updated
      */
     @Override
