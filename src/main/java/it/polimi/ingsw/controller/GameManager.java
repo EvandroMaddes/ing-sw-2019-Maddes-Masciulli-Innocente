@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.WinnerEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
 import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
@@ -208,7 +207,8 @@ public class GameManager {
             }
             else if (p.getPoints() == winningPoints){
                 drawPlayers.clear();
-                drawPlayers.add(winner);
+                if (winner != null)
+                    drawPlayers.add(winner);
                 boolean tockenFound = false;
                 for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()) {
                     if (!tockenFound && (d.getPlayer() == winner || d.getPlayer() == p)) {
@@ -226,15 +226,15 @@ public class GameManager {
         if (!draw && winner != null)
             return winner.getCharacter().toString() + " (" + winner.getUsername() + ") win with " + winner.getPoints() + " points!";
         else{
-            String drawMessage = new String();
+            String drawMessage;
             drawMessage = "Draw ";
-            if (!drawPlayers.isEmpty())
-                drawMessage += "of ";
-            for (Player p: drawPlayers) {
-                drawMessage += p.getCharacter().toString() + " ";
+            if (!drawPlayers.isEmpty()) {
+                drawMessage = drawMessage.concat("of ");
+                for (Player p : drawPlayers) {
+                    drawMessage = drawMessage.concat(p.getCharacter().toString() + " (" + p.getUsername() + "), ");
+                }
+                drawMessage= drawMessage.concat("with " + drawPlayers.get(0).getPoints() + " points");
             }
-            if (!drawPlayers.isEmpty())
-                drawMessage += "with " + drawPlayers.get(0).getPoints() + " points";
             return drawMessage;
         }
     }
