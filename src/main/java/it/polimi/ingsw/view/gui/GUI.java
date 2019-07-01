@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
@@ -10,8 +11,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -165,7 +164,7 @@ public class GUI extends RemoteView  {
     }
 
     @Override
-    public Event winnerUpdate(String user, int point) {
+    public Event winnerUpdate(EndGameUpdate endGameUpdate) {
         return null;
     }
 

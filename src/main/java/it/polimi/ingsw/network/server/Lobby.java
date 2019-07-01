@@ -298,7 +298,6 @@ public class Lobby extends Thread {
                 return currMessage;
             }
         }
-
         return null;
     }
 
@@ -410,6 +409,7 @@ public class Lobby extends Thread {
         }
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
+        serverRMI.cleanDisconnectedEventList(user);
     }
 
     /**

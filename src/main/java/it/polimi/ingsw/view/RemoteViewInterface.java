@@ -1,12 +1,11 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
+import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.client.ClientInterface;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,7 @@ public interface RemoteViewInterface {
    Event playerWeaponUpdate(Character currCharacter, String[] weapons,boolean[] load);
    Event gameTrackSkullUpdate(Character[] killerCharacter,int[] skullNumber);
    Event weaponReplaceUpdate(int x, int y,String[] weapon);
-   Event winnerUpdate(String user, int point);
+   Event winnerUpdate(EndGameUpdate endGameUpdate);
    Event playerReconnectionNotify(String user, Character character, boolean disconnected);
 
    //folliwing method manage server-view even
