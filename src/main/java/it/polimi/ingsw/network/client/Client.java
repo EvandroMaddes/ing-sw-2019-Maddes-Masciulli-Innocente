@@ -48,12 +48,12 @@ public class Client {
         }
 
         if(gameInterface.equalsIgnoreCase("GUI")){
-            remoteViewImplementation = new GUI();
+            LoginMain.guiMain();
         }
         else{
             remoteViewImplementation = new CLI();
+            remoteViewImplementation.startInterface();
         }
-        remoteViewImplementation.startInterface();
     }
 
 

@@ -39,24 +39,35 @@ public class LoginController extends AbstractController{
         return enterButton;
     }
 
+    private Stage stage;
+
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+
     @FXML
     void enterClick(ActionEvent event) throws Exception {
+        GUI gui = new GUI((Stage) enterButton.getScene().getWindow());
+        setGui(gui);
+        String[] choices = new String[3];
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
-        // getGui().setLoginController(this);
 
-        if(getGui()==null){
-            System.out.println("serveGUI");
-        }
-        //setGui(new GUI());
+        choices[0] = userString ;
+        choices[1] = connectionString;
+        choices[2] = ipAddresString;
+
+        System.out.println("\nUser: " + choices[0] +
+                "\nConnection: " + choices[1] +
+                "\nIp: " + choices[2]);
+
+        getGui().setClientChoices(choices);
         getGui().setUser(username.getText());
-        getGui().setPrimaryStage((Stage)enterButton.getScene().getWindow());
-        setPrimaryStage((Stage)enterButton.getScene().getWindow());
-
-        System.out.println("IP= "+ipAddresString);
-        System.out.println(2);
         getGui().initialize();
+        gui.initialize();
+        gui.setClientChoices(choices);
+        new Thread(()->gui.startInterface()).start();
         //getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
     }
 
