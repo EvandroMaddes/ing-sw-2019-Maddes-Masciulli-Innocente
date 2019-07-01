@@ -29,7 +29,8 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     //private transient ArrayList<Registry> clientRegistries;
     private Event currMessage;
     private ArrayList<Event> disconnectedClients = new ArrayList<>();
-    //private transient Registry registry;
+    private transient Registry registry;
+    private transient RemoteInterface serverStub;
     private String ipAddress;
     private int portRMI;
     private boolean gameCouldStart = false;
@@ -186,15 +187,16 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public void runServer() {
 
         try {
-            RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
-            Registry registry = LocateRegistry.createRegistry(portRMI);
+            serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
+            registry = LocateRegistry.createRegistry(portRMI);
             registry.rebind("RMIServer:"+portRMI, serverStub);
 
         } catch (ExportException e) {
             try {
                 UnicastRemoteObject.unexportObject(this, false);
-                RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
-                Registry registry = LocateRegistry.createRegistry(portRMI);
+
+                serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
+                registry = LocateRegistry.createRegistry(portRMI);
                 registry.rebind("RMIServer:"+portRMI, serverStub);
             } catch (RemoteException exc) {
                 CustomLogger.logException(exc);
@@ -270,9 +272,13 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public void shutDown() {
         try {
-            unexportObject(this,false);
-        } catch (RemoteException e) {
-
+            UnicastRemoteObject.unexportObject(this,false);
+            registry.unbind("RMIServer:"+portRMI);
+        } catch (RemoteException|NotBoundException e) {
+            CustomLogger.logException(e);
+        }
+        finally {
+            gameCouldTerminate = true;
         }
 
     }

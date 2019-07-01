@@ -36,6 +36,7 @@ public class Server {
     private static int handledUsers = 0;
     private static ArrayList<String> waitingLobby = new ArrayList<>();
     private static ArrayList<String> startedLobby = new ArrayList<>();
+    private static int gamesHandled = 0;
 
     public static void main(String[] args){
         try {
@@ -141,7 +142,8 @@ public class Server {
         Lobby newLobby;
         newLobby = new Lobby();
         activeLobbies.add(newLobby);
-        newLobby.setLobby(user,activeLobbies.size());
+        newLobby.setLobby(user,gamesHandled);
+        gamesHandled++;
         waitingLobby.add(newLobby.getLobbyName());
         newLobby.start();
         reconnectClient(user, newLobby);

@@ -298,7 +298,6 @@ public class Lobby extends Thread {
                 return currMessage;
             }
         }
-
         return null;
     }
 
@@ -403,13 +402,16 @@ public class Lobby extends Thread {
     private  void disconnectClient(String user){
         activeClientList.remove(user);
         disconnectedClientList.add(user);
-        message = mapUserServer.get(user).disconnectClient(user);
+        if (mapUserServer.containsKey(user)) {
+            message = mapUserServer.get(user).disconnectClient(user);
+        }
         mapUserServer.remove(user);
         if(isGameCouldStart()){
             mapUserView.get(user).toController(message);
         }
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
+        serverRMI.cleanDisconnectedEventList(user);
     }
 
     /**

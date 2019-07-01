@@ -38,6 +38,10 @@ public class Controller implements Observer {
         return gameManager;
     }
 
+    public boolean isGameOn() {
+        return gameOn;
+    }
+
     public void callView(ControllerViewEvent message){
         usersVirtualView.get(message.getUser()).callRemoteView(message);
     }
