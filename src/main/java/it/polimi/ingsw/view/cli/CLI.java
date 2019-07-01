@@ -549,8 +549,18 @@ public class CLI extends RemoteView {
     }
 
     @Override
-    public Event playerReconnectionNotify(String user, Character character) {
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+user+" reconnected: "+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(character)+character.name().concat(" is back in the arena!"));
+    public Event playerReconnectionNotify(String user, Character character, boolean disconnected) {
+        String optional;
+        String suffix;
+        if(disconnected){
+            optional = " disconnected: ";
+            suffix = " isn't anymore in the arena!";
+        }
+        else{
+            optional = " reconnected: ";
+            suffix = " is back in the arena!";
+        }
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+user+optional+Color.ANSI_BLACK_BACKGROUND.escape()+mapCharacterNameColors.get(character)+character.name().concat(suffix));
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 

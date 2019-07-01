@@ -288,6 +288,12 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         timer.start();
         while (timer.isAlive()){
         }
+        for (int i = 0; i < clientList.size(); i++) {
+           if(clientUserOrder.get(i).equals(username)) {
+               clientUserOrder.replace(i,username,newUser);
+               return;
+           }
+        }
     }
 
     /**

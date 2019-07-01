@@ -76,10 +76,12 @@ public class GameModel extends Observable{
         }
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 4; column++) {
-                ArrayList<Player> squarePlayers = this.getGameboard().getMap().getSquareMatrix()[row][column].getSquarePlayers();
-                if(!squarePlayers.isEmpty()){
-                    for (Player currSquarePlayer:squarePlayers) {
-                        reconnectionEvent.addEvent(new PlayerPositionUpdateEvent(currSquarePlayer.getCharacter(), column,row));
+                if(this.getGameboard().getMap().getSquareMatrix()[row][column] != null) {
+                    ArrayList<Player> squarePlayers = this.getGameboard().getMap().getSquareMatrix()[row][column].getSquarePlayers();
+                    if (!squarePlayers.isEmpty()) {
+                        for (Player currSquarePlayer : squarePlayers) {
+                            reconnectionEvent.addEvent(new PlayerPositionUpdateEvent(currSquarePlayer.getCharacter(), column, row));
+                        }
                     }
                 }
                 if (this.getGameboard().getMap().getSpawnSquares().contains(this.getGameboard().getMap().getSquareMatrix()[row][column]))
