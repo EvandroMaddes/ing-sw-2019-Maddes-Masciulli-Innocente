@@ -24,24 +24,24 @@ public class DisconnectionManager {
     }
 
     public void disconnectionManage(String username){
+        boolean newPlayer = false;
         if (controller.getGameManager().getCurrentRound() == null){
             boolean isInGamePlayers = containsPlayer(username, gamePlayers);
             boolean isInDisconnectedPlayers = containsPlayer(username, disconnectedPlayers);
             boolean isInDisconnectingQueue = containsPlayer(username, disconnectingQueue);
-            if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue){
+            newPlayer = true;
+            if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue)
                 defaultSetupDisconnection(username);
-                controller.getGameManager().characterSelect();
-            }
         }
-        else {
-            Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
-            if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
-                disconnectingQueue.add(disconnectedPlayer);
-                if (controller.getGameManager().getCurrentRound().getPhase() == 7)
-                    controller.getGameManager().getCurrentRound().manageRound();
-            } else
-                removePlayer(disconnectedPlayer);
-        }
+        Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
+        if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
+            disconnectingQueue.add(disconnectedPlayer);
+            if (controller.getGameManager().getCurrentRound().getPhase() == 7)
+                controller.getGameManager().getCurrentRound().manageRound();
+        } else
+            removePlayer(disconnectedPlayer);
+        if(newPlayer)
+            controller.getGameManager().characterSelect();
     }
 
     private boolean containsPlayer(String username, ArrayList<Player> playerList){
