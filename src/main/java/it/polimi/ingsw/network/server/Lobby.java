@@ -52,9 +52,8 @@ public class Lobby extends Thread {
     private  CustomTimer gameTimer;
     private  Event message;
     private  boolean gameCouldStart = false;
+    private boolean shutDown = false;
     int mapChoice = 404;
-    //todo cercare cambio turno != cambio di contesto
-    // private  String lastRoundPlayer =
 
 
     public int getPortRMI() {
@@ -104,7 +103,7 @@ public class Lobby extends Thread {
             rmiThread.start();
             log.info(lobbyName.concat(":\tReady to accept clients\n"));
 
-            boolean shutDown = false;
+
             boolean setUpComplete = false;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -166,18 +165,6 @@ public class Lobby extends Thread {
 
                 }
 
-
-
-
-                //todo PROVA: ci entra sempre se la partita può iniziare
-
-                /*        nextMessage = new NewPlayerJoinedUpdateEvent("TESTING PLAYER RECONNECTION\n", Character.SPROG);
-                        log.info("Testing player reconnection:");
-*/
-
-                //todo FINEPROVA
-
-
                 // ora si gestisce il turno, il controller ha settato nextMessage
                 message = null;
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
@@ -236,6 +223,10 @@ public class Lobby extends Thread {
 
     public  boolean isGameCouldStart() {
         return gameCouldStart;
+    }
+
+    public boolean isShutDown() {
+        return shutDown;
     }
 
     /**

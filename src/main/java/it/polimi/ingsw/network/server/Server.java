@@ -216,6 +216,11 @@ public class Server {
                     startedLobby.add(currLobby.getLobbyName());
                 }
             }
+            else if(currLobby.isShutDown()){
+                waitingLobby.remove(currLobby.getLobbyName());
+                startedLobby.remove(currLobby.getLobbyName());
+                activeLobbies.remove(currLobby);
+            }
         }
     }
 
