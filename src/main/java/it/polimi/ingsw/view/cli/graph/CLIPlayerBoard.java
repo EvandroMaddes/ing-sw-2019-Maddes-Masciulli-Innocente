@@ -196,6 +196,14 @@ public class CLIPlayerBoard {
      * @param row selected row
      */
     public void clean(int row){
+        /*
+        2 mark
+        3 damage
+        5 weapon
+        6 powerUp
+        7 ammo
+        8 skull
+         */
         int i=3;
         if(row==2||row==3){
             i=10;

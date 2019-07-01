@@ -1,11 +1,16 @@
 package it.polimi.ingsw.view.gui;
 
+import com.sun.javafx.fxml.builder.JavaFXImageBuilder;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.game_components.cards.weapons.Zx2;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.cli.graph.Color;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import javax.tools.JavaFileObject;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.EnumMap;
@@ -197,5 +202,72 @@ public class DecodeMessage {
 
         }
         return pathMap;
+    }
+
+    /**
+     * It gets image from path
+     * @param path location of ine image
+     * @return image of path
+     */
+    public Image loadImage(Path path){
+        Image image = new Image(path.toString());
+        return image;
+    }
+
+    /**
+     *
+     * @param character
+     * @return
+     */
+   public Image playerBoardImage(Character character){
+       Path path =  findPlayerBoardImage(character);
+       return loadImage(path);
+    }
+
+    /**
+     *
+     * @param weapon
+     * @return
+     */
+    public Image weaponImage(String weapon){
+        Path path =  findWeaponImage(weapon);
+        return loadImage(path);
+    }
+
+    /**
+     *
+     * @param name
+     * @param colour
+     * @return
+     */
+    public Image powerUpImage(String name, CubeColour colour){
+        Path path =  findPowerUpImage(name,colour);
+        return loadImage(path);
+    }
+
+    /**
+     *
+     * @param number
+     * @return
+     */
+    public Image[] mapImage(int number){
+        Path pathLeft = findMapImages(number)[0];
+        Path pathRight = findMapImages(number)[1];
+        Image[] map = new Image[2];
+        map[0] = loadImage(pathLeft);
+        map[1] = loadImage(pathRight);
+        return map;
+    }
+
+    /**
+     *
+     * @param firstColor
+     * @param secondColor
+     * @param thrirdColor
+     * @return
+     */
+    public Image ammoimage(String firstColor,String secondColor, String thrirdColor){
+        Path path =  findAmmoTileImage(firstColor,secondColor,thrirdColor);
+        return loadImage(path);
     }
 }
