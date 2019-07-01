@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,25 +21,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="750.0" prefWidth="1378.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameBoardController">
+<ScrollPane prefHeight="750.0" prefWidth="1378.0" style="-fx-background-color: #373737;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameBoardController">
   <content>
-    <AnchorPane prefHeight="756.0" prefWidth="1372.0" style="-fx-background-color: grey;">
+    <AnchorPane fx:id="gametrack" prefHeight="771.0" prefWidth="1428.0" style="-fx-background-color: #2c2c2c;">
          <children>
+            <GridPane id="ammoGrey" fx:id="dozerAmmoCube" layoutX="733.0" layoutY="-1.0" prefHeight="87.0" prefWidth="82.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
             <VBox alignment="CENTER" layoutX="81.0" layoutY="-8.0" prefHeight="687.0" prefWidth="783.0" spacing="10.0">
                <children>
                   <HBox prefHeight="90.0" prefWidth="760.0">
                      <children>
-                        <ImageView fitHeight="90.0" fitWidth="417.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="95.0" fitWidth="367.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../playerBoard/bluePlayerBoard.png" />
                            </image>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
                         </ImageView>
-                        <ImageView fitHeight="90.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="103.0" fitWidth="369.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../playerBoard/greyPlayerBoard.png" />
                            </image>
                         </ImageView>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                   <HBox>
                      <children>
@@ -68,7 +92,7 @@
                   </HBox>
                </children>
             </VBox>
-            <GridPane id="gridPanelGrey" layoutX="479.0" layoutY="19.0" prefHeight="36.0" prefWidth="252.0">
+            <GridPane id="gridPanelGrey" fx:id="dozerDamege" layoutX="479.0" layoutY="19.0" prefHeight="36.0" prefWidth="252.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -87,7 +111,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <GridPane id="gridPanelGrey" layoutX="112.0" layoutY="19.0" prefHeight="34.0" prefWidth="246.0">
+            <GridPane id="gridPanelGrey" fx:id="bansheeDamege" layoutX="112.0" layoutY="28.0" prefHeight="25.0" prefWidth="245.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -106,7 +130,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane id="gridPanelGrey" layoutX="115.0" layoutY="653.0" prefHeight="33.0" prefWidth="244.0">
+            <GridPane id="gridPanelGrey" fx:id="sprogDamege" layoutX="115.0" layoutY="653.0" prefHeight="33.0" prefWidth="244.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -125,7 +149,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane id="gridPanelGrey" layoutX="475.0" layoutY="652.0" prefHeight="34.0" prefWidth="249.0">
+            <GridPane id="gridPanelGrey" fx:id="dstructorDamege" layoutX="475.0" layoutY="652.0" prefHeight="34.0" prefWidth="249.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -144,7 +168,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane id="gridPanelGrey" layoutX="898.0" layoutY="23.0" prefHeight="26.0" prefWidth="236.0">
+            <GridPane id="gridPanelGrey" fx:id="violetDamege" layoutX="956.0" layoutY="23.0" prefHeight="26.0" prefWidth="233.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -170,7 +194,12 @@
                         <Image url="@../playerBoard/violetPlayerBoard.png" />
                      </image>
                   </ImageView>
-                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="423.0" spacing="20.0" style="-fx-background-color: black;">
+                  <Label text="YOUR ACTION:" textFill="YELLOW" underline="true">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="423.0" spacing="20.0" style="-fx-background-color: grey;">
                      <children>
                         <Button fx:id="fireButton" mnemonicParsing="false" onAction="#fireButtonPress" prefHeight="50.0" prefWidth="150.0" text="FIRE" />
                         <Button fx:id="grabButton" mnemonicParsing="false" onAction="#grabButtonPress" prefHeight="50.0" prefWidth="150.0" text="GRAB" />
@@ -180,31 +209,31 @@
                         <Insets bottom="4.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </HBox>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="114.0" text="YOUR POWER UP:" textAlignment="CENTER" underline="true">
+                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="114.0" text="YOUR POWER UP:" textAlignment="CENTER" textFill="YELLOW" underline="true">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@cards/AD_powerups_IT_022.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@cards/AD_powerups_IT_023.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@cards/AD_powerups_IT_024.png" />
                            </image>
                         </ImageView>
                      </children>
                   </HBox>
-                  <Label prefHeight="17.0" prefWidth="93.0" text="YOUR WEAPON:" textAlignment="CENTER" underline="true">
+                  <Label prefHeight="17.0" prefWidth="93.0" text="YOUR WEAPON:" textAlignment="CENTER" textFill="YELLOW" underline="true">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
@@ -214,39 +243,39 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: rgba(128,128,128,0.72);">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="249.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../cards/weapon/heatseeker.png" />
                            </image>
                         </ImageView>
                      </children>
                   </HBox>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" text="INFO SU ALTRI PLAYER??&#10;" />
+                  <TextArea prefHeight="114.0" prefWidth="423.0" text="INFO SU ALTRI PLAYER??&#10;" />
                </children>
             </VBox>
             <HBox alignment="CENTER" layoutX="-5.0" layoutY="320.0" prefHeight="133.0" prefWidth="231.0" rotate="270.0" spacing="2.0">
                <children>
-                  <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="firstWeaponSpawnRed" fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="secondWeaponSpawnRed" fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="thirdWeaponSpawnRed" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
@@ -255,17 +284,17 @@
             </HBox>
             <HBox id="blue spawn weapon" alignment="CENTER" layoutX="419.0" layoutY="80.0" prefHeight="120.0" prefWidth="302.0" spacing="2.0">
                <children>
-                  <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="firstWeaponSpawnBlue" fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="secondWeaponSpawnBlue" fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="thridWeaponSpawnBlue" fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
@@ -274,17 +303,17 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="625.0" layoutY="425.0" prefHeight="113.0" prefWidth="251.0" rotate="90.0" spacing="2.0">
                <children>
-                  <ImageView fitHeight="130.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="firstWeaponSpawnYellow" fitHeight="130.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="secondWeaponSpawnYellow" fitHeight="130.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="thridWeaponSpawnYellow" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../cards/weapon/heatseeker.png" />
                      </image>
@@ -304,10 +333,85 @@
                 <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <GridPane id="ammoViolet" fx:id="violetAmmoCube" layoutX="1197.0" layoutY="3.0" prefHeight="73.0" prefWidth="72.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <GridPane id="ammoBlue" fx:id="bansheeAmmoCube" layoutX="363.0" layoutY="-5.0" prefHeight="90.0" prefWidth="85.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane id="ammoGreen" fx:id="sprogAmmoCube" layoutX="362.0" layoutY="623.0" prefHeight="91.0" prefWidth="83.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane id="ammoYellow" fx:id="dstructorAmmoCube" layoutX="732.0" layoutY="624.0" prefHeight="100.0" prefWidth="81.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane id="gridPanelGrey" fx:id="gameTrack" layoutX="130.0" layoutY="118.0" prefHeight="42.0" prefWidth="256.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="116.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../skull.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../skull.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
          </children>
       </AnchorPane>
   </content>
    <padding>
-      <Insets left="40.0" right="40.0" top="10.0" />
+      <Insets left="10.0" right="10.0" top="10.0" />
    </padding>
 </ScrollPane>

@@ -161,7 +161,7 @@ public class GameManager {
         }
         currentPlayer = model.getPlayers().get(playerTurn);
 
-        if (getDisconnectionManager().getDisconnectingQueue().contains(model.getPlayers().get(playerTurn))){
+        if (getDisconnectionManager().getDisconnectingQueue().contains(currentPlayer)){
             getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
             playerTurn--;
             if (playerTurn < 0)
@@ -192,7 +192,6 @@ public class GameManager {
 
     /**
      *
-     * @return winner player. In case of draw, return null
      */
     private Player calculateWinner() {
         giveEndGamePoints();
@@ -323,12 +322,10 @@ public class GameManager {
                 controller.callView(new WinnerEvent(p.getUsername(), 0, true));
     }
 
-    // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare
     public void setCurrentRound(RoundManager roundManager){
         this.currentRound = roundManager;
     }
 
-    // TODO: 2019-06-18 usato per i test
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
         setFirstRoundPhase(false);

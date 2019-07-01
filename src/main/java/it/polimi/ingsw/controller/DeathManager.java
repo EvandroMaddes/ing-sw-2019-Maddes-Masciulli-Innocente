@@ -46,9 +46,9 @@ public class DeathManager {
             if (possibleSpawnSquare.getSquareColour().equals(chosenPowerUp.getColour().toString() ) ){
                 deadPlayer.setPosition(possibleSpawnSquare);
                 deadPlayer.discardPowerUp(chosenPowerUp);
+                model.getGameboard().getPowerUpDeck().discardCard(chosenPowerUp);
             }
         }
-        deadPlayer.discardPowerUp(chosenPowerUp);
 
         if (deadPlayer.isDead()) {
             deadPlayer.invertDeathState();

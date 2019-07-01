@@ -129,6 +129,10 @@ public class GUI extends RemoteView  {
         welcomeChoice(available,started,wait);
     }
 
+    @Override
+    public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
+        return null;
+    }
 
     /**
      * chiamato dai controller delle scene gira il messaggio al server
