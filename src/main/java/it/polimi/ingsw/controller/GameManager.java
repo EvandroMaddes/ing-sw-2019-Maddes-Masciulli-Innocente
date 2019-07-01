@@ -161,7 +161,7 @@ public class GameManager {
         }
         currentPlayer = model.getPlayers().get(playerTurn);
 
-        if (getDisconnectionManager().getDisconnectingQueue().contains(model.getPlayers().get(playerTurn))){
+        if (getDisconnectionManager().getDisconnectingQueue().contains(currentPlayer)){
             getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
             playerTurn--;
             if (playerTurn < 0)
@@ -192,7 +192,6 @@ public class GameManager {
 
     /**
      *
-     * @return winner player. In case of draw, return null
      */
     private Player calculateWinner() {
         giveEndGamePoints();
