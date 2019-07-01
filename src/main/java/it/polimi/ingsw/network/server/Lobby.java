@@ -15,6 +15,7 @@ import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -194,6 +195,7 @@ public class Lobby extends Thread {
                     }catch (NullPointerException noNewMessage){
 
                         gameCouldStart = false;
+                        shutDown = true;
                         break;
                     }
                     //lobbyController.update(mapUserView.get(message.getUser()), message);
@@ -212,14 +214,15 @@ public class Lobby extends Thread {
                 shutDown=!gameCouldStart;
 
             }
-
             serverRMI.shutDown();
             serverSocket.shutDown();
             log.info(lobbyName.concat("\t: ShutDown\n"));
 
     }
 
-
+    public ArrayList<String> getActiveClientList() {
+        return activeClientList;
+    }
 
     public  boolean isGameCouldStart() {
         return gameCouldStart;
