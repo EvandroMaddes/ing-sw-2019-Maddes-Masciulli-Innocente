@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.*;
@@ -387,14 +388,13 @@ public class CLI extends RemoteView {
 
     /**
      * iT show whio whin the game and his point
-     * @param user winner
-     * @param point total winner's points
-     * @return message notify the success of updating
+     *
+     * @param endGameUpdate
      */
     @Override
-    public Event winnerUpdate(String user, int point) {
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+" Player "+user+" win this game with "+point);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+    public Event winnerUpdate(EndGameUpdate endGameUpdate) {
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+endGameUpdate.getEndGameMessage());
+        return new UpdateChoiceEvent("BROADCAST");
     }
 
     /**

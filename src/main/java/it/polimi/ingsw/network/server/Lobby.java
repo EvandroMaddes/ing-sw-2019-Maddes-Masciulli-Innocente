@@ -284,6 +284,9 @@ public class Lobby extends Thread {
     private Event findNextMessage(){
         message = null;
         Event currMessage;
+        if(!lobbyController.isGameOn()){
+            return null;
+        }
         for (VirtualView currView: virtualViewList) {
             currMessage = currView.getModelUpdateQueue().poll();
             if(currMessage!=null){

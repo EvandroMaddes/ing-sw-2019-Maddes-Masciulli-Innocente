@@ -13,7 +13,7 @@ public class EndGameUpdate extends ModelViewEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        return null;
+        return remoteView.winnerUpdate(this);
     }
 
     public String getEndGameMessage() {
