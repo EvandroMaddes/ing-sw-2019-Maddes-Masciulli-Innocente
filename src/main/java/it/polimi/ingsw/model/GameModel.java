@@ -53,6 +53,10 @@ public class GameModel extends Observable{
         super.notifyObservers(arg);
     }
 
+    public void endGame(String message){
+        notifyObservers(new EndGameUpdate(message));
+    }
+
     public void reconnectionSetting(String username, ArrayList<Player> players){
         ReconnectionSettingsEvent reconnectionEvent = new ReconnectionSettingsEvent(username);
         reconnectionEvent.addEvent(new ReconnectionMapUpdate(this.gameboard.getMap().getChosenMap()));

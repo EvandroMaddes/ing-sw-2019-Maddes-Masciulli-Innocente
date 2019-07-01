@@ -193,9 +193,10 @@ public class GameManager {
     /**
      *
      */
-    private Player calculateWinner() {
+    private String calculateWinner() {
         giveEndGamePoints();
 
+        ArrayList<Player> drawPlayers = new ArrayList<>();
         boolean draw = false;
         Player winner = null;
         int winningPoints = 0;
@@ -206,21 +207,35 @@ public class GameManager {
                 draw = false;
             }
             else if (p.getPoints() == winningPoints){
+                drawPlayers.clear();
+                drawPlayers.add(winner);
                 boolean tockenFound = false;
                 for (DamageToken d: ((KillShotTrack)model.getGameboard().getGameTrack()).getTokenTrack()) {
                     if (!tockenFound && (d.getPlayer() == winner || d.getPlayer() == p)) {
                         winner = d.getPlayer();
                         tockenFound = true;
+                        drawPlayers.clear();
                     }
+                    else if (!drawPlayers.contains(d.getPlayer()))
+                        drawPlayers.add(d.getPlayer());
                 }
                 if (!tockenFound)
                     draw = true;
             }
         }
         if (!draw && winner != null)
-            return winner;
+            return winner.getCharacter().toString() + " (" + winner.getUsername() + ") win with " + winner.getPoints() + " points!";
         else{
-            return null;
+            String drawMessage = new String();
+            drawMessage = "Draw ";
+            if (!drawPlayers.isEmpty())
+                drawMessage += "of ";
+            for (Player p: drawPlayers) {
+                drawMessage += p.getCharacter().toString() + " ";
+            }
+            if (!drawPlayers.isEmpty())
+                drawMessage += "with " + drawPlayers.get(0).getPoints() + " points";
+            return drawMessage;
         }
     }
 
@@ -314,12 +329,8 @@ public class GameManager {
     }
 
     public void endGame(){
-        Player winner = calculateWinner();
-        if (winner != null)
-            controller.callView(new WinnerEvent(winner.getUsername(), winner.getPoints(), false));
-        else
-            for (Player p: controller.getGameManager().getModel().getPlayers())
-                controller.callView(new WinnerEvent(p.getUsername(), 0, true));
+        String endGameMessage = calculateWinner();
+        model.endGame(endGameMessage);
     }
 
     public void setCurrentRound(RoundManager roundManager){
