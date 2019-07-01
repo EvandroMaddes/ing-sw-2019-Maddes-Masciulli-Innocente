@@ -39,8 +39,9 @@ public interface RemoteViewInterface {
    Event weaponDiscardChoice(ArrayList<String> yourWeapon);
    Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
    Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
-   Event weaponEffectChoice(boolean[] availableWeaponEffects);
+   Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY);
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
+   Event weaponEffectChoice(boolean[] availableWeaponEffects);
    Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
    Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
    Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);

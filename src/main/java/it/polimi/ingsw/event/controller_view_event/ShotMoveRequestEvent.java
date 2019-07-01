@@ -11,7 +11,6 @@ public class ShotMoveRequestEvent extends PositionRequestEvent {
 
     @Override
     public Event performAction(RemoteView remoteView) {
-        // TODO: 2019-06-07
-        return null;
+        return remoteView.shotMoveChoiceEvent(getPossibleSquareX(),getPossibleSquareY());
     }
 }
