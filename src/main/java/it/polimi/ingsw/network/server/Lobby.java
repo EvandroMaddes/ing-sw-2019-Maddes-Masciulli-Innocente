@@ -284,9 +284,6 @@ public class Lobby extends Thread {
     private Event findNextMessage(){
         message = null;
         Event currMessage;
-        if(!lobbyController.isGameOn()){
-            return null;
-        }
         for (VirtualView currView: virtualViewList) {
             currMessage = currView.getModelUpdateQueue().poll();
             if(currMessage!=null){
@@ -301,7 +298,6 @@ public class Lobby extends Thread {
                 return currMessage;
             }
         }
-
         return null;
     }
 
@@ -413,6 +409,7 @@ public class Lobby extends Thread {
         }
         log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser()+"\n"));
         log.warning(lobbyName.concat(":\tClient Disconnected:\t"+user+"\n"));
+        serverRMI.cleanDisconnectedEventList(user);
     }
 
     /**

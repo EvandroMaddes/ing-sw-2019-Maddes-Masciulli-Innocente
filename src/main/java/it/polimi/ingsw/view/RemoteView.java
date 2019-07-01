@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
+import it.polimi.ingsw.view.cli.graph.Color;
 
 import java.net.ConnectException;
 import java.rmi.RemoteException;
@@ -26,6 +27,18 @@ public abstract class RemoteView implements RemoteViewInterface{
 
     public ClientInterface getClientImplementation() {
         return clientImplementation;
+    }
+
+    public void disconnect(){
+        connected = false;
+        currentMessage = null;
+        try {
+            clientImplementation.disconnectClient();
+        }catch (Exception e){
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+
+                        "Unable to disconnect client: ");
+            e.printStackTrace();
+        }
     }
 
     public void startInterface() {
@@ -101,7 +114,7 @@ public abstract class RemoteView implements RemoteViewInterface{
             CustomLogger.logException(closingException);
         }
         finally {
-            log.info("Please, try again restarting the game.");
+            log.info("Shutting-down the game.");
         }
     }
     public String getUser() {
