@@ -12,11 +12,13 @@ import java.util.Observer;
 public class Controller implements Observer {
     private GameManager gameManager;
     private Map<String, VirtualView> usersVirtualView;
+    private boolean gameOn;
 
     public Controller(Map<String, VirtualView> usersVirtualView, int mapChoice) {
         this.usersVirtualView = usersVirtualView;
         createGameManager(mapChoice);
         gameManager.characterSelect();
+        gameOn = true;
     }
 
     @Override
@@ -42,5 +44,9 @@ public class Controller implements Observer {
 
     public Map<String, VirtualView> getUsersVirtualView() {
         return usersVirtualView;
+    }
+
+    public void gameOff() {
+        gameOn = false;
     }
 }

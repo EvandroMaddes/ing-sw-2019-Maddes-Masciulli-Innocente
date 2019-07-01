@@ -330,6 +330,7 @@ public class GameManager {
 
     public void endGame(){
         String endGameMessage = calculateWinner();
+        controller.gameOff();
         model.endGame(endGameMessage);
     }
 
