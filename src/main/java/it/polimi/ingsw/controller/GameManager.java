@@ -323,12 +323,10 @@ public class GameManager {
                 controller.callView(new WinnerEvent(p.getUsername(), 0, true));
     }
 
-    // TODO: 2019-06-18 questo lo uso solo nei test, si potrebbe modificare
     public void setCurrentRound(RoundManager roundManager){
         this.currentRound = roundManager;
     }
 
-    // TODO: 2019-06-18 usato per i test
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
         setFirstRoundPhase(false);

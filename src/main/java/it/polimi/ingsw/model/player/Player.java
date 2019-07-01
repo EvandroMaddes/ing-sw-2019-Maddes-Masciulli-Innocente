@@ -248,7 +248,6 @@ public class Player extends Observable {
 
 
     /**
-     * todo va passata al deck per reshuffle()
      * @param powerUp is discarded powerUp
      */
     public void discardPowerUp(PowerUp powerUp)
