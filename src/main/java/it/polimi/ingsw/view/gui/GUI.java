@@ -1,23 +1,18 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.view.RemoteView;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 
@@ -94,9 +89,9 @@ public class GUI extends RemoteView  {
         Parent gameboard = null;
         Parent mapCharacter = null;
 
-        FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/lobbyScene.fxml"));
-        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
-        FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/mapCharacterChoice.fxml"));
+        FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
+        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameBoard.fxml"));
+        FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapCharacterChoice.fxml"));
         try {
             lobby = lobbyFxml.load();
             gameboard = gameBoardFxml.load();
@@ -382,6 +377,11 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
+        return null;
+    }
+
+    @Override
+    public Event playerReconnectionNotify(String user, Character character) {
         return null;
     }
 }
