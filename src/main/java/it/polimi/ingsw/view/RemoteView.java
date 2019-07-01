@@ -55,7 +55,7 @@ public abstract class RemoteView implements RemoteViewInterface{
             while (waiting) {
                 try {
                     currentMessage = clientImplementation.listenMessage();
-                    log.info("Listened message for:\t" + currentMessage.getUser());
+                    log.info("Listened message for:\t".concat(currentMessage.getUser()).concat(currentMessage.toString()));
                     if(isGameSet()&&!currentMessage.getUser().equals("BROADCAST")){
                         printScreen();
                     }
