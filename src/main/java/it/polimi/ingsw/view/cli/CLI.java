@@ -633,9 +633,9 @@ public class CLI extends RemoteView {
     public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
         display.getPlayerBoard(character).clean(2);//MARKS
         display.getPlayerBoard(character).clean(3);//DAMAGE
-        display.getPlayerBoard(character).clean(5);//WEAPON
-        display.getPlayerBoard(character).clean(6);//POWERUP
-        display.getPlayerBoard(character).clean(7);//AMMO
+       // display.getPlayerBoard(character).clean(5);//WEAPON
+       // display.getPlayerBoard(character).clean(6);//POWERUP
+       // display.getPlayerBoard(character).clean(7);//AMMO
         display.getPlayerBoard(character).clean(8);//SKULL
         int j=10;
         for (int i=0; i<marks.length;i++) {
