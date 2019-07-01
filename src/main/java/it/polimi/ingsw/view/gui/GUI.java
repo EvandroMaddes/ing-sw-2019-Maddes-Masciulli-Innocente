@@ -367,7 +367,7 @@ public class GUI extends RemoteView  {
     }
 
     @Override
-    public Event playerReconnectionNotify(String user, Character character) {
+    public Event playerReconnectionNotify(String user, Character character, boolean disconnected) {
         return null;
     }
 }

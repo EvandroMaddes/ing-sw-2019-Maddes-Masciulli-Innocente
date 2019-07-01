@@ -205,6 +205,7 @@ public class Lobby extends Thread {
                         }
                     }
                     }catch (NullPointerException noNewMessage){
+
                         gameCouldStart = false;
                         break;
                     }
@@ -361,6 +362,7 @@ public class Lobby extends Thread {
                     String connectedUsername = user;
                     user = listenedMessage.getUser();
                     serverImplementation.updateUsername(connectedUsername, user);
+                    mapUserServer.remove(connectedUsername);
                     mapUserServer.put(user,serverImplementation);
                     mapUserView.get(listenedMessage.getUser()).toController(listenedMessage);
                     disconnectedClientList.remove(user);
