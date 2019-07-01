@@ -15,58 +15,53 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
 
-public  class LobbyChioceController extends AbstractController{
+public class LobbyChioceController extends AbstractController {
 
-     @FXML
-        private AnchorPane gameChoicePanel;
+    @FXML
+    private AnchorPane gameChoicePanel;
 
-        @FXML
-        public Button newGameButton ;
+    @FXML
+    public Button newGameButton;
 
-        @FXML
-        private ComboBox<String> waitingLobbyComboBox ;
-        @FXML
-        private ComboBox<String> startedLobbyComboBox ;
+    @FXML
+    private ComboBox<String> waitingLobbyComboBox;
+    @FXML
+    private ComboBox<String> startedLobbyComboBox;
+        private Stage window;
+    private String choice;
 
-        private String choice;
 
-
-
-    public String setLobby(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies ){
+    public void setLobby(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
 
         //NEW GAME
-        if(available[0]){
+        if (available[0]) {
 
-        }else {
+        } else {
             newGameButton.setDisable(true);
         }
 
         //WAIT LOBBIES
-        if (available[1]){
+        if (available[1]) {
             ObservableList<String> list = FXCollections.observableArrayList(waitingLobbies);
-           waitingLobbyComboBox.setItems(list);
-        }
-        else {
+            waitingLobbyComboBox.setItems(list);
+        } else {
             waitingLobbyComboBox.setDisable(true);
         }
         //STARTED LOBBY
-        if (available[2]){
+        if (available[2]) {
             ObservableList<String> list = FXCollections.observableArrayList(startedLobbies);
-            Platform.runLater(()->startedLobbyComboBox.setItems(list));
-
-            }else {
-                startedLobbyComboBox.setDisable(true);
-            }
-
-       return choice;
-
+            startedLobbyComboBox.setItems(list);
+        } else {
+            startedLobbyComboBox.setDisable(true);
         }
+    }
 
 /*
         public  String listenNewGame() {
@@ -90,21 +85,19 @@ public  class LobbyChioceController extends AbstractController{
 */
 
 
-    public void newGameClick(){
+    public void newGameClick() {
 
-        sendChoice(new NewGameChoiceEvent(getGui().getUser()));
-
-
+       // sendChoice(new NewGameChoiceEvent(getGui().getUser()));
+        getGui().setChoice("newgame");
+        window.close();
     }
 
 
     @FXML
     public void waitLobbyClick() {
-
-        choice=waitingLobbyComboBox.getValue();
+        getGui().setChoice(waitingLobbyComboBox.getValue());
         waitingLobbyComboBox.setDisable(true);
-        sendChoice(new LobbyChoiceEvent(getGui().getUser(),choice));
-
+        window.close();
     }
 
 
@@ -112,12 +105,20 @@ public  class LobbyChioceController extends AbstractController{
     public void startedLobbyClick() {
 
 
-        choice=startedLobbyComboBox.getValue();
+        getGui().setChoice(startedLobbyComboBox.getValue());
         startedLobbyComboBox.setDisable(true);
-       sendChoice(new LobbyChoiceEvent(getGui().getUser(),choice));
+        window.close();
+
 
     }
+    public void setStage(Stage window){
+        this.window = window;
+    }
 
+public Event ask(){
+        Platform.runLater(()->window.showAndWait());
+        return new NewGameChoiceEvent(getGui().getUser());
+}
 
     public AnchorPane getGameChoicePanel() {
         return gameChoicePanel;
