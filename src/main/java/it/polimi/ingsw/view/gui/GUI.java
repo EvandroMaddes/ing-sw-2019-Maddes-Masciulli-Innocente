@@ -29,15 +29,18 @@ public class GUI extends RemoteView {
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
     private MapCharacterController mapController;
+    private CharacterChoiceController characterController;
 
     private Stage primaryStage;
     private Stage lobbyStage;
     private Stage gameBoardStage;
     private Stage mapStage;
+    private Stage characterStage;
 
     private Scene gameboardScene;
     private Scene lobbyScene;
     private Scene mapChoiceScene;
+    private Scene characterScene;
 
     private String[] clientChoices = new String[3];
     private Character characterChoose ;
@@ -64,26 +67,33 @@ public class GUI extends RemoteView {
         Parent lobby = null;
         Parent gameboard = null;
         Parent mapCharacter = null;
+        Parent character = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameboardScene.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapChoice.fxml"));
+        FXMLLoader characterFxml = new FXMLLoader(getClass().getResource("/fxml/characterChoicePopUp.fxml"));
         try {
             lobby = lobbyFxml.load();
             gameboard = gameBoardFxml.load();
             mapCharacter = mapCharacterFxml.load();
+            character = characterFxml.load();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         lobbyController = lobbyFxml.getController();
         gameBoardController = gameBoardFxml.getController();
         mapController = mapCharacterFxml.getController();
+        characterController = characterFxml.getController();
+
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
         lobbyStage = new Stage();
         mapStage = new Stage();
         gameBoardStage = new Stage();
+        characterStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -101,10 +111,13 @@ public class GUI extends RemoteView {
         lobbyScene = new Scene(lobby, 800, 560);
         gameboardScene = new Scene(gameboard, 800, 560);
         mapChoiceScene = new Scene(mapCharacter, 400, 120);
+        characterScene = new Scene(character, 500,262);
 
         lobbyStage.setScene(lobbyScene);
         gameBoardStage.setScene(gameboardScene);
         gameBoardController.init();
+        characterStage.setScene(characterScene);
+
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
         System.out.println("fine configurazione GUI");
         metodoPROVA();
@@ -223,11 +236,47 @@ public class GUI extends RemoteView {
     }
 
 
+    //todo modificare stage, da creare
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
-        
-
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                    characterController.setWindow(characterStage);
+                    if(availableCharacters.contains(Character.BANSHEE)){
+                        characterController.getBansheeButton().setDisable(false);
+                    }
+                    else{
+                        characterController.getBansheeButton().setDisable(true);
+                    }
+                    if(availableCharacters.contains(Character.D_STRUCT_OR)){
+                        characterController.getDstructorButton().setDisable(false);
+                    }
+                    else{
+                        characterController.getDstructorButton().setDisable(true);
+                    }
+                    if(availableCharacters.contains(Character.DOZER)){
+                        characterController.getDozerButton().setDisable(false);
+                    }
+                    else{
+                        characterController.getDozerButton().setDisable(true);
+                    }
+                    if(availableCharacters.contains(Character.SPROG)){
+                        characterController.getSprogButton().setDisable(false);
+                    }
+                    else{
+                        characterController.getSprogButton().setDisable(true);
+                    }
+                    if(availableCharacters.contains(Character.VIOLET)){
+                        characterController.getVioletButton().setDisable(false);
+                    }
+                    else{
+                        characterController.getVioletButton().setDisable(true);
+                    }
+                return  characterController.ask(characterScene);
+            }
+        };
+        return userChoice(query);
     }
 
     @Override
@@ -374,7 +423,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
-        return null;
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
@@ -384,7 +433,7 @@ public class GUI extends RemoteView {
              toAdd[i] = decodeMessage.playerTokenImage(damages[i]);
         }
         gameBoardController.setDemage(character,toAdd);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
@@ -395,18 +444,17 @@ public class GUI extends RemoteView {
             ammoToAdd[i] = decodeMessage.ammoCubeImage(ammo.get(i));
         }
         gameBoardController.setAmmo(currCharacter, ammoToAdd);
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
-        if()
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
-        return new UpdateChoiceEvent(getUser());
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
