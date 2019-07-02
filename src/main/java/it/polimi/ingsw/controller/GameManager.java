@@ -150,7 +150,7 @@ public class GameManager {
         if(gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
-        if (currentPlayer == null || !getDisconnectionManager().getDisconnectedPlayers().contains(currentPlayer))
+        if (playerTurn < 0 || !getDisconnectionManager().getDisconnectedPlayers().contains(currentPlayer))
             playerTurn++;
         if (playerTurn >= model.getPlayers().size()) {
             firstRoundPhase = false;
@@ -171,9 +171,9 @@ public class GameManager {
                 endGame();
         }
         else {
-            if (firstRoundPhase) {
+            if (firstRoundPhase)
                 currentRound = new FirstRoundManager(controller, model.getPlayers().get(playerTurn));
-            } else
+            else
                 currentRound = new RoundManager(controller, model.getPlayers().get(playerTurn));
             currentRound.manageRound();
         }

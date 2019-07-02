@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.player.Character;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,25 +40,25 @@ public class GameBoardController extends AbstractController{
     private Button fireButton;
 
     @FXML
-    private GridPane dstructorDamege;
+    private GridPane dstructorDamage;
 
     @FXML
     private GridPane dstructorAmmoCube;
 
     @FXML
-    private GridPane bansheeDamege;
+    private GridPane bansheeDamage;
 
     @FXML
     private GridPane bansheeAmmoCube;
 
     @FXML
-    private GridPane violetDamege;
+    private GridPane violetDamage;
 
     @FXML
     private GridPane violetAmmoCube;
 
     @FXML
-    private GridPane dozerDamege;
+    private GridPane dozerDamage;
 
     @FXML
     private GridPane dozerAmmoCube;
@@ -70,7 +67,7 @@ public class GameBoardController extends AbstractController{
     private GridPane sprogAmmoCube;
 
     @FXML
-    private GridPane sprogDamege;
+    private GridPane sprogDamage;
 
     //SPAWNSQUARE
     @FXML
@@ -105,12 +102,21 @@ public class GameBoardController extends AbstractController{
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
 
     public void init(){
-        mapCharacterAmmoCube.put(Character.BANSHEE,new GridPane[]{bansheeDamege,bansheeAmmoCube});
-        mapCharacterAmmoCube.put(Character.VIOLET,new GridPane[]{violetDamege,violetAmmoCube});
-        mapCharacterAmmoCube.put(Character.DOZER,new GridPane[]{dozerDamege,dozerAmmoCube});
-        mapCharacterAmmoCube.put(Character.SPROG,new GridPane[]{sprogDamege,sprogAmmoCube});
-        mapCharacterAmmoCube.put(Character.D_STRUCT_OR,new GridPane[]{dstructorDamege,dstructorAmmoCube});
-
+        mapCharacterAmmoCube.put(Character.BANSHEE,new GridPane[]{bansheeDamage,bansheeAmmoCube});
+        mapCharacterAmmoCube.put(Character.VIOLET,new GridPane[]{violetDamage,violetAmmoCube});
+        mapCharacterAmmoCube.put(Character.DOZER,new GridPane[]{dozerDamage,dozerAmmoCube});
+        mapCharacterAmmoCube.put(Character.SPROG,new GridPane[]{sprogDamage,sprogAmmoCube});
+        mapCharacterAmmoCube.put(Character.D_STRUCT_OR,new GridPane[]{dstructorDamage,dstructorAmmoCube});
+        gridImageAmmoCubeSetting(bansheeAmmoCube);
+        gridImageAmmoCubeSetting(violetAmmoCube);
+        gridImageAmmoCubeSetting(dozerAmmoCube);
+        gridImageAmmoCubeSetting(sprogAmmoCube);
+        gridImageAmmoCubeSetting(dstructorAmmoCube);
+        gridImageClean(bansheeDamage);
+        gridImageClean(violetDamage);
+        gridImageClean(dozerDamage);
+        gridImageClean(sprogDamage);
+        gridImageClean(dstructorDamage);
     }
 
     public Button getFireButton() {
@@ -139,24 +145,69 @@ public class GameBoardController extends AbstractController{
         this.firstWeaponSpawnBlue.setImage(firstWeaponSpawnBlue);
     }
 
+    /**
+     * It set on scene map selected
+     * @param lefMap
+     * @param rightmap
+     */
     public void setMap(Image lefMap, Image rightmap){
         this.leftMap.setImage(lefMap);
         this.rightMap.setImage(rightmap);
     }
 
-    public void setAmmo(Image[] ammo, Character character){
-        GridPane currPane = mapCharacterAmmoCube.get(character)[0];
-        gridImageClean(currPane);
-        for(int i=0; i<ammo.length;i++){
-            ImageView currImageView = ((ImageView)currPane.getChildren().get(i));
-            currImageView.setImage(ammo[i]);
+    /**
+     * it sets images on a grid pane
+     * @param toAdd images to add on a grid pane
+     * @param toRefill grid pane in which add images
+     */
+    private void setImageOnGrid(Image[] toAdd,GridPane toRefill){
+        gridImageClean(toRefill);
+        for(int i=0; i<toAdd.length;i++){
+            ImageView currImageView = ((ImageView)toRefill.getChildren().get(i));
+            currImageView.setImage(toAdd[i]);
         }
     }
 
-    public void gridImageClean(GridPane toClean){
+    /**
+     * it removes evry singlle image on a grid pane
+     * @param toClean grid pane to clean
+     */
+    private void gridImageClean(GridPane toClean){
         for (int i=0;i <toClean.getChildren().size();i++){
             ((ImageView)toClean.getChildren().get(i)).setImage(null);
+            
         }
     }
+
+    /**
+     * it sets dimension of an ammoCube
+     * @param toSet current grid to set
+     */
+    private void gridImageAmmoCubeSetting(GridPane toSet){
+        for (int i=0;i <toSet.getChildren().size();i++){
+            ((ImageView)toSet.getChildren().get(i)).setFitHeight(15);
+            ((ImageView)toSet.getChildren().get(i)).setFitWidth(15);
+        }
+    }
+
+    /**
+     * It sets ammo on a playerBoard
+     * @param character
+     * @param ammo
+     */
+    public void setAmmo(Character character, Image[] ammo){
+        GridPane curr = mapCharacterAmmoCube.get(character)[1];
+        setImageOnGrid(ammo,curr);
+    }
+
+    /**
+     * it sets Damages on a playerboard
+     * @param character
+     * @param damages
+     */
+    public void setDemage(Character character, Image[] damages){
+            GridPane curr = mapCharacterAmmoCube.get(character)[0];
+            setImageOnGrid(damages,curr);
+        }
 
 }
