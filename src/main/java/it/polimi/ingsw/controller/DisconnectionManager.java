@@ -24,14 +24,14 @@ public class DisconnectionManager {
     }
 
     public void disconnectionManage(String username){
-        boolean disconnectedInCHampSelect = false;
+        boolean disconnectedInChampSelect = false;
         if (controller.getGameManager().getCurrentRound() == null){
             boolean isInGamePlayers = containsPlayer(username, gamePlayers);
             boolean isInDisconnectedPlayers = containsPlayer(username, disconnectedPlayers);
             boolean isInDisconnectingQueue = containsPlayer(username, disconnectingQueue);
             if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue){
                 defaultSetupDisconnection(username);
-                disconnectedInCHampSelect = true;
+                disconnectedInChampSelect = true;
             }
         }
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
@@ -42,7 +42,7 @@ public class DisconnectionManager {
         }
         else
             removePlayer(disconnectedPlayer);
-        if(disconnectedInCHampSelect)
+        if(disconnectedInChampSelect)
             controller.getGameManager().characterSelect();
     }
 
@@ -89,10 +89,7 @@ public class DisconnectionManager {
             controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[disconnectedPlayer.getPosition().getRow()][disconnectedPlayer.getPosition().getColumn()].removeCurrentPlayer(disconnectedPlayer);
         }
         controller.getGameManager().getModel().notifyObservers(new PlayerDisconnectionNotify(disconnectedPlayer.getCharacter()));
-        if (controller.getGameManager().getModel().getPlayers().size() < 3)
-            controller.getGameManager().endGame();
-        else
-            controller.getGameManager().newRound();
+
     }
 
     public void reconnectPlayer(String username){

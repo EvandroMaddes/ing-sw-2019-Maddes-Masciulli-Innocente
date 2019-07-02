@@ -26,9 +26,9 @@ public class Map {
         if (leftMap.equals(BIG_LEFT) && rightMap.equals(BIG_RIGHT))
             chosenMap = 0;
         else if (leftMap.equals(BIG_LEFT))
-            chosenMap = 2;
-        else if (leftMap.equals(SMALL_LEFT) && rightMap.equals(BIG_RIGHT))
             chosenMap = 1;
+        else if (leftMap.equals(SMALL_LEFT) && rightMap.equals(BIG_RIGHT))
+            chosenMap = 2;
         else
             chosenMap = 3;
     }

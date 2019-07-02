@@ -16,7 +16,7 @@ public class Decoder {
     private Decoder(){
 
     }
-    
+
     public static ArrayList<PowerUp> decodePowerUpsList(Player powerUpsOwner, String[] powerUpType, CubeColour[] powerUpColour){
         ArrayList<PowerUp> decodedPowerUps = new ArrayList<>();
         for(int i = 0; i < powerUpType.length; i++){
