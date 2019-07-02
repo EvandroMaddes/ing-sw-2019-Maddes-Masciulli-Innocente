@@ -288,4 +288,33 @@ public class DecodeMessage {
         Path  path = findAmmoCubeImage(ammoCube);
         return loadImage(path);
     }
+
+    private Path findPlayerTokenImage(Character character){
+        Path path = null;
+        switch(character) {
+            case VIOLET:
+                path = getPath("playerTokens/violetToken.png");
+                break;
+            case SPROG:
+                path = getPath("playerTokens/sprogToken.png");
+                break;
+            case BANSHEE :
+                path = getPath("playerTokens/bansheeToken.png");
+                break;
+            case DOZER:
+                path = getPath("playerTokens/dozerToken.png");
+            case D_STRUCT_OR:
+                path = getPath("playerTokens/dstructorToken.png");
+                break;
+
+        }
+                return path;
+    }
+
+    public Image playerTokenImage(Character character) {
+        Path path = findPlayerTokenImage(character);
+        return loadImage(path);
+
+    }
 }
+

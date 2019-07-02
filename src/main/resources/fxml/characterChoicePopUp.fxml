@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="500.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.CharacterChoiceController">
+   <children>
+      <VBox prefHeight="250.0" prefWidth="500.0">
+         <children>
+            <Label prefHeight="44.0" prefWidth="401.0" text="Chose your character between:" textFill="YELLOW" translateX="55.0">
+               <font>
+                  <Font name="Arial Black" size="22.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" spacing="100.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="sprogButton" contentDisplay="TOP" mnemonicParsing="false" text="SPROG" textFill="GREEN">
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../players/Sprog.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bansheeButton" contentDisplay="TOP" mnemonicParsing="false" text="BANSHEE" textFill="BLUE">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../players/banshee.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="dstructorButton" contentDisplay="TOP" mnemonicParsing="false" text="D_STRUCT_OR" textFill="YELLOW">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../players/distructor.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" spacing="125.0">
+               <children>
+                  <Button fx:id="violetButton" contentDisplay="TOP" mnemonicParsing="false" text="VIOLET" textFill="#ff00fe">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../players/violet.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="dozerButton" contentDisplay="TOP" mnemonicParsing="false" text="DOZER">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../players/dozer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

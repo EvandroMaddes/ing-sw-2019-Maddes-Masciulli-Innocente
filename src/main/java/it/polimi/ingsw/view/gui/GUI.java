@@ -4,6 +4,7 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
@@ -17,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,6 +40,7 @@ public class GUI extends RemoteView {
     private Scene mapChoiceScene;
 
     private String[] clientChoices = new String[3];
+    private Character characterChoose ;
     
 
     /**
@@ -65,7 +66,7 @@ public class GUI extends RemoteView {
         Parent mapCharacter = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
-        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameBoard.fxml"));
+        FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameboardScene.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapChoice.fxml"));
         try {
             lobby = lobbyFxml.load();
@@ -76,13 +77,13 @@ public class GUI extends RemoteView {
         }
         lobbyController = lobbyFxml.getController();
         gameBoardController = gameBoardFxml.getController();
-        gameBoardController.init();
         mapController = mapCharacterFxml.getController();
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
         lobbyStage = new Stage();
         mapStage = new Stage();
+        gameBoardStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -102,8 +103,11 @@ public class GUI extends RemoteView {
         mapChoiceScene = new Scene(mapCharacter, 400, 120);
 
         lobbyStage.setScene(lobbyScene);
+        gameBoardStage.setScene(gameboardScene);
+        gameBoardController.init();
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
         System.out.println("fine configurazione GUI");
+        metodoPROVA();
 
         /***********FUNZIONA**************
          Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
@@ -113,6 +117,11 @@ public class GUI extends RemoteView {
          primaryStage.show();
          });
          */
+    }
+
+    public void metodoPROVA(){
+
+        Platform.runLater(()->gameBoardStage.show());
     }
 
     /**
@@ -216,12 +225,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
-        ArrayList<String> charctersName = new ArrayList<>();
-        charctersName.add(availableCharacters.get(0).name());
-        charctersName.add(availableCharacters.get(1).name());
-        charctersName.add(availableCharacters.get(2).name());
-        charctersName.add(availableCharacters.get(3).name());
-        Platform.runLater(() -> mapController.setCharacterComboBox(charctersName));
+        
 
         return null;
     }
@@ -375,7 +379,12 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
-        return null;
+        Image[] toAdd = new Image[damages.length];
+        for (int i=0; i<damages.length;i++){
+             toAdd[i] = decodeMessage.playerTokenImage(damages[i]);
+        }
+        gameBoardController.setDemage(character,toAdd);
+        return new UpdateChoiceEvent(getUser());
     }
 
     @Override
@@ -385,18 +394,19 @@ public class GUI extends RemoteView {
         for (int i=0; i<ammo.size(); i++) {
             ammoToAdd[i] = decodeMessage.ammoCubeImage(ammo.get(i));
         }
-        gameBoardController.setAmmo(ammoToAdd,currCharacter);
-        return null;
+        gameBoardController.setAmmo(currCharacter, ammoToAdd);
+        return new UpdateChoiceEvent(getUser());
     }
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
-        return null;
+        if()
+        return new UpdateChoiceEvent(getUser());
     }
 
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
-        return null;
+        return new UpdateChoiceEvent(getUser());
     }
 
     @Override
