@@ -157,16 +157,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     @Override
-    public String getIPAddress() {
-        return ipAddress;
-    }
-
-    @Override
-    public int remoteGetPort() {
-        return getPort();
-    }
-
-    @Override
     public String getUser() {
         return "SERVER";
     }
@@ -376,9 +366,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     }
 
     /**
-     * is called during the remoteSendMessage() from a RMIClient
-     * @param message is the received message
-     * @throws RemoteException
+     * is called during the remoteSendMessage() from a RMIClient, wait for a latch
+     * @param remoteImplementation is the client remote implementation in which will be retrieved the message
+     * @throws RemoteException if client isn't reachble
      */
     @Override
     public synchronized void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException {
@@ -390,10 +380,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         currMessage = remoteImplementation.getCurrMessage();
     }
 
-    @Override
-    public Event remoteGetCurrEvent() throws RemoteException {
-        return currMessage;
-    }
 
     /**
      * This method set, on each RemoteClient, the current message and wait for 100 milliSeconds between each setting
