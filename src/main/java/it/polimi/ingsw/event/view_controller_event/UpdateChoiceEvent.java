@@ -9,6 +9,5 @@ public class UpdateChoiceEvent extends ViewControllerEvent {
 
     @Override
     public void performAction(Controller controller) {
-        //TODO notifica controller della giusta ricezione dell'updateEvent
     }
 }

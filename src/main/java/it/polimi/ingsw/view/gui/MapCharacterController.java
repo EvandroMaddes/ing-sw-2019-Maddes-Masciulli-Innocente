@@ -52,7 +52,7 @@ public class MapCharacterController extends AbstractController {
     void mapComboBoxChoice(ActionEvent event) {
         mapChoice = mapComboBox.getValue();
         System.out.println("map choose");
-        setMessage(new GameChoiceEvent(getGui().getUser(),mapChoice,0));
+        setMessage(new GameChoiceEvent(getGui().getUser(),mapChoice));
         getWindow().close();
     }
 

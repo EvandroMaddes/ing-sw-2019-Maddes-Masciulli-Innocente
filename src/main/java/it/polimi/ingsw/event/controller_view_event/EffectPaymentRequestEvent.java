@@ -10,7 +10,6 @@ public class EffectPaymentRequestEvent extends PaymentRequestEvent {
         super(user, powerUpNames, powerUpColours, minimumPowerUpRequest, maximumPowerUpRequest);
     }
 
-    //todo reimplentare
     @Override
     public Event performAction(RemoteView remoteView) {
         return remoteView.weaponEffectPaymentChoice(getPowerUpNames(),getPowerUpColours(),getMinimumPowerUpRequest(),getMaximumPowerUpRequest());
