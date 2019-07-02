@@ -11,8 +11,6 @@ public class CLISquare {
     private boolean isSpawnSquare;
 
 
-    //todo aggiungere spawn/basic e coord porte(?), modificare è brutto muri separati!!!
-
     /**
      * constructor: it set color and property of one square(spawn square or not)
      * @param color color of the square
