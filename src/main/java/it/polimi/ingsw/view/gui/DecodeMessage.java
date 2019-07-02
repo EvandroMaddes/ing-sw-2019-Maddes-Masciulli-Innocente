@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import javafx.scene.image.Image;
@@ -160,11 +161,22 @@ public class DecodeMessage {
         return mapPowerUpColor.get(powerUpName+powerUpColor);
     }
 
+    private Path findAmmoCubeImage(AmmoCube ammo){
+        Path path = null;
+        if (ammo.getColour() == CubeColour.Red){
+            path = getPath("ammoboxes/redammobox.png");
+        }else if (ammo.getColour() == CubeColour.Yellow){
+            path = getPath("ammoboxes/yellowammobox.png");
+        }else {
+            path = getPath("ammoboxes/blueammobox.png");
+        }
+
+        return path;
+    }
     /**
      * It finds playerboard path by the character
      * @param character character of the powerUP
      * @return path of the image
-
      */
     private Path findPlayerBoardImage(Character character){
         return mapCharacterPlayerboard.get(character);
@@ -261,8 +273,19 @@ public class DecodeMessage {
      * @param thrirdColor ammo cube or powerUp
      * @return image of an ammo Tile
      */
-    public Image ammoimage(String firstColor,String secondColor, String thrirdColor){
+    public Image ammoTileImage(String firstColor, String secondColor, String thrirdColor){
         Path path =  findAmmoTileImage(firstColor,secondColor,thrirdColor);
+        return loadImage(path);
+    }
+
+    // TODO: 02/07/2019
+    /**
+     *
+     * @param ammoCube
+     * @return
+     */
+    public Image ammoCubeImage(AmmoCube ammoCube){
+        Path  path = findAmmoCubeImage(ammoCube);
         return loadImage(path);
     }
 }

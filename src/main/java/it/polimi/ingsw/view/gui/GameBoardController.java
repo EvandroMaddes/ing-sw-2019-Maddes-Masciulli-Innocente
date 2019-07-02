@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
+import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
+import it.polimi.ingsw.model.player.Character;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,10 +11,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * It controls scene of gameboard
  */
 public class GameBoardController extends AbstractController{
+
+    @FXML
+    private ImageView rightMap;
+
+    @FXML
+    private ImageView leftMap;
 
 
     @FXML
@@ -90,10 +102,14 @@ public class GameBoardController extends AbstractController{
     private ImageView thridWeaponSpawnYellow;
 
 
+    private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
 
-
-    @FXML
-    void gridMapClick() {
+    public void init(){
+        mapCharacterAmmoCube.put(Character.BANSHEE,new GridPane[]{bansheeDamege,bansheeAmmoCube});
+        mapCharacterAmmoCube.put(Character.VIOLET,new GridPane[]{violetDamege,violetAmmoCube});
+        mapCharacterAmmoCube.put(Character.DOZER,new GridPane[]{dozerDamege,dozerAmmoCube});
+        mapCharacterAmmoCube.put(Character.SPROG,new GridPane[]{sprogDamege,sprogAmmoCube});
+        mapCharacterAmmoCube.put(Character.D_STRUCT_OR,new GridPane[]{dstructorDamege,dstructorAmmoCube});
 
     }
 
@@ -104,25 +120,43 @@ public class GameBoardController extends AbstractController{
     @FXML
     void moveButtonPress(ActionEvent event) {
 
-        sendChoice(new ActionChoiceEvent(getGui().getUser(),1));
     }
 
     @FXML
     void grabButtonPress(ActionEvent event) {
 
-        sendChoice(new ActionChoiceEvent(getGui().getUser(),2));
     }
 
 
 
-    @FXML
-    void fireButtonPress(ActionEvent event) {
 
-        sendChoice(new ActionChoiceEvent(getGui().getUser(),3));
+    @FXML
+    void fireButtonPress() {
 
     }
 
     public void setFirstWeaponSpawnBlueImage(Image firstWeaponSpawnBlue) {
         this.firstWeaponSpawnBlue.setImage(firstWeaponSpawnBlue);
     }
+
+    public void setMap(Image lefMap, Image rightmap){
+        this.leftMap.setImage(lefMap);
+        this.rightMap.setImage(rightmap);
+    }
+
+    public void setAmmo(Image[] ammo, Character character){
+        GridPane currPane = mapCharacterAmmoCube.get(character)[0];
+        gridImageClean(currPane);
+        for(int i=0; i<ammo.length;i++){
+            ImageView currImageView = ((ImageView)currPane.getChildren().get(i));
+            currImageView.setImage(ammo[i]);
+        }
+    }
+
+    public void gridImageClean(GridPane toClean){
+        for (int i=0;i <toClean.getChildren().size();i++){
+            ((ImageView)toClean.getChildren().get(i)).setImage(null);
+        }
+    }
+
 }

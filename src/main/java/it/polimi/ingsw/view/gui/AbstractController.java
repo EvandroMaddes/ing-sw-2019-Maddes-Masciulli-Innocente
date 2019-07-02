@@ -52,14 +52,6 @@ public abstract class AbstractController {
     }
 
     /**
-     * It send a choice to server
-     * @param choice user choice
-     */
-    public void sendChoice(Event choice){
-        gui.sendMessage(choice);
-    }
-
-    /**
      * It change scene on a stage
      * @param scene scene to show
      */

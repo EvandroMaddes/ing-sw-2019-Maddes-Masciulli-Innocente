@@ -4,8 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  * It controls login scene
@@ -14,6 +19,10 @@ public class LoginController extends AbstractController{
     private String userString;
     private String connectionString;
     private String ipAddresString;
+    private boolean accepted = false;
+
+    @FXML
+    private GridPane TESTGRID;
     @FXML
     private AnchorPane anchorPanel;
 
@@ -55,7 +64,6 @@ public class LoginController extends AbstractController{
         ipAddresString = IPaddress.getText();
         userString = username.getText();
         connectionString = connection.getText();
-
         choices[0] = userString ;
         choices[1] = connectionString;
         choices[2] = ipAddresString;
@@ -71,18 +79,34 @@ public class LoginController extends AbstractController{
     @FXML
     void usernameType(ActionEvent event)
     {
+        username.getText();
     }
 
     @FXML
     void connectionType(ActionEvent event) {
-        //check sulla correttezza dell'input oppure settarlo a default
-
+        try {
+            if (!connection.getText().equalsIgnoreCase("RMI") && !connection.getText().equalsIgnoreCase("SOCKET")) {
+                accepted = false;
+            } else {
+                accepted = true;
+                ipType(event);
+            }
+        }catch (NullPointerException exc){
+            accepted = false;
+        }
     }
+
     @FXML
     void ipType(ActionEvent event) {
-        //check sulla correttezza dell'input oppure settarlo a default
-
-        enterButton.setDisable(false);
+        if(accepted) {
+            enterButton.setDisable(false);
+        }
     }
 
+    // TODO: 2019-07-02 DA ELIMINARE
+    public void setTESTGRID(Image image) {
+       ImageView curr = ((ImageView)TESTGRID.getChildren().get(0));
+       curr.setImage(image);
+
+    }
 }

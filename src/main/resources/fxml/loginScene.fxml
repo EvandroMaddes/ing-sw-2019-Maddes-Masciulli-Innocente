@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -21,6 +22,21 @@
                   <DropShadow blurType="TWO_PASS_BOX" height="29.65" radius="18.0325" spread="0.43" width="44.48" />
                </effect>
             </Text>
+            <GridPane fx:id="TESTGRID">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="13.0" fitWidth="304.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
             <VBox prefHeight="158.0" prefWidth="602.0" spacing="40.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="319.0" style="-fx-background-color: #73807b;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MapCharacterController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" layoutY="-2.0" prefHeight="115.0" prefWidth="319.0" spacing="20.0" style="-fx-background-color: #73807b;">
+         <children>
+            <Label prefHeight="34.0" prefWidth="251.0" style="-fx-background-color: #73807b;" text="Select map:" textFill="YELLOW" underline="true">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="mapComboBox" onAction="#mapComboBoxChoice" prefWidth="150.0" promptText="map" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
