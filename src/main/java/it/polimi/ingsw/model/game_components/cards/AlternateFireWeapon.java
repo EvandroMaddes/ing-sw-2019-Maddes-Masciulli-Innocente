@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 public abstract class AlternateFireWeapon extends TwoEffectWeapon {
 
@@ -20,7 +21,7 @@ public abstract class AlternateFireWeapon extends TwoEffectWeapon {
             updateUsableEffect(new boolean[]{false, false, false});
         }
         else
-            throw new IllegalArgumentException("EffectControlFlow error");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override

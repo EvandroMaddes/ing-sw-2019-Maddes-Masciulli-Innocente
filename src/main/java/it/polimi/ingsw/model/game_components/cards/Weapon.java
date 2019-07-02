@@ -5,6 +5,7 @@ import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,14 +84,14 @@ public abstract class Weapon extends Card {
         if (selectedEffect == 1)
             performEffectOne(targets);
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public ControllerViewEvent getTargetEffect(int selectedEffect){
         if (selectedEffect == 1)
             return getTargetEffectOne();
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public boolean isUsableEffect (int selectedEffect){
@@ -113,7 +114,7 @@ public abstract class Weapon extends Card {
         if (effectUsed == 0 && getUsableEffect()[0] )
             updateUsableEffect(new boolean[]{false, false, false});
         else
-            throw new IllegalArgumentException("Effect control flow error");
+            throw new EffectIllegalArgumentException();
     }
 
     public abstract void performEffectOne(List<Object> targets);
@@ -132,7 +133,7 @@ public abstract class Weapon extends Card {
         if (effect == 1)
             return new AmmoCube[]{};
         else
-            throw new UnsupportedOperationException("Richiesto effetto non presente");
+            throw new EffectIllegalArgumentException();
     }
 
     public ArrayList<Player> getDamagedPlayer() {

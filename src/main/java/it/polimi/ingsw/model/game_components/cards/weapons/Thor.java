@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.TwoOptionalEffectWeapon;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class Thor extends TwoOptionalEffectWeapon {
         else if (effectUsed == 2 && getUsableEffect()[2])
             updateUsableEffect(new boolean[]{false, false, false});
         else
-            throw new IllegalArgumentException("Effect control flow inconsistence");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override

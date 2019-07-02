@@ -4,6 +4,7 @@ import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
 import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         if (getUsableEffect()[effectUsed])
             getUsableEffect()[effectUsed] = false;
         else
-            throw new IllegalArgumentException();
+            throw new EffectIllegalArgumentException();
     }
 
     public boolean isUsableEffectThree(){
@@ -48,7 +49,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (selectedEffect == 3)
             performEffectThree(targets);
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public ControllerViewEvent getTargetEffect(int selectedEffect){
@@ -59,7 +60,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (selectedEffect == 3)
             return getTargetEffectThree();
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public boolean isUsableEffect (int selectedEffect){
@@ -70,7 +71,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (selectedEffect == 3)
             return  isUsableEffectThree();
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override
@@ -82,7 +83,7 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (effect == 3)
             return thirdEffectCost;
         else
-            throw new UnsupportedOperationException("Effetto richiesto non esistente");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override
@@ -94,6 +95,6 @@ public abstract class TwoOptionalEffectWeapon extends OneOptionalEffectWeapon {
         else if (effect == 3)
             return getUsableEffect()[2];
         else
-            throw new UnsupportedOperationException("Effetto richiesto non esistente");
+            throw new EffectIllegalArgumentException();
     }
 }

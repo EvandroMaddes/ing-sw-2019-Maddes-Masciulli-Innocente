@@ -13,6 +13,10 @@ import java.util.List;
 
 public class Decoder {
 
+    private Decoder(){
+
+    }
+    
     public static ArrayList<PowerUp> decodePowerUpsList(Player powerUpsOwner, String[] powerUpType, CubeColour[] powerUpColour){
         ArrayList<PowerUp> decodedPowerUps = new ArrayList<>();
         for(int i = 0; i < powerUpType.length; i++){
@@ -68,6 +72,6 @@ public class Decoder {
             if (weaponOwner.getWeapons()[i].getName().equals(weaponName))
                 return weaponOwner.getWeapons()[i];
         }
-        throw new UnsupportedOperationException("Il giocatore non possiede l'arma");
+        throw new UnsupportedOperationException("Player doesn't have the weapon");
     }
 }

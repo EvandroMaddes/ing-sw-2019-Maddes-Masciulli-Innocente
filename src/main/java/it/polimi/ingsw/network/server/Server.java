@@ -327,7 +327,7 @@ public class Server {
                     serverImplementation = acceptingSocket;
                 }
                 userAddAndMap(connectedUser, serverImplementation);
-                log.info("Sending message to:\t"+currUser+"\n");
+                log.info("Sending message to:\t".concat(currUser.concat("\n")));
                 serverImplementation.sendMessage(new UsernameModificationEvent(currUser,connectedUser));
                 serverImplementation.updateUsername(currUser,connectedUser);
                 return connectedUser;
@@ -336,6 +336,9 @@ public class Server {
         return connectedUser;
     }
 
+    /**
+     * Called when "Quit" String is read on command line;
+     */
     private static void shutDownServer(){
         for (Lobby currLobby: activeLobbies) {
             currLobby.shutDownLobby();

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.client.socket;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.utils.custom_exceptions.CustomConnectException;
 import it.polimi.ingsw.utils.NetConfiguration;
-import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -12,10 +12,10 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
- * @author Francesco Masciulli
  * This is the Socket Network implementation
+ * @author Francesco Masciulli
  */
-public class SocketClient implements NetworkHandler, ClientInterface {
+public class SocketClient implements ClientInterface {
     private String user;
     private String serverIPAddress;
     private int serverPort;
@@ -31,9 +31,18 @@ public class SocketClient implements NetworkHandler, ClientInterface {
         connectClient();
    }
 
+    /**
+     * Getter method:
+     * @return connected value
+     */
     public boolean isConnected() {
         return connected;
     }
+
+    /**
+     * ClientInterface's reconnectClient() implementation
+     * This method reconnect the client to the requested port, on the same server
+     */
 
     @Override
     public void reconnectClient() {
@@ -45,11 +54,22 @@ public class SocketClient implements NetworkHandler, ClientInterface {
         }
     }
 
+    /**
+     * ClientInterface's Setter method implementation:
+     * set serverPort attribute
+     * @param serverPort is the server port number
+     */
     @Override
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
     }
 
+    /**
+     * ClientInterface method implementation:
+     * this method handle the lookup and the creation of the client RemoteRegistry
+     * calling the method on the server to add the Remote reference to this last created registry;
+     * @throws ConnectException if couldn't connect properly
+     */
     @Override
     public synchronized void connectClient() throws ConnectException{
 
@@ -62,10 +82,14 @@ public class SocketClient implements NetworkHandler, ClientInterface {
             connected = true;
         }catch(Exception e){
             CustomLogger.logException(e);
-            throw new ConnectException("Couldn't reach the server!");
+            throw new CustomConnectException();
         }
     }
 
+    /**
+     * Disconnect the client, closing the socket;
+     * @throws Exception if couldn't close the socket properly
+     */
     @Override
     public void disconnectClient() throws Exception {
        connected = false;
@@ -73,6 +97,11 @@ public class SocketClient implements NetworkHandler, ClientInterface {
 
     }
 
+    /**
+     * this method update the username after a modification request
+     * @param user is the old username
+     * @param newUsername is the updated username
+     */
     @Override
     public void changeUsername(String user, String newUsername) {
         if(!user.equalsIgnoreCase(newUsername)){
@@ -80,6 +109,10 @@ public class SocketClient implements NetworkHandler, ClientInterface {
         }
     }
 
+    /**
+     * ClientInterface's listenMessage implementation
+     * @return the listened message, null if no message was retrieved
+     */
     @Override
     public Event listenMessage() {
         Event message = null;
@@ -103,6 +136,10 @@ public class SocketClient implements NetworkHandler, ClientInterface {
         return message;
     }
 
+    /**
+     * ClientInterface's sendMessage implementation
+     * @param message is the message that must be sent
+     */
     @Override
     public void sendMessage(Event message) {
         try {

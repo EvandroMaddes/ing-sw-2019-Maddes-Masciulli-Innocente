@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.game_components.cards.OneOptionalEffectWeapon;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class LockRifle extends OneOptionalEffectWeapon {
         else if ( effectUsed == 1 && getUsableEffect()[1] )
             updateUsableEffect(new boolean[]{false, false, false});
         else
-            throw new IllegalArgumentException("Something wrong in effectControlFlow");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override
