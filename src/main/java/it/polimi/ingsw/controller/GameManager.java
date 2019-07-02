@@ -234,7 +234,7 @@ public class GameManager {
         playerTurn--;
         if (playerTurn < 0)
             playerTurn = model.getPlayers().size() - 1;
-        getDisconnectionManager().roundFlowManageing();
+        getDisconnectionManager().roundFlowManaging();
     }
 
     /**
