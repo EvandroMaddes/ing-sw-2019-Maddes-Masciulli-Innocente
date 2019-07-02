@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'A'
+ */
 public class ATitleCharacter extends TitleCharacter{
 
     public ATitleCharacter(){

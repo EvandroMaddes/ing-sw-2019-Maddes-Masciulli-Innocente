@@ -29,7 +29,8 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     //private transient ArrayList<Registry> clientRegistries;
     private Event currMessage;
     private ArrayList<Event> disconnectedClients = new ArrayList<>();
-    //private transient Registry registry;
+    private transient Registry registry;
+    private transient RemoteInterface serverStub;
     private String ipAddress;
     private int portRMI;
     private boolean gameCouldStart = false;
@@ -156,16 +157,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     @Override
-    public String getIPAddress() {
-        return ipAddress;
-    }
-
-    @Override
-    public int remoteGetPort() {
-        return getPort();
-    }
-
-    @Override
     public String getUser() {
         return "SERVER";
     }
@@ -186,15 +177,16 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     public void runServer() {
 
         try {
-            RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
-            Registry registry = LocateRegistry.createRegistry(portRMI);
+            serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
+            registry = LocateRegistry.createRegistry(portRMI);
             registry.rebind("RMIServer:"+portRMI, serverStub);
 
         } catch (ExportException e) {
             try {
                 UnicastRemoteObject.unexportObject(this, false);
-                RemoteInterface serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
-                Registry registry = LocateRegistry.createRegistry(portRMI);
+
+                serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
+                registry = LocateRegistry.createRegistry(portRMI);
                 registry.rebind("RMIServer:"+portRMI, serverStub);
             } catch (RemoteException exc) {
                 CustomLogger.logException(exc);
@@ -270,9 +262,13 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public void shutDown() {
         try {
-            unexportObject(this,false);
-        } catch (RemoteException e) {
-
+            UnicastRemoteObject.unexportObject(this,false);
+            registry.unbind("RMIServer:"+portRMI);
+        } catch (RemoteException|NotBoundException e) {
+            CustomLogger.logException(e);
+        }
+        finally {
+            gameCouldTerminate = true;
         }
 
     }
@@ -370,9 +366,9 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     }
 
     /**
-     * is called during the remoteSendMessage() from a RMIClient
-     * @param message is the received message
-     * @throws RemoteException
+     * is called during the remoteSendMessage() from a RMIClient, wait for a latch
+     * @param remoteImplementation is the client remote implementation in which will be retrieved the message
+     * @throws RemoteException if client isn't reachble
      */
     @Override
     public synchronized void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException {
@@ -384,10 +380,6 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
         currMessage = remoteImplementation.getCurrMessage();
     }
 
-    @Override
-    public Event remoteGetCurrEvent() throws RemoteException {
-        return currMessage;
-    }
 
     /**
      * This method set, on each RemoteClient, the current message and wait for 100 milliSeconds between each setting

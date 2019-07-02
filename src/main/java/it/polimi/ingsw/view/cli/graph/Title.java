@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
-
+/**
+ * It manage title "ADRENALINE"
+ */
 public class Title {
     private static final int LENGHT = 210;
     private static final int HEIGHT = 9;

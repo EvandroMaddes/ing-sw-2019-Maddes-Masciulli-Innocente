@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'E'
+ */
 public class ETitleCharacter extends TitleCharacter {
     public ETitleCharacter(){
         string[0]="_/\\\\\\\\\\\\\\\\\\\\\\\\\\_";

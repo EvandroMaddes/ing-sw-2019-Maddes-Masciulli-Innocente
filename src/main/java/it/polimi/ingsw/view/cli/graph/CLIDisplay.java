@@ -3,8 +3,9 @@ package it.polimi.ingsw.view.cli.graph;
 import it.polimi.ingsw.model.player.Character;
 import java.util.ArrayList;
 
-
-
+/**
+ * It is display print on screenand it contains playerboards, gametrack, map
+ */
 public class CLIDisplay {
 
 

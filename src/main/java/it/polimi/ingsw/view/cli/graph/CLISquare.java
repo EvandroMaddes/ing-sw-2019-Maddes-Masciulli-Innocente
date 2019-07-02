@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * this class represents a square on map
+ */
 public class CLISquare {
     public static final int MAXSQUARECOLUMN = 10;
     public static final int MAXSQUAREROW = 5;
@@ -7,8 +10,6 @@ public class CLISquare {
     private String currColorEscape;
     private boolean isSpawnSquare;
 
-
-    //todo aggiungere spawn/basic e coord porte(?), modificare è brutto muri separati!!!
 
     /**
      * constructor: it set color and property of one square(spawn square or not)

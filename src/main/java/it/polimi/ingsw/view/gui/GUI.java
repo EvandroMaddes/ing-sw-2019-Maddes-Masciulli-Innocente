@@ -3,11 +3,15 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
+import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,9 +20,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// TODO: 02/07/2019 chiudere il primary stage prima di mostare la welcomeChoice  modificare mapCharacterChoiceFxml in mapChoice
 
-public class GUI extends RemoteView  {
-    private DecodeMessage decodeMessage= new DecodeMessage();
+public class GUI extends RemoteView {
+    private DecodeMessage decodeMessage = new DecodeMessage();
 
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
@@ -35,24 +40,28 @@ public class GUI extends RemoteView  {
     private Scene lobbyScene;
     private Scene mapharacterChoiceScene;
 
+    private String[] clientChoices = new String[3];
+
+    private String choice;
     private String prova;
-
-
-
-
 
     /**
      * inizializzazione e caricamento stage
      * todo ogni metodo chiamerà set stage
+     *
      * @return
      */
     @Override
     public String[] gameInit() {
-        return new String[0];
+        return clientChoices;
+    }
+
+    public GUI(Stage primaryStage){
+        this.primaryStage = primaryStage;
     }
 
 
-    public void initialize(){
+    public void initialize() {
 
         Parent lobby = null;
         Parent gameboard = null;
@@ -74,9 +83,10 @@ public class GUI extends RemoteView  {
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
-        mapCharacterController.setGui(this);
-/*
         lobbyStage = new Stage();
+        mapCharacterStage = new Stage();
+/*
+
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
         setPrimaryStage((Stage)enterButton.getScene().getWindow());
         gameBoardStage = new Stage();
@@ -88,27 +98,30 @@ public class GUI extends RemoteView  {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
  */
-        lobbyScene =new Scene(lobby, 800, 560);
-        gameboardScene = new Scene(gameboard,800,560);
-        mapharacterChoiceScene = new Scene(mapCharacter,400,280);
+        mapCharacterController.setGui(this);
+        lobbyScene = new Scene(lobby, 800, 560);
+        gameboardScene = new Scene(gameboard, 800, 560);
+        mapharacterChoiceScene = new Scene(mapCharacter, 400, 280);
 
+        lobbyStage.setScene(lobbyScene);
 
         System.out.println("fine configurazione GUI");
+
         /***********FUNZIONA**************
-        Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
-        Platform.runLater(()->{
-            primaryStage.setScene(gameboardScene);
-            gameBoardController.setFirstWeaponSpawnBlueImage(weapon);
-            primaryStage.show();
-            });
+         Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
+         Platform.runLater(()->{
+         primaryStage.setScene(gameboardScene);
+         gameBoardController.setFirstWeaponSpawnBlueImage(weapon);
+         primaryStage.show();
+         });
          */
     }
 
-    public void metodoprova(){
-        boolean[] available=new boolean[3];
-        available[0]=true;
-        available[1]=true;
-        available[2]=true;
+    public void metodoprova() {
+        boolean[] available = new boolean[3];
+        available[0] = true;
+        available[1] = true;
+        available[2] = true;
 
         ArrayList<String> wait = new ArrayList<String>();
         wait.add("wait1");
@@ -125,7 +138,14 @@ public class GUI extends RemoteView  {
         name.add("name2");
         name.add("name3");
 
-        welcomeChoice(available,started,wait);
+        welcomeChoice(available, started, wait);
+    }
+
+    public void setClientChoices(String[] choices) {
+        clientChoices = choices;
+        System.out.println("\nUser: " + clientChoices[0] +
+                "\nConnection: " + clientChoices[1] +
+                "\nIp: " + clientChoices[2]);
     }
 
     @Override
@@ -136,11 +156,11 @@ public class GUI extends RemoteView  {
     /**
      * chiamato dai controller delle scene gira il messaggio al server
      * //TODO frti tornarre nel metodo chiamante il controller delle sceene il messaggio
+     *
      * @param choice
      */
-    public void sendMessage(Event choice){
+    public void sendMessage(Event choice) {
         System.out.println(choice.getUser());
-        setToVirtualView(choice);
 
     }
 
@@ -148,6 +168,10 @@ public class GUI extends RemoteView  {
     @Override
     public void printScreen() {
 
+    }
+
+    public void setChoice(String choice) {
+        this.choice = choice;
     }
 
     @Override
@@ -174,7 +198,7 @@ public class GUI extends RemoteView  {
     }
 
     @Override
-    public Event gameTrackSkullUpdate( Character[] killerCharacter, int[] skullNumber) {
+    public Event gameTrackSkullUpdate(Character[] killerCharacter, int[] skullNumber) {
         return null;
     }
 
@@ -232,7 +256,7 @@ public class GUI extends RemoteView  {
         charctersName.add(availableCharacters.get(1).name());
         charctersName.add(availableCharacters.get(2).name());
         charctersName.add(availableCharacters.get(3).name());
-        Platform.runLater(()->mapCharacterController.setCharacterComboBox(charctersName));
+        Platform.runLater(() -> mapCharacterController.setCharacterComboBox(charctersName));
 
         return null;
     }
@@ -269,25 +293,43 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event gameChoice() {
-        Platform.runLater(()->mapCharacterController.getMapComboBox().setDisable(false));
-        ArrayList<Integer> mapChoice = new ArrayList<Integer>();
-        mapChoice.add(0);
-        mapChoice.add(1);
-        mapChoice.add(2);
-        mapChoice.add(3);
-        Platform.runLater(()->mapCharacterController.getEnterButton().setDisable(true));
-        Platform.runLater(()->mapCharacterController.setMapComboBox(mapChoice));
-
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                try {
+                    mapCharacterController.setWindow(mapCharacterStage);
+                    ArrayList<Integer> mapChoice = new ArrayList<Integer>();
+                    mapChoice.add(0);
+                    mapChoice.add(1);
+                    mapChoice.add(2);
+                    mapChoice.add(3);
+                    mapCharacterController.setMapComboBox(mapChoice);
+                } catch (Exception e) {
+                }
+                Event event = mapCharacterController.ask(mapharacterChoiceScene);
+                return event;
+            }
+        };
+        Thread th = new Thread(query);
+        th.start();
+        try{
+            Event event = query.get();
+            return event;
+        }catch(Exception interrupted){
+            CustomLogger.logException(interrupted);
+            return null;
+        }
     }
 
     @Override
     public Event actionChoice(boolean fireEnable) {
         System.out.println("action choice");
-        Platform.runLater(()->{primaryStage.setScene(gameboardScene);
-        primaryStage.show();
-        System.out.println("run later");
-        gameBoardController.getFireButton().setDisable(!fireEnable);}
+        Platform.runLater(() -> {
+                    primaryStage.setScene(gameboardScene);
+                    primaryStage.show();
+                    System.out.println("run later");
+                    gameBoardController.getFireButton().setDisable(!fireEnable);
+                }
         );
         return null;
     }
@@ -335,8 +377,38 @@ public class GUI extends RemoteView  {
 
     @Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
-        Platform.runLater(()->lobbyController.setLobby(available,startedLobbies,waitingLobbies));
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                try {
+                    lobbyController.setWindow(lobbyStage);
+                    lobbyController.setLobby(available, startedLobbies, waitingLobbies);
+                } catch (Exception e) {
+                }
+                Event event = lobbyController.ask(lobbyScene);
+                return event;
+            }
+        };
+        // TODO: 02/07/2019 renderlo un metodo 
+        Thread th = new Thread(query);
+        th.start();
+        try{
+            Event event = query.get();
+            return event;
+        }catch(Exception interrupted){
+            CustomLogger.logException(interrupted);
+            return null;
+        }
+
+
+        /*Platform.runLater(
+                () -> {
+                    lobbyController.setLobby(available, startedLobbies, waitingLobbies);
+                    lobbyStage.setScene(lobbyScene);
+                });
+         return lobbyController.ask(lobbyScene);
+
+         */
     }
 
     @Override

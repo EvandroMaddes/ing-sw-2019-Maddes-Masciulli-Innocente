@@ -8,26 +8,23 @@ import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
-import it.polimi.ingsw.view.cli.CLIHandler;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.logging.Logger;
 
 /**
  * Is the main Game Server, handles the incoming connection from new clients and redirects them to the chosen Lobby
+ * @author Francesco Masciulli
  */
 public class Server {
 
     private static Logger log = Logger.getLogger("ServerLogger");
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static Scanner scanner = new Scanner(reader);
-
-    private static final int startPortNumber = NetConfiguration.RMISERVERPORTNUMBER;
-    private static boolean shutDown = false;
     private static ArrayList<Lobby> activeLobbies = new ArrayList<>();
     private static ArrayList<String> connectedUsers = new ArrayList<>();
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
@@ -36,8 +33,10 @@ public class Server {
     private static int handledUsers = 0;
     private static ArrayList<String> waitingLobby = new ArrayList<>();
     private static ArrayList<String> startedLobby = new ArrayList<>();
+    private static int gamesHandled = 0;
 
     public static void main(String[] args){
+        boolean shutDown = false;
         try {
             boolean isSetted = false;
             int gameTimerValue;
@@ -72,9 +71,6 @@ public class Server {
                     isSetted=true;
                 }
             }
-
-
-            //todo deve disconnettere i client
             acceptingRMI = new RMIServer();
             acceptingSocket = new SocketServer();
             ((SocketServer)acceptingSocket).start();
@@ -85,15 +81,23 @@ public class Server {
             CustomLogger.logException(e);
         }
         while(!shutDown){
-
             cleanConnectedUsers();
             updateStartedLobbies();
             String incomingUser = checkNewClient();
-            if(!incomingUser.isEmpty()) {
+            if (!incomingUser.isEmpty()) {
                 welcomeUser(incomingUser);
+            }
+            try {
+                if(reader.ready()&&scanner.nextLine().equalsIgnoreCase("quit")){
+                    shutDown = true;
+                }
+            }
+            catch (IOException nothingToRead){
+                shutDown = false;
             }
         }
 
+        shutDownServer();
     }
 
 
@@ -141,7 +145,8 @@ public class Server {
         Lobby newLobby;
         newLobby = new Lobby();
         activeLobbies.add(newLobby);
-        newLobby.setLobby(user,activeLobbies.size());
+        newLobby.setLobby(user,gamesHandled);
+        gamesHandled++;
         waitingLobby.add(newLobby.getLobbyName());
         newLobby.start();
         reconnectClient(user, newLobby);
@@ -322,7 +327,7 @@ public class Server {
                     serverImplementation = acceptingSocket;
                 }
                 userAddAndMap(connectedUser, serverImplementation);
-                log.info("Sending message to:\t"+currUser+"\n");
+                log.info("Sending message to:\t".concat(currUser.concat("\n")));
                 serverImplementation.sendMessage(new UsernameModificationEvent(currUser,connectedUser));
                 serverImplementation.updateUsername(currUser,connectedUser);
                 return connectedUser;
@@ -331,6 +336,18 @@ public class Server {
         return connectedUser;
     }
 
+    /**
+     * Called when "Quit" String is read on command line;
+     */
+    private static void shutDownServer(){
+        for (Lobby currLobby: activeLobbies) {
+            currLobby.shutDownLobby();
+        }
+        acceptingRMI.shutDown();
+        acceptingSocket.shutDown();
+        log.info("Shutting-down the server..");
+        System.exit(0);
+    }
 
 
 }

@@ -11,8 +11,9 @@ import java.io.IOException;
 public class LoginMain extends Application{
 
    private Parent root;
+   private static Stage loginStage;
    private LoginController loginController;
-   private static final GUI gui = new GUI();
+   private static GUI gui;
 
     /**
      *
@@ -31,7 +32,6 @@ public class LoginMain extends Application{
     public void start(Stage primaryStage) {
 
         FXMLLoader loginFxml = new FXMLLoader(getClass().getResource("/fxml/loginScene.fxml"));
-
         primaryStage.setTitle("ADRENALINE");
         try {
             root = loginFxml.load();
@@ -39,15 +39,10 @@ public class LoginMain extends Application{
             e.printStackTrace();
         }
         loginController = loginFxml.getController();
-        loginController.setGui(gui);
+        loginController.setStage(primaryStage);
         primaryStage.setScene(new Scene(root, 800, 560));
         primaryStage.show();
     }
-
-    public static GUI getGui() {
-        return gui;
-    }
-
 
     public static void guiMain() {
         launch();

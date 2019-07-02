@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'L'
+ */
 public class LTitleCharacter extends TitleCharacter {
     public LTitleCharacter(){
         String repeatedString = "_\\/\\\\\\________";

@@ -1,13 +1,13 @@
 package it.polimi.ingsw.view.cli.graph;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import static it.polimi.ingsw.view.cli.graph.CLISquare.MAXSQUARECOLUMN;
 import static it.polimi.ingsw.view.cli.graph.CLISquare.MAXSQUAREROW;
 
-//todo è stata implementata PrinatbleElement per creare stringhe dei player e delle ammo, occhio alle coordinate su map
+/**
+ * It is the map
+ */
 public class CLIMap {
     //un carattere verticale per ogni due orizzontali
     private static final int MAXCOLUMN = 42;
@@ -93,12 +93,12 @@ public class CLIMap {
         return cliSquares;
     }
 
-    // TODO: 25/06/2019 chiedi a fra  
+
     /**
-     *
-     * @param isFirst
-     * @param isRight
-     * @param isAlternatedOrder
+     * Depending on the boolean given, it allocate the respectively game's semi-map
+     * @param isFirst is true if must be allocated the first semi-map, false if second
+     * @param isRight is true if must be allocated the Right semi-map, false if is Left
+     * @param isAlternatedOrder is true if is allocated map 1 or 2 (FirstLeft+SecondRight and SecondLeft+FirstRight)
      * @return
      */
     private ArrayList<CLISquare> allocateSemiMap(boolean isFirst, boolean isRight, boolean isAlternatedOrder){
@@ -255,7 +255,7 @@ public class CLIMap {
 
 
     /**
-     * this method insert in the map the right sequence of CLISquares, given in the ArrayList squares
+     * This method insert in the map the right sequence of CLISquares, given in the ArrayList squares
      * the order follow the horizontal sequence of each map, constructed in the method allocateSquares()
      * @param squares square to add
      */
@@ -279,31 +279,20 @@ public class CLIMap {
     }
 
 
-    // TODO: 25/06/2019 da eliminare?
-    public void plot() {
 
-        for (int row = 0; row < MAXROW; row++) {
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
-            for (int column = 0; column < MAXCOLUMN; column++) {
-                System.out.print(map[column][row]);
-            }
-        }
-
-    }
-
-    // TODO: 25/06/2019 chiedi a fra 
     /**
-     * 
-     * @param element 
-     * @param coordX column
-     * @param coordY row
+     * Set a CLIPrintableElement on the map's square identified by the coordinates (of it on the mapMatrix)
+     * @param element is the update element
+     * @param coordX column is the Square's column
+     * @param coordY row is the Square's row
      */
     public void updateResource(CLIPrintableElement element,int coordX, int coordY){
         coordX = coordX * MAXSQUARECOLUMN + 2;
         coordY = coordY * MAXSQUAREROW + 2;
-        int tempCoordX, tempCoordY;
-        removePlayer(element.getResource());
+        int tempCoordX;
+        int tempCoordY;
         if (element.isPlayer()) {
+            removePlayer(element.getResource());
             tempCoordX = coordX;
             tempCoordY = coordY + 1;
             while (tempCoordY < coordY + MAXSQUAREROW) {
@@ -336,7 +325,7 @@ public class CLIMap {
     }
 
     /**
-     * it remove one player from the map 
+     * It remove one player from the map
      * @param player selected player
      */
     public void removePlayer(String player){

@@ -56,6 +56,7 @@ public class SocketServer extends Thread implements ServerInterface {
         while(gameIsRunning){
             acceptClient();
         }
+
     }
 
 
@@ -65,9 +66,7 @@ public class SocketServer extends Thread implements ServerInterface {
      */
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
-        Iterator iterator = socketList.iterator();
-        while(iterator.hasNext()){
-            SocketServerThread currClientThread = (SocketServerThread) iterator.next();
+        for (SocketServerThread currClientThread:socketList) {
             clientUserList.add(currClientThread.getClientUser());
         }
         return clientUserList;
@@ -104,6 +103,7 @@ public class SocketServer extends Thread implements ServerInterface {
     @Override
     public void runServer() {
         try{
+
         serverSocket = new ServerSocket(serverPort);
         }catch(IOException e){
             CustomLogger.logException(e);
@@ -130,7 +130,7 @@ public class SocketServer extends Thread implements ServerInterface {
 
                 socketList.add(clientSocketThread);
             } catch (IOException e) {
-                CustomLogger.logException(e);
+                gameIsRunning=false;
             }
         }
     }
@@ -149,13 +149,17 @@ public class SocketServer extends Thread implements ServerInterface {
     /**
      * This method shutDown the server
      */
-    //todo non si arresta run() prima che si chiudano i socket a seguito di Lobby.disconnect(), da controllare;
     @Override
     public void shutDown() {
         for (SocketServerThread currThread: socketList) {
 
             currThread.disconnect();
+        }
+        try{
             gameIsRunning= false;
+            serverSocket.close();
+        }catch (IOException ioExc){
+            CustomLogger.logException(ioExc);
         }
     }
 
@@ -186,7 +190,7 @@ public class SocketServer extends Thread implements ServerInterface {
         CustomTimer timer = new CustomTimer(NetConfiguration.roundTimer);
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.roundTimer + " seconds.\n");
+        log.info("Started the round countdown!\nPlayer disconnected in ".concat(Integer.toString(NetConfiguration.roundTimer).concat(" seconds.\n")));
         for (int i = 0; i < socketList.size() ; i++) {
             SocketServerThread currSocket = socketList.get(i);
             if(currSocket.getCurrMessage()!=null&&currSocket.isConnected()) {

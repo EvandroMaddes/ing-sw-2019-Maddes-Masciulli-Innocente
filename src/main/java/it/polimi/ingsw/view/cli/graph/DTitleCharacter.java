@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'D'
+ */
 public class DTitleCharacter extends TitleCharacter {
     public DTitleCharacter(){
         string[0]="_/\\\\\\\\\\\\\\\\\\\\____";

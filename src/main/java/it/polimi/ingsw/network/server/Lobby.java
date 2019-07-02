@@ -2,31 +2,20 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.model_view_event.PlayerDisconnectionNotify;
 import it.polimi.ingsw.event.server_view_event.LobbySettingsEvent;
 import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
 import it.polimi.ingsw.event.controller_view_event.GameRequestEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomTimer;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.view.VirtualView;
-
-
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import java.rmi.RemoteException;
 import java.util.*;
@@ -40,7 +29,6 @@ public class Lobby extends Thread {
     private  Logger log = Logger.getLogger("ServerLogger");
 
     private String lobbyName;
-    private Controller lobbyController;
     private  ArrayList<VirtualView> virtualViewList = new ArrayList<>();
     private  ArrayList<String> activeClientList = new ArrayList<>();
     private  ArrayList<String> disconnectedClientList = new ArrayList<>();
@@ -54,7 +42,7 @@ public class Lobby extends Thread {
     private  Event message;
     private  boolean gameCouldStart = false;
     private boolean shutDown = false;
-    int mapChoice = 404;
+    private int mapChoice = 404;
 
 
     public int getPortRMI() {
@@ -99,14 +87,12 @@ public class Lobby extends Thread {
      */
     @Override
     public void run() {
+            Controller lobbyController;
             serverSocket.start();
             Thread rmiThread = new Thread(serverRMI);
             rmiThread.start();
             log.info(lobbyName.concat(":\tReady to accept clients\n"));
-
-
             boolean setUpComplete = false;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 
             while(!shutDown){
@@ -129,13 +115,13 @@ public class Lobby extends Thread {
                             String firstUser = activeClientList.get(0);
                             ServerInterface currServer = mapUserServer.get(firstUser);
                             currServer.sendMessage(new GameRequestEvent(firstUser));
-                            log.info(lobbyName.concat(":\tSending message to:\t" + firstUser + "\n"));
+                            log.info(lobbyName.concat(":\tSending message to:\t".concat(firstUser.concat("\n"))));
                             while (message == null) {
                                 message = currServer.listenMessage();
                             }
                             mapChoice = ((GameChoiceEvent) message).getMap();
                             setUpComplete = true;
-                            log.info(lobbyName.concat("\tListened message from:\t" + message.getUser() + "\n"));
+                            log.info(lobbyName.concat("\tListened message from:\t".concat(message.getUser().concat("\n"))));
                             message = null;
                         }
                     }
@@ -145,8 +131,8 @@ public class Lobby extends Thread {
                         if(gameTimer==null){
                             gameTimer = new CustomTimer(NetConfiguration.startGameTimer);
                             gameTimer.start();
-                            log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in "
-                                    + NetConfiguration.startGameTimer +" seconds.\n"));
+                            log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in ".concat(
+                                   Integer.toString(NetConfiguration.startGameTimer).concat(" seconds.\n"))));
                         }
                         else if(!gameTimer.isAlive()) {
                             serverRMI.gameCouldStart();
@@ -171,7 +157,6 @@ public class Lobby extends Thread {
                 //Update dei giocatori riconnessi, all'inizio di ogni turno di un giocatore
                 checkNewClient();
                 //Update dei giocatori disconnessi, all'inizio di ogni cambio di contesto
-                //TODO chiama ping solo se currUser != vecchioUser
                 ArrayList<Event> disconnectedClients = ping();
                 if(disconnectedClients.isEmpty()) {
                     Event nextMessage = findNextMessage();
@@ -198,7 +183,6 @@ public class Lobby extends Thread {
                         shutDown = true;
                         break;
                     }
-                    //lobbyController.update(mapUserView.get(message.getUser()), message);
                 }
                 else {
 
@@ -230,6 +214,10 @@ public class Lobby extends Thread {
 
     public boolean isShutDown() {
         return shutDown;
+    }
+
+    public void shutDownLobby(){
+        shutDown = false;
     }
 
     /**
@@ -402,7 +390,9 @@ public class Lobby extends Thread {
     private  void disconnectClient(String user){
         activeClientList.remove(user);
         disconnectedClientList.add(user);
-        message = mapUserServer.get(user).disconnectClient(user);
+        if (mapUserServer.containsKey(user)) {
+            message = mapUserServer.get(user).disconnectClient(user);
+        }
         mapUserServer.remove(user);
         if(isGameCouldStart()){
             mapUserView.get(user).toController(message);

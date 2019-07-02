@@ -1,22 +1,17 @@
 package it.polimi.ingsw.view.gui;
 
-import com.sun.javafx.fxml.builder.JavaFXImageBuilder;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.weapons.Zx2;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.view.cli.graph.Color;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import javax.tools.JavaFileObject;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * It links an image and a card, map, character, playerboard
+ */
 public class DecodeMessage {
 
     private Map<Character, Path> mapCharacterPlayerboard = new EnumMap<Character, Path>(Character.class);
@@ -26,7 +21,7 @@ public class DecodeMessage {
 
     /**
      * Constructor: set relation between character and playerboard image,
-     *              character andhis marker,
+     *              character and his marker,
      *              weapon and card,
      *              powerUp and card,
      *              ammoTile and card.
@@ -87,6 +82,7 @@ public class DecodeMessage {
         mapWeapon.put( "VORTEX CANNON",vortexCannon);
         mapWeapon.put( "WHISPER",whisper);
         mapWeapon.put( "ZX-2", zx2);
+        mapWeapon.put("unload",unload);
         //setting PowerUp e relativa card
         Path newtonRed = getPath("cards/powerUp/newtonRed.png");
         Path newtonYellow = getPath("cards/powerUp/newtonYellow.png");
@@ -132,54 +128,54 @@ public class DecodeMessage {
     }
 
     /**
-     * It finds ammotile image by its component
-     * @param firstcolor first ammo color
+     * It finds ammo tile path by its component
+     * @param firstColor first ammo color
      * @param secondColor second ammo color
-     * @param thrirdColor thrid ammo color or one powerUp
+     * @param thirdColor thrid ammo color or one powerUp
      * @return path of the image
      */
-    public Path findAmmoTileImage(String firstcolor, String secondColor, String thrirdColor){
-        char firstChar = firstcolor.toLowerCase().charAt(0);
+    private Path findAmmoTileImage(String firstColor, String secondColor, String thirdColor){
+        char firstChar = firstColor.toLowerCase().charAt(0);
         char secondChar = secondColor.toLowerCase().charAt(0);
-        char thirdChar = thrirdColor.toLowerCase().charAt(0);
+        char thirdChar = thirdColor.toLowerCase().charAt(0);
         return getPath("cards/ammoTile/"+firstChar+secondChar+thirdChar+".png");
     }
 
     /**
-     *i finds weapon image by weapon name
+     *it finds weapon path by weapon name
      * @param weapon weapon name
      * @return path of the image
      */
-    public Path findWeaponImage(String weapon){
+    private Path findWeaponImage(String weapon){
         return mapWeapon.get(weapon);
     }
 
     /**
-     * it finds powerUp image by its name and color
+     * it finds powerUp path by its name and color
      * @param powerUpName name of the powerUp
      * @param powerUpColor color of the powerUp
      * @return path of the image
      */
-    public Path findPowerUpImage(String powerUpName, CubeColour powerUpColor){
+    private Path findPowerUpImage(String powerUpName, CubeColour powerUpColor){
         return mapPowerUpColor.get(powerUpName+powerUpColor);
     }
 
     /**
-     * It finds playerboard image by the character
+     * It finds playerboard path by the character
      * @param character character of the powerUP
      * @return path of the image
 
      */
-    public Path findPlayerBoardImage(Character character){
+    private Path findPlayerBoardImage(Character character){
         return mapCharacterPlayerboard.get(character);
     }
 
     /**
-     * It finds map images by number selected
+     * It finds map paths by number selected
      * @param mapNumber number of the map
      * @return paths of the two map images
      */
-    public Path[] findMapImages(int mapNumber){
+    private Path[] findMapImages(int mapNumber){
         Path[] pathMap = new Path[2];
 
             switch(mapNumber) {
@@ -209,15 +205,14 @@ public class DecodeMessage {
      * @param path location of ine image
      * @return image of path
      */
-    public Image loadImage(Path path){
-        Image image = new Image(path.toString());
-        return image;
+    private Image loadImage(Path path){
+        return new Image(path.toString());
     }
 
     /**
-     *
-     * @param character
-     * @return
+     * It gets image of a playerboard from a character
+     * @param character playerboard to find
+     * @return image of a playerboard
      */
    public Image playerBoardImage(Character character){
        Path path =  findPlayerBoardImage(character);
@@ -225,9 +220,9 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param weapon
-     * @return
+     * It gets image of a weapon from a weapon name
+     * @param weapon weapon name
+     * @return weapon image
      */
     public Image weaponImage(String weapon){
         Path path =  findWeaponImage(weapon);
@@ -235,10 +230,10 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param name
-     * @param colour
-     * @return
+     * It gets image of a powerUp from powerUP name and color
+     * @param name name of a powerUp
+     * @param colour color of a powerUp
+     * @return powerUp image
      */
     public Image powerUpImage(String name, CubeColour colour){
         Path path =  findPowerUpImage(name,colour);
@@ -246,9 +241,9 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param number
-     * @return
+     * It gets images of a map from a number
+     * @param number nember of a map
+     * @return both images(semimap) of a map
      */
     public Image[] mapImage(int number){
         Path pathLeft = findMapImages(number)[0];
@@ -260,11 +255,11 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param firstColor
-     * @param secondColor
-     * @param thrirdColor
-     * @return
+     * It gets image of an ammo tile from its component
+     * @param firstColor ammo cube
+     * @param secondColor ammo cube
+     * @param thrirdColor ammo cube or powerUp
+     * @return image of an ammo Tile
      */
     public Image ammoimage(String firstColor,String secondColor, String thrirdColor){
         Path path =  findAmmoTileImage(firstColor,secondColor,thrirdColor);

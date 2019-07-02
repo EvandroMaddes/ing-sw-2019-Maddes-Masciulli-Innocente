@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
+import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.cli.graph.Color;
 
 import java.net.ConnectException;
@@ -42,6 +43,7 @@ public abstract class RemoteView implements RemoteViewInterface{
     }
 
     public void startInterface() {
+
         connected = false;
         String[] userInput = gameInit();
         String user = userInput[0];
@@ -124,37 +126,5 @@ public abstract class RemoteView implements RemoteViewInterface{
     public void setUser(String user) {
         this.user = user;
     }
-
-    /**
-     *
-     * @return
-     */
-    public Event getToVirtualView() {
-        return toVirtualView;
-    }
-
-    /**
-     *
-     * @param toServer
-     */
-    public void setToVirtualView(Event toServer) {
-        this.toVirtualView = toServer;
-    }
-
-    /**
-     * send a messaage to virtual view
-     */
-    public void toVirtualView(){
-       //todo metodi che dal client inviano al server passando il messaggio toVirtualView
-   }
-
-    /**
-     *
-     */
-   public void fromVirtualView(){
-        //todo riceve un messagio dalla virtual view e chiama metodi coder(?)
-   }
-
-
 
 }
