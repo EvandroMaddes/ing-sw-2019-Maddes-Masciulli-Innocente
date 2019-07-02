@@ -467,7 +467,6 @@ public class GUI extends RemoteView {
             gameBoardController.setPlayerWeapon(toAdd);
             }
         }
-            return new UpdateChoiceEvent(getUser());
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
