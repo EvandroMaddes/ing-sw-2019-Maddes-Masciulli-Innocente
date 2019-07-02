@@ -5,6 +5,7 @@ import it.polimi.ingsw.event.controller_view_event.TargetPlayerRequestEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public abstract class TwoEffectWeapon extends Weapon {
         else if (selectedEffect == 2)
             performEffectTwo(targets);
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public ControllerViewEvent getTargetEffect(int selectedEffect){
@@ -57,7 +58,7 @@ public abstract class TwoEffectWeapon extends Weapon {
         else if (selectedEffect == 2)
             return getTargetEffectTwo();
         else
-            throw new IllegalAccessError("The effect doesn't exist");
+            throw new EffectIllegalArgumentException();
     }
 
     public boolean isUsableEffect (int selectedEffect){
@@ -80,7 +81,7 @@ public abstract class TwoEffectWeapon extends Weapon {
         else if (effect == 2)
             return getUsableEffect()[1];
         else
-            throw new UnsupportedOperationException("efeftto richiesto non esistente");
+            throw new EffectIllegalArgumentException();
     }
 
     @Override
@@ -90,6 +91,6 @@ public abstract class TwoEffectWeapon extends Weapon {
         else if (effect == 2)
             return secondEffectCost;
         else
-            throw new UnsupportedOperationException("effetto richiesto non esistente");
+            throw new EffectIllegalArgumentException();
     }
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.client.rmi;
 
 import it.polimi.ingsw.event.ErrorEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.utils.CustomConnectException;
+import it.polimi.ingsw.utils.custom_exceptions.CustomConnectException;
 import it.polimi.ingsw.utils.NetConfiguration;
 import it.polimi.ingsw.network.RemoteInterface;
 import it.polimi.ingsw.network.client.ClientInterface;

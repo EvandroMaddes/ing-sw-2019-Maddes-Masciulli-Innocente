@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils;
+package it.polimi.ingsw.utils.custom_exceptions;
 
 import java.net.ConnectException;
 

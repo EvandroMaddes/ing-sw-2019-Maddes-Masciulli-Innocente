@@ -11,7 +11,7 @@ public class FinalFrenzyValidator extends Validator{
     public ArrayList<Square> availableMoves(Controller controller) {
         if (!controller.getGameManager().isFirsPlayerPlayed())
             return reachableInMoves(controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition(), 4);
-        else throw new IllegalArgumentException("I giocatori dopo il primo non possono fare azioni di movimento in questa fase");
+        else throw new IllegalArgumentException("Player action not valid!");
     }
 
     @Override

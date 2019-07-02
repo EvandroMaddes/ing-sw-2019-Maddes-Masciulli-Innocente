@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.game_components.cards;
 
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 
 public abstract class OneOptionalEffectWeapon extends TwoEffectWeapon {
 
@@ -15,6 +16,6 @@ public abstract class OneOptionalEffectWeapon extends TwoEffectWeapon {
         if (effectUsed != 2 && getUsableEffect()[effectUsed])
             getUsableEffect()[effectUsed] = false;
         else
-            throw new IllegalArgumentException();
+            throw new EffectIllegalArgumentException();
     }
 }
