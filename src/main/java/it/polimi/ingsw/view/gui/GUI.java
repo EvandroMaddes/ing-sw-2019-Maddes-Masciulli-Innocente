@@ -400,7 +400,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
-        if()
+        //if()
         return new UpdateChoiceEvent(getUser());
     }
 
