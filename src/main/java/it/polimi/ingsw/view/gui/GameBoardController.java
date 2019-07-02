@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.HBox;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +16,9 @@ import java.util.Map;
  * It controls scene of gameboard
  */
 public class GameBoardController extends AbstractController{
+    @FXML
+    private HBox yourWeapon;
+
 
     @FXML
     private ImageView rightMap;
@@ -210,4 +213,9 @@ public class GameBoardController extends AbstractController{
             setImageOnGrid(damages,curr);
         }
 
+        public void setPlayerWeapon(Image[] weapon){
+            for (int i=0; i<weapon.length;i++){
+                ((ImageView)yourWeapon.getChildren().get(i)).setImage(weapon[i]);
+            }
+        }
 }
