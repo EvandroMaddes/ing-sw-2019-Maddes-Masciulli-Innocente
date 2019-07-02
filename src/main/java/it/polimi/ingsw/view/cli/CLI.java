@@ -730,7 +730,7 @@ public class CLI extends RemoteView {
         }
 
 
-        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\n\nOr yuo can choose one powerUp:  \n");
+        System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"\n\nOr you can choose one powerUp:  \n");
 
         for(int i=3;i<powerUpsType.length+3;i++){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+findColorEscape(powerUpsColour[i-3].toString())+powerUpsType[i-3]+" OPTION "+i);
