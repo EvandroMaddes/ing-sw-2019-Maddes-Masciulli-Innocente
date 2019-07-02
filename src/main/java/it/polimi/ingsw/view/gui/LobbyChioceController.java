@@ -1,19 +1,18 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.Event;
+
 import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
 import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
-import it.polimi.ingsw.utils.CustomLogger;
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 /**
@@ -79,30 +78,17 @@ public class LobbyChioceController extends AbstractController {
      */
     @FXML
     public void waitLobbyClick() {
-       // message = new LobbyChoiceEvent(getGui().getUser(),waitingLobbyComboBox.getValue());
-        Platform.runLater(()->getWindow().close());    }
+        setMessage(new LobbyChoiceEvent(getGui().getUser(),waitingLobbyComboBox.getValue()));
+        getWindow().close();    }
 
     /**
      * * It checks selection of a starting lobby
      */
     @FXML
     public void startedLobbyClick() {
-       // message = new LobbyChoiceEvent(getGui().getUser(),startedLobbyComboBox.getValue());
-        Platform.runLater(()->getWindow().close());
+       setMessage(new LobbyChoiceEvent(getGui().getUser(),startedLobbyComboBox.getValue()));
+        getWindow().close();
     }
 
-    /**
-     *setter
-    // * @param window new stage
-     */
-  //  public void setStage(Stage window){
-    //    this.window = window;
-  //  }
-//
-
-
-        public AnchorPane getGameChoicePanel () {
-            return gameChoicePanel;
-        }
     }
 
