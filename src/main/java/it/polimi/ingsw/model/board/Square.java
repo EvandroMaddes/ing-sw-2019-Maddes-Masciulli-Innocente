@@ -169,39 +169,6 @@ public abstract class Square extends Observable {
         return visiblePlayers;
     }
 
-    // TODO: 2019-06-11 che fare di questo sotto? mai usato, non capisco se serve, penso si possa cancellare
-/*    /**
-     *
-     * @param square one square of the room
-     * @param colourSquare colour of the room
-     * @return players of one room
-     */
-/*    public ArrayList<Player> findRoomPlayers(Square square, String colourSquare){
-        ArrayList<Square> squareRoom = new ArrayList<Square>();
-        squareRoom.add(square);
-
-        ArrayList<Player> playerRoom = new ArrayList<Player>();
-
-        for (Square currentSquare : squareRoom) {
-            for(int i=0; i<4; i++) {
-                if (currentSquare.checkDirection(i)) {
-                  //  currentSquare = getNextSquare(i);
-                    if (currentSquare.getNextSquare(i).getSquareColour() == colourSquare && !squareRoom.contains(currentSquare)) {
-
-                        squareRoom.add(currentSquare.getNextSquare(i));
-
-                    }
-                }
-            }
-        }
-        for (Square currentSquare:squareRoom
-             ) {
-            playerRoom.addAll(currentSquare.getSquarePlayers());
-
-        }
-        return playerRoom;
-    }
-*/
     /**
      *
      * @return all current room players
