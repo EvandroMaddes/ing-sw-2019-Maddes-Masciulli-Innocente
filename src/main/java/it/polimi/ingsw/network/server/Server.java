@@ -10,6 +10,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -17,15 +18,13 @@ import java.util.logging.Logger;
 
 /**
  * Is the main Game Server, handles the incoming connection from new clients and redirects them to the chosen Lobby
+ * @author Francesco Masciulli
  */
 public class Server {
 
     private static Logger log = Logger.getLogger("ServerLogger");
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static Scanner scanner = new Scanner(reader);
-
-    private static final int startPortNumber = NetConfiguration.RMISERVERPORTNUMBER;
-    private static boolean shutDown = false;
     private static ArrayList<Lobby> activeLobbies = new ArrayList<>();
     private static ArrayList<String> connectedUsers = new ArrayList<>();
     private static Map<String,ServerInterface> mapUserServer = new HashMap<>();
@@ -37,6 +36,7 @@ public class Server {
     private static int gamesHandled = 0;
 
     public static void main(String[] args){
+        boolean shutDown = false;
         try {
             boolean isSetted = false;
             int gameTimerValue;
@@ -71,9 +71,6 @@ public class Server {
                     isSetted=true;
                 }
             }
-
-
-            //todo deve disconnettere i client
             acceptingRMI = new RMIServer();
             acceptingSocket = new SocketServer();
             ((SocketServer)acceptingSocket).start();
@@ -84,15 +81,23 @@ public class Server {
             CustomLogger.logException(e);
         }
         while(!shutDown){
-
             cleanConnectedUsers();
             updateStartedLobbies();
             String incomingUser = checkNewClient();
-            if(!incomingUser.isEmpty()) {
+            if (!incomingUser.isEmpty()) {
                 welcomeUser(incomingUser);
+            }
+            try {
+                if(reader.ready()&&scanner.nextLine().equalsIgnoreCase("quit")){
+                    shutDown = true;
+                }
+            }
+            catch (IOException nothingToRead){
+                shutDown = false;
             }
         }
 
+        shutDownServer();
     }
 
 
@@ -331,6 +336,15 @@ public class Server {
         return connectedUser;
     }
 
+    private static void shutDownServer(){
+        for (Lobby currLobby: activeLobbies) {
+            currLobby.shutDownLobby();
+        }
+        acceptingRMI.shutDown();
+        acceptingSocket.shutDown();
+        log.info("Shutting-down the server..");
+        System.exit(0);
+    }
 
 
 }

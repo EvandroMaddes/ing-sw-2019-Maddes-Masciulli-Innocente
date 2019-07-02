@@ -21,7 +21,6 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
     private ObjectOutputStream outputStream;
     private Event currMessage;
     private boolean connected;
-    private boolean alive;
 
     public SocketServerThread(Socket socket){
         this.client = socket;
@@ -36,6 +35,22 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
         }catch(IOException e){
             CustomLogger.logException(e);
         }
+    }
+
+    /**
+     * Is the Thread's run implementation:
+     * while the client is connected, it continues with the messages listening
+     */
+    @Override
+    public void run() {
+        while(!isInterrupted()){
+            while (connected) {
+                currMessage = listenMessage();
+            }
+            setPriority(2);
+            interrupt();
+        }
+
     }
 
     public void setClientUser(String clientUser) {
@@ -92,49 +107,18 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
     }
 
 
-    /**
-     * Is the Thread's run implementation:
-     * while the client is connected, it continues with the messages listening
-     */
-    @Override
-    public void run() {
-       while(!isInterrupted()){
-           while (connected) {
-               currMessage = listenMessage();
-           }
-           setPriority(2);
-        //   waitServer();
-           interrupt();
-       }
 
-    }
-
-    private synchronized void waitServer(){
-        try{
-            interrupt();
-            while(alive){
-                System.out.println();
-                //interrupt();
-
-                wait();
-            }
-        }catch (InterruptedException e){
-            interrupt();
-        }
-        kill();
-    }
 
     /**
      * This method, which is called from a client disconnection, kill the SocketThread
      */
     public synchronized void  kill(){
-        alive = false;
         interrupt();
     }
 
     /**
-     *
-     * @param message
+     * Write the message on the client's socket input stream
+     * @param message is the message that must be sent
      */
     @Override
     public void sendMessage(Event message) {
@@ -148,26 +132,23 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
     }
 
+    /**
+     * Wait for a message wrote on its input stream
+     * @return
+     */
     @Override
     public Event listenMessage() {
 
         try{
-
-            Event actualMessage =(Event) inputStream.readObject();
-            return actualMessage;
+            return (Event) inputStream.readObject();
         }
         catch (SocketException|EOFException socketClosed){
-
-
             disconnect();
             try {
                 join();
-                //sleep(5000);
             }catch (InterruptedException e){
-
                 interrupt();
             }
-
         }
         catch (Exception e){CustomLogger.logException(e);}
         return currMessage;
