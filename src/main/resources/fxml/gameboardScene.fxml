@@ -171,7 +171,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <TextArea fx:id="infoArea" prefHeight="114.0" prefWidth="423.0" text="INFO SU ALTRI PLAYER??&#10;" />
+                  <TextArea prefHeight="114.0" prefWidth="423.0" text="INFO SU ALTRI PLAYER??&#10;" />
                </children>
             </VBox>
             <HBox fx:id="spawnRed" alignment="CENTER" layoutX="-5.0" layoutY="320.0" prefHeight="133.0" prefWidth="231.0" rotate="270.0" spacing="2.0">
@@ -239,22 +239,46 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="102.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="125.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="126.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="186.0" prefWidth="238.0">
+                  <VBox fx:id="vboxSquare0" prefHeight="85.0" prefWidth="126.0">
                      <children>
-                        <HBox prefHeight="111.0" prefWidth="249.0">
+                        <HBox prefHeight="53.0" prefWidth="126.0">
                            <children>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="106.0" fitWidth="1.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../players/violet.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../players/banshee.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../players/dozer.png" />
+                                 </image>
+                              </ImageView>
+                           </children></HBox>
+                        <HBox prefHeight="48.0" prefWidth="126.0">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../players/distructor.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../players/Sprog.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" />
-                        <ImageView fitHeight="36.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../cards/ammoTile/AD_ammo_0410.png" />
                            </image>
@@ -322,7 +346,7 @@
                   </ImageView>
                </children>
             </GridPane>
-            <GridPane fx:id="gameTrack" layoutX="130.0" layoutY="118.0" prefHeight="42.0" prefWidth="256.0">
+            <GridPane fx:id="gameTrack" layoutX="130.0" layoutY="122.0" prefHeight="42.0" prefWidth="258.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -335,19 +359,20 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0">
                      <image>
                         <Image url="@../skull.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="42.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="42.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
                         <Image url="@../skull.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="74.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="116.0" fitWidth="25.0" layoutX="74.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                      <image>
                         <Image url="@../skull.png" />
                      </image>
@@ -377,6 +402,14 @@
                         <Image url="@../skull.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="21.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="10.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="42.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="74.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="106.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="138.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="170.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="202.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane fx:id="bansheeAmmoCube" layoutX="372.0" layoutY="-8.0" prefHeight="98.0" prefWidth="92.0">

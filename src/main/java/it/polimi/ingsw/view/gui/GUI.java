@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -134,7 +135,12 @@ public class GUI extends RemoteView {
 
     public void metodoPROVA(){
 
-        Platform.runLater(()->gameBoardStage.show());
+        Platform.runLater(()->{
+            Character[] characters = {Character.BANSHEE,Character.VIOLET,Character.SPROG};
+            int[] skulls = {1,2,1,0};
+            gameTrackSkullUpdate(characters,skulls);
+            gameBoardStage.show();
+        });
     }
 
     /**
@@ -186,6 +192,11 @@ public class GUI extends RemoteView {
 
     @Override
     public Event gameTrackSkullUpdate(Character[] killerCharacter, int[] skullNumber) {
+        gameBoardController.gameTrackClean();
+        for (int i=0; skullNumber[i]!=0;i++ ) {
+            gameBoardController.removeSkull(skullNumber[i], decodeMessage.playerTokenImage(killerCharacter[i]));
+
+        }
         return null;
     }
 

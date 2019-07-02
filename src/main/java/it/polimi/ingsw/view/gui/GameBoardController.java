@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,9 @@ import java.util.Map;
  * It controls scene of gameboard
  */
 public class GameBoardController extends AbstractController{
+
+    @FXML
+    private VBox vboxSquare0;
 
     @FXML
     private GridPane gameTrack;
@@ -86,7 +91,7 @@ public class GameBoardController extends AbstractController{
     private HBox spawnRed;
 
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
-    
+    private Map<Integer[],VBox> mapSquareVBox = new HashMap<Integer[], VBox>();
     private int numberOfSkull = 0;
 
     public void init(){
@@ -105,6 +110,8 @@ public class GameBoardController extends AbstractController{
         gridImageClean(dozerDamage);
         gridImageClean(sprogDamage);
         gridImageClean(dstructorDamage);
+        // TODO: 02/07/2019 settare le associazioni square Vbox 
+        // TODO: 02/07/2019 settare tutte le immagini
     }
     
 
@@ -236,12 +243,59 @@ public class GameBoardController extends AbstractController{
     public void setInfo(String toSet){
         infoArea.setText(toSet);
     }
-    
-    public void removeSkull(){
-        if (numberOfSkull<9) {
-            ((ImageView) gameTrack.getChildren().get(numberOfSkull)).setImage(null);
+
+    public void removeSkull(int numberOfToken,Image token){
+      ImageView current = ((ImageView) gameTrack.getChildren().get(numberOfSkull));
+        if (numberOfSkull<8) {
+            current.setImage(token);
             numberOfSkull++;
+            if (numberOfToken==2){
+                ((ImageView)gameTrack.getChildren().get(numberOfSkull+7)).setImage(token);
+            }
         }
-        // TODO: 02/07/2019 aggiungere segnalini giocatori 
     }
+
+    public void gameTrackClean(){
+        for (int i = numberOfSkull; i>=0; i--){
+            ((ImageView) gameTrack.getChildren().get(numberOfSkull)).setImage(null);
+        }
+        numberOfSkull = 0 ;
+    }
+
+    /**
+     * 
+     * @param square position:{x,y}
+     * @param character
+     */
+    public void setPosition(int[] square, Image character){
+        // TODO: 02/07/2019 rimuoverlo dalla precedente posizione
+        VBox currentSquare = ((VBox)(mapSquareVBox.get(square).getChildren()));
+        getFreePosition(currentSquare).setImage(character);
+        
+        
+    }
+
+    /**
+     * IT find in a square the first free position to put an image
+     * @param square
+     * @return
+     */
+    private ImageView getFreePosition(VBox square){
+        ImageView curentImageView = new ImageView();
+        int j=0;
+        for (int i=0;i<3;i++){
+            curentImageView =((ImageView)((HBox)square.getChildren().get(j)).getChildren().get(i));
+            if (curentImageView.getImage()==null){
+                i=3;
+            }
+            if (i==2){
+                j++;
+                i=0;
+            }
+        }
+        
+        return curentImageView;
+    }
+
+    // TODO: 02/07/2019 setare ammo sugli square playerboard marchi 
 }
