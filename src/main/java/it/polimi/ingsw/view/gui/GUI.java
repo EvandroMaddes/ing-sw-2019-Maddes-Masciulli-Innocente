@@ -4,7 +4,6 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
-import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
@@ -15,8 +14,10 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,23 +28,19 @@ public class GUI extends RemoteView {
 
     private LobbyChioceController lobbyController;
     private GameBoardController gameBoardController;
-    private MapCharacterController mapCharacterController;
-    private LoginController loginController;
+    private MapCharacterController mapController;
 
     private Stage primaryStage;
-    private Stage prevStage;
     private Stage lobbyStage;
     private Stage gameBoardStage;
-    private Stage mapCharacterStage;
+    private Stage mapStage;
 
     private Scene gameboardScene;
     private Scene lobbyScene;
-    private Scene mapharacterChoiceScene;
+    private Scene mapChoiceScene;
 
     private String[] clientChoices = new String[3];
-
-    private String choice;
-    private String prova;
+    
 
     /**
      * inizializzazione e caricamento stage
@@ -69,7 +66,7 @@ public class GUI extends RemoteView {
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameBoard.fxml"));
-        FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapCharacterChoice.fxml"));
+        FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapChoice.fxml"));
         try {
             lobby = lobbyFxml.load();
             gameboard = gameBoardFxml.load();
@@ -79,12 +76,13 @@ public class GUI extends RemoteView {
         }
         lobbyController = lobbyFxml.getController();
         gameBoardController = gameBoardFxml.getController();
-        mapCharacterController = mapCharacterFxml.getController();
+        gameBoardController.init();
+        mapController = mapCharacterFxml.getController();
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
         lobbyStage = new Stage();
-        mapCharacterStage = new Stage();
+        mapStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -98,13 +96,13 @@ public class GUI extends RemoteView {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
  */
-        mapCharacterController.setGui(this);
+        mapController.setGui(this);
         lobbyScene = new Scene(lobby, 800, 560);
         gameboardScene = new Scene(gameboard, 800, 560);
-        mapharacterChoiceScene = new Scene(mapCharacter, 400, 280);
+        mapChoiceScene = new Scene(mapCharacter, 400, 120);
 
         lobbyStage.setScene(lobbyScene);
-
+        //primaryStage.close(); non mostra il secondo stage prova con la reduce
         System.out.println("fine configurazione GUI");
 
         /***********FUNZIONA**************
@@ -117,30 +115,10 @@ public class GUI extends RemoteView {
          */
     }
 
-    public void metodoprova() {
-        boolean[] available = new boolean[3];
-        available[0] = true;
-        available[1] = true;
-        available[2] = true;
-
-        ArrayList<String> wait = new ArrayList<String>();
-        wait.add("wait1");
-        wait.add("wait2");
-        wait.add("wait3");
-
-        ArrayList<String> started = new ArrayList<String>();
-        started.add("started1");
-        started.add("started2");
-        started.add("started3");
-
-        ArrayList<String> name = new ArrayList<String>();
-        name.add("name1");
-        name.add("name2");
-        name.add("name3");
-
-        welcomeChoice(available, started, wait);
-    }
-
+    /**
+     *
+     * @param choices
+     */
     public void setClientChoices(String[] choices) {
         clientChoices = choices;
         System.out.println("\nUser: " + clientChoices[0] +
@@ -152,17 +130,7 @@ public class GUI extends RemoteView {
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
         return null;
     }
-
-    /**
-     * chiamato dai controller delle scene gira il messaggio al server
-     * //TODO frti tornarre nel metodo chiamante il controller delle sceene il messaggio
-     *
-     * @param choice
-     */
-    public void sendMessage(Event choice) {
-        System.out.println(choice.getUser());
-
-    }
+    
 
     //todo aggiunto per essere chiamato da client
     @Override
@@ -170,10 +138,7 @@ public class GUI extends RemoteView {
 
     }
 
-    public void setChoice(String choice) {
-        this.choice = choice;
-    }
-
+    
     @Override
     public void setGame(int mapNumber) {
     }
@@ -256,7 +221,7 @@ public class GUI extends RemoteView {
         charctersName.add(availableCharacters.get(1).name());
         charctersName.add(availableCharacters.get(2).name());
         charctersName.add(availableCharacters.get(3).name());
-        Platform.runLater(() -> mapCharacterController.setCharacterComboBox(charctersName));
+        Platform.runLater(() -> mapController.setCharacterComboBox(charctersName));
 
         return null;
     }
@@ -297,28 +262,22 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 try {
-                    mapCharacterController.setWindow(mapCharacterStage);
+                    mapController.setWindow(mapStage);
                     ArrayList<Integer> mapChoice = new ArrayList<Integer>();
                     mapChoice.add(0);
                     mapChoice.add(1);
                     mapChoice.add(2);
                     mapChoice.add(3);
-                    mapCharacterController.setMapComboBox(mapChoice);
+                    mapController.setMapComboBox(mapChoice);
                 } catch (Exception e) {
                 }
-                Event event = mapCharacterController.ask(mapharacterChoiceScene);
+                Event event = mapController.ask(mapChoiceScene);
+                Image[] mapChoice = decodeMessage.mapImage(((GameChoiceEvent)event).getMap());
+                gameBoardController.setMap(mapChoice[0],mapChoice[1]);
                 return event;
             }
         };
-        Thread th = new Thread(query);
-        th.start();
-        try{
-            Event event = query.get();
-            return event;
-        }catch(Exception interrupted){
-            CustomLogger.logException(interrupted);
-            return null;
-        }
+        return userChoice(query);
     }
 
     @Override
@@ -389,7 +348,15 @@ public class GUI extends RemoteView {
                 return event;
             }
         };
-        // TODO: 02/07/2019 renderlo un metodo 
+    return userChoice(query);
+    }
+
+    /**
+     * It "takes" choice from controller
+     * @param query
+     * @return
+     */
+    private Event userChoice(Task<Event> query){
         Thread th = new Thread(query);
         th.start();
         try{
@@ -399,17 +366,7 @@ public class GUI extends RemoteView {
             CustomLogger.logException(interrupted);
             return null;
         }
-
-
-        /*Platform.runLater(
-                () -> {
-                    lobbyController.setLobby(available, startedLobbies, waitingLobbies);
-                    lobbyStage.setScene(lobbyScene);
-                });
-         return lobbyController.ask(lobbyScene);
-
-         */
-    }
+        }
 
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
@@ -423,6 +380,12 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
+
+        Image[] ammoToAdd = new Image[ammo.size()];
+        for (int i=0; i<ammo.size(); i++) {
+            ammoToAdd[i] = decodeMessage.ammoCubeImage(ammo.get(i));
+        }
+        gameBoardController.setAmmo(ammoToAdd,currCharacter);
         return null;
     }
 

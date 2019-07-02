@@ -4,8 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  * It controls login scene
@@ -14,6 +19,9 @@ public class LoginController extends AbstractController{
     private String userString;
     private String connectionString;
     private String ipAddresString;
+
+    @FXML
+    private GridPane TESTGRID;
     @FXML
     private AnchorPane anchorPanel;
 
@@ -71,6 +79,7 @@ public class LoginController extends AbstractController{
     @FXML
     void usernameType(ActionEvent event)
     {
+        username.getText();
     }
 
     @FXML
@@ -85,4 +94,9 @@ public class LoginController extends AbstractController{
         enterButton.setDisable(false);
     }
 
+    public void setTESTGRID(Image image) {
+       ImageView curr = ((ImageView)TESTGRID.getChildren().get(0));
+       curr.setImage(image);
+
+    }
 }
