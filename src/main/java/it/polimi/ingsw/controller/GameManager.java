@@ -190,7 +190,6 @@ public class GameManager {
         if (lastPlayer > getModel().getPlayers().size())
             lastPlayer = getModel().getPlayers().size();
 
-        // TODO: 2019-07-02 aggiungere un controllo sul settaggio della final frenzy
         if (gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
@@ -468,7 +467,7 @@ public class GameManager {
         return disconnectionManager;
     }
 
-    
+
 
     /*
      * Setter Methods
