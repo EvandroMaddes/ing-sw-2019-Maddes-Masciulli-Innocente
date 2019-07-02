@@ -1,19 +1,18 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.Event;
+
 import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
 import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
-import it.polimi.ingsw.utils.CustomLogger;
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 /**
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  */
 public class LobbyChioceController extends AbstractController {
 
-    private Event message;
+
     @FXML
     private AnchorPane gameChoicePanel;
 
@@ -32,8 +31,8 @@ public class LobbyChioceController extends AbstractController {
     private ComboBox<String> waitingLobbyComboBox;
     @FXML
     private ComboBox<String> startedLobbyComboBox;
-        private Stage window;
-    private String choice;
+
+
 
     /**
      * It sets available lobby of started game or waiting one
@@ -71,70 +70,25 @@ public class LobbyChioceController extends AbstractController {
      */
     public void newGameClick() {
 
-       // sendChoice(new NewGameChoiceEvent(getGui().getUser()));
-        getGui().setChoice("newgame");
-        message = new NewGameChoiceEvent(getGui().getUser()) ;
-        window.close();    }
+        setMessage(new NewGameChoiceEvent(getGui().getUser())) ;
+        getWindow().close();    }
 
     /**
      * It checks selection of a waiting lobby
      */
     @FXML
     public void waitLobbyClick() {
-        message = new LobbyChoiceEvent(getGui().getUser(),waitingLobbyComboBox.getValue());
-        Platform.runLater(()->window.close());    }
+        setMessage(new LobbyChoiceEvent(getGui().getUser(),waitingLobbyComboBox.getValue()));
+        getWindow().close();    }
 
     /**
      * * It checks selection of a starting lobby
      */
     @FXML
     public void startedLobbyClick() {
-        message = new LobbyChoiceEvent(getGui().getUser(),startedLobbyComboBox.getValue());
-        Platform.runLater(()->window.close());
+       setMessage(new LobbyChoiceEvent(getGui().getUser(),startedLobbyComboBox.getValue()));
+        getWindow().close();
     }
 
-    /**
-     *setter
-     * @param window new stage
-     */
-    public void setStage(Stage window){
-        this.window = window;
     }
-
-    /**
-     *
-     * @return
-     */
-    public Event ask(Scene scene){
-        final Task<Event> query = new Task<Event>(){
-            @Override
-            public Event call() throws Exception {
-                    window.setScene(scene);
-                    window.showAndWait();
-
-                Event event = message;
-                return event;
-            }
-        };
-        Platform.runLater(query);
-        try{
-            Event event = query.get();
-            return event;
-        }catch(Exception interrupted){
-            CustomLogger.logException(interrupted);
-            return null;
-        }
-
-
-        /*Platform.runLater(()->{
-            window.setScene(scene);
-            window.showAndWait();
-        });
-        return message;*/
-}
-
-    public AnchorPane getGameChoicePanel() {
-        return gameChoicePanel;
-    }
-}
 

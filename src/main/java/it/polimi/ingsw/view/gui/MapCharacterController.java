@@ -1,14 +1,18 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
+
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+
 
 import java.util.ArrayList;
 
@@ -26,9 +30,9 @@ public class MapCharacterController extends AbstractController {
     private Character characterChoice;
 
     @FXML
-    void enterButtonPress(ActionEvent event) {
-        sendChoice(new GameChoiceEvent(getGui().getUser(),mapChoice,0));
-        sendChoice(new CharacterChoiceEvent(getGui().getUser(),characterChoice));
+    void enterButtonPress() {
+        //sendChoice(new CharacterChoiceEvent(getGui().getUser(),characterChoice));
+
     }
 
     public void setMapComboBox(ArrayList<Integer> mapChoice){
@@ -37,9 +41,6 @@ public class MapCharacterController extends AbstractController {
 
     }
 
-    public Button getEnterButton() {
-        return enterButton;
-    }
 
     public void setCharacterComboBox(ArrayList<String> availableCharacters) {
 
@@ -51,10 +52,8 @@ public class MapCharacterController extends AbstractController {
     void mapComboBoxChoice(ActionEvent event) {
         mapChoice = mapComboBox.getValue();
         System.out.println("map choose");
-    }
-
-    public ComboBox<Integer> getMapComboBox() {
-        return mapComboBox;
+        setMessage(new GameChoiceEvent(getGui().getUser(),mapChoice,0));
+        getWindow().close();
     }
 
 
@@ -64,6 +63,7 @@ public class MapCharacterController extends AbstractController {
         enterButton.setDisable(false);
         System.out.println(characterChoice.name());
     }
+
 
 
 }
