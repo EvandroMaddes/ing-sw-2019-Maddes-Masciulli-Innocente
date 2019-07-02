@@ -322,10 +322,15 @@ public interface RemoteViewInterface {
     * It shows winner of the game and his point
     * @param endGameUpdate
     */
-   // TODO: 02/07/2019 commentare parametro
    Event winnerUpdate(EndGameUpdate endGameUpdate);
 
-   // TODO: 02/07/2019  commenatre metodo
+   /**
+    * Print a reconnection or disconnection (depending on disconnected value) update notifying the user and character disconnected
+    * @param user is the involved user
+    * @param character is the involved user's character
+    * @param disconnected is true if the user was disconnected, false if was reconnected
+    * @return
+    */
    Event playerReconnectionNotify(String user, Character character, boolean disconnected);
 
    // + + + + +folliwing method manage server-view even + + + + +//
