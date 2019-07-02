@@ -8,11 +8,9 @@ import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
-import it.polimi.ingsw.view.cli.CLIHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.logging.Logger;

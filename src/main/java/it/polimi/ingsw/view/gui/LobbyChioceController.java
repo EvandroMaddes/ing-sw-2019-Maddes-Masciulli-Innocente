@@ -3,9 +3,11 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
 import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
+import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -104,11 +106,31 @@ public class LobbyChioceController extends AbstractController {
      * @return
      */
     public Event ask(Scene scene){
-        Platform.runLater(()->{
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                    window.setScene(scene);
+                    window.showAndWait();
+
+                Event event = message;
+                return event;
+            }
+        };
+        Platform.runLater(query);
+        try{
+            Event event = query.get();
+            return event;
+        }catch(Exception interrupted){
+            CustomLogger.logException(interrupted);
+            return null;
+        }
+
+
+        /*Platform.runLater(()->{
             window.setScene(scene);
             window.showAndWait();
         });
-        return message;
+        return message;*/
 }
 
     public AnchorPane getGameChoicePanel() {

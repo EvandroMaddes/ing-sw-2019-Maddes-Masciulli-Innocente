@@ -8,8 +8,10 @@ import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -355,12 +357,37 @@ public class GUI extends RemoteView {
 
     @Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
-        Platform.runLater(
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                try {
+                    lobbyController.setLobby(available, startedLobbies, waitingLobbies);
+                    lobbyStage.setScene(lobbyScene);
+                } catch (Exception e) {
+                }
+                Event event = lobbyController.ask(lobbyScene);
+                return event;
+            }
+        };
+        Thread th = new Thread(query);
+        th.start();
+        try{
+            Event event = query.get();
+            return event;
+        }catch(Exception interrupted){
+            CustomLogger.logException(interrupted);
+            return null;
+        }
+
+
+        /*Platform.runLater(
                 () -> {
                     lobbyController.setLobby(available, startedLobbies, waitingLobbies);
                     lobbyStage.setScene(lobbyScene);
                 });
          return lobbyController.ask(lobbyScene);
+
+         */
     }
 
     @Override
