@@ -49,7 +49,6 @@ public class RoundManager {
      * - the 6th is used to reload weapons
      * - the 7th allowed all the players to use their end-round powerUP
      * - the 8th manage the dead players
-     *
      */
     public void manageRound() {
         switch (phase) {
@@ -142,7 +141,8 @@ public class RoundManager {
 
     /**
      * Create a new deathManager to respawn a dead player
-     * @param model is the GameModel of the game
+     *
+     * @param model      is the GameModel of the game
      * @param deadPlayer is the dead player to respawn
      */
     void createDeathManager(GameModel model, Player deadPlayer) {
@@ -178,7 +178,8 @@ public class RoundManager {
 
     /**
      * Send the end-round powerUps usage request to the player
-     * @param player is the player who receive the request
+     *
+     * @param player        is the player who receive the request
      * @param usablePowerUp is a list of all powerUps usable in that phase
      */
     private void askForEndRoundPowerUp(Player player, List<PowerUp> usablePowerUp) {
@@ -187,8 +188,9 @@ public class RoundManager {
 
     /**
      * Perform the end-round powerUps effects
-     * @param powerUpOwner is the username of the player who want to use the powerUps
-     * @param powerUpType is a list of all the types of powerUps that the player want to use
+     *
+     * @param powerUpOwner  is the username of the player who want to use the powerUps
+     * @param powerUpType   is a list of all the types of powerUps that the player want to use
      * @param powerUpColour is a list of colours associated with the types of powerUpType
      */
     public void performEndRoundPowerUpEffect(String powerUpOwner, String[] powerUpType, CubeColour[] powerUpColour) {
@@ -217,6 +219,7 @@ public class RoundManager {
 
     /**
      * Getter method
+     *
      * @return the actual actionManager associated with the round
      */
     public ActionManager getActionManager() {
@@ -225,6 +228,7 @@ public class RoundManager {
 
     /**
      * Getter method
+     *
      * @return the deadManager associated with the current round
      */
     public DeathManager getDeathManager() {
@@ -233,6 +237,7 @@ public class RoundManager {
 
     /**
      * Getter method
+     *
      * @return the round's player
      */
     public Player getCurrentPlayer() {
@@ -241,6 +246,7 @@ public class RoundManager {
 
     /**
      * Getter method
+     *
      * @return the current phase
      */
     public int getPhase() {
@@ -253,6 +259,7 @@ public class RoundManager {
 
     /**
      * Setter method
+     *
      * @param phase is the phase to which is set the round
      */
     public void setPhase(int phase) {
