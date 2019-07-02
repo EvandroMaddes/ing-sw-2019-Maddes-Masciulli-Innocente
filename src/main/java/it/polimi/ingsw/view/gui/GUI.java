@@ -173,6 +173,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event gameTrackSkullUpdate(Character[] killerCharacter, int[] skullNumber) {
+        // TODO: 02/07/2019
         return null;
     }
 
@@ -289,14 +290,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event actionChoice(boolean fireEnable) {
-        System.out.println("action choice");
-        Platform.runLater(() -> {
-                    primaryStage.setScene(gameboardScene);
-                    primaryStage.show();
-                    System.out.println("run later");
-                    gameBoardController.getFireButton().setDisable(!fireEnable);
-                }
-        );
+        
         return null;
     }
 
@@ -403,19 +397,18 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
-        if(weapons.length<4){
-
-        if(characterChoose == currCharacter){
-
+         if(characterChoose == currCharacter){
+            if(weapons.length<4){
             Image[] toAdd = new Image[weapons.length];
-            for (int i=0; i<weapons.length;i++){
-                if (load[i]){
-                toAdd[i] = decodeMessage.weaponImage(weapons[i]);
-            }else
-                toAdd[i] = decodeMessage.weaponImage("unload");
-            }
-            gameBoardController.setPlayerWeapon(toAdd);
-            }
+                for (int i=0; i<weapons.length;i++){
+                    if (load[i]){
+                        toAdd[i] = decodeMessage.weaponImage(weapons[i]);
+                    }else{
+                        toAdd[i] = decodeMessage.weaponImage("unload");
+                    }
+                }
+                gameBoardController.setPlayerWeapon(toAdd);
+         }
         }
             return new UpdateChoiceEvent(getUser());
     }
@@ -423,18 +416,35 @@ public class GUI extends RemoteView {
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
         //xy:01 red
-        //20 blue
-        //32 yellow
+        //   20 blue
+        //   32 yellow
+        Image[] toAdd = new Image[weapon.length];
+        for (int i=0; i<weapon.length;i++){
+                toAdd[i] = decodeMessage.weaponImage(weapon[i]);
+
+        }
+        gameBoardController.setSpawnWeapon(x,toAdd);
         return new UpdateChoiceEvent(getUser());
     }
 
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
-        return null;
-    }
+        Image[] toAdd = new Image[powerUp.length];
+        if(characterChoose == currCharacter){
+            for (int i=0; i<powerUp.length;i++){
+                    toAdd[i] = decodeMessage.powerUpImage(powerUp[i],color[i]);
+                }
+            }
+            gameBoardController.setPlayerPowerUp(toAdd);
+            return new UpdateChoiceEvent(getUser());
+        }
+
+
 
     @Override
     public Event playerReconnectionNotify(String user, Character character, boolean disconnected) {
+        // TODO: 02/07/2019 chiedi a fra come funziona
+        //si chiama gameboard.setInfo() e si passa la stringa da mostrare
         return null;
     }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.player.Character;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,14 @@ import java.util.Map;
  * It controls scene of gameboard
  */
 public class GameBoardController extends AbstractController{
+
+    @FXML
+    private GridPane gameTrack;
+    
+    @FXML
+    private HBox yourPowerUp;
+
+
     @FXML
     private HBox yourWeapon;
 
@@ -26,22 +35,16 @@ public class GameBoardController extends AbstractController{
     @FXML
     private ImageView leftMap;
 
+    @FXML
+    private TextArea infoArea;
 
     @FXML
     private GridPane gridMap;
 
     @FXML
     private AnchorPane anchorPane;
-
-    @FXML
-    private Button moveButton;
-
-    @FXML
-    private Button grabButton;
-
-    @FXML
-    private Button fireButton;
-
+    
+    //PLAYERBOARD
     @FXML
     private GridPane dstructorDamage;
 
@@ -74,35 +77,17 @@ public class GameBoardController extends AbstractController{
 
     //SPAWNSQUARE
     @FXML
-    private ImageView firstWeaponSpawnRed;
+    private HBox spawnBlue;
 
     @FXML
-    private ImageView secondWeaponSpawnRed;
+    private HBox spawnYellow;
 
     @FXML
-    private ImageView thirdWeaponSpawnRed;
-
-    @FXML
-    private ImageView firstWeaponSpawnBlue;
-
-
-    @FXML
-    private ImageView secondWeaponSpawnBlue;
-
-    @FXML
-    private ImageView thridWeaponSpawnBlue;
-
-    @FXML
-    private ImageView firstWeaponSpawnYellow;
-
-    @FXML
-    private ImageView secondWeaponSpawnYellow;
-
-    @FXML
-    private ImageView thridWeaponSpawnYellow;
-
+    private HBox spawnRed;
 
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
+    
+    private int numberOfSkull = 0;
 
     public void init(){
         mapCharacterAmmoCube.put(Character.BANSHEE,new GridPane[]{bansheeDamage,bansheeAmmoCube});
@@ -121,32 +106,7 @@ public class GameBoardController extends AbstractController{
         gridImageClean(sprogDamage);
         gridImageClean(dstructorDamage);
     }
-
-    public Button getFireButton() {
-        return fireButton;
-    }
-
-    @FXML
-    void moveButtonPress(ActionEvent event) {
-
-    }
-
-    @FXML
-    void grabButtonPress(ActionEvent event) {
-
-    }
-
-
-
-
-    @FXML
-    void fireButtonPress() {
-
-    }
-
-    public void setFirstWeaponSpawnBlueImage(Image firstWeaponSpawnBlue) {
-        this.firstWeaponSpawnBlue.setImage(firstWeaponSpawnBlue);
-    }
+    
 
     /**
      * It set on scene map selected
@@ -172,13 +132,25 @@ public class GameBoardController extends AbstractController{
     }
 
     /**
-     * it removes evry singlle image on a grid pane
+     * it removes every single image on a grid pane
      * @param toClean grid pane to clean
      */
     private void gridImageClean(GridPane toClean){
         for (int i=0;i <toClean.getChildren().size();i++){
             ((ImageView)toClean.getChildren().get(i)).setImage(null);
             
+        }
+    }
+
+    /**
+     * /**
+     * It removes every single image of a hBox
+     * @param hBox grid pane to clean
+     */
+    public void hBoxImageClean(HBox hBox){
+        for (int i=0;i <hBox.getChildren().size();i++){
+            ((ImageView)hBox.getChildren().get(i)).setImage(null);
+
         }
     }
 
@@ -213,9 +185,63 @@ public class GameBoardController extends AbstractController{
             setImageOnGrid(damages,curr);
         }
 
-        public void setPlayerWeapon(Image[] weapon){
-            for (int i=0; i<weapon.length;i++){
-                ((ImageView)yourWeapon.getChildren().get(i)).setImage(weapon[i]);
+    /**
+     * It Sets weapons of player
+     * @param weapon weapons to set
+     */
+    public void setPlayerWeapon(Image[] weapon){
+        hBoxImageClean(yourWeapon);
+            for (int i = 0; i< weapon.length; i++){
+                ((ImageView) yourWeapon.getChildren().get(i)).setImage(weapon[i]);
             }
         }
+
+    /**
+     * It sets weapons on spawn square
+     * @param x column which identifier a spawn square
+     * @param spawnWeapon weapon to add
+     */
+    public void setSpawnWeapon(int x, Image[] spawnWeapon){
+
+        HBox current = new HBox();
+            if (x==0){
+                hBoxImageClean(spawnRed);
+                current=spawnRed;
+            }else if (x==2){
+                hBoxImageClean(spawnBlue);
+                current=spawnBlue;
+            }else if (x==3){
+                hBoxImageClean(spawnYellow);
+                current=spawnYellow;
+            }
+
+            for (int i=0; i<spawnWeapon.length;i++){
+                ((ImageView)current.getChildren().get(i)).setImage(spawnWeapon[i]);
+            }
+        }
+    /**
+     * It sets power up of player
+     * @param powerUp power up to set
+     */
+    public void setPlayerPowerUp(Image[] powerUp) {
+        for (int i = 0; i< powerUp.length; i++){
+            ((ImageView)yourPowerUp.getChildren().get(i)).setImage(powerUp[i]);
+        }
+    }
+
+    /**
+     * It shows a new information on text area
+     * @param toSet
+     */
+    public void setInfo(String toSet){
+        infoArea.setText(toSet);
+    }
+    
+    public void removeSkull(){
+        if (numberOfSkull<9) {
+            ((ImageView) gameTrack.getChildren().get(numberOfSkull)).setImage(null);
+            numberOfSkull++;
+        }
+        // TODO: 02/07/2019 aggiungere segnalini giocatori 
+    }
 }
