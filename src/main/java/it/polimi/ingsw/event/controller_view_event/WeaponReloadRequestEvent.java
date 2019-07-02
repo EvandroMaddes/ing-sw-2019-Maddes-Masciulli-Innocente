@@ -17,6 +17,4 @@ public class WeaponReloadRequestEvent extends WeaponRequestEvent {
         return remoteView.reloadChoice(getWeapons());
     }
 
-    public static class GenericPayRequestEvent {
-    }
 }
