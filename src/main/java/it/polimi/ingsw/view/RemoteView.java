@@ -24,6 +24,7 @@ public abstract class RemoteView implements RemoteViewInterface{
     private ClientInterface clientImplementation;
     private boolean connected;
     private Event currentMessage;
+    public static final String BROADCASTSTRING = "BROADCAST";
 
 
     public ClientInterface getClientImplementation() {

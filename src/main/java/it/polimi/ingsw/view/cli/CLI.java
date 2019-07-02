@@ -20,8 +20,8 @@ import java.util.*;
 public class CLI extends RemoteView {
 
     private CLIDisplay display;
-    private Map<Character, String> mapCharacterNameColors = new EnumMap<Character, String>(Character.class);
-    private static final String BROADCASTSTRING = "BROADCAST";
+    private Map<Character, String> mapCharacterNameColors = new EnumMap<>(Character.class);
+
 
 
     /**
@@ -334,7 +334,7 @@ public class CLI extends RemoteView {
     @Override
     public Event winnerUpdate(EndGameUpdate endGameUpdate) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+endGameUpdate.getEndGameMessage());
-        return new UpdateChoiceEvent("BROADCAST");
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
 

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 /**
  * Class to manage the game
+ *
+ * @author Federico Innocente
  */
 public class GameManager {
 
@@ -232,10 +234,7 @@ public class GameManager {
         playerTurn--;
         if (playerTurn < 0)
             playerTurn = model.getPlayers().size() - 1;
-        if (model.getPlayers().size() >= 3)
-            newRound();
-        else
-            endGame();
+        getDisconnectionManager().roundFlowManaging();
     }
 
     /**
