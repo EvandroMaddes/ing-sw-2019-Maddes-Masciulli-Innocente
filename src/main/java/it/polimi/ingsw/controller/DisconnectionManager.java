@@ -24,23 +24,25 @@ public class DisconnectionManager {
     }
 
     public void disconnectionManage(String username){
-        boolean newPlayer = false;
+        boolean disconnectedInCHampSelect = false;
         if (controller.getGameManager().getCurrentRound() == null){
             boolean isInGamePlayers = containsPlayer(username, gamePlayers);
             boolean isInDisconnectedPlayers = containsPlayer(username, disconnectedPlayers);
             boolean isInDisconnectingQueue = containsPlayer(username, disconnectingQueue);
-            newPlayer = true;
-            if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue)
+            if (controller.getUsersVirtualView().get(username) != null && !isInGamePlayers && !isInDisconnectedPlayers && !isInDisconnectingQueue){
                 defaultSetupDisconnection(username);
+                disconnectedInCHampSelect = true;
+            }
         }
         Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
         if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
             disconnectingQueue.add(disconnectedPlayer);
-            if (controller.getGameManager().getCurrentRound().getPhase() == 7)
+            if (controller.getGameManager().getCurrentRound() != null && controller.getGameManager().getCurrentRound().getPhase() == 7)
                 controller.getGameManager().getCurrentRound().manageRound();
-        } else
+        }
+        else
             removePlayer(disconnectedPlayer);
-        if(newPlayer)
+        if(disconnectedInCHampSelect)
             controller.getGameManager().characterSelect();
     }
 
@@ -73,9 +75,6 @@ public class DisconnectionManager {
         else
             defaultCharacter = Character.VIOLET;
         Player newPlayer = new Player(username, defaultCharacter);
-        disconnectedPlayers.add(newPlayer);
-        newPlayer.setPosition(controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().get(0));
-        newPlayer.getPosition().getSquarePlayers().remove(newPlayer);
         if (!gamePlayers.contains(newPlayer))
             gamePlayers.add(newPlayer);
     }
@@ -109,6 +108,9 @@ public class DisconnectionManager {
         }
         else {
             reconnectedPlayer = Decoder.decodePlayerFromUsername(username, disconnectedPlayers);
+            if (reconnectedPlayer.getPosition() == null){
+                reconnectedPlayer.setPosition(controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().get(0));
+            }
             controller.getGameManager().getModel().getPlayers().add(reconnectedPlayer);
             disconnectedPlayers.remove(reconnectedPlayer);
             controller.getUsersVirtualView().get(username).setPlayerConnected();
