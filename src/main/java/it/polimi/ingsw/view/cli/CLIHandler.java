@@ -2,10 +2,12 @@ package it.polimi.ingsw.view.cli;
 
 
 import it.polimi.ingsw.view.cli.graph.Color;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * It menages reading and printing on screen
+ */
 public class CLIHandler {
     private static final Scanner inputScanner = new Scanner(System.in);
 
@@ -44,7 +46,7 @@ public class CLIHandler {
     }
 
     /**
-     * this method prints an array of Square and read square selected by user
+     * This method prints an array of Square and read square selected by user
      * @param X column
      * @param Y row
      * @return square selected

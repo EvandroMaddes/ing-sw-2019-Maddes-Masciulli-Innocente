@@ -1,18 +1,17 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+/**
+ * It controls scene of gameboard
+ */
 public class GameBoardController extends AbstractController{
 
 
@@ -30,7 +29,6 @@ public class GameBoardController extends AbstractController{
 
     @FXML
     private Button fireButton;
-
 
     @FXML
     private GridPane dstructorDamege;

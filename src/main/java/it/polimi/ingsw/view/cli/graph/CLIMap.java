@@ -1,12 +1,13 @@
 package it.polimi.ingsw.view.cli.graph;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import static it.polimi.ingsw.view.cli.graph.CLISquare.MAXSQUARECOLUMN;
 import static it.polimi.ingsw.view.cli.graph.CLISquare.MAXSQUAREROW;
 
+/**
+ * It is the map
+ */
 public class CLIMap {
     //un carattere verticale per ogni due orizzontali
     private static final int MAXCOLUMN = 42;
@@ -254,7 +255,7 @@ public class CLIMap {
 
 
     /**
-     * this method insert in the map the right sequence of CLISquares, given in the ArrayList squares
+     * This method insert in the map the right sequence of CLISquares, given in the ArrayList squares
      * the order follow the horizontal sequence of each map, constructed in the method allocateSquares()
      * @param squares square to add
      */
@@ -324,7 +325,7 @@ public class CLIMap {
     }
 
     /**
-     * it remove one player from the map 
+     * It remove one player from the map
      * @param player selected player
      */
     public void removePlayer(String player){

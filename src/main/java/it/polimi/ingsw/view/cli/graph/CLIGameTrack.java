@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * It is the gametrack
+ */
 public class CLIGameTrack {
     private static final int MAXCOLUMN = 32;
     private static final int MAXROW = 3;

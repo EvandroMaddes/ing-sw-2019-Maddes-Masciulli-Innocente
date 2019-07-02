@@ -1,10 +1,11 @@
 package it.polimi.ingsw.view.cli.graph;
 
-
 import it.polimi.ingsw.model.player.Character;
-
 import java.util.Map;
 
+/**
+ * It is a  playerboard
+ */
 public class CLIPlayerBoard {
     private String resource = Color.ANSI_BLACK_BACKGROUND.escape();
     private String user ;
@@ -230,17 +231,6 @@ public class CLIPlayerBoard {
             }
         }
 
-
-    // TODO: 25/06/2019 da eliminare
-    public void printPlayerBoard(){
-        for (int row = 0; row < MAXROW2; row++) {
-            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
-            for (int column =0; column < MAXCOLUMN; column++) {
-                System.out.print(playerBoard[column][row]);
-            }
-        }
-
-    }
 }
 
 

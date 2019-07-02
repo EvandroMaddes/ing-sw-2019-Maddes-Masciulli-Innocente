@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.cli.graph;
 
-
+// TODO: 02/07/2019 completare commenti 
 public abstract class TitleCharacter {
 
     // TODO: 25/06/2019 serve LENGHT? 

@@ -1,18 +1,15 @@
 package it.polimi.ingsw.view.gui;
-import it.polimi.ingsw.network.client.Client;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
+/**
+ * It controls login scene
+ */
 public class LoginController extends AbstractController{
     private String userString;
     private String connectionString;
@@ -45,8 +42,13 @@ public class LoginController extends AbstractController{
         this.stage = stage;
     }
 
+    /**
+     * It manage click of a newGame button. It create a new GUI and start a thread which controls interaction between server and client
+     * @param event click action
+     * @throws Exception
+     */
     @FXML
-    void enterClick(ActionEvent event) throws Exception {
+    void enterClick(ActionEvent event) {
         GUI gui = new GUI((Stage) enterButton.getScene().getWindow());
         setGui(gui);
         String[] choices = new String[3];
@@ -57,23 +59,16 @@ public class LoginController extends AbstractController{
         choices[0] = userString ;
         choices[1] = connectionString;
         choices[2] = ipAddresString;
-
-        System.out.println("\nUser: " + choices[0] +
-                "\nConnection: " + choices[1] +
-                "\nIp: " + choices[2]);
-
         getGui().setClientChoices(choices);
         getGui().setUser(username.getText());
-        getGui().initialize();
         gui.initialize();
         gui.setClientChoices(choices);
         new Thread(()->gui.startInterface()).start();
-        //getGui().gameInit(new String[]{userString,connectionString,ipAddresString});
     }
 
 
     @FXML
-    void usernameType(ActionEvent event)        //todo username della GUI lo setto qui??
+    void usernameType(ActionEvent event)
     {
     }
 

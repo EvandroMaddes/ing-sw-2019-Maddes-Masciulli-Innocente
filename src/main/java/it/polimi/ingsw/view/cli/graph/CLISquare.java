@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * this class represents a square on map
+ */
 public class CLISquare {
     public static final int MAXSQUARECOLUMN = 10;
     public static final int MAXSQUAREROW = 5;

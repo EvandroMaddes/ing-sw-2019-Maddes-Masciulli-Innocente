@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'R'
+ */
 public class RTitleCharacter  extends TitleCharacter{
     public RTitleCharacter(){
         string[0]="__/\\\\\\\\\\\\\\_____";

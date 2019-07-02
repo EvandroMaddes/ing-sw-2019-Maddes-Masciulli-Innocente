@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * it contains color
+ */
 public enum Color {
      ANSI_BLACK("\u001B[30m"),
      ANSI_RED("\u001B[31m"),
@@ -21,9 +24,17 @@ public enum Color {
 
     private String escape;
 
+    /**
+     * Constructor
+     * @param escape
+     */
     Color(String escape) {
         this.escape = escape;
     }
+
+    /**
+     * @return color
+     */
     public String escape(){
         return escape;
     }

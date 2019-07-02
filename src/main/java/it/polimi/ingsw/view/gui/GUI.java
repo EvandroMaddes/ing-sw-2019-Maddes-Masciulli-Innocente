@@ -101,6 +101,7 @@ public class GUI extends RemoteView {
 
 
         System.out.println("fine configurazione GUI");
+
         /***********FUNZIONA**************
          Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
          Platform.runLater(()->{
@@ -155,7 +156,6 @@ public class GUI extends RemoteView {
      */
     public void sendMessage(Event choice) {
         System.out.println(choice.getUser());
-        setToVirtualView(choice);
 
     }
 
@@ -360,7 +360,7 @@ public class GUI extends RemoteView {
                     lobbyController.setLobby(available, startedLobbies, waitingLobbies);
                     lobbyStage.setScene(lobbyScene);
                 });
-         return lobbyController.ask();
+         return lobbyController.ask(lobbyScene);
     }
 
     @Override

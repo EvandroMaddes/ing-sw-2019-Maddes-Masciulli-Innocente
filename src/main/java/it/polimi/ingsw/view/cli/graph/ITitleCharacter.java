@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * Char 'I'
+ */
 public class ITitleCharacter extends TitleCharacter {
     public ITitleCharacter(){
         String upperTopString = "_/\\\\\\\\\\\\\\\\\\";
