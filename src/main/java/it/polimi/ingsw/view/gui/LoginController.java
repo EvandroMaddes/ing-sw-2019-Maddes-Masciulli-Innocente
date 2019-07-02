@@ -94,9 +94,4 @@ public class LoginController extends AbstractController{
         enterButton.setDisable(false);
     }
 
-    public void setTESTGRID(Image image) {
-       ImageView curr = ((ImageView)TESTGRID.getChildren().get(0));
-       curr.setImage(image);
-
-    }
 }

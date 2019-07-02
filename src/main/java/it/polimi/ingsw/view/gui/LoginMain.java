@@ -39,6 +39,7 @@ public class LoginMain extends Application{
             e.printStackTrace();
         }
         loginController = loginFxml.getController();
+        DecodeMessage decodeTEST= new DecodeMessage();
         loginController.setStage(primaryStage);
         primaryStage.setScene(new Scene(root, 800, 560));
         primaryStage.show();
