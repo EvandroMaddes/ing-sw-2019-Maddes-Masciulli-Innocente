@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// TODO: 02/07/2019 chiudere il primary stage prima di mostare la welcomeChoice  modificare mapCharacterChoiceFxml in mapChoice
 
 public class GUI extends RemoteView {
     private DecodeMessage decodeMessage = new DecodeMessage();
@@ -59,6 +60,7 @@ public class GUI extends RemoteView {
         this.primaryStage = primaryStage;
     }
 
+
     public void initialize() {
 
         Parent lobby = null;
@@ -82,7 +84,7 @@ public class GUI extends RemoteView {
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
         lobbyStage = new Stage();
-        lobbyController.setStage(lobbyStage);
+        mapCharacterStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -101,6 +103,7 @@ public class GUI extends RemoteView {
         gameboardScene = new Scene(gameboard, 800, 560);
         mapharacterChoiceScene = new Scene(mapCharacter, 400, 280);
 
+        lobbyStage.setScene(lobbyScene);
 
         System.out.println("fine configurazione GUI");
 
@@ -290,15 +293,32 @@ public class GUI extends RemoteView {
 
     @Override
     public Event gameChoice() {
-        Platform.runLater(() -> mapCharacterController.getMapComboBox().setDisable(false));
-        ArrayList<Integer> mapChoice = new ArrayList<Integer>();
-        mapChoice.add(0);
-        mapChoice.add(1);
-        mapChoice.add(2);
-        mapChoice.add(3);
-        Platform.runLater(() -> mapCharacterController.getEnterButton().setDisable(true));
-        Platform.runLater(() -> mapCharacterController.setMapComboBox(mapChoice));
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                try {
+                    mapCharacterController.setWindow(mapCharacterStage);
+                    ArrayList<Integer> mapChoice = new ArrayList<Integer>();
+                    mapChoice.add(0);
+                    mapChoice.add(1);
+                    mapChoice.add(2);
+                    mapChoice.add(3);
+                    mapCharacterController.setMapComboBox(mapChoice);
+                } catch (Exception e) {
+                }
+                Event event = mapCharacterController.ask(mapharacterChoiceScene);
+                return event;
+            }
+        };
+        Thread th = new Thread(query);
+        th.start();
+        try{
+            Event event = query.get();
+            return event;
+        }catch(Exception interrupted){
+            CustomLogger.logException(interrupted);
+            return null;
+        }
     }
 
     @Override
@@ -361,14 +381,15 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 try {
+                    lobbyController.setWindow(lobbyStage);
                     lobbyController.setLobby(available, startedLobbies, waitingLobbies);
-                    lobbyStage.setScene(lobbyScene);
                 } catch (Exception e) {
                 }
                 Event event = lobbyController.ask(lobbyScene);
                 return event;
             }
         };
+        // TODO: 02/07/2019 renderlo un metodo 
         Thread th = new Thread(query);
         th.start();
         try{

@@ -63,6 +63,7 @@ public class LoginController extends AbstractController{
         getGui().setUser(username.getText());
         gui.initialize();
         gui.setClientChoices(choices);
+        gui.setPrimaryStage(stage);
         new Thread(()->gui.startInterface()).start();
     }
 
