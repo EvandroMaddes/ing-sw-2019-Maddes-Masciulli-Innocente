@@ -167,7 +167,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: rgba(128,128,128,0.72);">
+                  <HBox fx:id="yourWeapon" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: rgba(128,128,128,0.72);">
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -707,7 +707,7 @@
                   <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
                   <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="130.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" />
                   <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="150.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" />
-                  <ImageView fx:id="dstructorDemage" fitHeight="30.0" fitWidth="23.0" layoutX="213.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" />
+                  <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="213.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" />
                   <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="222.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" />
                   <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="222.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="9" />
                </children>
