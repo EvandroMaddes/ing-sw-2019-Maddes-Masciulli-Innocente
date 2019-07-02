@@ -279,6 +279,10 @@ public class GUI extends RemoteView {
         return userChoice(query);
     }
 
+    public void setCharacterChoose(Character characterChoose) {
+        this.characterChoose = characterChoose;
+    }
+
     @Override
     public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
         return null;
@@ -449,12 +453,30 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
+        if(weapons.length<4){
+
+        if(characterChoose == currCharacter){
+
+            Image[] toAdd = new Image[weapons.length];
+            for (int i=0; i<weapons.length;i++){
+                if (load[i]){
+                toAdd[i] = decodeMessage.weaponImage(weapons[i]);
+            }else
+                toAdd[i] = decodeMessage.weaponImage("unload");
+            }
+            gameBoardController.setPlayerWeapon(toAdd);
+            }
+        }
+            return new UpdateChoiceEvent(getUser());
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
         return new UpdateChoiceEvent(BROADCASTSTRING);
+        //xy:01 red
+        //20 blue
+        //32 yellow
     }
 
     @Override

@@ -289,6 +289,11 @@ public class DecodeMessage {
         return loadImage(path);
     }
 
+    /**
+     *
+     * @param character
+     * @return
+     */
     private Path findPlayerTokenImage(Character character){
         Path path = null;
         switch(character) {
@@ -311,6 +316,11 @@ public class DecodeMessage {
                 return path;
     }
 
+    /**
+     *
+     * @param character
+     * @return
+     */
     public Image playerTokenImage(Character character) {
         Path path = findPlayerTokenImage(character);
         return loadImage(path);

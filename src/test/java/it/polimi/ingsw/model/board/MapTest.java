@@ -73,42 +73,6 @@ public class MapTest {
         Assert.assertEquals(square2,player2.getPosition());
         Assert.assertTrue(player1.getPosition().findVisiblePlayers().contains(player2));
         Assert.assertTrue(player2.getPosition().findVisiblePlayers().contains(player1));
-
-        // TODO: 2019-06-11 che fare di questa cosa sotto?
-/*
-        Square square;
-         for (int i=0; i<mapList.size();i++) {
-
-            square = mapList.get(i);
-            if (square != null) {
-                System.out.print("Square " + i + " colour: " + square.getSquareColour());
-                System.out.print(" ROW " + square.getRow() + " COLUMN " + square.getColumn() + "\n");
-                System.out.print(" NORTH: " + square.checkDirection(0));
-                if (square.checkDirection(0)) {
-                    System.out.print(square.getNextSquare(0).getSquareColour() + "\t");
-                }
-                System.out.print(" SOUTH: " + square.checkDirection(1));
-                if (square.checkDirection(1)) {
-                    System.out.print(square.getNextSquare(1).getSquareColour() + "\t");
-                }
-                System.out.print(" EAST: " + square.checkDirection(2));
-                if (square.checkDirection(2)) {
-                    System.out.print(square.getNextSquare(2).getSquareColour() + "\t");
-                }
-                System.out.print(" WEST: " + square.checkDirection(3) + "\n\n");
-                if (square.checkDirection(3)) {
-                    System.out.print(square.getNextSquare(3).getSquareColour() + "\n\n");
-                }
-
-
-            }
-
-        }
-*/
-
-
-
-
     }
 
     @Test
