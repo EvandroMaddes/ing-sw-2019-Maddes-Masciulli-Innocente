@@ -105,7 +105,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
     /**
      *  Getter method:
      * @return the number of client connected to the server
-     * @throws RemoteException
+     * @throws RemoteException if couldn't reach the server properly
      */
     @Override
     public int getClientListNumber() throws RemoteException {
@@ -200,7 +200,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      */
 
     /**
-     *
+     * connect the client to the server
      * @param remotePort is the server Port, from the NetConfiguration Class
      * @param remoteIPAddress
      * @throws RemoteException
@@ -277,7 +277,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
 
     /**
-     *  remoteListenMessage implementation
+     * remoteListenMessage implementation
      * @return the listened message, null if the currMessage isn't updated
      * @throws RemoteException
      */

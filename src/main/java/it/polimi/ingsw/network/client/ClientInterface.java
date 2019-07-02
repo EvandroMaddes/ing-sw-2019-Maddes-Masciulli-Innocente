@@ -40,7 +40,7 @@ public interface ClientInterface extends NetworkHandler {
 
     /**
      * Getter method:
-     * @return attribute connected value
+     * @return connected attribute value
      */
     boolean isConnected();
 }
