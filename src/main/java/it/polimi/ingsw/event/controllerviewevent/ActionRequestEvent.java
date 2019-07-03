@@ -3,13 +3,20 @@ package it.polimi.ingsw.event.controllerviewevent;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
+/**
+ * Event to ask to the player which action they want to use
+ *
+ * @author Federico Inncente
+ * @author Evandro Maddes
+ */
 public class ActionRequestEvent extends ControllerViewEvent {
-    /**
+    /*
      * 0 - MOVE
      * 1 - GRAB
      * 2 - SHOT
      */
     private boolean[] usableActions;
+
 
     public ActionRequestEvent(String user, boolean[] usableActions) {
         super(user);

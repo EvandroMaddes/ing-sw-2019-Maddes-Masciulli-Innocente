@@ -21,6 +21,7 @@ public class AdrenalinicGrabValidator extends BaseActionValidator {
      * @param controller is the controller of the game, with all the information about the map and the game itself
      * @return a list of all possible destination of a correct grab action
      */
+    @Override
     public List<Square> availableGrab(Controller controller) {
         ArrayList<Square> possibleSquare = controller.getGameManager().getCurrentRound().getCurrentPlayer().getPosition().reachableInMoves(2);
         ArrayList<Square> grabbableSquare = new ArrayList<>();
