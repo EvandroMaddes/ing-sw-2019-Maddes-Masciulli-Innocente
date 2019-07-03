@@ -6,47 +6,58 @@ import it.polimi.ingsw.model.game_components.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- * @author federicoinnocente
+ * This interface define the methods to get the action that players can perform in different situation and all the possible targets of those actions
+ *
+ * @author Federico Innocente
  */
-public abstract class Validator {
+public interface Validator {
 
     /**
-     * @param start         is the starting position
-     * @param numberOfMoves is the numder of single move action between two squares
-     * @return an arrayList of all the square reachable from the start, start included
-     */
-    public ArrayList<Square> reachableInMoves(Square start, int numberOfMoves) {
-        return start.reachableInMoves(numberOfMoves);
-    }
-
-
-    /**
+     * Calculate all possible destination of a move action performed by the current player
      *
-     * @return all possible destination square
+     * @param controller is teh controller of the game, with all the information about the map and the game itself
+     * @return is a list of the possible destination of a move action performed by the current player
      */
-    public abstract ArrayList<Square> availableMoves(Controller controller);
+    List<Square> availableMoves(Controller controller);
 
     /**
-     * @return all the square in which the player can grab
-     */
-    public abstract ArrayList<Square> availableGrab(Controller controller);
-
-    /**
+     * Calculate all possible squares that can be grab by the current player in only one grab action, both basic and spawn square.
+     * Basic square with no ammo tile and empty spawn square or with not correctly payable weapons will not be count
      *
-     * @return a list of all loaded weapons that can be used in that moment for a shot action
+     * @param controller is the controller of the game, with all the information about the map and the game itself
+     * @return a list of all possible destination of a correct
      */
-    public static ArrayList<Weapon> availableToFireWeapons(Player player){
+    List<Square> availableGrab(Controller controller);
+
+    /**
+     * Find all the weapons of the player that can correctly fire.
+     * Weapons must be load and be able to perform correctly at least one payable effect.
+     *
+     * @param player is the player who's weapon are searched
+     * @return a list of all the player's weapon that can correctly fire
+     */
+    static ArrayList<Weapon> availableToFireWeapons(Player player) {
         ArrayList<Weapon> possibleWeapons = new ArrayList<>();
-        for (int i = 0; i < player.getNumberOfWeapons(); i++){
+        for (int i = 0; i < player.getNumberOfWeapons(); i++) {
             if (player.getWeapons()[i].isUsable())
                 possibleWeapons.add(player.getWeapons()[i]);
         }
         return possibleWeapons;
     }
 
-    public abstract boolean[] getUsableActions(Controller controller);
+    /**
+     * Calculate which actions the current player can perform in his round
+     *
+     * @param controller is the controller of the game, with all the information about the map and the game state
+     * @return a boolean vector, which true value define the usability of an action according with the following codification:
+     * 0 - move action
+     * 1 - grab action
+     * 2 - shot action
+     */
+    boolean[] getUsableActions(Controller controller);
 
 }
