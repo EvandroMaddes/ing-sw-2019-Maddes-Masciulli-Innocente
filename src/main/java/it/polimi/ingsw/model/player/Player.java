@@ -303,7 +303,7 @@ public class Player extends Observable {
     /**
      * This method add the given method to the player reserve, notifying the change
      *
-     * @param weapon
+     * @param weapon is the added weapon
      */
     public void addWeapon(Weapon weapon) {
         weapons[numberOfWeapons] = weapon;
@@ -401,18 +401,17 @@ public class Player extends Observable {
 
         for (AmmoCube cube : cost) {
             switch (cube.getColour()) {
-                case Blue: {
+                case Blue:
                     blueCubes++;
                     break;
-                }
-                case Red: {
+                case Red:
                     redCubes++;
                     break;
-                }
-                case Yellow: {
+                case Yellow:
                     yellowCubes++;
                     break;
-                }
+                default:
+                    throw new IllegalArgumentException();
             }
         }
         blueCubes -= getCubeColourNumber(CubeColour.Blue);
@@ -421,18 +420,17 @@ public class Player extends Observable {
 
         for (PowerUp p : powerUps) {
             switch (p.getColour()) {
-                case Yellow: {
+                case Yellow:
                     yellowCubes--;
                     break;
-                }
-                case Red: {
+                case Red:
                     redCubes--;
                     break;
-                }
-                case Blue: {
+                case Blue:
                     blueCubes--;
                     break;
-                }
+                default:
+                    throw new IllegalArgumentException();
             }
         }
         return blueCubes <= 0 && yellowCubes <= 0 && redCubes <= 0;
