@@ -1,7 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
+
+import it.polimi.ingsw.event.viewcontrollerevent.ActionChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.SkipActionChoiceEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
