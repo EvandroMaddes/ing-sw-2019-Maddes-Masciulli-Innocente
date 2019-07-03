@@ -14,6 +14,9 @@ import java.util.Observable;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ */
 public class GameModel extends Observable{
     
     private ArrayList<Player> players;
