@@ -9,6 +9,7 @@ import java.util.Observable;
  * Is the Square abstract class
  *
  * @author Evandro Maddes
+ * @author Federico Innocente
  */
 public abstract class Square extends Observable {
     /**
@@ -75,7 +76,7 @@ public abstract class Square extends Observable {
      * @param east  is the Square to the east
      * @param west  is the Square to the west
      */
-    public void setNearSquares(Square north, Square south, Square east, Square west) {
+    void setNearSquares(Square north, Square south, Square east, Square west) {
 
         nearSquares[0] = north;
         nearSquares[1] = south;
@@ -92,7 +93,7 @@ public abstract class Square extends Observable {
      * @param reachableEast  is true if the Square to the east is reachable
      * @param reachableWest  is true if the Square to the west is reachable
      */
-    public void setSquareReachable(boolean reachableNorth, boolean reachableSouth, boolean reachableEast, boolean reachableWest) {
+    void setSquareReachable(boolean reachableNorth, boolean reachableSouth, boolean reachableEast, boolean reachableWest) {
         reachable[0] = reachableNorth;
         reachable[1] = reachableSouth;
         reachable[2] = reachableEast;
@@ -105,7 +106,7 @@ public abstract class Square extends Observable {
      *
      * @param squareColour is the String that identifies the colour
      */
-    public void setSquareColour(String squareColour) {
+    void setSquareColour(String squareColour) {
         this.squareColour = squareColour;
     }
 
@@ -141,7 +142,7 @@ public abstract class Square extends Observable {
      *
      * @return the nearSquare array
      */
-    public Square[] getNearSquares() {
+    Square[] getNearSquares() {
         return nearSquares;
     }
 

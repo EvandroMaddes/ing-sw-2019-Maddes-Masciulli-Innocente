@@ -120,7 +120,7 @@ public abstract class Weapon extends Card {
 
     /**
      * Check if the weapon is usable.
-     * To be usable, the weapon must be loaded and at least une of its effects must be usable
+     * To be usable, the weapon must be loaded and at least one of its effects must be correctly usable
      *
      * @return true if the weapon is usable, false otherwise
      */

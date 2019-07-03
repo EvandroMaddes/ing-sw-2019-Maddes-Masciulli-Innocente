@@ -14,7 +14,7 @@ public interface BaseFightAction {
      * @param target is the target Player
      * @param amount is the DamageToken amount
      */
-    public void damage(Player target, int amount);
+    void damage(Player target, int amount);
 
     /**
      * Move a target Player to the destination Square
@@ -22,7 +22,7 @@ public interface BaseFightAction {
      * @param target      is the target Player
      * @param destination is the destination Square
      */
-    public void move(Player target, Square destination);
+    void move(Player target, Square destination);
 
     /**
      * Mark a target Player of the amount number of token
@@ -30,6 +30,6 @@ public interface BaseFightAction {
      * @param target is the target Player
      * @param amount is the DamageToken amount
      */
-    public void mark(Player target, int amount);
+    void mark(Player target, int amount);
 
 }
