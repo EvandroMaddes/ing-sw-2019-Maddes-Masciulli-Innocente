@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
+import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -106,4 +107,16 @@ public abstract class AbstractController {
         }
     }
 
+    public Event showUpdate(Scene scene){
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                window.setScene(scene);
+                window.show();
+                Event event = new UpdateChoiceEvent("oioi");
+                return event;
+            }
+        };
+        return new UpdateChoiceEvent("ososo");
+    }
 }

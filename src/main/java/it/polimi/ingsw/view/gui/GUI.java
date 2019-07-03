@@ -133,6 +133,9 @@ public class GUI extends RemoteView {
         characterStage.setScene(characterScene);
         powerUpStage.setScene(powerUpScene);
 
+        primaryStage.setScene(gameboardScene);
+
+
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
 
         /***********FUNZIONA**************
@@ -143,21 +146,13 @@ public class GUI extends RemoteView {
          primaryStage.show();
          });
          */
+        metodoPROVA();
     }
 
     public void metodoPROVA(){
-
         Platform.runLater(()->{
-           Image[]map = decodeMessage.mapImage(0);
-            //gameBoardController.setMap(map[0],map[1]);
-            weaponReplaceUpdate(0,2,new String[]{"T.H.O.R.","FURNACE","HELLION"});
-            newPlayerJoinedUpdate("evandro",Character.D_STRUCT_OR);
-            newPlayerJoinedUpdate("evandro",Character.BANSHEE);
-            newPlayerJoinedUpdate("evandro",Character.VIOLET);
-
-
-            gameBoardStage.show();
-        });
+            primaryStage.setFullScreen(true);
+            primaryStage.show();});
     }
 
     /**
@@ -335,6 +330,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
+        System.out.println(fistColour +"  "+secondColour+"  "+ thirdColour );
         gameBoardController.addAmmoTileOnMap(x,y,decodeMessage.ammoTileImage(fistColour,secondColour,thirdColour));
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
@@ -362,6 +358,7 @@ public class GUI extends RemoteView {
                 Event event = mapController.ask(mapChoiceScene);
                 Image[] mapChoice = decodeMessage.mapImage(((GameChoiceEvent)event).getMap());
                 gameBoardController.setMap(mapChoice[0],mapChoice[1]);
+                gameBoardController.showScene(gameboardScene);// ?
                 return event;
             }
         };
