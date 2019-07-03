@@ -5,20 +5,38 @@ import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
 /**
- * Quando si connette un nuovo giocatore, viene mostrato a tutti i client connessi;
+ * When a new client enter the match and chose the character, is shown to all the other connected clients
  */
 public class NewPlayerJoinedUpdateEvent extends ModelViewBroadcastEvent {
 
+    /**
+     * Is the new player username
+     */
     String newPlayer;
+    /**
+     * is the Character chosen by the new player
+     */
     Character characterChoice;
 
-    public NewPlayerJoinedUpdateEvent(String username, Character characterChoice){
+    /**
+     * Constructor: call super-class constructor and set newPlayer and characterChoice values
+     *
+     * @param username        is the new player username
+     * @param characterChoice is the new player's chosen character
+     */
+    public NewPlayerJoinedUpdateEvent(String username, Character characterChoice) {
         super();
         this.newPlayer = username;
         this.characterChoice = characterChoice;
     }
 
 
+    /**
+     * Implements the performAction: notify the character choice
+     *
+     * @param remoteView is the Client RemoteView implementation
+     * @return an UpdateChoiceEvent
+     */
     @Override
     public Event performAction(RemoteView remoteView) {
 
