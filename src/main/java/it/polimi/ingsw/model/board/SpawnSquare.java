@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  * Class that implements the SpawnSquares
  * @author Evandro Maddes
+ * @author Federico Innocente
  */
 public class SpawnSquare extends Square {
      /**
