@@ -31,7 +31,7 @@ public class ValidatorTest {
 
     @Test
     public void reachableInMovesTest(){
-        ArrayList<Square> possibleSquares = validator.reachableInMoves(map[0][0], 2);
+        ArrayList<Square> possibleSquares = map[0][0].reachableInMoves(2);
         Assert.assertEquals(6, possibleSquares.size());
         ArrayList<Square> expectedSquares = new ArrayList<>();
         expectedSquares.add(map[0][0]);
