@@ -41,7 +41,8 @@ public class LoginMain extends Application{
         loginController = loginFxml.getController();
         loginController.getEnterButton().setDisable(true);
         loginController.setStage(primaryStage);
-        primaryStage.setScene(new Scene(root, 800, 560));
+        primaryStage.setScene(new Scene(root, 880, 620));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

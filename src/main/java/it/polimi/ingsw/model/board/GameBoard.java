@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.gamecomponents.cards.WeaponDeck;
 
 /**
  * Class that represent the GameBoard
+ *
  * @author Evandro Maddes
  */
 public class GameBoard {
@@ -37,11 +38,12 @@ public class GameBoard {
 
     /**
      * Constructor: set the GameBoard elements depending on the Lobby creator's preferences
-     * @param gameTrack is the GameTrack implementation
-     * @param map is the chosen map implementation
-     * @param weaponDeck is a shuffled and complete WeaponDeck
+     *
+     * @param gameTrack     is the GameTrack implementation
+     * @param map           is the chosen map implementation
+     * @param weaponDeck    is a shuffled and complete WeaponDeck
      * @param ammoTilesDeck is a shuffled and complete AmmoTileDeck
-     * @param powerUpDeck is a shuffled and complete PowerUpDeck
+     * @param powerUpDeck   is a shuffled and complete PowerUpDeck
      */
     public GameBoard(GameTrack gameTrack, Map map, WeaponDeck weaponDeck, AmmoTilesDeck ammoTilesDeck, PowerUpDeck powerUpDeck) {
         this.gameTrack = gameTrack;
@@ -53,6 +55,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return the gameTrack
      */
     public GameTrack getGameTrack() {
@@ -61,6 +64,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return the map
      */
     public Map getMap() {
@@ -69,6 +73,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return the weaponDeck
      */
     public WeaponDeck getWeaponDeck() {
@@ -77,6 +82,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return the ammoTilesDeck
      */
     public AmmoTilesDeck getAmmoTilesDeck() {
@@ -85,6 +91,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return the powerUpDeck
      */
     public PowerUpDeck getPowerUpDeck() {
@@ -94,6 +101,7 @@ public class GameBoard {
 
     /**
      * Getter method:
+     *
      * @return true if is the final frenzy moment
      */
     public boolean isFinalFrenzy() {
@@ -103,6 +111,8 @@ public class GameBoard {
     /**
      * set finalFrenzy value to true
      */
-    public void setFinalFrenzy(){ finalFrenzy = true; }
+    public void setFinalFrenzy() {
+        finalFrenzy = true;
+    }
 
 }
