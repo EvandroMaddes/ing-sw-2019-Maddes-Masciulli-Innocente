@@ -33,7 +33,7 @@ public class CLIGameTrack {
         }
 
         for (int lastLine =0; lastLine<MAXCOLUMN; lastLine++){
-            track[lastLine][2] =Color.ANSI_GREEN.escape()+"﹎";
+            track[lastLine][2] =Color.ANSI_GREEN.escape()+"_ ";
         }
     }
 

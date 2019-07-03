@@ -1,10 +1,9 @@
 package it.polimi.ingsw.view.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class CharacterChoiceController {
+public class CharacterChoiceController extends AbstractController {
 
     @FXML
     private Button dozerButton;
@@ -21,5 +20,23 @@ public class CharacterChoiceController {
     @FXML
     private Button dstructorButton;
 
+    public Button getDozerButton() {
+        return dozerButton;
+    }
 
+    public Button getVioletButton() {
+        return violetButton;
+    }
+
+    public Button getSprogButton() {
+        return sprogButton;
+    }
+
+    public Button getBansheeButton() {
+        return bansheeButton;
+    }
+
+    public Button getDstructorButton() {
+        return dstructorButton;
+    }
 }
