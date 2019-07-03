@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author Francesco Masciulli
  * Class implementing the Weapon Deck
- * is just the concrete class of the DeckManagement Class
+ * is just the concrete class of the DeckManagement Class, which methods covers each of the WeaponDeck functionality
+ *
+ * @author Francesco Masciulli
+ * @author Evandro Maddes
  */
-
 
 
 public class WeaponDeck extends DeckManagement {
 
-    /**@author Evandro Maddes
-     * this method creates deck of all 21 weapons
+    /**
+     * Constructor:
+     * this method creates a deck of all of the 21 weapons
      */
     public WeaponDeck() {
 

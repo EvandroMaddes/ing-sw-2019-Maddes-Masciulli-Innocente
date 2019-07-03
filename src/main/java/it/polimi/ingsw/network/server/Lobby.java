@@ -76,6 +76,10 @@ public class Lobby extends Thread {
     }
 
 
+    /**
+     * Getter method:
+     * @return lobbyName String
+     */
     public String getLobbyName() {
         return lobbyName;
     }
@@ -83,7 +87,7 @@ public class Lobby extends Thread {
 
     /**
      * Is the Thread run() implementation:
-     * it start the already allocated and set RMI/Socket servers and handle the network from the beginning to the end of the Game;
+     * it start the already allocated and set RMI/Socket servers and handle the network from the beginning to the end of the match;
      */
     @Override
     public void run() {
@@ -129,10 +133,10 @@ public class Lobby extends Thread {
 
                     if(activeClientList.size() > 2) {
                         if(gameTimer==null){
-                            gameTimer = new CustomTimer(NetConfiguration.startGameTimer);
+                            gameTimer = new CustomTimer(NetConfiguration.getStartGameTimer());
                             gameTimer.start();
                             log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in ".concat(
-                                   Integer.toString(NetConfiguration.startGameTimer).concat(" seconds.\n"))));
+                                   Integer.toString(NetConfiguration.getStartGameTimer()).concat(" seconds.\n"))));
                         }
                         else if(!gameTimer.isAlive()) {
                             serverRMI.gameCouldStart();
@@ -204,6 +208,10 @@ public class Lobby extends Thread {
 
     }
 
+    /**
+     * Getter method:
+     * @return the activeClientList usernames
+     */
     public ArrayList<String> getActiveClientList() {
         return activeClientList;
     }
@@ -216,8 +224,11 @@ public class Lobby extends Thread {
         return shutDown;
     }
 
+    /**
+     * this method set the Lobby shutdown signal to false;
+     */
     public void shutDownLobby(){
-        shutDown = false;
+        shutDown = true;
     }
 
     /**

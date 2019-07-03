@@ -22,6 +22,11 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
     private Event currMessage;
     private boolean connected;
 
+    /**
+     * Constructor:
+     * create a socket thread that handle the communication with a socket client and connect their input and output streams.
+     * @param socket is the client socket
+     */
     public SocketServerThread(Socket socket){
         this.client = socket;
         connected = true;

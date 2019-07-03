@@ -3,18 +3,21 @@ package it.polimi.ingsw.model.gamecomponents.cards;
 import java.util.ArrayList;
 import java.util.Collections;
 /**
- * @author Francesco Masciulli
  *
  * Abstract class for the Deck Management;
- * implements the basic methods of drawing and shuffling further the Constructor and getter;
+ * implements the basic methods of drawing and shuffling further the Constructor and getter methods;
+ * @author Francesco Masciulli
  *
  */
 public abstract class DeckManagement {
 
+    /**
+     * Is the ArrayList of Object that contains the deck elements
+     */
     private ArrayList<Object> deck ;
 
     /**
-     * Setter method
+     * Setter method:
      * @param deck is the standard ArrayList given in the initializing phase of the game
      *
      */
@@ -23,7 +26,7 @@ public abstract class DeckManagement {
     }
 
     /**
-     * Getter method
+     * Getter method:
      * @return the deck
      */
     public ArrayList<Object> getDeck() {
@@ -38,7 +41,7 @@ public abstract class DeckManagement {
     }
 
     /**
-     *
+     * perform a draw from the deck
      * @return the first Deck element, if is not empty, or the following exception, null if the deck is empty
      */
     public Object draw() {

@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model.board;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,20 +8,49 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+
 /**
+ * This class is the Map representation
+ *
  * @author Evandro Maddes
  */
 public class Map {
 
+    /**
+     * String that represent the bigger left semi-map
+     */
     public static final String BIG_LEFT = "leftFirst";
+    /**
+     * String that represent the littler left semi-map
+     */
     public static final String SMALL_LEFT = "leftSecond";
+    /**
+     * String that represent the bigger right semi-map
+     */
     public static final String BIG_RIGHT = "rightFirst";
+    /**
+     * String that represent the littler right semi-map
+     */
     public static final String SMALL_RIGHT = "rightSecond";
-
+    /**
+     * An ArrayList that contains all of the SpawnSquares
+     */
     private ArrayList<SpawnSquare> spawnSquares = new ArrayList<>();
+    /**
+     * A Square matrix that contains the Map implementations square, set according with the game map
+     */
     private Square[][] squareMatrix;
+    /**
+     * A number that identifies the chosen complete Map, composed by two semi-map
+     */
     private int chosenMap;
 
+    /**
+     * Constructor, call a method that allocates the squareMatrix, and set the respectively chosenMap number
+     *
+     * @param leftMap  is the String that identifies the left semi-map
+     * @param rightMap is the String that identifies the right semi-map
+     */
     public Map(String leftMap, String rightMap) {
         this.squareMatrix = createGround(leftMap, rightMap);
         if (leftMap.equals(BIG_LEFT) && rightMap.equals(BIG_RIGHT))
@@ -34,21 +64,43 @@ public class Map {
     }
 
 
+    /**
+     * Getter method:
+     *
+     * @return the squareMatrix
+     */
     public Square[][] getSquareMatrix() {
         return squareMatrix;
     }
 
-
+    /**
+     * Getter method:
+     *
+     * @return an ArrayList that contains all of the SpawnSquares
+     */
+    public ArrayList<SpawnSquare> getSpawnSquares() {
+        return spawnSquares;
+    }
 
     /**
-     * it creates ground and sets spawn square
-     * @param selectedLeftMap choice of the first part(left)
+     * Getter method:
+     *
+     * @return the chosenMap number
+     */
+    public int getChosenMap() {
+        return chosenMap;
+    }
+
+    /**
+     * it creates ground and sets spawn square following the schema present in the resource Json
+     *
+     * @param selectedLeftMap  choice of the first part(left)
      * @param selectedRightMap choice of the second part(right)
      */
-    public Square[][] createGround(String selectedLeftMap , String selectedRightMap ) {
+    public Square[][] createGround(String selectedLeftMap, String selectedRightMap) {
 
 
-        Square [][] squaresMatrix = new Square[3][4];
+        Square[][] squaresMatrix = new Square[3][4];
         JsonParser parser = new JsonParser();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/map.json");
         Reader reader = new InputStreamReader(inputStream);
@@ -72,7 +124,9 @@ public class Map {
         if (selectedLeftMap.equals(BIG_LEFT)) {
 
             square2 = new BasicSquare(2, 0);
-        }else { square2 = null;}
+        } else {
+            square2 = null;
+        }
 
         squares.add(square2);
         squaresMatrix[2][0] = square2;
@@ -111,7 +165,9 @@ public class Map {
         if (selectedRightMap.equals(BIG_RIGHT)) {
             square9 = new BasicSquare(0, 3);
 
-        }else{square9=null;}
+        } else {
+            square9 = null;
+        }
         squares.add(square9);
         squaresMatrix[0][3] = square9;
 
@@ -125,13 +181,10 @@ public class Map {
         getSpawnSquares().add(square11);
 
 
-
-
-
-        addPropertyNearSquares(squares,right,(squares.size()-1),i-1);
-        addPropertyNearSquares(squares,left,i-1,-1);
-        addPropertyReachable(squares,right,(squares.size()-1),i-1);
-        addPropertyReachable(squares,left,i-1,-1);
+        addPropertyNearSquares(squares, right, (squares.size() - 1), i - 1);
+        addPropertyNearSquares(squares, left, i - 1, -1);
+        addPropertyReachable(squares, right, (squares.size() - 1), i - 1);
+        addPropertyReachable(squares, left, i - 1, -1);
 
         if (selectedRightMap.equals(SMALL_RIGHT))
             square7.setSquareColour(square4.getSquareColour());
@@ -142,17 +195,17 @@ public class Map {
     }
 
     /**
-     *create link between squares
-     * @param squares all square belongs to the map
+     * create link between squares according with the chosen map implementation
+     *
+     * @param squares         all square belongs to the map
      * @param semiMapSelected right or left semi map
-     * @param j starting point of the cycle
-     * @param i ending point of the cycle
+     * @param j               starting point of the cycle
+     * @param i               ending point of the cycle
      * @throws UnsupportedOperationException
      */
-    private void addPropertyNearSquares(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i)
-    {
+    private void addPropertyNearSquares(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i) {
 
-        for (int h=j; h > i; h--)//quadrati parte sinistra della mappa
+        for (int h = j; h > i; h--)//quadrati parte sinistra della mappa
         {
             if (squares.get(h) != null) {
                 Square north = null;
@@ -196,16 +249,17 @@ public class Map {
 
 
     /**
-     *create door of the map end set colour of every square
-     * @param squares all square belongs to the map
+     * create door of the map end set colour of every square
+     *
+     * @param squares         all square belongs to the map
      * @param semiMapSelected right or left semi map
-     * @param j starting point of the cycle
-     * @param i ending point of the cycle
+     * @param j               starting point of the cycle
+     * @param i               ending point of the cycle
      */
     private void addPropertyReachable(ArrayList<Square> squares, JsonObject semiMapSelected, int j, int i) {
 
-        for ( int h=j; h>i ;h--) {
-            if ( squares.get(h)!=null) {
+        for (int h = j; h > i; h--) {
+            if (squares.get(h) != null) {
 
                 boolean northReachable;
 
@@ -234,11 +288,5 @@ public class Map {
         }
     }
 
-    public ArrayList<SpawnSquare> getSpawnSquares() {
-        return spawnSquares;
-    }
 
-    public int getChosenMap() {
-        return chosenMap;
-    }
 }
