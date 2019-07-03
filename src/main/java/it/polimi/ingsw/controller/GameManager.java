@@ -251,7 +251,6 @@ public class GameManager {
      */
     void endGame() {
         String endGameMessage = calculateWinner();
-        controller.gameOff();
         model.endGame(endGameMessage);
     }
 
