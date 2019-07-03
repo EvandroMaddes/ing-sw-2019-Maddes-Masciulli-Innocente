@@ -38,7 +38,8 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     /**
-     * Constructor
+     * Constructor:
+     * Create an UnicastRemoteObject on default port 1099 (see NetConfiguration) and set server ipAdress
      * @throws RemoteException from UnicastRemoteObject constructor
      */
     public RMIServer() throws RemoteException {
@@ -53,7 +54,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     }
     /**
-     * Overloaded constructor, is given the portNumber
+     * Overloaded constructor, is given the portNumber given to the UnicastRemoteObject constructor
      * @throws RemoteException from UnicastRemoteObject constructor
      */
     public RMIServer(int portNumber) throws RemoteException {
@@ -447,10 +448,10 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     @Override
     public Event listenMessage() {
         Event currEvent = null;
-        CustomTimer timer = new CustomTimer(NetConfiguration.roundTimer);
+        CustomTimer timer = new CustomTimer(NetConfiguration.getRoundTimer());
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.roundTimer + " seconds.\n");
+        log.info("Started the round countdown!\nPlayer disconnected in " + NetConfiguration.getRoundTimer() + " seconds.\n");
         while (currEvent == null&&timer.isAlive()) {
 
             try {

@@ -34,11 +34,14 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
     private boolean connected = false;
 
 
-
-
     /**
-     * we need the RemoteException in the constructor
-     * @throws RemoteException if couldn't connect properly
+     * Create a UnicastRemoteObject with the given port, set username, server and client IpAddress and port;
+     * try to reach the server
+     * @param user is client username
+     * @param port is the client port
+     * @param serverIPAddress is the server IP address
+     * @throws RemoteException because extend UnicastRemoteObject
+     * @throws ConnectException if couldn't reach the server
      */
     public RMIClient(String user, int port, String serverIPAddress) throws RemoteException, ConnectException{
         super(port);
