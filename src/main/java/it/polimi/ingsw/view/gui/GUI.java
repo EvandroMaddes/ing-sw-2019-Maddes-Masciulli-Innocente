@@ -287,7 +287,7 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                     characterController.setCharacterChoice(availableCharacters);
                     characterController.setWindow(characterStage);
-                File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
+                //File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
                 //return gameBoardController.askPopUp( characterController,popUpFXML.toPath(), gameboardScene);
                 return  characterController.ask(characterScene);
             }
