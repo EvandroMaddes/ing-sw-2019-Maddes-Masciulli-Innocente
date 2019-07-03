@@ -33,7 +33,7 @@ public class AmmoTilesDeck extends DeckManagement {
     public AmmoTilesDeck() {
 
 
-        ArrayList<Object> deck = new ArrayList<Object>();
+        ArrayList<Object> deck = new ArrayList<>();
         JsonParser parser = new JsonParser();
         InputStream input = getClass().getClassLoader().getResourceAsStream("json/ammoTile.json");
         Reader reader = new InputStreamReader(input);
