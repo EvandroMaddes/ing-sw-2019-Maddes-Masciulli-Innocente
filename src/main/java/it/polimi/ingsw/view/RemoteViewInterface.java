@@ -14,13 +14,13 @@ import java.util.ArrayList;
 public interface RemoteViewInterface {
 
     /**
-    * It prints title "ADRENALINE" and catch user choice for username and connection(RMI/SOCKET)
+    * it catches user choices for username,connection(RMI/SOCKET) and IP address
     * @return user choices
     */
     String[] gameInit();
 
    /**
-    * Print screen gameboard updated: map, playerboards and gametrack
+    * it shows game board updated: map, player boards and game track
     */
    void printScreen();
 
@@ -38,7 +38,7 @@ public interface RemoteViewInterface {
 
    //+ + + + + following methods manages Request event + + + + +//
    /**
-    * user choice for map a
+    * User choice for map
     * @return event that contains player's choice
     */
    Event gameChoice();
@@ -51,21 +51,21 @@ public interface RemoteViewInterface {
    Event characterChoice(ArrayList<Character> availableCharacters);
 
    /**
-    *User choose an action at the beginning of his own turn
+    *User chooses an action at the beginning of his own turn
     * @param fireEnable true if player can use action fire
     * @return event that contains player's choice
     */
    Event actionChoice(boolean fireEnable);
 
    /**
-    * user choose weapon to reload
+    * user chooses weapon to reload
     * @param reloadableWeapons list of weapon that can be reloaded
     * @return event that contains player's choice
     */
    Event reloadChoice(ArrayList<String> reloadableWeapons);
 
    /**
-    * User choose which powerUp discard
+    * User chooses which powerUp discard
     * @param powerUpNames list of powerUp
     * @param powerUpColours color of powerUp
     * @return event that contains player's choice
@@ -73,7 +73,7 @@ public interface RemoteViewInterface {
    Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours);
 
    /**
-    * user choose where move his character
+    * user chooses where move his character
     * @param possibleSquareX column
     * @param possibleSquareY row
     * @return event that contains player's choice
@@ -81,7 +81,7 @@ public interface RemoteViewInterface {
    Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY);
 
    /**
-    *User choose where move his character and grab item on new position
+    *User chooses where move his character and grab item on new position
     * @param possibleSquareX column
     * @param possibleSquareY row
     * @return event that contains player's choice
@@ -89,28 +89,28 @@ public interface RemoteViewInterface {
    Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY);
 
    /**
-    * User choose weapon to fire
+    * User chooses weapon to fire
     * @param availableWeapons weapon loaded and ready to fire
     * @return event that contains player's choice
     */
    Event weaponChoice(ArrayList<String> availableWeapons);//to fire
 
    /**
-    * User select one weapon to grab
+    * User selects one weapon to grab
     * @param availableWeapon weapon on spawn square
     * @return event that contains player's choice
     */
    Event weaponGrabChoice(ArrayList<String> availableWeapon);
 
    /**
-    * User choose one weapon to discard
+    * User chooses one weapon to discard
     * @param yourWeapon player's weapon
     * @return event that contains player's choice
     */
    Event weaponDiscardChoice(ArrayList<String> yourWeapon);
 
    /**
-    * It return how a player pay the weapon GRAB cost
+    * It returns how a player pay the weapon GRAB cost
     * @param powerUpNames list of power up's name available to use
     * @param powerUpColours list of power up's colour available to use
     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
@@ -130,7 +130,7 @@ public interface RemoteViewInterface {
    Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
 
    /**
-    *User choice one square for action move
+    *User chooses one destination square for action move
     * @param possibleSquareX row of possible destination square
     * @param possibleSquareY column of possible destination square
     * @return
@@ -140,19 +140,20 @@ public interface RemoteViewInterface {
    /**
     * User select target to hit(characters)
     * @param availableTargets characters that can be hit
+    * @param numTarget  number of target
     * @return event that contains player's choice
     */
    Event weaponTargetChoice(ArrayList<Character> availableTargets,int numTarget);
 
    /**
-    * User choose at least one effect for his own weapon
+    * User chooses at least one effect for his own weapon
     * @param availableWeaponEffects effect available for selected weapon
     * @return event that contains player's choice
     */
    Event weaponEffectChoice(boolean[] availableWeaponEffects);
 
    /**
-    * it return how a player pay the cost of effect selected(weapon effect)
+    * it returns how a player pay the cost of effect selected(weapon effect)
     * @param powerUpNames list of power up's name available to use
     * @param powerUpColours list of power up's colour available to use
     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
@@ -162,7 +163,7 @@ public interface RemoteViewInterface {
    Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest);
 
    /**
-    *User choose square target for his selected effect
+    *User chooses square target for his selected effect
     * @param possibleSquareX column of available square
     * @param possibleSquareY row of available square
     * @return event that contains player's choice
@@ -170,7 +171,7 @@ public interface RemoteViewInterface {
    Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY);
 
    /**
-    *User choose one powerUp to use
+    *User chooses one powerUp to use
     * @param powerUpNames name of powerUp available
     * @param powerUpColours color of powerUp available
     * @return event that contains player's choice
@@ -178,7 +179,7 @@ public interface RemoteViewInterface {
    Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours);
 
    /**
-    * User choose target of his power up
+    * User chooses target of his power up
     * @param availableTargets character available to hit
     * @param maxTarget max number of target
     * @return event that contains player's choice
@@ -186,7 +187,7 @@ public interface RemoteViewInterface {
    Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget);
 
    /**
-    * it selects the destination square of target or newton powerUp
+    * it selects the destination square of target of newton powerUp
     * @param possibleSquareX column of possible square
     * @param possibleSquareY row of possible square
     * @return event that contains player's choice
@@ -203,7 +204,7 @@ public interface RemoteViewInterface {
    Event genericPaymentChoice( boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour);
 
    /**
-    * It show the possibility to use one power up at the end of turn(no yor turn)
+    * It shows the possibility to use one power up at the end of turn(no your turn)
     * @param powerUpNames list of  power up's name available to use
     * @param powerUpColours list of power up's colour available to use
     * @param maxUsablePowerUps max powerUp that you can use
@@ -212,14 +213,14 @@ public interface RemoteViewInterface {
    Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps);
 
    /**
-    * User choice a target character
+    * User chooses a target character
     * @param possibleTargets character available to hit
     * @return event that contains player's choice
     */
    Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets);
 
    /**
-    * User choose to use one of his power up during an action
+    * User chooses to use one of his power up during an action
     * @param powerUpNames available power up
     * @param powerUpColours colour of power up
     * @return event that contains player's choice
@@ -255,6 +256,8 @@ public interface RemoteViewInterface {
    Event removeAmmoTileUpdate(int x, int y);
 
    /**
+    * it sets character on a new position on map
+    *
     * @param currCharacter modified player position
     * @param x row: if sets at 404, player must be removed
     * @param y column: if sets at 404, players must be removed
@@ -273,7 +276,7 @@ public interface RemoteViewInterface {
    Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages);
 
    /**
-    *It shows power up available on player board
+    *It shows power up available
     * @param currCharacter  modified player board
     * @param powerUp power up of player
     * @param color colour of power up
@@ -282,7 +285,7 @@ public interface RemoteViewInterface {
    Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color);
 
    /**
-    *It shows ammo available on player board
+    *It shows ammo available
     * @param currCharacter  modified player board
     * @param ammo ammo of player
     * @return message notify the success of updating
@@ -290,7 +293,7 @@ public interface RemoteViewInterface {
    Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo);
 
    /**
-    *It shows weapon available on player board
+    *It shows weapon available
     * @param currCharacter  modified player board
     * @param weapons weapons of player
     * @return message notify the success of updating
@@ -321,7 +324,9 @@ public interface RemoteViewInterface {
    /**
     * It shows winner of the game and his point
     * @param endGameUpdate
+    *
     */
+   // TODO: 03/07/2019 fra
    Event winnerUpdate(EndGameUpdate endGameUpdate);
 
    /**
@@ -329,14 +334,14 @@ public interface RemoteViewInterface {
     * @param user is the involved user
     * @param character is the involved user's character
     * @param disconnected is true if the user was disconnected, false if was reconnected
-    * @return
+    * @return event that contains player's choice
     */
    Event playerReconnectionNotify(String user, Character character, boolean disconnected);
 
    // + + + + +folliwing method manage server-view even + + + + +//
 
    /**
-    * User choose which game would like to join
+    * User chooses which game would like to join
     * @param available  : availableChoice[0] = new game
     *                   : availableChoice[1] = wait lobby
     *                   : availableChoice[2] = started game
@@ -346,7 +351,8 @@ public interface RemoteViewInterface {
     */
    Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies,ArrayList<String> waitingLobbies);
    /**
-    * Print on screen the UpdateNotification message, requesting a choice if necessary;
+    * it prints on screen the UpdateNotification message, requesting a choice if necessary;
+    * @param usernameEvent notify modification of a user name
     * @return the answer that will be sent to the server.
     */
    Event printUserNotification(UsernameModificationEvent usernameEvent);

@@ -20,38 +20,67 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  * The RMI implementation of ClientInterface
+ *
  * @author Francesco Masciulli
  */
-public class RMIClient extends UnicastRemoteObject implements ClientInterface, RemoteInterface{
+public class RMIClient extends UnicastRemoteObject implements ClientInterface, RemoteInterface {
+    /**
+     * Is the RMIServer RemoteInterface, transient because it couldn't be send on network
+     */
     private transient RemoteInterface server;
+    /**
+     * Is the name used in binding
+     */
     private String bindName;
+    /**
+     * Is the client username
+     */
     private String user;
+    /**
+     * Is the client IP address
+     */
     private String clientIPAddress;
+    /**
+     * Is the client port number
+     */
     private int port;
+    /**
+     * is the server IP address
+     */
     private String serverIPAddress;
+    /**
+     * Is the RMIServer port numver
+     */
     private int serverPort;
+    /**
+     * Is the last set message
+     */
     private Event currMessage;
+    /**
+     * This boolean is true until the client is connected to the server
+     */
     private boolean connected = false;
 
 
     /**
      * Create a UnicastRemoteObject with the given port, set username, server and client IpAddress and port;
      * try to reach the server
-     * @param user is client username
-     * @param port is the client port
+     *
+     * @param user            is client username
+     * @param port            is the client port
      * @param serverIPAddress is the server IP address
-     * @throws RemoteException because extend UnicastRemoteObject
+     * @throws RemoteException  because extend UnicastRemoteObject
      * @throws ConnectException if couldn't reach the server
      */
-    public RMIClient(String user, int port, String serverIPAddress) throws RemoteException, ConnectException{
+    public RMIClient(String user, int port, String serverIPAddress) throws RemoteException, ConnectException {
         super(port);
-        this.port= port;
-        this.user=user;
+        this.port = port;
+        this.user = user;
         this.serverIPAddress = serverIPAddress;
         serverPort = NetConfiguration.RMISERVERPORTNUMBER;
-        try{
+        try {
             this.clientIPAddress = InetAddress.getLocalHost().getHostAddress();
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
         }
 
@@ -60,6 +89,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * Getter method:
+     *
      * @return attribute connected value
      */
     @Override
@@ -72,11 +102,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      */
     @Override
     public void reconnectClient() {
-        try{
-            acceptRemoteClient(serverPort,serverIPAddress,"RMIServer:"+serverPort);
-            server.acceptRemoteClient(port,clientIPAddress,bindName);
+        try {
+            acceptRemoteClient(serverPort, serverIPAddress, "RMIServer:" + serverPort);
+            server.acceptRemoteClient(port, clientIPAddress, bindName);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
         }
     }
@@ -84,6 +114,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
     /**
      * Setter method:
      * set serverPort attribute
+     *
      * @param serverPort is the server port number
      */
     @Override
@@ -97,16 +128,18 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * Getter method:
+     *
      * @return currMessage
      * @throws RemoteException
      */
     @Override
-    public Event getCurrMessage(){
+    public Event getCurrMessage() {
         return currMessage;
     }
 
     /**
-     *  Getter method:
+     * Getter method:
+     *
      * @return the number of client connected to the server
      * @throws RemoteException if couldn't reach the server properly
      */
@@ -117,28 +150,30 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * Getter method:
+     *
      * @return the client username
      */
     @Override
-    public String getUser(){
+    public String getUser() {
         return user;
     }
 
 
-     //ClientInterface's methods Implementations
+    //ClientInterface's methods Implementations
+
     /**
      * this method handle the lookup and the creation of the client RemoteRegistry
      * calling the method on the server to add the Remote reference to this last created registry;
+     *
      * @throws ConnectException if couldn't connect properly
      */
     @Override
     public void connectClient() throws ConnectException {
-        bindName = "RMIClient:"+clientIPAddress+":"+port;
+        bindName = "RMIClient:" + clientIPAddress + ":" + port;
 
         try {
-            acceptRemoteClient(serverPort, serverIPAddress, "RMIServer:"+serverPort);
-        }
-        catch(RemoteException unknownHost){
+            acceptRemoteClient(serverPort, serverIPAddress, "RMIServer:" + serverPort);
+        } catch (RemoteException unknownHost) {
             disconnectClient();
             throw new CustomConnectException();
         }
@@ -149,22 +184,19 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
             clientRegistry.rebind(bindName, clientStub);
             server.acceptRemoteClient(port, clientIPAddress, bindName);
             connected = true;
-        }
-        catch (ExportException alreadyExported){
+        } catch (ExportException alreadyExported) {
             try {
                 disconnectClient();
-                RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this,0);
+                RemoteInterface clientStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, 0);
                 Registry clientRegistry = LocateRegistry.createRegistry(port);
-                clientRegistry.rebind(bindName,clientStub);
-                server.acceptRemoteClient(port,clientIPAddress,bindName);
+                clientRegistry.rebind(bindName, clientStub);
+                server.acceptRemoteClient(port, clientIPAddress, bindName);
                 connected = true;
-            }
-            catch(Exception exc){
+            } catch (Exception exc) {
                 CustomLogger.logException(exc);
                 throw new CustomConnectException();
             }
-        }
-        catch(RemoteException exc){
+        } catch (RemoteException exc) {
             CustomLogger.logException(exc);
             throw new CustomConnectException();
 
@@ -174,13 +206,14 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * this method update the username after a modification request
-     * @param user is the old username
+     *
+     * @param user        is the old username
      * @param newUsername is the updated username
      */
     @Override
     public void changeUsername(String user, String newUsername) {
-        if(!user.equals(newUsername)){
-            this.user=newUsername;
+        if (!user.equals(newUsername)) {
+            this.user = newUsername;
         }
     }
 
@@ -188,12 +221,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      * this method handle the RMIClient disconnection
      */
     @Override
-    public void disconnectClient(){
+    public void disconnectClient() {
         try {
             connected = false;
             UnicastRemoteObject.unexportObject(this, false);
-        }
-        catch(NoSuchObjectException exc){
+        } catch (NoSuchObjectException exc) {
             return;
         }
     }
@@ -204,23 +236,25 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * connect the client to the server
-     * @param remotePort is the server Port, from the NetConfiguration Class
+     *
+     * @param remotePort      is the server Port, from the NetConfiguration Class
      * @param remoteIPAddress
      * @throws RemoteException
      */
     @Override
-    public void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException {
-       try{
-           Registry serverRegistry = LocateRegistry.getRegistry(remoteIPAddress, remotePort);
-           server = (RemoteInterface) serverRegistry.lookup(bindName);
-       }catch (Exception e){
-           CustomLogger.logException(e);
-           throw new RemoteException(e.getMessage());
-       }
+    public void acceptRemoteClient(int remotePort, String remoteIPAddress, String bindName) throws RemoteException {
+        try {
+            Registry serverRegistry = LocateRegistry.getRegistry(remoteIPAddress, remotePort);
+            server = (RemoteInterface) serverRegistry.lookup(bindName);
+        } catch (Exception e) {
+            CustomLogger.logException(e);
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     /**
      * this method is call by server to check the client livability
+     *
      * @throws RemoteException
      */
     @Override
@@ -230,6 +264,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * clean the currMessage, is called by server when the client message is retrieved
+     *
      * @throws RemoteException
      */
     @Override
@@ -239,55 +274,58 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * Set the currMessage, is called by server during a remoteSendMessage
+     *
      * @param remoteImplementation is the implementation from which the message must be retrieved
      * @throws RemoteException if couldn't reach the server
      */
     @Override
     public synchronized void remoteSetCurrEvent(RemoteInterface remoteImplementation) throws RemoteException {
-        try{
-            while(currMessage!=null) wait(50);
-        }catch (InterruptedException exc){
+        try {
+            while (currMessage != null) wait(50);
+        } catch (InterruptedException exc) {
             CustomLogger.logException(exc);
         }
 
-        currMessage=remoteImplementation.getCurrMessage();
+        currMessage = remoteImplementation.getCurrMessage();
     }
 
     /**
      * remoteSendMessage implementation
+     *
      * @param message the message that must be sent
      * @throws RemoteException if couldn't send properly
      */
     @Override
-    public void remoteSendMessage(Event message) throws RemoteException{
-            currMessage = message;
-            server.remoteSetCurrEvent(this);
-            remoteCleanCurrEvent();
+    public void remoteSendMessage(Event message) throws RemoteException {
+        currMessage = message;
+        server.remoteSetCurrEvent(this);
+        remoteCleanCurrEvent();
     }
 
 
     /**
      * wasn't implemented, just the server could send Broadcast;
      * it could be implemented, in the future, to send broadcast defined messages to each client
+     *
      * @param message
      * @throws RemoteException
      */
     @Override
-    public void remoteSendBroadcast(Event message) throws RemoteException{
+    public void remoteSendBroadcast(Event message) throws RemoteException {
 
     }
 
 
-
     /**
      * remoteListenMessage implementation
+     *
      * @return the listened message, null if the currMessage isn't updated
      * @throws RemoteException
      */
     @Override
-    public Event remoteListenMessage() throws RemoteException{
+    public Event remoteListenMessage() throws RemoteException {
         Event listenedMessage = currMessage;
-        if(currMessage != null) {
+        if (currMessage != null) {
             currMessage = null;
         }
         return listenedMessage;
@@ -299,28 +337,29 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
 
     /**
      * ClientInterface's sendMessage implementation
+     *
      * @param message is the message that must be sent
      */
     @Override
     public void sendMessage(Event message) {
         try {
             remoteSendMessage(message);
-        }
-        catch(RemoteException rmtException){
+        } catch (RemoteException rmtException) {
             disconnectClient();
         }
     }
 
     /**
      * ClientInterface's listenMessage implementation
+     *
      * @return the listened message, null if no message was retrieved
      */
     @Override
     public Event listenMessage() {
-        try{
+        try {
             return remoteListenMessage();
 
-        }catch (RemoteException rmtException){
+        } catch (RemoteException rmtException) {
             return new ErrorEvent(user);
         }
     }

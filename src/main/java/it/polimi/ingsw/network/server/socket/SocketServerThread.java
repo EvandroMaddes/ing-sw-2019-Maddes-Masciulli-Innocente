@@ -12,32 +12,52 @@ import java.net.SocketException;
 
 /**
  * This class implements a SocketThread for each client connected with this technology
+ *
  * @author Francesco Masciulli
  */
-public class SocketServerThread extends Thread implements  NetworkHandler {
+public class SocketServerThread extends Thread implements NetworkHandler {
+    /**
+     * Is the connected client Socket
+     */
     private Socket client;
+    /**
+     * is the connecte client username
+     */
     private String clientUser;
+    /**
+     * Is the SocketThread input stream
+     */
     private ObjectInputStream inputStream;
+    /**
+     * Is the SocketThread output stream
+     */
     private ObjectOutputStream outputStream;
+    /**
+     * Is the last set message
+     */
     private Event currMessage;
+    /**
+     * This boolean is true while the client is connected
+     */
     private boolean connected;
 
     /**
      * Constructor:
      * create a socket thread that handle the communication with a socket client and connect their input and output streams.
+     *
      * @param socket is the client socket
      */
-    public SocketServerThread(Socket socket){
+    public SocketServerThread(Socket socket) {
         this.client = socket;
         connected = true;
         try {
             outputStream = new ObjectOutputStream(client.getOutputStream());
             inputStream = new ObjectInputStream(client.getInputStream());
-            while(clientUser == null){
+            while (clientUser == null) {
                 clientUser = inputStream.readUTF();
             }
 
-        }catch(IOException e){
+        } catch (IOException e) {
             CustomLogger.logException(e);
         }
     }
@@ -48,7 +68,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
      */
     @Override
     public void run() {
-        while(!isInterrupted()){
+        while (!isInterrupted()) {
             while (connected) {
                 currMessage = listenMessage();
             }
@@ -64,15 +84,15 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
     /**
      * Getter method
+     *
      * @return true if the client is connected
      */
-    public boolean isConnected(){
+    public boolean isConnected() {
         try {
             if (connected) {
                 join(200);
             }
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             interrupt();
         }
 
@@ -82,13 +102,14 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
     /**
      * Handle the thread's disconnection process
      */
-    public synchronized void disconnect(){
+    public synchronized void disconnect() {
         currMessage = new DisconnectedEvent(getClientUser());
-        connected=false;
+        connected = false;
     }
 
     /**
      * Getter method
+     *
      * @return the last listened Event
      */
     public Event getCurrMessage() {
@@ -97,6 +118,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
     /**
      * Getter method
+     *
      * @return the username of the client connected with this thread
      */
     public String getClientUser() {
@@ -105,6 +127,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
     /**
      * Getter method
+     *
      * @return the connected Socket
      */
     public Socket getClient() {
@@ -112,17 +135,16 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
     }
 
 
-
-
     /**
      * This method, which is called from a client disconnection, kill the SocketThread
      */
-    public synchronized void  kill(){
+    public synchronized void kill() {
         interrupt();
     }
 
     /**
      * Write the message on the client's socket input stream
+     *
      * @param message is the message that must be sent
      */
     @Override
@@ -130,7 +152,7 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
         try {
             outputStream.writeObject(message);
             outputStream.flush();
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
             disconnect();
         }
@@ -139,27 +161,28 @@ public class SocketServerThread extends Thread implements  NetworkHandler {
 
     /**
      * Wait for a message wrote on its input stream
+     *
      * @return
      */
     @Override
     public Event listenMessage() {
 
-        try{
+        try {
             return (Event) inputStream.readObject();
-        }
-        catch (SocketException|EOFException socketClosed){
+        } catch (SocketException | EOFException socketClosed) {
             disconnect();
             try {
                 join();
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 interrupt();
             }
+        } catch (Exception e) {
+            CustomLogger.logException(e);
         }
-        catch (Exception e){CustomLogger.logException(e);}
         return currMessage;
     }
 
-    public void resetMessage(){
+    public void resetMessage() {
         currMessage = null;
     }
 
