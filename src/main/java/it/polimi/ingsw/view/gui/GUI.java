@@ -36,17 +36,20 @@ public class GUI extends RemoteView {
     private GameBoardController gameBoardController;
     private MapCharacterController mapController;
     private CharacterChoiceController characterController;
+    private PowerUpChoiceController powerUpController;
 
     private Stage primaryStage;
     private Stage lobbyStage;
     private Stage gameBoardStage;
     private Stage mapStage;
     private Stage characterStage;
+    private Stage powerUpStage;
 
     private Scene gameboardScene;
     private Scene lobbyScene;
     private Scene mapChoiceScene;
     private Scene characterScene;
+    private Scene powerUpScene;
 
     private String[] clientChoices = new String[3];
     private Character characterChoose ;
@@ -74,17 +77,21 @@ public class GUI extends RemoteView {
         Parent gameboard = null;
         Parent mapCharacter = null;
         Parent character = null;
+        Parent powerUp = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameboardScene.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapChoice.fxml"));
         FXMLLoader characterFxml = new FXMLLoader(getClass().getResource("/fxml/characterChoicePopUp.fxml"));
+        FXMLLoader powerUpFxml = new FXMLLoader(getClass().getResource("/fxml/powerUpChoicePopUp.fxml"));
+
+
         try {
             lobby = lobbyFxml.load();
             gameboard = gameBoardFxml.load();
             mapCharacter = mapCharacterFxml.load();
             character = characterFxml.load();
-
+            powerUp = powerUpFxml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +99,7 @@ public class GUI extends RemoteView {
         gameBoardController = gameBoardFxml.getController();
         mapController = mapCharacterFxml.getController();
         characterController = characterFxml.getController();
-
+        powerUpController = powerUpFxml.getController();
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
@@ -100,6 +107,7 @@ public class GUI extends RemoteView {
         mapStage = new Stage();
         gameBoardStage = new Stage();
         characterStage = new Stage();
+        powerUpStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -115,15 +123,21 @@ public class GUI extends RemoteView {
  */
 
         mapController.setGui(this);
+        characterController.setGui(this);
+        powerUpController.setGui(this);
+
+
         lobbyScene = new Scene(lobby, 800, 560);
         gameboardScene = new Scene(gameboard, 800, 560);
         mapChoiceScene = new Scene(mapCharacter, 400, 120);
         characterScene = new Scene(character, 500,262);
+        powerUpScene = new Scene(powerUp, 500, 250);
 
         lobbyStage.setScene(lobbyScene);
         gameBoardStage.setScene(gameboardScene);
         gameBoardController.init();
         characterStage.setScene(characterScene);
+        lobbyStage.setScene(powerUpScene);
 
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
 
@@ -284,7 +298,6 @@ public class GUI extends RemoteView {
     }
 
 
-    //todo modificare stage, da creare
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
         final Task<Event> query = new Task<Event>(){
@@ -292,12 +305,12 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                     characterController.setCharacterChoice(availableCharacters);
                     characterController.setWindow(characterStage);
-                File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
+                //File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
                 //return gameBoardController.askPopUp( characterController,popUpFXML.toPath(), gameboardScene);
                 return  characterController.ask(characterScene);
             }
         };
-        characterController.setGui(this);
+        //characterController.setGui(this);
         return userChoice(query);
     }
 
