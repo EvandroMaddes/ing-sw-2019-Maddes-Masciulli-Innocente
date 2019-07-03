@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * This class is the Map representation
  *
  * @author Evandro Maddes
+ * @author Federico Innocente
  */
 public class Map {
 
