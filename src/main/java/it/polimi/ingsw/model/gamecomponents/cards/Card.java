@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.player.Player;
 
 
 /**
- * abstract class that is the base for both weapons and powerUps
+ * Abstract class that is the base for both weapons and powerUps
  *
- * @author Federico Innocente
+ * @author Federico Inncente
  */
 public abstract class Card implements BaseFightAction {
 

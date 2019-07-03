@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.player.Player;
  * Class represents tha square that contains an ammo card
  *
  * @author Evandro Maddes
+ * @author Federico Innocente
  */
 public class BasicSquare extends Square {
 
@@ -96,7 +97,7 @@ public class BasicSquare extends Square {
             else
                 message = new AmmoTileUpdateEvent(true, getColumn(), getRow(), ammo.getAmmoCubes()[0].getColour().toString(), ammo.getAmmoCubes()[1].getColour().toString(), ammo.getAmmoCubes()[2].getColour().toString());
             setChanged();
-            notifyObservers(message);//send to VirtualView
+            notifyObservers(message);
         }
     }
 
