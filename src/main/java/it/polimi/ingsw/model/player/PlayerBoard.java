@@ -27,7 +27,7 @@ public class PlayerBoard extends Observable implements Serializable {
      * This array contains the points that a player could earn killing the owner of this PlayerBoard,
      * following the game rules is final and set as done; after each death of the player, the lefter element is skipped
      */
-    protected static final int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
+    public static final int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
     /**
      * An array containing the DamageTokens that represent all of the damages set on the playerBoard and the players that inflicted them
      */
