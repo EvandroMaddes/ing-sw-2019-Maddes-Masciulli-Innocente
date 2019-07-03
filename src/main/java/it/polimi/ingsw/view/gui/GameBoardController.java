@@ -5,24 +5,18 @@ import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -249,7 +243,7 @@ public class GameBoardController extends AbstractController {
      * @param playerboard image of a playerboard
      * @param character   character of playerboard
      */
-    private void setPrincipalPlayerboard(Image playerboard, Character character) {
+    public void setPrincipalPlayerboard(Image playerboard, Character character) {
         principalPlayerBoard.setImage(playerboard);
         mapCharacterAmmoCube.put(character, new GridPane[]{principalDamage, principalAmmoCube, principalMarks});
 
@@ -507,6 +501,7 @@ public class GameBoardController extends AbstractController {
             ImageView currentImageView = ((ImageView) ((HBox) square.getChildren().get(0)).getChildren().get(i));
             if (currentImageView.getImage() == toFind) {
                 position = currentImageView;
+                break;
             }
         }
 
@@ -514,7 +509,7 @@ public class GameBoardController extends AbstractController {
             ImageView currentImageViewBis = ((ImageView) ((HBox) square.getChildren().get(1)).getChildren().get(j));
             if (currentImageViewBis.getImage() == toFind) {
                 position = currentImageViewBis;
-
+                break;
             }
         }
 
@@ -588,27 +583,23 @@ public class GameBoardController extends AbstractController {
      */
     void setNewPlayer(Image playerBoard, Character character) {
         switch (numberOfPlayers) {
+
             case 0:
-                setPrincipalPlayerboard(playerBoard, character);
-                initAmmocube(principalAmmoCube);
-                numberOfPlayers++;
-                break;
-            case 1:
                 setTopLeftPlayerboard(playerBoard, character);
                 initAmmocube(topLeftAmmoCube);
                 numberOfPlayers++;
                 break;
-            case 2:
+            case 1:
                 setTopCenterPlayerboard(playerBoard, character);
                 initAmmocube(topCenterAmmoCube);
                 numberOfPlayers++;
                 break;
-            case 3:
+            case 2:
                 setDownLeftPlayerboardLeftPlayerboard(playerBoard, character);
                 initAmmocube(downLeftAmmoCube);
                 numberOfPlayers++;
                 break;
-            case 4:
+            case 3:
                 setDownCenterPlayerboardPlayerboard(playerBoard, character);
                 initAmmocube(downLeftAmmoCube);
                 numberOfPlayers++;
@@ -628,7 +619,6 @@ public class GameBoardController extends AbstractController {
         ((ImageView) ammoCubeGrid.getChildren().get(1)).setImage(new Image("ammoboxes/blueammobox.png"));
         ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoboxes/redammobox.png"));
     }
-    // TODO: 02/07/2019 setare ammo sugli square playerboard marchi
 
 
     public AbstractController getPopUpController() {
@@ -636,10 +626,9 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     *
      * @return
      */
-    public Event askPopUp(AbstractController popUpController, Path popUpPath, Scene scene){
+    public Event askPopUp(AbstractController popUpController, Path popUpPath, Scene scene) {
         setPopUpPane(popUpPath);
         //popUpController.setWindow(getWindow());
 
@@ -650,17 +639,18 @@ public class GameBoardController extends AbstractController {
 
     /**
      * set the popUpPane in the invisible AnchorPane and make it visible
+     *
      * @param popUpPath is the popUp fxml Path given to te loader;
      */
     private void setPopUpPane(Path popUpPath) {
         Task query = new Task() {
             @Override
             protected AnchorPane call() throws Exception {
-                try{
+                try {
                     Pane popUp = FXMLLoader.load(getClass().getResource(popUpPath.toString()));
                     popUpPane.getChildren().add(popUp);
                     popUpPane.setStyle("-fx-background-color: grey;");
-                }catch (IOException noFXML){
+                } catch (IOException noFXML) {
                     CustomLogger.logException(noFXML);
                 }
                 return popUpPane;
@@ -673,7 +663,7 @@ public class GameBoardController extends AbstractController {
     /**
      *
      */
-    private void cleanPopUpPane(){
+    private void cleanPopUpPane() {
         Task query = new Task() {
             @Override
             protected AnchorPane call() throws Exception {

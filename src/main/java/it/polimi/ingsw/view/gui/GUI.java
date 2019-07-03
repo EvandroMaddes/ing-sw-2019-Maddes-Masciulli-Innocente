@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
 import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.CharacterChoiceEvent;
 import it.polimi.ingsw.event.viewcontrollerevent.GameChoiceEvent;
 import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
 import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
@@ -16,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,8 +56,8 @@ public class GUI extends RemoteView {
     private Scene genericPaymentScene;
 
     private String[] clientChoices = new String[3];
-    private Character characterChoose ;
-    
+    private Character characterChoose;
+
 
     /**
      * inizializzazione e caricamento stage
@@ -70,7 +70,7 @@ public class GUI extends RemoteView {
         return clientChoices;
     }
 
-    public GUI(Stage primaryStage){
+    public GUI(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
@@ -126,19 +126,14 @@ public class GUI extends RemoteView {
         actionChoiceStage = new Stage();
         weaponChoiceStage = new Stage();
         genericPaymentStage = new Stage();
-/*
-
-        lobbyStage = ((Stage)lobbyController.getScene().getWindow());
-        setPrimaryStage((Stage)enterButton.getScene().getWindow());
-        gameBoardStage = new Stage();
-        mapCharacterStage = new Stage();
-        lobbyStage.setScene(new Scene(lobby, 800, 560));
-        gameBoardStage.setScene(new Scene(gameboard,800,560));
-        mapCharacterStage.setScene(new Scene(mapCharacter,400,280));
         lobbyStage.setTitle("Lobby-ADRENALINE");
-        mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
+        mapStage.setTitle("MapChoice-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
- */
+        actionChoiceStage.setTitle("ActionChoice-ADRENALINE");
+        weaponChoiceStage.setTitle("WeaponChoice-ADRENALINE");
+        characterStage.setTitle("CharacterChoice-ADRENALINE");
+        powerUpStage.setTitle("PowerUpChoice-ADRENALINE");
+        genericPaymentStage.setTitle("PaymentChoice-ADRENALINE");
 
         mapController.setGui(this);
         characterController.setGui(this);
@@ -148,12 +143,12 @@ public class GUI extends RemoteView {
         genericPaymentController.setGui(this);
 
 
-        lobbyScene = new Scene(lobby, 800, 560);
+        lobbyScene = new Scene(lobby, 880, 620);
         gameboardScene = new Scene(gameboard, 800, 560);
         mapChoiceScene = new Scene(mapCharacter, 400, 120);
-        characterScene = new Scene(character, 500,262);
+        characterScene = new Scene(character, 500, 262);
         powerUpScene = new Scene(powerUp, 500, 250);
-        actionChoiceScene = new Scene(action, 500,250);
+        actionChoiceScene = new Scene(action, 500, 250);
         weaponChoiceScene = new Scene(weapon, 500, 400);
         genericPaymentScene = new Scene(genericPayment, 505, 456);
 
@@ -166,13 +161,7 @@ public class GUI extends RemoteView {
         actionChoiceStage.setScene(actionChoiceScene);
         weaponChoiceStage.setScene(weaponChoiceScene);
         genericPaymentStage.setScene(genericPaymentScene);
-
-
-        primaryStage.setScene(gameboardScene);
-
-
-        //primaryStage.close(); non mostra il secondo stage prova con la reduce
-
+        metodoPROVA();
         /***********FUNZIONA**************
          Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
          Platform.runLater(()->{
@@ -181,17 +170,24 @@ public class GUI extends RemoteView {
          primaryStage.show();
          });
          */
-        metodoPROVA();
     }
 
-    public void metodoPROVA(){
-        Platform.runLater(()->{
-            primaryStage.setFullScreen(true);
-            primaryStage.show();});
+    public void metodoPROVA() {
+        Platform.runLater(() -> {
+            Image[] map = decodeMessage.mapImage(3);
+            gameBoardController.setMap(map[0], map[1]);
+            positionUpdate(Character.BANSHEE, 2, 0);
+            positionUpdate(Character.DOZER, 2, 0);
+            positionUpdate(Character.VIOLET, 2, 0);
+            positionUpdate(Character.SPROG, 2, 0);
+            positionUpdate(Character.D_STRUCT_OR, 2, 0);
+
+
+            gameBoardStage.show();
+        });
     }
 
     /**
-     *
      * @param choices
      */
     public void setClientChoices(String[] choices) {
@@ -201,25 +197,42 @@ public class GUI extends RemoteView {
                 "\nIp: " + clientChoices[2]);
     }
 
+    /**
+     *
+     * @param possibleSquareX row of possible destination square
+     * @param possibleSquareY column of possible destination square
+     * @return
+     */
     @Override
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
         return null;
     }
-    
 
-    //todo aggiunto per essere chiamato da client
+    /**
+     *
+     */
     @Override
     public void printScreen() {
+        Platform.runLater(() -> {
+            primaryStage.setResizable(true);
+            primaryStage.setScene(gameboardScene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+        });
 
     }
 
-    
+
     @Override
     public void setGame(int mapNumber) {
+        Image[] maps = decodeMessage.mapImage(mapNumber);
+        gameBoardController.setMap(maps[0], maps[1]);
+
     }
 
     @Override
     public boolean isGameSet() {
+        // TODO: 03/07/2019 fra chiedi a evandro
         return false;
     }
 
@@ -229,7 +242,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event winnerUpdate(EndGameUpdate endGameUpdate) {
-        // TODO: 03/07/2019 da fare 
+        // TODO: 03/07/2019 da fare
         return null;
     }
 
@@ -241,11 +254,10 @@ public class GUI extends RemoteView {
     @Override
     public Event gameTrackSkullUpdate(Character[] killerCharacter, int[] skullNumber) {
         gameBoardController.gameTrackClean();
-        for (int i=0; skullNumber[i]!=0;i++ ) {
+        for (int i = 0; skullNumber[i] != 0; i++) {
             gameBoardController.removeSkull(skullNumber[i], decodeMessage.playerTokenImage(killerCharacter[i]));
-
         }
-        return null;
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
@@ -280,7 +292,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event printUserNotification(UsernameModificationEvent usernameEvent) {
-        // TODO: 2019-07-03 VD commentato il metodo della cli 
+        // TODO: 2019-07-03 VD commentato il metodo della cli
         /*String newUser = usernameEvent.getNewUser();
         Event returnedEvent;
         if (newUser.equals(usernameEvent.getUser())) {
@@ -310,8 +322,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
-
-        gameBoardController.setPosition(x,y,decodeMessage.characterImage(currCharacter));
+        gameBoardController.setPosition(x, y, decodeMessage.characterImage(currCharacter));
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
@@ -324,17 +335,17 @@ public class GUI extends RemoteView {
 
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
-        final Task<Event> query = new Task<Event>(){
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
-                    characterController.setCharacterChoice(availableCharacters);
-                    characterController.setWindow(characterStage);
-                //File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
-                //return gameBoardController.askPopUp( characterController,popUpFXML.toPath(), gameboardScene);
-                return  characterController.ask(characterScene);
+                characterController.setCharacterChoice(availableCharacters);
+                characterController.setWindow(characterStage);
+                Event message = characterController.ask(characterScene);
+                characterChoose = ((CharacterChoiceEvent) message).getChosenCharacter();
+                gameBoardController.setPrincipalPlayerboard(decodeMessage.playerBoardImage(characterChoose), characterChoose);
+                return message;
             }
         };
-        //characterController.setGui(this);
         return userChoice(query);
     }
 
@@ -359,14 +370,14 @@ public class GUI extends RemoteView {
 
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
-        gameBoardController.removeAmmoTileOnMap(x,y);
+        gameBoardController.removeAmmoTileOnMap(x, y);
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
-        System.out.println(fistColour +"  "+secondColour+"  "+ thirdColour );
-        gameBoardController.addAmmoTileOnMap(x,y,decodeMessage.ammoTileImage(fistColour,secondColour,thirdColour));
+        System.out.println(fistColour + "  " + secondColour + "  " + thirdColour);
+        gameBoardController.addAmmoTileOnMap(x, y, decodeMessage.ammoTileImage(fistColour, secondColour, thirdColour));
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
@@ -377,7 +388,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event gameChoice() {
-        final Task<Event> query = new Task<Event>(){
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
                 try {
@@ -391,9 +402,9 @@ public class GUI extends RemoteView {
                 } catch (Exception e) {
                 }
                 Event event = mapController.ask(mapChoiceScene);
-                Image[] mapChoice = decodeMessage.mapImage(((GameChoiceEvent)event).getMap());
-                gameBoardController.setMap(mapChoice[0],mapChoice[1]);
-                gameBoardController.showScene(gameboardScene);// ?
+                Image[] mapChoice = decodeMessage.mapImage(((GameChoiceEvent) event).getMap());
+                gameBoardController.setMap(mapChoice[0], mapChoice[1]);
+                printScreen();
                 return event;
             }
         };
@@ -403,7 +414,7 @@ public class GUI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
 
-        final Task<Event> query = new Task<Event>(){
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
                 actionChoiceController.setWindow(actionChoiceStage);
@@ -457,7 +468,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
-        final Task<Event> query = new Task<Event>(){
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
                 try {
@@ -469,30 +480,33 @@ public class GUI extends RemoteView {
                 return event;
             }
         };
-    return userChoice(query);
+        return userChoice(query);
     }
 
     /**
      * It "takes" choice from controller
+     *
      * @param query
      * @return
      */
-    private Event userChoice(Task<Event> query){
+    private Event userChoice(Task<Event> query) {
         Thread th = new Thread(query);
         th.start();
-        try{
+        try {
             Event event = query.get();
             return event;
-        }catch(Exception interrupted){
+        } catch (Exception interrupted) {
             CustomLogger.logException(interrupted);
             return null;
         }
-        }
+    }
 
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
-        gameBoardController.setNewPlayer(decodeMessage.playerBoardImage(characterChoice),characterChoice);
-        gameBoardController.setInfo("User "+newPlayer+" join with "+characterChoice.name());
+        if (characterChoose != characterChoice) {
+            gameBoardController.setNewPlayer(decodeMessage.playerBoardImage(characterChoice), characterChoice);
+        }
+        gameBoardController.setInfo("User " + newPlayer + " join with " + characterChoice.name());
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
@@ -501,14 +515,14 @@ public class GUI extends RemoteView {
         Image[] damageToAdd = new Image[damages.length];
         Image[] marksToAdd = new Image[marks.length];
 
-        for (int i=0; i<damages.length;i++){
-             damageToAdd[i] = decodeMessage.playerTokenImage(damages[i]);
+        for (int i = 0; i < damages.length; i++) {
+            damageToAdd[i] = decodeMessage.playerTokenImage(damages[i]);
         }
-        for (int i=0; i<marks.length;i++){
+        for (int i = 0; i < marks.length; i++) {
             marksToAdd[i] = decodeMessage.playerTokenImage(marks[i]);
         }
-        gameBoardController.setDamage(character,damageToAdd);
-        gameBoardController.setMark(character,marksToAdd);
+        gameBoardController.setDamage(character, damageToAdd);
+        gameBoardController.setMark(character, marksToAdd);
         if (characterChoose == character) {
             gameBoardController.addPlayerSkull(skullNumber);
         }
@@ -519,7 +533,7 @@ public class GUI extends RemoteView {
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
 
         Image[] ammoToAdd = new Image[ammo.size()];
-        for (int i=0; i<ammo.size(); i++) {
+        for (int i = 0; i < ammo.size(); i++) {
             ammoToAdd[i] = decodeMessage.ammoCubeImage(ammo.get(i));
         }
         gameBoardController.setAmmo(currCharacter, ammoToAdd);
@@ -528,18 +542,18 @@ public class GUI extends RemoteView {
 
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
-         if(characterChoose == currCharacter){
-            if(weapons.length<4){
-            Image[] toAdd = new Image[weapons.length];
-                for (int i=0; i<weapons.length;i++){
-                    if (load[i]){
+        if (characterChoose == currCharacter) {
+            if (weapons.length < 4) {
+                Image[] toAdd = new Image[weapons.length];
+                for (int i = 0; i < weapons.length; i++) {
+                    if (load[i]) {
                         toAdd[i] = decodeMessage.weaponImage(weapons[i]);
-                    }else{
+                    } else {
                         toAdd[i] = decodeMessage.weaponImage("unload");
                     }
                 }
                 gameBoardController.setPlayerWeapon(toAdd);
-         }
+            }
         }
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
@@ -550,26 +564,25 @@ public class GUI extends RemoteView {
         //   20 blue
         //   32 yellow
         Image[] toAdd = new Image[weapon.length];
-        for (int i=0; i<weapon.length;i++){
-                toAdd[i] = decodeMessage.weaponImage(weapon[i]);
+        for (int i = 0; i < weapon.length; i++) {
+            toAdd[i] = decodeMessage.weaponImage(weapon[i]);
 
         }
-        gameBoardController.setSpawnWeapon(x,toAdd);
+        gameBoardController.setSpawnWeapon(x, toAdd);
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] color) {
         Image[] toAdd = new Image[powerUp.length];
-        if(characterChoose == currCharacter){
-            for (int i=0; i<powerUp.length;i++){
-                    toAdd[i] = decodeMessage.powerUpImage(powerUp[i],color[i]);
-                }
+        if (characterChoose == currCharacter) {
+            for (int i = 0; i < powerUp.length; i++) {
+                toAdd[i] = decodeMessage.powerUpImage(powerUp[i], color[i]);
             }
-            gameBoardController.setPlayerPowerUp(toAdd);
-            return new UpdateChoiceEvent(getUser());
         }
-
+        gameBoardController.setPlayerPowerUp(toAdd);
+        return new UpdateChoiceEvent(getUser());
+    }
 
 
     @Override

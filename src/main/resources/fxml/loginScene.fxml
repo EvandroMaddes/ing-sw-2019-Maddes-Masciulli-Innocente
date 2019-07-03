@@ -1,58 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPanel" prefHeight="374.0" prefWidth="602.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LoginController">
-   <children>
-      <VBox prefHeight="388.0" prefWidth="602.0" spacing="20.0">
-         <children>
-            <Text fill="#fc7a00" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADRENALINE" textAlignment="CENTER" wrappingWidth="601.0078125">
-               <font>
-                  <Font name="Berlin Sans FB" size="72.0" />
-               </font>
-               <effect>
-                  <DropShadow blurType="TWO_PASS_BOX" height="29.65" radius="18.0325" spread="0.43" width="44.48" />
-               </effect>
-            </Text>
-            <VBox prefHeight="158.0" prefWidth="602.0" spacing="40.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select your username:" />
-                        <TextField fx:id="username" onAction="#usernameType" promptText="username" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select RMI or SOCKET:" />
-                        <TextField fx:id="connection" onAction="#connectionType" promptText="connection" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select server IP address:" textAlignment="CENTER" />
+<AnchorPane fx:id="anchorPanel" prefHeight="621.0" prefWidth="747.0" style="-fx-background-image: url('backGround.png');" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LoginController">
+    <children>
+        <VBox alignment="BOTTOM_CENTER" layoutY="337.0" prefHeight="272.0" prefWidth="747.0" spacing="20.0">
+            <children>
+                <VBox prefHeight="100.0" prefWidth="727.0">
+                    <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Select your USERNAME:">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="username" onAction="#usernameType" prefHeight="19.0" prefWidth="727.0" promptText="username" />
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="700.0">
+                    <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Select RMI or SOCKET:">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="connection" onAction="#connectionType" prefHeight="25.0" prefWidth="747.0" promptText="connection" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="727.0">
+                    <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Select server IP address:" textAlignment="CENTER">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                        </Text>
                         <TextField fx:id="IPaddress" onAction="#ipType" promptText="IP addres" />
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-            <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterClick" text="ENTER">
-               <VBox.margin>
-                  <Insets left="260.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-   </children>
+                    </children>
+                </VBox>
+                <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterClick" prefHeight="0.0" prefWidth="90.0" text="ENTER">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <font>
+                        <Font name="Arial Black" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <padding>
+                <Insets left="20.0" />
+            </padding>
+        </VBox>
+    </children>
 </AnchorPane>

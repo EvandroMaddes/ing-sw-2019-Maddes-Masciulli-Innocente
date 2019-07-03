@@ -58,10 +58,10 @@ public abstract class AbstractController {
      * It change scene on a stage
      * @param scene scene to show
      */
-    public void showScene(Scene scene){
-    primaryStage.setScene(scene);
-    primaryStage.show();
-    }
+ //   public void showScene(Scene scene){
+  //  primaryStage.setScene(scene);
+   // primaryStage.show();
+   // }
 
     /**
      * getter
@@ -107,7 +107,7 @@ public abstract class AbstractController {
         }
     }
 
-    public Event showUpdate(Scene scene){
+    public void showUpdate(Scene scene){
         final Task<Event> query = new Task<Event>(){
             @Override
             public Event call() throws Exception {
@@ -117,6 +117,5 @@ public abstract class AbstractController {
                 return event;
             }
         };
-        return new UpdateChoiceEvent("ososo");
     }
 }
