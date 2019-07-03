@@ -29,7 +29,7 @@ public class PowerUpChoiceController extends AbstractController{
     @FXML
     private Button powerUp1Button;
 
-    private int toChose;
+    private int toChose = 1;
 
     public void setController(String[] powerUpNames, CubeColour[] powerUpColours, int toChose){
         this.toChose = toChose;

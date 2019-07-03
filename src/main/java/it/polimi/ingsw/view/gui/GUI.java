@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class GUI extends RemoteView {
     private MapCharacterController mapController;
     private CharacterChoiceController characterController;
     private PowerUpChoiceController powerUpController;
+    private ActionChoiceController actionChoiceController;
+    private WeaponChoiceController weaponChoiceController;
+    private GenericPaymentController genericPaymentController;
 
     private Stage primaryStage;
     private Stage lobbyStage;
@@ -38,12 +42,18 @@ public class GUI extends RemoteView {
     private Stage mapStage;
     private Stage characterStage;
     private Stage powerUpStage;
+    private Stage actionChoiceStage;
+    private Stage weaponChoiceStage;
+    private Stage genericPaymentStage;
 
     private Scene gameboardScene;
     private Scene lobbyScene;
     private Scene mapChoiceScene;
     private Scene characterScene;
     private Scene powerUpScene;
+    private Scene actionChoiceScene;
+    private Scene weaponChoiceScene;
+    private Scene genericPaymentScene;
 
     private String[] clientChoices = new String[3];
     private Character characterChoose ;
@@ -72,13 +82,18 @@ public class GUI extends RemoteView {
         Parent mapCharacter = null;
         Parent character = null;
         Parent powerUp = null;
+        Parent action = null;
+        Parent weapon = null;
+        Parent genericPayment = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameboardScene.fxml"));
         FXMLLoader mapCharacterFxml = new FXMLLoader(getClass().getResource("/fxml/mapChoice.fxml"));
         FXMLLoader characterFxml = new FXMLLoader(getClass().getResource("/fxml/characterChoicePopUp.fxml"));
         FXMLLoader powerUpFxml = new FXMLLoader(getClass().getResource("/fxml/powerUpChoicePopUp.fxml"));
-
+        FXMLLoader actionFxml = new FXMLLoader(getClass().getResource("/fxml/actionChoicePopUp.fxml"));
+        FXMLLoader weaponFxml = new FXMLLoader(getClass().getResource("/fxml/weaponChoicePopUp.fxml"));
+        FXMLLoader genericPaymentFxml = new FXMLLoader(getClass().getResource("/fxml/genericPaymentPopUp.fxml"));
 
         try {
             lobby = lobbyFxml.load();
@@ -86,6 +101,9 @@ public class GUI extends RemoteView {
             mapCharacter = mapCharacterFxml.load();
             character = characterFxml.load();
             powerUp = powerUpFxml.load();
+            action = actionFxml.load();
+            weapon = weaponFxml.load();
+            genericPayment = genericPaymentFxml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,6 +112,9 @@ public class GUI extends RemoteView {
         mapController = mapCharacterFxml.getController();
         characterController = characterFxml.getController();
         powerUpController = powerUpFxml.getController();
+        actionChoiceController = actionFxml.getController();
+        weaponChoiceController = weaponFxml.getController();
+        genericPaymentController = genericPaymentFxml.getController();
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
@@ -102,6 +123,9 @@ public class GUI extends RemoteView {
         gameBoardStage = new Stage();
         characterStage = new Stage();
         powerUpStage = new Stage();
+        actionChoiceStage = new Stage();
+        weaponChoiceStage = new Stage();
+        genericPaymentStage = new Stage();
 /*
 
         lobbyStage = ((Stage)lobbyController.getScene().getWindow());
@@ -119,6 +143,9 @@ public class GUI extends RemoteView {
         mapController.setGui(this);
         characterController.setGui(this);
         powerUpController.setGui(this);
+        actionChoiceController.setGui(this);
+        weaponChoiceController.setGui(this);
+        genericPaymentController.setGui(this);
 
 
         lobbyScene = new Scene(lobby, 800, 560);
@@ -126,12 +153,20 @@ public class GUI extends RemoteView {
         mapChoiceScene = new Scene(mapCharacter, 400, 120);
         characterScene = new Scene(character, 500,262);
         powerUpScene = new Scene(powerUp, 500, 250);
+        actionChoiceScene = new Scene(action, 500,250);
+        weaponChoiceScene = new Scene(weapon, 500, 400);
+        genericPaymentScene = new Scene(genericPayment, 505, 456);
+
 
         lobbyStage.setScene(lobbyScene);
         gameBoardStage.setScene(gameboardScene);
         gameBoardController.init();
         characterStage.setScene(characterScene);
         powerUpStage.setScene(powerUpScene);
+        actionChoiceStage.setScene(actionChoiceScene);
+        weaponChoiceStage.setScene(weaponChoiceScene);
+        genericPaymentStage.setScene(genericPaymentScene);
+
 
         primaryStage.setScene(gameboardScene);
 
@@ -347,7 +382,7 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                 try {
                     mapController.setWindow(mapStage);
-                    ArrayList<Integer> mapChoice = new ArrayList<Integer>();
+                    ArrayList<Integer> mapChoice = new ArrayList<>();
                     mapChoice.add(0);
                     mapChoice.add(1);
                     mapChoice.add(2);
@@ -368,7 +403,15 @@ public class GUI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
 
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                actionChoiceController.setWindow(actionChoiceStage);
+                actionChoiceController.setController(fireEnable);
+                return actionChoiceController.ask(actionChoiceScene);
+            }
+        };
+        return userChoice(query);
     }
 
     @Override
