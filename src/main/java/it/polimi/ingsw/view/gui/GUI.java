@@ -23,7 +23,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 // TODO: 02/07/2019 chiudere il primary stage prima di mostare la welcomeChoice  modificare mapCharacterChoiceFxml in mapChoice
@@ -112,6 +114,7 @@ public class GUI extends RemoteView {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
  */
+
         mapController.setGui(this);
         lobbyScene = new Scene(lobby, 800, 560);
         gameboardScene = new Scene(gameboard, 800, 560);
@@ -282,40 +285,14 @@ public class GUI extends RemoteView {
         final Task<Event> query = new Task<Event>(){
             @Override
             public Event call() throws Exception {
+                    characterController.setCharacterChoice(availableCharacters);
                     characterController.setWindow(characterStage);
-                    if(availableCharacters.contains(Character.BANSHEE)){
-                        characterController.getBansheeButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getBansheeButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.D_STRUCT_OR)){
-                        characterController.getDstructorButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getDstructorButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.DOZER)){
-                        characterController.getDozerButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getDozerButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.SPROG)){
-                        characterController.getSprogButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getSprogButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.VIOLET)){
-                        characterController.getVioletButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getVioletButton().setDisable(true);
-                    }
+                File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
+                //return gameBoardController.askPopUp( characterController,popUpFXML.toPath(), gameboardScene);
                 return  characterController.ask(characterScene);
             }
         };
+        characterController.setGui(this);
         return userChoice(query);
     }
 
