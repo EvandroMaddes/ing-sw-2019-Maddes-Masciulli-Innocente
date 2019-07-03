@@ -2,14 +2,18 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
+import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
+import it.polimi.ingsw.view.cli.CLIHandler;
+import it.polimi.ingsw.view.cli.graph.Color;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -232,6 +236,31 @@ public class GUI extends RemoteView {
 
     @Override
     public Event printUserNotification(UsernameModificationEvent usernameEvent) {
+        // TODO: 2019-07-03 VD commentato il metodo della cli 
+        /*String newUser = usernameEvent.getNewUser();
+        Event returnedEvent;
+        if (newUser.equals(usernameEvent.getUser())) {
+            ArrayList<String> disconnectedClients = ((ReconnectionRequestEvent) usernameEvent).getDisconnectedUsers();
+            while (!disconnectedClients.contains(newUser)) {
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                        "The disconnected clients are:");
+                CLIHandler.arrayPrint(((ReconnectionRequestEvent) usernameEvent).getDisconnectedUsers());
+                System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                        "Type your old username:\t");
+                newUser = CLIHandler.stringRead();
+            }
+            usernameEvent.setNewUser(newUser);
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                    "Reconnecting as " + newUser);
+            returnedEvent = new ReconnectedEvent(newUser);
+        } else {
+            System.out.println("Username already connected, yours is now:\t" + newUser);
+
+            returnedEvent = null;
+        }
+        return returnedEvent;
+
+         */
         return null;
     }
 
