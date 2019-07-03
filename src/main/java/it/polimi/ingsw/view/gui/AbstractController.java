@@ -5,10 +5,8 @@ import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * It is a controller
@@ -18,6 +16,7 @@ public abstract class AbstractController {
     private Stage primaryStage;
     private Event message;
     private Stage window;
+
     public Event getMessage() {
         return message;
     }
@@ -40,6 +39,7 @@ public abstract class AbstractController {
 
     /**
      * setter
+     *
      * @param gui
      */
     public void setGui(GUI gui) {
@@ -48,6 +48,7 @@ public abstract class AbstractController {
 
     /**
      * getter
+     *
      * @return GUI
      */
     public GUI getGui() {
@@ -58,13 +59,14 @@ public abstract class AbstractController {
      * It change scene on a stage
      * @param scene scene to show
      */
- //   public void showScene(Scene scene){
-  //  primaryStage.setScene(scene);
-   // primaryStage.show();
-   // }
+    //   public void showScene(Scene scene){
+    //  primaryStage.setScene(scene);
+    // primaryStage.show();
+    // }
 
     /**
      * getter
+     *
      * @return primary stage
      */
     public Stage getPrimaryStage() {
@@ -73,6 +75,7 @@ public abstract class AbstractController {
 
     /**
      * setter
+     *
      * @param primaryStage
      */
     public void setPrimaryStage(Stage primaryStage) {
@@ -80,11 +83,10 @@ public abstract class AbstractController {
     }
 
     /**
-     *
      * @return
      */
-    public Event ask(Scene scene){
-        final Task<Event> query = new Task<Event>(){
+    public Event ask(Scene scene) {
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
                 window.setScene(scene);
@@ -97,18 +99,18 @@ public abstract class AbstractController {
     }
 
 
-    public final Event ask(Task<Event> query){
+    public final Event ask(Task<Event> query) {
         Platform.runLater(query);
-        try{
+        try {
             return query.get();
-        }catch(Exception interrupted){
+        } catch (Exception interrupted) {
             CustomLogger.logException(interrupted);
             return null;
         }
     }
 
-    public void showUpdate(Scene scene){
-        final Task<Event> query = new Task<Event>(){
+    public void showUpdate(Scene scene) {
+        final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
                 window.setScene(scene);

@@ -22,6 +22,8 @@ import java.util.Map;
 
 /**
  * It controls scene of gameboard
+ *
+ * @author Evandro Maddes
  */
 public class GameBoardController extends AbstractController {
 
@@ -158,18 +160,18 @@ public class GameBoardController extends AbstractController {
 
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new EnumMap<>(Character.class);
     private Map<VBox, int[]> mapSquareVBox = new HashMap<>();
-    //prova popUp
-    @FXML
-    private AnchorPane popUpPane;
-
-    AbstractController popUpController;
-
-
     private int numberOfSkull = 0;
     private ArrayList<VBox> square = new ArrayList<>();
     private int numberOfPlayers = 0;
 
-    public void init() {
+
+    //prova popUp
+    @FXML
+    private AnchorPane popUpPane;
+    private AbstractController popUpController;
+
+
+     void init() {
 
         gridImageAmmoCubeSetting(topLeftAmmoCube);
         gridImageAmmoCubeSetting(principalAmmoCube);
@@ -228,8 +230,8 @@ public class GameBoardController extends AbstractController {
     /**
      * It set on scene map selected
      *
-     * @param lefMap
-     * @param rightmap
+     * @param lefMap   left map selected
+     * @param rightmap right map selected
      */
     void setMap(Image lefMap, Image rightmap) {
         this.leftMap.setImage(lefMap);
@@ -243,7 +245,7 @@ public class GameBoardController extends AbstractController {
      * @param playerboard image of a playerboard
      * @param character   character of playerboard
      */
-    public void setPrincipalPlayerboard(Image playerboard, Character character) {
+     void setPrincipalPlayerboard(Image playerboard, Character character) {
         principalPlayerBoard.setImage(playerboard);
         mapCharacterAmmoCube.put(character, new GridPane[]{principalDamage, principalAmmoCube, principalMarks});
 
@@ -272,10 +274,10 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     * setter: It link one player to his playerboard
+     * setter: It link one player to his player board
      *
-     * @param playerboard image of a playerboard
-     * @param character   character of playerboard
+     * @param playerboard image of a player board
+     * @param character   character of player board
      */
     private void setDownLeftPlayerboardLeftPlayerboard(Image playerboard, Character character) {
         downLeftPlayerboard.setImage(playerboard);
@@ -283,10 +285,10 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     * setter: It link one player to his playerboard
+     * setter: It link one player to his player board
      *
-     * @param playerboard image of a playerboard
-     * @param character   character of playerboard
+     * @param playerboard image of a player board
+     * @param character   character of player board
      */
     private void setDownCenterPlayerboardPlayerboard(Image playerboard, Character character) {
         downCenterPlayerboard.setImage(playerboard);
@@ -371,7 +373,7 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     * It Sets weapons of player
+     * It sets weapons of player
      *
      * @param weapon weapons to set
      */
@@ -620,6 +622,8 @@ public class GameBoardController extends AbstractController {
         ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoboxes/redammobox.png"));
     }
 
+
+    /*********************************PROVA******************************/
 
     public AbstractController getPopUpController() {
         return popUpController;
