@@ -13,32 +13,53 @@ import java.net.SocketException;
 
 /**
  * This is the Socket Network implementation
+ *
  * @author Francesco Masciulli
  */
 public class SocketClient implements ClientInterface {
+    /**
+     * Is the client username
+     */
     private String user;
+    /**
+     * Is the server IP address
+     */
     private String serverIPAddress;
+    /**
+     * Is the SocketServer port number
+     */
     private int serverPort;
+    /**
+     * Is the client Socket
+     */
     private Socket clientSocket;
+    /**
+     * Is the clientSocket input stream
+     */
     private ObjectInputStream inputStream;
+    /**
+     * Is the clientSocket output stream
+     */
     private ObjectOutputStream outputStream;
     private boolean connected = false;
 
     /**
      * Set username, server and client IpAddress and port; try to reach the server
-     * @param user is client username
+     *
+     * @param user            is client username
      * @param serverIPAddress is the server IP address
      * @throws ConnectException if couldn't reach the server
      */
-   public SocketClient(String user, String serverIPAddress) throws ConnectException{
-        this.user=user;
-        this.serverIPAddress=serverIPAddress;
+    public SocketClient(String user, String serverIPAddress) throws ConnectException {
+        this.user = user;
+        this.serverIPAddress = serverIPAddress;
         this.serverPort = NetConfiguration.SOCKETSERVERPORTNUMBER;
         connectClient();
-   }
+    }
 
     /**
      * Getter method:
+     *
      * @return connected value
      */
     public boolean isConnected() {
@@ -47,15 +68,15 @@ public class SocketClient implements ClientInterface {
 
     /**
      * ClientInterface's reconnectClient() implementation
-     * This method reconnect the client to the requested port, on the same server
+     * This method reconnect the client to the requested port (it must be changed before this method call), on the same server
      */
 
     @Override
     public void reconnectClient() {
-        try{
+        try {
             disconnectClient();
             connectClient();
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
         }
     }
@@ -63,6 +84,7 @@ public class SocketClient implements ClientInterface {
     /**
      * ClientInterface's Setter method implementation:
      * set serverPort attribute
+     *
      * @param serverPort is the server port number
      */
     @Override
@@ -74,19 +96,20 @@ public class SocketClient implements ClientInterface {
      * ClientInterface method implementation:
      * this method handle the lookup and the creation of the client RemoteRegistry
      * calling the method on the server to add the Remote reference to this last created registry;
+     *
      * @throws ConnectException if couldn't connect properly
      */
     @Override
-    public synchronized void connectClient() throws ConnectException{
+    public synchronized void connectClient() throws ConnectException {
 
-        try{
+        try {
             clientSocket = new Socket(serverIPAddress, serverPort);
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
             outputStream.writeUTF(user);
             outputStream.flush();
             connected = true;
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
             throw new CustomConnectException();
         }
@@ -94,48 +117,49 @@ public class SocketClient implements ClientInterface {
 
     /**
      * Disconnect the client, closing the socket;
+     *
      * @throws Exception if couldn't close the socket properly
      */
     @Override
     public void disconnectClient() throws Exception {
-       connected = false;
+        connected = false;
         clientSocket.close();
 
     }
 
     /**
      * this method update the username after a modification request
-     * @param user is the old username
+     *
+     * @param user        is the old username
      * @param newUsername is the updated username
      */
     @Override
     public void changeUsername(String user, String newUsername) {
-        if(!user.equalsIgnoreCase(newUsername)){
-           this.user=newUsername;
+        if (!user.equalsIgnoreCase(newUsername)) {
+            this.user = newUsername;
         }
     }
 
     /**
      * ClientInterface's listenMessage implementation
+     *
      * @return the listened message, null if no message was retrieved
      */
     @Override
     public Event listenMessage() {
         Event message = null;
-        while(message == null) {
+        while (message == null) {
 
             try {
                 message = (Event) inputStream.readObject();
-            }
-            catch (EOFException| SocketException serverShutDown){
+            } catch (EOFException | SocketException serverShutDown) {
                 try {
                     disconnectClient();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     CustomLogger.logException(e);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 CustomLogger.logException(e);
             }
         }
@@ -144,6 +168,7 @@ public class SocketClient implements ClientInterface {
 
     /**
      * ClientInterface's sendMessage implementation
+     *
      * @param message is the message that must be sent
      */
     @Override
@@ -151,12 +176,12 @@ public class SocketClient implements ClientInterface {
         try {
             outputStream.writeObject(message);
             outputStream.flush();
-        }catch(Exception e){
+        } catch (Exception e) {
             CustomLogger.logException(e);
             try {
                 disconnectClient();
 
-            }catch (Exception disconnectionException){
+            } catch (Exception disconnectionException) {
                 CustomLogger.logException(disconnectionException);
             }
         }

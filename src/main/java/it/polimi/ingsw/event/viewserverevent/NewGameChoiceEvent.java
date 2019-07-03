@@ -13,7 +13,7 @@ public class NewGameChoiceEvent extends ViewServerEvent {
      * @param user is the client username
      */
     public NewGameChoiceEvent(String user) {
-        super(user);
+        super(user, true);
     }
 
     /**

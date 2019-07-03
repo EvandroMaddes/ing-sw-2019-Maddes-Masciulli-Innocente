@@ -18,7 +18,7 @@ public class LobbyChoiceEvent extends ViewServerEvent {
      * @param chosenLobby is the chosen lobby ID
      */
     public LobbyChoiceEvent(String user, String chosenLobby) {
-        super(user);
+        super(user, false);
         this.chosenLobby = chosenLobby;
     }
 

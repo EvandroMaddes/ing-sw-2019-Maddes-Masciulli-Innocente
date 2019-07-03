@@ -8,14 +8,25 @@ import it.polimi.ingsw.event.Event;
  * @author Francesco Masciulli
  */
 public abstract class ViewServerEvent extends Event {
+    private boolean isNewGame;
 
     /**
-     * Constructor: call the Event constructor
+     * Constructor: call the Event constructor and set isNewGame value
      *
      * @param user is the client username
      */
-    public ViewServerEvent(String user) {
+    public ViewServerEvent(String user, boolean isNewGame) {
         super(user);
+        this.isNewGame = isNewGame;
+    }
+
+    /**
+     * Getter method:
+     *
+     * @return isNewGame value
+     */
+    public boolean isNewGame() {
+        return isNewGame;
     }
 
     /**

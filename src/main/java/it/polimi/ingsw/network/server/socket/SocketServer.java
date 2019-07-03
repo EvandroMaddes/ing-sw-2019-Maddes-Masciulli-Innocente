@@ -16,17 +16,34 @@ import java.util.logging.Logger;
 
 /**
  * This class is the implementation of the MultiThreading SocketServer
+ *
  * @author Francesco Masciulli
  */
 public class SocketServer extends Thread implements ServerInterface {
-    private ServerSocket serverSocket ;
-    private int serverPort= NetConfiguration.SOCKETSERVERPORTNUMBER;
+    /**
+     * Is the server ServerSocket
+     */
+    private ServerSocket serverSocket;
+    /**
+     * Is the SocketServer port number
+     */
+    private int serverPort = NetConfiguration.SOCKETSERVERPORTNUMBER;
+    /**
+     * This thread-safe ArrayList implementation contains a SocketServerThread for each connected client that use Socket connection
+     */
     private CopyOnWriteArrayList<SocketServerThread> socketList = new CopyOnWriteArrayList<>();
+    /**
+     * This boolean is true if the game is started
+     */
     private boolean gameCouldStart = false;
+    /**
+     * this boolean is true if the game is running
+     */
     private boolean gameIsRunning = false;
 
     /**
      * Getter method
+     *
      * @return the port on which the server is started
      */
     @Override
@@ -36,10 +53,11 @@ public class SocketServer extends Thread implements ServerInterface {
 
     /**
      * Setter method
+     *
      * @param serverPort is the port number, depending on the Lobby utilization
      */
     public void setServerPort(int serverPort) {
-        this.serverPort = serverPort ;
+        this.serverPort = serverPort;
     }
 
     /**
@@ -47,13 +65,13 @@ public class SocketServer extends Thread implements ServerInterface {
      * it wait the end of the match, accepting new client
      */
     @Override
-    public void run(){
+    public void run() {
         runServer();
-        while(!gameCouldStart){
+        while (!gameCouldStart) {
             acceptClient();
         }
         gameIsRunning = true;
-        while(gameIsRunning){
+        while (gameIsRunning) {
             acceptClient();
         }
 
@@ -62,11 +80,12 @@ public class SocketServer extends Thread implements ServerInterface {
 
     /**
      * Iterates on the SocketThreads, returning a list of string
+     *
      * @return an ArrayList with the usernames.
      */
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
-        for (SocketServerThread currClientThread:socketList) {
+        for (SocketServerThread currClientThread : socketList) {
             clientUserList.add(currClientThread.getClientUser());
         }
         return clientUserList;
@@ -77,19 +96,20 @@ public class SocketServer extends Thread implements ServerInterface {
      */
     @Override
     public void gameCouldStart() {
-        gameCouldStart=true;
+        gameCouldStart = true;
     }
 
     /**
      * In case of a username change, this method update the SocketServerThread's client
+     *
      * @param username is the old username, that must be changed;
-     * @param newUser is the new username, that is set;
+     * @param newUser  is the new username, that is set;
      */
     @Override
     public void updateUsername(String username, String newUser) {
-        for (int i = socketList.size()-1; i >=0 ; i--) {
+        for (int i = socketList.size() - 1; i >= 0; i--) {
             SocketServerThread currSocketThread = socketList.get(i);
-            if(currSocketThread.getClientUser().equalsIgnoreCase(username)){
+            if (currSocketThread.getClientUser().equalsIgnoreCase(username)) {
                 currSocketThread.setClientUser(newUser);
                 return;
             }
@@ -102,13 +122,12 @@ public class SocketServer extends Thread implements ServerInterface {
      */
     @Override
     public void runServer() {
-        try{
+        try {
 
-        serverSocket = new ServerSocket(serverPort);
-        }catch(IOException e){
+            serverSocket = new ServerSocket(serverPort);
+        } catch (IOException e) {
             CustomLogger.logException(e);
         }
-
 
 
     }
@@ -119,10 +138,9 @@ public class SocketServer extends Thread implements ServerInterface {
      */
     @Override
     public void acceptClient() {
-        if (socketList.size()==5) {
+        if (socketList.size() == 5) {
             gameCouldStart = true;
-        }
-        else {
+        } else {
             try {
                 Socket clientSocket = serverSocket.accept();
                 SocketServerThread clientSocketThread = new SocketServerThread(clientSocket);
@@ -130,18 +148,19 @@ public class SocketServer extends Thread implements ServerInterface {
 
                 socketList.add(clientSocketThread);
             } catch (IOException e) {
-                gameIsRunning=false;
+                gameIsRunning = false;
             }
         }
     }
 
     /**
      * Sends the message to each client connected
+     *
      * @param message is the Event that must be sent.
      */
     @Override
     public void sendBroadcast(Event message) {
-        for (SocketServerThread currThread: socketList) {
+        for (SocketServerThread currThread : socketList) {
             currThread.sendMessage(message);
         }
     }
@@ -151,27 +170,28 @@ public class SocketServer extends Thread implements ServerInterface {
      */
     @Override
     public void shutDown() {
-        for (SocketServerThread currThread: socketList) {
+        for (SocketServerThread currThread : socketList) {
 
             currThread.disconnect();
         }
-        try{
-            gameIsRunning= false;
+        try {
+            gameIsRunning = false;
             serverSocket.close();
-        }catch (IOException ioExc){
+        } catch (IOException ioExc) {
             CustomLogger.logException(ioExc);
         }
     }
 
     /**
      * Send the given message with the respectively ServerSocketThread, find with the username.
+     *
      * @param message is the Event that must be sent
      */
     @Override
     public void sendMessage(Event message) {
 
-        for (int i = socketList.size()-1; i >= 0 ; i--) {
-            if(socketList.get(i).getClientUser().equals(message.getUser())){
+        for (int i = socketList.size() - 1; i >= 0; i--) {
+            if (socketList.get(i).getClientUser().equals(message.getUser())) {
 
                 socketList.get(i).sendMessage(message);
                 return;
@@ -182,6 +202,7 @@ public class SocketServer extends Thread implements ServerInterface {
 
     /**
      * This method start a custom timer and wait for a message delivery;
+     *
      * @return the listened message, or null if the timer elapses and any message is listened.
      */
     @Override
@@ -191,15 +212,14 @@ public class SocketServer extends Thread implements ServerInterface {
         timer.start();
         Logger log = Logger.getLogger("Logger");
         log.info("Started the round countdown!\nPlayer disconnected in ".concat(Integer.toString(NetConfiguration.getRoundTimer()).concat(" seconds.\n")));
-        for (int i = 0; i < socketList.size() ; i++) {
+        for (int i = 0; i < socketList.size(); i++) {
             SocketServerThread currSocket = socketList.get(i);
-            if(currSocket.getCurrMessage()!=null&&currSocket.isConnected()) {
+            if (currSocket.getCurrMessage() != null && currSocket.isConnected()) {
                 currMessage = currSocket.getCurrMessage();
                 currSocket.resetMessage();
                 return currMessage;
 
-            }
-            else if (i == socketList.size()-1&&timer.isAlive()){
+            } else if (i == socketList.size() - 1 && timer.isAlive()) {
                 i = -1;
             }
         }
@@ -208,13 +228,14 @@ public class SocketServer extends Thread implements ServerInterface {
 
     /**
      * Force a client KickOut after the timer elapses
+     *
      * @param user the client's username that must be kicked out
      * @return the DisconnectionEvent
      */
     @Override
     public Event disconnectClient(String user) {
-        for (SocketServerThread currThread: socketList) {
-            if(currThread.getClientUser().equals(user)){
+        for (SocketServerThread currThread : socketList) {
+            if (currThread.getClientUser().equals(user)) {
                 currThread.disconnect();
                 Event currEvent = currThread.getCurrMessage();
                 currThread.kill();
@@ -228,19 +249,20 @@ public class SocketServer extends Thread implements ServerInterface {
 
     /**
      * Call isConnected on each thread, eventually saving the relative DisconnectedClientEvent
+     *
      * @return all of the DisconnectedClientEvents of this round
      */
     @Override
-    public synchronized   ArrayList<Event> ping(){
+    public synchronized ArrayList<Event> ping() {
         ArrayList<Event> currentDisconnectedClients = new ArrayList<>();
         for (int i = 0; i < socketList.size(); i++) {
-            SocketServerThread currThread= socketList.get(i);
+            SocketServerThread currThread = socketList.get(i);
 
-            if(!currThread.isConnected()){
+            if (!currThread.isConnected()) {
                 currentDisconnectedClients.add(currThread.getCurrMessage());
 
             }
         }
-        return currentDisconnectedClients ;
+        return currentDisconnectedClients;
     }
 }
