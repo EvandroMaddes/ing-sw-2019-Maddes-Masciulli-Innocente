@@ -27,7 +27,7 @@ public class PlayerBoard extends Observable implements Serializable {
      * This array contains the points that a player could earn killing the owner of this PlayerBoard,
      * following the game rules is final and set as done; after each death of the player, the lefter element is skipped
      */
-    public static final int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
+    protected static final int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
     /**
      * An array containing the DamageTokens that represent all of the damages set on the playerBoard and the players that inflicted them
      */
@@ -55,7 +55,7 @@ public class PlayerBoard extends Observable implements Serializable {
      *
      * @param character is the character chosen by the player that own the PlayerBoard
      */
-    public PlayerBoard(Character character) {
+    PlayerBoard(Character character) {
         damageReceived = new DamageToken[11];
         damageAmount = 0;
         skullsNumber = 0;
@@ -150,7 +150,7 @@ public class PlayerBoard extends Observable implements Serializable {
      *
      * @param player is the player which marks we have to add
      */
-    public void inflictMarks(Player player) {
+    void inflictMarks(Player player) {
         Iterator iterator = marks.iterator();
         DamageToken mark;
 
@@ -194,7 +194,7 @@ public class PlayerBoard extends Observable implements Serializable {
      * @param player is the player of whom we want to count the marks
      * @return the number of marks inflict by player
      */
-    public int checkNumberOfMarks(Player player) {
+    int checkNumberOfMarks(Player player) {
         Iterator iterator = marks.iterator();
         DamageToken mark;
         int numberOfMarks = 0;
@@ -213,7 +213,7 @@ public class PlayerBoard extends Observable implements Serializable {
      *
      * @return is true if damageAmount is greater than 2
      */
-    public boolean checkAdrenalinicGrab() {
+    boolean checkAdrenalinicGrab() {
         return damageAmount > 2;
     }
 
@@ -222,10 +222,14 @@ public class PlayerBoard extends Observable implements Serializable {
      *
      * @return true if damageAmount is greater than 5
      */
-    public boolean checkAdrenalinicShot() {
+    boolean checkAdrenalinicShot() {
         return damageAmount > 5;
     }
 
+    /**
+     * Check the player adrenalinic state
+     * @return 2 for teh adrenalinic shot, 1 for adrenalinic grab, 0 for not adrenalinic state
+     */
     public int getAdrenalinicState() {
         if (checkAdrenalinicShot())
             return 2;
@@ -239,7 +243,7 @@ public class PlayerBoard extends Observable implements Serializable {
      * In the final frenzy phase, if the player has 0 damage, set the score board of the player at 2-1-1;
      * is done setting the skulls number to 3, so the check on POINTS array will create the indicated number of points
      */
-    public void setFinalFrenzyScoreBoard() {
+    void setFinalFrenzyScoreBoard() {
         if (damageAmount == 0) {
             skullsNumber = 3;
         }
