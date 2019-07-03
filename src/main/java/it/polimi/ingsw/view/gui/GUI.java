@@ -386,7 +386,7 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                 try {
                     mapController.setWindow(mapStage);
-                    ArrayList<Integer> mapChoice = new ArrayList<Integer>();
+                    ArrayList<Integer> mapChoice = new ArrayList<>();
                     mapChoice.add(0);
                     mapChoice.add(1);
                     mapChoice.add(2);
@@ -406,7 +406,15 @@ public class GUI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
 
-        return null;
+        final Task<Event> query = new Task<Event>(){
+            @Override
+            public Event call() throws Exception {
+                actionChoiceController.setWindow(actionChoiceStage);
+                actionChoiceController.setController(fireEnable);
+                return actionChoiceController.ask(actionChoiceScene);
+            }
+        };
+        return userChoice(query);
     }
 
     @Override
