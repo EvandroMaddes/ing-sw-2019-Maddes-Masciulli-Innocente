@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.gamecomponents.cards;
 
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TagbackGrenade;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TargetingScope;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Teleporter;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.Newton;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.TagbackGrenade;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.TargetingScope;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.Teleporter;
 
 import java.util.ArrayList;
 import java.util.Collections;

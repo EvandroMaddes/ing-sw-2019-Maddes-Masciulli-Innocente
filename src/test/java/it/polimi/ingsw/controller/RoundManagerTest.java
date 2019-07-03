@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TargetingScope;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.TargetingScope;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;

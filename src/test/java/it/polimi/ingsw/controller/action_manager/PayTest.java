@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TagbackGrenade;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.TagbackGrenade;
 import it.polimi.ingsw.model.gamecomponents.cards.weapons.Flamethrower;
 import it.polimi.ingsw.model.gamecomponents.cards.weapons.PlasmaGun;
 import it.polimi.ingsw.model.gamecomponents.cards.weapons.Railgun;

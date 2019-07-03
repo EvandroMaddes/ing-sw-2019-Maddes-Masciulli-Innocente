@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.gamecomponents.cards.power_ups;
+package it.polimi.ingsw.model.gamecomponents.cards.powerups;
 
 import it.polimi.ingsw.event.controllerviewevent.ControllerViewEvent;
 import it.polimi.ingsw.event.controllerviewevent.NewtonTargetSquareRequestEvent;

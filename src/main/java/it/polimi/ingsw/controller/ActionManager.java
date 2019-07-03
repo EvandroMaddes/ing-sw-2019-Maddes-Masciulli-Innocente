@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.Newton;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;

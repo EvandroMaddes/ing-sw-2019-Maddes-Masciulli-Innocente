@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.Newton;
 import it.polimi.ingsw.model.gamecomponents.cards.weapons.Electroscythe;
 import it.polimi.ingsw.model.gamecomponents.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;

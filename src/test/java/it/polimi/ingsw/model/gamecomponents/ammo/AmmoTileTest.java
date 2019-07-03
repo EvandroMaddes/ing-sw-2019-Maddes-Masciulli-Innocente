@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.gamecomponents.ammo;
 
-import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TagbackGrenade;
+import it.polimi.ingsw.model.gamecomponents.cards.powerups.TagbackGrenade;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;
