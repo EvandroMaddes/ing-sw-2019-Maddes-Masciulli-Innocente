@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Class that implements the abstracts weapons with only one base effects
+ *
  * @author Federico Innocente
  */
 public abstract class Weapon extends Card {
@@ -46,8 +47,9 @@ public abstract class Weapon extends Card {
 
     /**
      * Constructor
-     * @param colour is the colour of the weapon
-     * @param name is the name of the weapon
+     *
+     * @param colour     is the colour of the weapon
+     * @param name       is the name of the weapon
      * @param reloadCost is the reload cost of the weapon
      */
     public Weapon(CubeColour colour, String name, AmmoCube[] reloadCost) {
@@ -60,18 +62,20 @@ public abstract class Weapon extends Card {
 
     /**
      * Method to reset the usable effect for the weapon in a determinate moment
+     *
      * @param newUsableEffect is the new configuration of the usable effectcs
      */
-    public void updateUsableEffect(boolean[] newUsableEffect){
+    public void updateUsableEffect(boolean[] newUsableEffect) {
         usableEffect = newUsableEffect;
     }
 
     /**
      * Method called to perform an effect. It can preform only an effect that is enabled for that weapon, otherwise throw an exception
+     *
      * @param selectedEffect is the selected effect
-     * @param targets are the targets of the effect, that could be character o square alternatively (depends of the effect)
+     * @param targets        are the targets of the effect, that could be character o square alternatively (depends of the effect)
      */
-    public void performEffect(int selectedEffect, List<Object> targets){
+    public void performEffect(int selectedEffect, List<Object> targets) {
         if (selectedEffect == 1)
             performEffectOne(targets);
         else
@@ -81,10 +85,11 @@ public abstract class Weapon extends Card {
     /**
      * Get all the possible target of the effect, which could be both squares or players, and return a message ready to be send to the clients for the choice.
      * Only effects enabled for the weapons can be requested.
+     *
      * @param selectedEffect is the effect which targets are requested
      * @return a message with the information about all possible targets of the effetc
      */
-    public ControllerViewEvent getTargetEffect(int selectedEffect){
+    public ControllerViewEvent getTargetEffect(int selectedEffect) {
         if (selectedEffect == 1)
             return getTargetEffectOne();
         else
@@ -95,10 +100,11 @@ public abstract class Weapon extends Card {
      * Check if an effect can be correctly used.
      * That means that teh effect must be enabled, the player can pay for it and that it has targets in range.
      * Only enabled effects can be checked
+     *
      * @param selectedEffect is the selected effect
      * @return true if the effect is usable, false otherwise
      */
-    public boolean isUsableEffect (int selectedEffect){
+    public boolean isUsableEffect(int selectedEffect) {
         if (selectedEffect == 1)
             return isUsableEffectOne();
         else
@@ -108,27 +114,29 @@ public abstract class Weapon extends Card {
     /**
      * Set the usable effects. This method is called in the reloading phase of the weapon to set the effects that the player can use at teh start of the shot action
      */
-    protected void setUsableEffect(){
+    protected void setUsableEffect() {
         updateUsableEffect(new boolean[]{true, true, true});
     }
 
     /**
      * Check if the weapon is usable.
      * To be usable, the weapon must be loaded and at least une of its effects must be usable
-     * @return
+     *
+     * @return true if the weapon is usable, false otherwise
      */
-    public boolean isUsable(){
+    public boolean isUsable() {
         return isLoaded() && getUsableEffect()[0] && isUsableEffectOne();
     }
 
     /**
      * Manage the flow of the effects after using one, setting the once that are usable or less.
      * Some effects are only usable before or after other specific effects.
+     *
      * @param effectUsed is the last effect used
      */
-    public void effectControlFlow(int effectUsed){
+    public void effectControlFlow(int effectUsed) {
         effectUsed--;
-        if (effectUsed == 0 && getUsableEffect()[0] )
+        if (effectUsed == 0 && getUsableEffect()[0])
             updateUsableEffect(new boolean[]{false, false, false});
         else
             throw new EffectIllegalArgumentException();
@@ -136,12 +144,14 @@ public abstract class Weapon extends Card {
 
     /**
      * Perform the basic effect of the weapon
+     *
      * @param targets are the targets chosen by the player
      */
     public abstract void performEffectOne(List<Object> targets);
 
     /**
      * Calculate all the possible targets of the basic effect (which could be squares or players) and encode them into a message ready to be send to the player .
+     *
      * @return a message with all teh information about teh possible targets
      */
     public abstract ControllerViewEvent getTargetEffectOne();
@@ -149,29 +159,31 @@ public abstract class Weapon extends Card {
     /**
      * Check if the basic effect is usable in the current condition.
      * That means that teh effect must be enabled, the player can pay for it and that it has targets in range.
+     *
      * @return true if the effect can be performed, false otherwise
      */
-    public boolean isUsableEffectOne(){
-        return effectsEnable[0] && usableEffect[0] && !((TargetPlayerRequestEvent)getTargetEffectOne()).getPossibleTargets().isEmpty();
+    public boolean isUsableEffectOne() {
+        return effectsEnable[0] && usableEffect[0] && !((TargetPlayerRequestEvent) getTargetEffectOne()).getPossibleTargets().isEmpty();
     }
 
     /**
      * Check if an effect has to be payed or less.
-     * That's because some effects can be performed on more steps, but has to payed ust once
+     * That's because some effects can be performed on more steps, but has to payed just once
+     *
      * @param effect is the checked effect
      * @return true if the effect has to be payed, false otherwise
      */
-    public boolean hasToPay(int effect){
-        // TODO: 2019-07-03
+    public boolean hasToPay(int effect) {
         return false;
     }
 
     /**
      * Get the cost of an effect. Only enabled effect can have a cost
+     *
      * @param effect is the effect which cost is searched
      * @return the cost of the effect
      */
-    public AmmoCube[] getEffectCost(int effect){
+    public AmmoCube[] getEffectCost(int effect) {
         if (effect == 1)
             return new AmmoCube[]{};
         else
@@ -181,47 +193,57 @@ public abstract class Weapon extends Card {
     /**
      * Check that the target list of an effect is not empty
      * If it is, throw an IllegalArgumentException
+     *
      * @param targets is the list of the targets passed to an effect
      */
-    public void checkEmptyTargets(List<Object> targets){
+    public void checkEmptyTargets(List<Object> targets) {
         if (targets.isEmpty())
             throw new IllegalArgumentException("No targets found");
     }
 
     /**
+     * Reset the list of the players damaged by the weapon
+     */
+    public void resetDamagedplayer(){
+        // TODO: 2019-07-03
+        damagedPlayer.clear();
+    }
+
+    /**
      * Getter method
+     *
      * @return the reload cost
      */
-    public AmmoCube[] getReloadCost()
-    {
+    public AmmoCube[] getReloadCost() {
         return reloadCost;
     }
 
     /**
      * Getter method
+     *
      * @return the grab cost, which is the reload cost without the fist ammo cube
      */
-    public AmmoCube[] getGrabCost(){
+    public AmmoCube[] getGrabCost() {
         AmmoCube[] grabCost = new AmmoCube[getReloadCost().length - 1];
 
         for (int i = 0; i < grabCost.length; i++)
-            grabCost[i] = getReloadCost()[i+1];
+            grabCost[i] = getReloadCost()[i + 1];
         return grabCost;
     }
 
     /**
      * Getter method
+     *
      * @return the load state of the weapon
      */
-    public boolean isLoaded()
-    {
+    public boolean isLoaded() {
         return loaded;
     }
 
     /**
      * Setter method, set the weapon unloaded
      */
-    public void setUnloaded(){
+    public void setUnloaded() {
         this.loaded = false;
         getOwner().notifyWeaponsChange();
     }
@@ -229,7 +251,7 @@ public abstract class Weapon extends Card {
     /**
      * Setter method, set the weapon loaded
      */
-    public void setLoaded(){
+    public void setLoaded() {
         this.loaded = true;
         setUsableEffect();
         if (getOwner() != null)
@@ -238,6 +260,7 @@ public abstract class Weapon extends Card {
 
     /**
      * Getter method
+     *
      * @return the usable effects
      */
     public boolean[] getUsableEffect() {
@@ -246,6 +269,7 @@ public abstract class Weapon extends Card {
 
     /**
      * Getter method
+     *
      * @return the effect enable
      */
     protected boolean[] getEffectsEnable() {
@@ -254,6 +278,7 @@ public abstract class Weapon extends Card {
 
     /**
      * Setter method
+     *
      * @param effectsEnable set the effect enable for the weapon
      */
     void setEffectsEnable(boolean[] effectsEnable) {
@@ -262,6 +287,7 @@ public abstract class Weapon extends Card {
 
     /**
      * Getter method
+     *
      * @return the player damaged in the last weapon action
      */
     public List<Player> getDamagedPlayer() {
