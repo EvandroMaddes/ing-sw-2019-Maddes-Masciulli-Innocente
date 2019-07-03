@@ -18,17 +18,17 @@ public abstract class GameTrack extends Observable {
     /**
      * Is the set of reachable point, gained at the end of the game following the game rules
      */
-    public final static int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
+    static final int[] POINTS = new int[]{8, 6, 4, 2, 1, 1};
     /**
      * Is the number of repeted token from the same player on each GameTrack box
      */
-    public int[] tokenSequence;
+    private int[] tokenSequence;
 
     /**
      * Constructor:
      * set to 8 the number of skull, following the game rules, and clean the tokenSequence
      */
-    public GameTrack() {
+    GameTrack() {
         this.skullBox = 8;
         this.tokenSequence = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
     }
