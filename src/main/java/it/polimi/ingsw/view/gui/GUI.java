@@ -140,7 +140,6 @@ public class GUI extends RemoteView {
         powerUpStage.setScene(powerUpScene);
 
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
-        System.out.println("fine configurazione GUI");
 
         /***********FUNZIONA**************
          Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
@@ -206,6 +205,7 @@ public class GUI extends RemoteView {
 
     @Override
     public Event winnerUpdate(EndGameUpdate endGameUpdate) {
+        // TODO: 03/07/2019 da fare 
         return null;
     }
 

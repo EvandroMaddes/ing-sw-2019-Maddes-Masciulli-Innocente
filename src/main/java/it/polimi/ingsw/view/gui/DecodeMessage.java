@@ -161,6 +161,11 @@ public class DecodeMessage {
         return mapPowerUpColor.get(powerUpName+powerUpColor);
     }
 
+    /**
+     * It finds ammo cube path by ammo cube color
+     * @param ammo ammo cube to find
+     * @return path of the image
+     */
     private Path findAmmoCubeImage(AmmoCube ammo){
         Path path = null;
         if (ammo.getColour() == CubeColour.Red){
@@ -174,7 +179,7 @@ public class DecodeMessage {
         return path;
     }
     /**
-     * It finds playerboard path by the character
+     * It finds player board path by the character
      * @param character character of the powerUP
      * @return path of the image
      */
@@ -278,11 +283,10 @@ public class DecodeMessage {
         return loadImage(path);
     }
 
-    // TODO: 02/07/2019
     /**
-     *
-     * @param ammoCube
-     * @return
+     * It gets image of an ammo cube
+     * @param ammoCube ammo cube to find
+     * @return image of the ammo cube
      */
     public Image ammoCubeImage(AmmoCube ammoCube){
         Path  path = findAmmoCubeImage(ammoCube);
@@ -290,9 +294,9 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param character
-     * @return
+     * it finds player token path by character
+     * @param character character of token to find
+     * @return character token path
      */
     private Path findPlayerTokenImage(Character character){
         Path path = null;
@@ -308,6 +312,7 @@ public class DecodeMessage {
                 break;
             case DOZER:
                 path = getPath("playerTokens/dozerToken.png");
+                break;
             case D_STRUCT_OR:
                 path = getPath("playerTokens/dstructorToken.png");
                 break;
@@ -317,14 +322,53 @@ public class DecodeMessage {
     }
 
     /**
-     *
-     * @param character
-     * @return
+     * it finds character path by character
+     * @param character character to find
+     * @return path of the image
+     */
+    private Path findCharacterImage(Character character) {
+        Path path = null;
+        switch (character) {
+            case VIOLET:
+                path = getPath("players/violet.png");
+                break;
+            case SPROG:
+                path = getPath("players/sprog.png");
+                break;
+            case BANSHEE:
+                path = getPath("players/banshee.png");
+                break;
+            case DOZER:
+                path = getPath("players/dozer.png");
+                break;
+            case D_STRUCT_OR:
+                path = getPath("players/dstructor.png");
+                break;
+        }
+        return path;
+    }
+
+    /**
+     *it gets image of character token
+     * @param character character to find
+     * @return image of character token
      */
     public Image playerTokenImage(Character character) {
         Path path = findPlayerTokenImage(character);
         return loadImage(path);
 
+    }
+
+
+    /**
+     *it gets image of character
+     * @param character character to find
+     * @return image of character
+     *
+     */
+    public Image characterImage(Character character){
+        Path path= findCharacterImage(character);
+        return loadImage(path);
     }
 }
 

@@ -170,8 +170,7 @@ public class GameBoardController extends AbstractController {
 
     AbstractController popUpController;
 
-    private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
-    private Map<Integer[],VBox> mapSquareVBox = new HashMap<Integer[], VBox>();
+
     private int numberOfSkull = 0;
     private ArrayList<VBox> square = new ArrayList<>();
     private int numberOfPlayers = 0;
