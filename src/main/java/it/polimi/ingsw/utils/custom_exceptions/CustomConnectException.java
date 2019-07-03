@@ -7,6 +7,10 @@ import java.net.ConnectException;
  * @author Francesco Masciulli
  */
 public class CustomConnectException extends ConnectException {
+    /**
+     * Constructor:
+     * set a custom message;
+     */
     public CustomConnectException() {
         super("Couldn't reach the server!");
     }

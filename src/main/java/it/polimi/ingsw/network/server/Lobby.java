@@ -76,6 +76,10 @@ public class Lobby extends Thread {
     }
 
 
+    /**
+     * Getter method:
+     * @return lobbyName String
+     */
     public String getLobbyName() {
         return lobbyName;
     }
@@ -83,7 +87,7 @@ public class Lobby extends Thread {
 
     /**
      * Is the Thread run() implementation:
-     * it start the already allocated and set RMI/Socket servers and handle the network from the beginning to the end of the Game;
+     * it start the already allocated and set RMI/Socket servers and handle the network from the beginning to the end of the match;
      */
     @Override
     public void run() {
@@ -204,6 +208,10 @@ public class Lobby extends Thread {
 
     }
 
+    /**
+     * Getter method:
+     * @return the activeClientList usernames
+     */
     public ArrayList<String> getActiveClientList() {
         return activeClientList;
     }
@@ -216,8 +224,11 @@ public class Lobby extends Thread {
         return shutDown;
     }
 
+    /**
+     * this method set the Lobby shutdown signal to false;
+     */
     public void shutDownLobby(){
-        shutDown = false;
+        shutDown = true;
     }
 
     /**

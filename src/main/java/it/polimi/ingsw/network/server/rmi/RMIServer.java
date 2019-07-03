@@ -38,7 +38,8 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
 
     /**
-     * Constructor
+     * Constructor:
+     * Create an UnicastRemoteObject on default port 1099 (see NetConfiguration) and set server ipAdress
      * @throws RemoteException from UnicastRemoteObject constructor
      */
     public RMIServer() throws RemoteException {
@@ -53,7 +54,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     }
     /**
-     * Overloaded constructor, is given the portNumber
+     * Overloaded constructor, is given the portNumber given to the UnicastRemoteObject constructor
      * @throws RemoteException from UnicastRemoteObject constructor
      */
     public RMIServer(int portNumber) throws RemoteException {

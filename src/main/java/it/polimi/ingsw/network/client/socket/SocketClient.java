@@ -24,6 +24,12 @@ public class SocketClient implements ClientInterface {
     private ObjectOutputStream outputStream;
     private boolean connected = false;
 
+    /**
+     * Set username, server and client IpAddress and port; try to reach the server
+     * @param user is client username
+     * @param serverIPAddress is the server IP address
+     * @throws ConnectException if couldn't reach the server
+     */
    public SocketClient(String user, String serverIPAddress) throws ConnectException{
         this.user=user;
         this.serverIPAddress=serverIPAddress;
