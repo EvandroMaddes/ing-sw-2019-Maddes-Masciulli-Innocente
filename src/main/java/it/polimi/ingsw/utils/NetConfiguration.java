@@ -18,11 +18,11 @@ public class NetConfiguration {
     /**
      * Default gameTimer value, in seconds; is set during Server initialization
      */
-    public static int startGameTimer = 5;
+    private static int startGameTimer = 5;
     /**
      * Default roundTimer value, in seconds; is set during Server initialization
      */
-    public static int roundTimer = 30;
+    private static int roundTimer = 30;
 
     /**
      * Connection Type implemented, each client could chose one of these
@@ -46,5 +46,21 @@ public class NetConfiguration {
      */
     public static void setRoundTimer(int roundTimer) {
         NetConfiguration.roundTimer = roundTimer;
+    }
+
+    /**
+     * Getter method:
+     * @return the startGameTimer value
+     */
+    public static int getStartGameTimer() {
+        return startGameTimer;
+    }
+
+    /**
+     * Getter method:
+     * @return the roundTimer value
+     */
+    public static int getRoundTimer() {
+        return roundTimer;
     }
 }

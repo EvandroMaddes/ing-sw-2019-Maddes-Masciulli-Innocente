@@ -187,10 +187,10 @@ public class SocketServer extends Thread implements ServerInterface {
     @Override
     public Event listenMessage() {
         Event currMessage;
-        CustomTimer timer = new CustomTimer(NetConfiguration.roundTimer);
+        CustomTimer timer = new CustomTimer(NetConfiguration.getRoundTimer());
         timer.start();
         Logger log = Logger.getLogger("Logger");
-        log.info("Started the round countdown!\nPlayer disconnected in ".concat(Integer.toString(NetConfiguration.roundTimer).concat(" seconds.\n")));
+        log.info("Started the round countdown!\nPlayer disconnected in ".concat(Integer.toString(NetConfiguration.getRoundTimer()).concat(" seconds.\n")));
         for (int i = 0; i < socketList.size() ; i++) {
             SocketServerThread currSocket = socketList.get(i);
             if(currSocket.getCurrMessage()!=null&&currSocket.isConnected()) {

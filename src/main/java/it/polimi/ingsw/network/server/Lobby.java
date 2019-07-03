@@ -133,10 +133,10 @@ public class Lobby extends Thread {
 
                     if(activeClientList.size() > 2) {
                         if(gameTimer==null){
-                            gameTimer = new CustomTimer(NetConfiguration.startGameTimer);
+                            gameTimer = new CustomTimer(NetConfiguration.getStartGameTimer());
                             gameTimer.start();
                             log.info(lobbyName.concat(":\tStarted the match countdown!\n\nGame start in ".concat(
-                                   Integer.toString(NetConfiguration.startGameTimer).concat(" seconds.\n"))));
+                                   Integer.toString(NetConfiguration.getStartGameTimer()).concat(" seconds.\n"))));
                         }
                         else if(!gameTimer.isAlive()) {
                             serverRMI.gameCouldStart();
