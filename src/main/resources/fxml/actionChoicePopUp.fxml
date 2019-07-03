@@ -21,23 +21,25 @@
                   <Font name="Arial Black" size="22.0" />
                </font></Label>
             <AnchorPane prefHeight="199.0" prefWidth="500.0" />
-            <HBox prefHeight="250.0" prefWidth="500.0">
+            <HBox alignment="CENTER" prefHeight="250.0" prefWidth="500.0" spacing="20.0">
                <children>
-                  <AnchorPane prefHeight="230.0" prefWidth="50.0" />
-                  <Button id="moveButton" fx:id="moveButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="100.0" text="Move">
+                  <Button id="moveButton" fx:id="moveButton" mnemonicParsing="false" onAction="#moveClick" prefHeight="75.0" prefWidth="100.0" text="Move">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font></Button>
-                  <AnchorPane prefHeight="164.0" prefWidth="50.0" />
-                  <Button fx:id="grabButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="100.0" text="Grab">
+                  <Button fx:id="grabButton" mnemonicParsing="false" onAction="#grabClick" prefHeight="75.0" prefWidth="100.0" text="Grab">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font></Button>
-                  <AnchorPane prefHeight="164.0" prefWidth="50.0" />
-                  <Button fx:id="shotButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="100.0" text="Shot">
+                  <Button fx:id="shotButton" mnemonicParsing="false" onAction="#shotClick" prefHeight="75.0" prefWidth="100.0" text="Shot">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font></Button>
+                  <Button fx:id="skipButton" mnemonicParsing="false" onAction="#skipClick" prefHeight="75.0" prefWidth="100.0" text="Skip">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                  </Button>
                </children></HBox>
          </children>
       </VBox>

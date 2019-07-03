@@ -1,14 +1,28 @@
 package it.polimi.ingsw.view.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 public class WeaponChoiceController extends AbstractController {
-
     @FXML
     private Button weapon3Button;
+
+    @FXML
+    private ImageView weapon1Image;
+
+    @FXML
+    private ImageView weapon3Image;
+
     @FXML
     private Button skipChoiceButton;
+
+    @FXML
+    private ImageView weapon4Image;
+
+    @FXML
+    private ImageView weapon2Image;
 
     @FXML
     private Button weapon1Button;
@@ -19,23 +33,32 @@ public class WeaponChoiceController extends AbstractController {
     @FXML
     private Button weapon2Button;
 
-    public Button getWeapon3Button() {
-        return weapon3Button;
+    public void setController(){
+        
     }
 
-    public Button getSkipChoiceButton() {
-        return skipChoiceButton;
+    @FXML
+    void weapon1Click(ActionEvent event) {
+
     }
 
-    public Button getWeapon1Button() {
-        return weapon1Button;
+    @FXML
+    void weapon2Click(ActionEvent event) {
+
     }
 
-    public Button getWeapon4Button() {
-        return weapon4Button;
+    @FXML
+    void weapon3Click(ActionEvent event) {
+
     }
 
-    public Button getWeapon2Button() {
-        return weapon2Button;
+    @FXML
+    void skipChoiceClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void weapon4Click(ActionEvent event) {
+
     }
 }
