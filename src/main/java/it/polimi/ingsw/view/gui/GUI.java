@@ -137,7 +137,7 @@ public class GUI extends RemoteView {
         gameBoardStage.setScene(gameboardScene);
         gameBoardController.init();
         characterStage.setScene(characterScene);
-        lobbyStage.setScene(powerUpScene);
+        powerUpStage.setScene(powerUpScene);
 
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
         System.out.println("fine configurazione GUI");
