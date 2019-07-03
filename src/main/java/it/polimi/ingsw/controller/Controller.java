@@ -15,13 +15,11 @@ import java.util.Observer;
 public class Controller implements Observer {
     private GameManager gameManager;
     private Map<String, VirtualView> usersVirtualView;
-    private boolean gameOn;
 
     public Controller(Map<String, VirtualView> usersVirtualView, int mapChoice) {
         this.usersVirtualView = usersVirtualView;
         createGameManager(mapChoice);
         gameManager.characterSelect();
-        gameOn = true;
     }
 
     /**
@@ -62,14 +60,6 @@ public class Controller implements Observer {
     /*
      * Getter and setter methods
      */
-
-    /**
-     * Setter method.
-     * Set to false the flag that say if the game is on or is over
-     */
-    void gameOff() {
-        gameOn = false;
-    }
 
     /**
      * Getter method
