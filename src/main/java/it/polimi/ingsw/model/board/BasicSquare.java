@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.player.Player;
 
 /**
  * Class represents tha square that contains an ammo card
+ *
  * @author Evandro Maddes
  */
 public class BasicSquare extends Square {
@@ -17,15 +18,17 @@ public class BasicSquare extends Square {
 
     /**
      * Constructor: call the Square Constructor to set row and column
-     * @param row is the Square row on the Map squares matrix
+     *
+     * @param row    is the Square row on the Map squares matrix
      * @param column is the Square column on the Map squares matrix
      */
-    public BasicSquare(int row, int column ){
-        super(row,column);
+    public BasicSquare(int row, int column) {
+        super(row, column);
     }
 
     /**
      * Square method implementation: call the checkAmmo method;
+     *
      * @param grabber is the player that would grab from the Square
      * @return true if there is an ammo to grab
      */
@@ -36,6 +39,7 @@ public class BasicSquare extends Square {
 
     /**
      * Getter method
+     *
      * @return the ammo AmmoTile
      */
     public AmmoTile getAmmo() {
@@ -45,6 +49,7 @@ public class BasicSquare extends Square {
 
     /**
      * Setter method set the ammo attribute
+     *
      * @param ammo is the AmmoTile that must be set
      */
     public void setAmmo(AmmoTile ammo) {
@@ -53,33 +58,36 @@ public class BasicSquare extends Square {
 
     /**
      * it checks if on the square there is an ammo or not
+     *
      * @return true if the ammo isn't set to null, false in the other case
      */
-    public boolean checkAmmo(){
+    public boolean checkAmmo() {
         return ammo != null;
     }
 
     /**
      * it calls method from AmmoTile to grab an Ammo
+     *
      * @param player is the Player who grabs the ammo
      */
-    public void grabAmmoTile( Player player){
+    public void grabAmmoTile(Player player) {
 
-           ammo.pickAmmo(player);
-           ammo = null;//remove ammo after it is grabbed
+        ammo.pickAmmo(player);
+        ammo = null;//remove ammo after it is grabbed
 
-           AmmoTileUpdateEvent message = new AmmoTileUpdateEvent(false, getColumn(), getRow(), null, null, null);
-           setChanged();
-           notifyObservers(message);
+        AmmoTileUpdateEvent message = new AmmoTileUpdateEvent(false, getColumn(), getRow(), null, null, null);
+        setChanged();
+        notifyObservers(message);
     }
 
     /**
      * if the BasicSquare doesn't have a ammo,it adds one;
      * when an AmmoTile is replaced, notifies the observers
+     *
      * @param ammoTileCard card that was drawn from AmmoTileDeck
      */
-    public void replaceAmmoTile(AmmoTile ammoTileCard){
-        if(!checkAmmo()) {
+    public void replaceAmmoTile(AmmoTile ammoTileCard) {
+        if (!checkAmmo()) {
             ammo = ammoTileCard;
 
             AmmoTileUpdateEvent message;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * This class implements the basic mod (KillShot mod) GameTrack of the game
+ *
  * @Evandro Maddes
  */
 public class KillShotTrack extends GameTrack {
@@ -20,6 +21,7 @@ public class KillShotTrack extends GameTrack {
 
     /**
      * Getter Method:
+     *
      * @return the tokenTrack
      */
     public ArrayList<DamageToken> getTokenTrack() {
@@ -29,14 +31,14 @@ public class KillShotTrack extends GameTrack {
     /**
      * GameTrack method implementation:
      * this method add the number (1 or 2 following game rules) of DamageToken to the Track
+     *
      * @param damageToken that represent the player
-     * @param number of token that replace a skull
+     * @param number      of token that replace a skull
      */
     @Override
-    public void evaluateDamage( DamageToken damageToken, int number )
-    {
+    public void evaluateDamage(DamageToken damageToken, int number) {
         addDamage(damageToken, number);
-        if(!checkEndTrack()) {
+        if (!checkEndTrack()) {
             removeSkull();
         }
     }
@@ -54,7 +56,7 @@ public class KillShotTrack extends GameTrack {
     /**
      * Notify the VirtualViews with an ad-hoc created UpdateEvent
      */
-    private void notifyView(){
+    private void notifyView() {
         KillShotTrackUpdateEvent message = new KillShotTrackUpdateEvent(Encoder.encodeDamageTokenList(tokenTrack), getTokenSequence());
         notifyObservers(message);
     }
@@ -62,12 +64,12 @@ public class KillShotTrack extends GameTrack {
 
     /**
      * Add the given number of a player's token on the KillShotTrack and notify the VirtualViews
+     *
      * @param damageToken is the player's DamageToken
-     * @param number is the number of token that must be set;
+     * @param number      is the number of token that must be set;
      */
-    private void addDamage( DamageToken damageToken, int number )
-    {
-        for(int i = 0; i < number; i++){
+    private void addDamage(DamageToken damageToken, int number) {
+        for (int i = 0; i < number; i++) {
             tokenTrack.add(new DamageToken(damageToken.getPlayer()));
         }
         if (!checkEndTrack()) {
@@ -85,9 +87,9 @@ public class KillShotTrack extends GameTrack {
     @Override
     public void collectGameTrackPoints() {
         Player[] damageDealer = new Player[5];
-        int[] damageDealed = new int[]{0,0,0,0,0};
+        int[] damageDealed = new int[]{0, 0, 0, 0, 0};
 
-        for (DamageToken d:tokenTrack){
+        for (DamageToken d : tokenTrack) {
             int i = 0;
             while (damageDealed[i] != 0 && damageDealer[i] != d.getPlayer())
                 i++;
@@ -95,22 +97,22 @@ public class KillShotTrack extends GameTrack {
             damageDealed[i]++;
         }
 
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j < 5 - i - 1; j++){
-                if (damageDealed[j + 1] > damageDealed[j]){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5 - i - 1; j++) {
+                if (damageDealed[j + 1] > damageDealed[j]) {
                     int intTemp;
                     Player playerTemp;
-                    intTemp = damageDealed[j+1];
-                    damageDealed[j+1] = damageDealed[j];
+                    intTemp = damageDealed[j + 1];
+                    damageDealed[j + 1] = damageDealed[j];
                     damageDealed[j] = intTemp;
-                    playerTemp = damageDealer[j+1];
-                    damageDealer[j+1] = damageDealer[j];
+                    playerTemp = damageDealer[j + 1];
+                    damageDealer[j + 1] = damageDealer[j];
                     damageDealer[j] = playerTemp;
                 }
             }
         }
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             if (damageDealer[i] != null)
                 damageDealer[i].addPoints(GameTrack.POINTS[i]);
         }

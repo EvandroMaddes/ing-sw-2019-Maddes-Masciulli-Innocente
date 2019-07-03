@@ -11,16 +11,31 @@ import it.polimi.ingsw.utils.Encoder;
 import java.util.ArrayList;
 
 /**
+ * Newton PowerUp implementation
+ *
  * @author Federico Innocente
  */
 public class Newton extends PowerUp {
+    /**
+     * is the target player on which will'be used the effect
+     */
     private Player targetPlayer;
 
+    /**
+     * Constructor: set the colour value and usability value, reset the targetPlayer setting it to null
+     *
+     * @param colour is the PowerUp CubeColour value
+     */
     public Newton(CubeColour colour) {
         super(colour, "Newton", Usability.AS_ACTION);
         targetPlayer = null;
     }
 
+    /**
+     * Implements PowerUp method: set a chosen Player target or, if already chosen, the target Square where will be moved
+     *
+     * @param target is the target of the effect (a Player or a Square)
+     */
     @Override
     public void performEffect(Object target) {
         if (targetPlayer == null)
@@ -31,6 +46,11 @@ public class Newton extends PowerUp {
         }
     }
 
+    /**
+     * Get the possible destination of the targetPlayer after the Newton usage
+     *
+     * @returna NewtonTargetRequestEvent containing the possible Squares positions
+     */
     public ControllerViewEvent getTargets() {
         ArrayList<Square> possibleDestination = new ArrayList<>();
         possibleDestination.add(targetPlayer.getPosition());
