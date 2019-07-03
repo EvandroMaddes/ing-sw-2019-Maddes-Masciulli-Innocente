@@ -6,25 +6,34 @@ import it.polimi.ingsw.model.player.Player;
 
 
 /**
- * @author Federico Innocente
+ * Abstract class that is the base for both weapons and powerUps
  *
- * abstract class that is the base for both weapons and powerUps
+ * @author Federico Inncente
  */
 public abstract class Card implements BaseFightAction {
 
+    /**
+     * Is the colour of the card
+     */
     private CubeColour colour;
+    /**
+     * Is the name of the card
+     */
     private String name;
+    /**
+     * Is the owner of the card
+     */
     private Player owner;
 
 
 
 
     /**
-     *
+     * Constructor
      * @param colour is the colour of the card
      * @param name is the name of the card
      */
-    public Card(CubeColour colour, String name)
+    Card(CubeColour colour, String name)
     {
         this.name = name;
         this.colour = colour;
@@ -41,7 +50,7 @@ public abstract class Card implements BaseFightAction {
 
 
     /**
-     *
+     * Getter method
      * @return the colour of the card
      */
     public CubeColour getColour()
@@ -50,7 +59,7 @@ public abstract class Card implements BaseFightAction {
     }
 
     /**
-     *
+     * Getter method
      * @return card owner
      */
     public Player getOwner()
@@ -59,8 +68,8 @@ public abstract class Card implements BaseFightAction {
     }
 
     /**
-     *
-     * @param player
+     * Setter method
+     * @param player is the new card owner
      */
     public void setOwner(Player player)
     {

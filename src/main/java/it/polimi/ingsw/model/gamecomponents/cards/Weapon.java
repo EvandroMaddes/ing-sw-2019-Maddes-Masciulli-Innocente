@@ -10,6 +10,9 @@ import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public abstract class Weapon extends Card {
 
     private AmmoCube[] reloadCost;
