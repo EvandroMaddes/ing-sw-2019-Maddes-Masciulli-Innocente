@@ -4,8 +4,8 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.view.RemoteView;
 
 /**
- * @author Francesco Masciulli
  * it represent an Ammo Tile replacement on the Map
+ * @author Francesco Masciulli
  */
 public class AmmoTileUpdateEvent extends PositionUpdateEvent {
     private boolean replace;

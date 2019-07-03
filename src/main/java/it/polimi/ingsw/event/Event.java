@@ -2,29 +2,40 @@ package it.polimi.ingsw.event;
 
 import java.io.Serializable;
 
-/**@author Francesco Masciulli
+/**
  * this is the abstract Class representing the messages between Server and Client
  *
+ * @author Francesco Masciulli
  */
 public abstract class Event implements Serializable {
+
+    /**
+     * Is the addressee's Username
+     */
     private String user;
 
     /**
+     * Constructor:
      *
-     * @param user is the string representing the user client,
-     *             it will be mapped by the controller with the Character chosen
+     * @param user is the string representing the addressee,
      */
-   public Event(String user){
-       this.user=user;
-   }
+    public Event(String user) {
+        this.user = user;
+    }
 
+    /**
+     * Getter method
+     *
+     * @return the user value
+     */
     public String getUser() {
         return user;
     }
 
     /**
-     * this setter method is called during the BroadcastSend of a message
-     * @param user
+     * Setter method: set the user value to the one given as argument
+     *
+     * @param user is the user that will be set
      */
     public void setUser(String user) {
         this.user = user;

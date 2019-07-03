@@ -2,17 +2,26 @@ package it.polimi.ingsw.event.viewserverevent;
 
 import it.polimi.ingsw.event.Event;
 
-public abstract class ViewServerEvent  extends Event {
-    private boolean isNewGame;
+/**
+ * Abstract class that handle the messages sent from the client to the Server
+ *
+ * @author Francesco Masciulli
+ */
+public abstract class ViewServerEvent extends Event {
 
-    public ViewServerEvent(String user, boolean isNewGame) {
+    /**
+     * Constructor: call the Event constructor
+     *
+     * @param user is the client username
+     */
+    public ViewServerEvent(String user) {
         super(user);
-        this.isNewGame = isNewGame;
     }
 
-    public boolean isNewGame() {
-        return isNewGame;
-    }
-
+    /**
+     * This performAction will be implemented to return the user choice
+     *
+     * @return the String containing the user choice
+     */
     public abstract String performAction();
 }
