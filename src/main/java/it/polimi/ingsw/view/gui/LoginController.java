@@ -4,34 +4,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 /**
  * It controls login scene
+ *
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
  */
-public class LoginController extends AbstractController{
-    private String userString;
-    private String connectionString;
-    private String ipAddresString;
+public class LoginController extends AbstractController {
+    /**
+     * It is used to check the correctness of the input data
+     */
     private boolean accepted = false;
-
-    @FXML
-    private GridPane TESTGRID;
-    @FXML
-    private AnchorPane anchorPanel;
 
     @FXML
     private Button enterButton;
 
     @FXML
-    private TextField IPaddress;
-
+    private TextField ipAddress;
 
     @FXML
     private TextField connection;
@@ -39,20 +30,33 @@ public class LoginController extends AbstractController{
     @FXML
     private TextField username;
 
-    private String usernameString;
 
+    /**
+     * stage showed
+     */
+    private Stage stage;
+
+    /**
+     * getter
+     *
+     * @return enterButton
+     */
     public Button getEnterButton() {
         return enterButton;
     }
 
-    private Stage stage;
-
-    public void setStage(Stage stage){
+    /**
+     * setter
+     *
+     * @param stage showing stage
+     */
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     /**
      * It manage click of a newGame button. It create a new GUI and start a thread which controls interaction between server and client
+     *
      * @param event click action
      * @throws Exception
      */
@@ -61,27 +65,34 @@ public class LoginController extends AbstractController{
         GUI gui = new GUI((Stage) enterButton.getScene().getWindow());
         setGui(gui);
         String[] choices = new String[3];
-        ipAddresString = IPaddress.getText();
-        userString = username.getText();
-        connectionString = connection.getText();
-        choices[0] = userString ;
+        String ipAddresString = ipAddress.getText();
+        String userString = username.getText();
+        String connectionString = connection.getText();
+        choices[0] = userString;
         choices[1] = connectionString;
         choices[2] = ipAddresString;
         getGui().setClientChoices(choices);
         getGui().setUser(username.getText());
         gui.initialize();
         gui.setClientChoices(choices);
-        gui.setPrimaryStage(stage);
-        new Thread(()->gui.startInterface()).start();
+        new Thread(() -> gui.startInterface()).start();
     }
 
-
+    /**
+     * It sets username of player
+     *
+     * @param event typing on username box
+     */
     @FXML
-    void usernameType(ActionEvent event)
-    {
+    void usernameType(ActionEvent event) {
         username.getText();
     }
 
+    /**
+     * It sets type connection choice of aplayer
+     *
+     * @param event typing on connection box
+     */
     @FXML
     void connectionType(ActionEvent event) {
         try {
@@ -91,22 +102,22 @@ public class LoginController extends AbstractController{
                 accepted = true;
                 ipType(event);
             }
-        }catch (NullPointerException exc){
+        } catch (NullPointerException exc) {
             accepted = false;
         }
     }
 
+    /**
+     * It set ip addres
+     *
+     * @param event typing on address box
+     */
     @FXML
     void ipType(ActionEvent event) {
-        if(accepted) {
+        if (accepted) {
             enterButton.setDisable(false);
         }
     }
 
-    // TODO: 2019-07-02 DA ELIMINARE
-    public void setTESTGRID(Image image) {
-       ImageView curr = ((ImageView)TESTGRID.getChildren().get(0));
-       curr.setImage(image);
 
-    }
 }

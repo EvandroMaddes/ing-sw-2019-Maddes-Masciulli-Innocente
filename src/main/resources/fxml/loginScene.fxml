@@ -43,7 +43,7 @@
                                 <Font name="Arial Black" size="12.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="IPaddress" onAction="#ipType" promptText="IP addres" />
+                        <TextField fx:id="ipAddress" onAction="#ipType" promptText="IP addres" />
                     </children>
                 </VBox>
                 <Button fx:id="enterButton" mnemonicParsing="false" onAction="#enterClick" prefHeight="0.0" prefWidth="90.0" text="ENTER">

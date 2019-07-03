@@ -8,29 +8,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginMain extends Application{
-
-   private Parent root;
-   private static Stage loginStage;
-   private LoginController loginController;
-   private static GUI gui;
-
-    /**
-     *
-     * @return
-     */
-    public LoginController getLoginController() {
-        return loginController;
-    }
+/**
+ * It launch GUI interface
+ * @author Evandro Maddes
+ */
+public class LoginMain extends Application {
 
     /**
-     *
-     * @param primaryStage
+     * It loads first controller and first scene and then shows it
+     * @param primaryStage stage to show
      * @throws Exception
      */
     @Override
     public void start(Stage primaryStage) {
-
+        Parent root = null;
+        LoginController loginController;
         FXMLLoader loginFxml = new FXMLLoader(getClass().getResource("/fxml/loginScene.fxml"));
         primaryStage.setTitle("ADRENALINE");
         try {
@@ -46,58 +38,14 @@ public class LoginMain extends Application{
         primaryStage.show();
     }
 
+    /**
+     * It starts application gui
+     */
     public static void guiMain() {
         launch();
     }
 
 
-/*
-    @Override
-    public void start(Stage primaryStage) {
-
-        FXMLLoader loginFxml = new FXMLLoader(getClass().getResource("/loginScene.fxml"));
-
-        primaryStage.setTitle("ADRENALINE");
-        try {
-            root = loginFxml.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        loginController = loginFxml.getController();
-
-        loginController.setGui(gui);
-
-        primaryStage.setScene(new Scene(root, 800, 560));
-        // longrunning operation runs on different thread
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Runnable updater = new Runnable() {
-                    @Override
-                    public void run() {
-
-        primaryStage.setScene(new Scene(root, 800, 560));
-                    }
-                };
-                https://riptutorial.com/it/home 102
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                    }
-                    // UI update is run on the Application thread
-                    Platform.runLater(updater);
-                }
-            }
-        });
-        // don't let thread prevent JVM shutdown
-        thread.setDaemon(true);
-        thread.start();
-        primaryStage.show();
-
-    }
-*/
 
 }
 
