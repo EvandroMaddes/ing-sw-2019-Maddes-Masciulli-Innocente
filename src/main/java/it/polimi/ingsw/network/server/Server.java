@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.event.server_view_event.ClientReconnectionEvent;
-import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.event.server_view_event.WelcomeEvent;
-import it.polimi.ingsw.event.view_server_event.ViewServerEvent;
+import it.polimi.ingsw.event.serverviewevent.ClientReconnectionEvent;
+import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
+import it.polimi.ingsw.event.serverviewevent.WelcomeEvent;
+import it.polimi.ingsw.event.viewserverevent.ViewServerEvent;
 import it.polimi.ingsw.network.server.rmi.RMIServer;
 import it.polimi.ingsw.network.server.socket.SocketServer;
 import it.polimi.ingsw.utils.CustomLogger;

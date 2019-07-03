@@ -1,11 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.validator.Validator;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;

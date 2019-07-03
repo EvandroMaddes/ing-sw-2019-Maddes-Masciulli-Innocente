@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.event.model_view_event.PlayerBoardUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.PlayerBoardUpdateEvent;
 import it.polimi.ingsw.utils.Encoder;
 
 import java.io.Serializable;

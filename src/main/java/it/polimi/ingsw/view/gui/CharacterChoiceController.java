@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.CharacterChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 

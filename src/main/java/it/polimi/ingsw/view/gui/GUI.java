@@ -1,19 +1,15 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
-import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
-import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
-import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
+import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.GameChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
-import it.polimi.ingsw.view.cli.CLIHandler;
-import it.polimi.ingsw.view.cli.graph.Color;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -23,9 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 // TODO: 02/07/2019 chiudere il primary stage prima di mostare la welcomeChoice  modificare mapCharacterChoiceFxml in mapChoice

@@ -1,0 +1,21 @@
+package it.polimi.ingsw.model.gamecomponents.cards;
+
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.utils.custom_exceptions.EffectIllegalArgumentException;
+
+public abstract class OneOptionalEffectWeapon extends TwoEffectWeapon {
+
+    public OneOptionalEffectWeapon(CubeColour colour, String name, AmmoCube[] reloadCost, AmmoCube[] secondEffectCost) {
+        super(colour, name, reloadCost, secondEffectCost);
+    }
+
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if (effectUsed != 2 && getUsableEffect()[effectUsed])
+            getUsableEffect()[effectUsed] = false;
+        else
+            throw new EffectIllegalArgumentException();
+    }
+}

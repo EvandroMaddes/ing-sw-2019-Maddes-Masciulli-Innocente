@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.event.model_view_event.KillShotTrackUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.KillShotTrackUpdateEvent;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Encoder;

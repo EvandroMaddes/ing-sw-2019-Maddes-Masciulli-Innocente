@@ -1,8 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 
-import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
-import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
+import it.polimi.ingsw.event.viewserverevent.LobbyChoiceEvent;
+import it.polimi.ingsw.event.viewserverevent.NewGameChoiceEvent;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

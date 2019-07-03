@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.event.model_view_event.AmmoTileUpdateEvent;
-import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
+import it.polimi.ingsw.event.modelviewevent.AmmoTileUpdateEvent;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
 import it.polimi.ingsw.model.player.Player;
 
 /**

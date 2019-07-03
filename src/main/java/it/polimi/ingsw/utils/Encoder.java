@@ -1,9 +1,9 @@
 package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;

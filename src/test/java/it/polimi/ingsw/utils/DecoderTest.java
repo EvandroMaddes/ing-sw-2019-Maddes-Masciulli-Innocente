@@ -2,12 +2,12 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
-import it.polimi.ingsw.model.game_components.cards.weapons.Electroscythe;
-import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.Electroscythe;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.LockRifle;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;

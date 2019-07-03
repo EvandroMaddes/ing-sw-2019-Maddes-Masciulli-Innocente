@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.EndRoundPowerUpRequestEvent;
+import it.polimi.ingsw.event.controllerviewevent.EndRoundPowerUpRequestEvent;
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
@@ -27,6 +27,12 @@ public class RoundManager {
     private DeathManager deathManager;
     private int phase;
 
+    /**
+     * Constructor
+     *
+     * @param controller    is the controller of the game
+     * @param currentPlayer is the player who play teh round
+     */
     public RoundManager(Controller controller, Player currentPlayer) {
         this.controller = controller;
         this.currentPlayer = currentPlayer;
@@ -146,7 +152,7 @@ public class RoundManager {
      * @param deadPlayer is the dead player to respawn
      */
     void createDeathManager(GameModel model, Player deadPlayer) {
-        deathManager = new DeathManager(controller, model, deadPlayer, this);
+        deathManager = new DeathManager(controller, deadPlayer, this);
     }
 
 

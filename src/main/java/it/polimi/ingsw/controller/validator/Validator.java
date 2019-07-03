@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.validator;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.ArrayList;
