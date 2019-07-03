@@ -8,19 +8,45 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 /**
+ * This class is the Map representation
  * @author Evandro Maddes
  */
 public class Map {
 
+    /**
+     * String that represent the bigger left semi-map
+     */
     public static final String BIG_LEFT = "leftFirst";
+    /**
+     * String that represent the littler left semi-map
+     */
     public static final String SMALL_LEFT = "leftSecond";
+    /**
+     * String that represent the bigger right semi-map
+     */
     public static final String BIG_RIGHT = "rightFirst";
+    /**
+     * String that represent the littler right semi-map
+     */
     public static final String SMALL_RIGHT = "rightSecond";
-
+    /**
+     * An ArrayList that contains all of the SpawnSquares
+     */
     private ArrayList<SpawnSquare> spawnSquares = new ArrayList<>();
+    /**
+     * A Square matrix that contains the Map implementations square, set according with the game map
+     */
     private Square[][] squareMatrix;
+    /**
+     * A number that identifies the chosen complete Map, composed by two semi-map
+     */
     private int chosenMap;
 
+    /**
+     * Constructor, call a method that allocates the squareMatrix, and set the respectively chosenMap number
+     * @param leftMap is the String that identifies the left semi-map
+     * @param rightMap is the String that identifies the right semi-map
+     */
     public Map(String leftMap, String rightMap) {
         this.squareMatrix = createGround(leftMap, rightMap);
         if (leftMap.equals(BIG_LEFT) && rightMap.equals(BIG_RIGHT))
@@ -34,14 +60,32 @@ public class Map {
     }
 
 
+    /**
+     * Getter method:
+     * @return the squareMatrix
+     */
     public Square[][] getSquareMatrix() {
         return squareMatrix;
     }
 
-
+    /**
+     * Getter method:
+     * @return an ArrayList that contains all of the SpawnSquares
+     */
+    public ArrayList<SpawnSquare> getSpawnSquares() {
+        return spawnSquares;
+    }
 
     /**
-     * it creates ground and sets spawn square
+     * Getter method:
+     * @return the chosenMap number
+     */
+    public int getChosenMap() {
+        return chosenMap;
+    }
+
+    /**
+     * it creates ground and sets spawn square following the schema present in the resource Json
      * @param selectedLeftMap choice of the first part(left)
      * @param selectedRightMap choice of the second part(right)
      */
@@ -142,7 +186,7 @@ public class Map {
     }
 
     /**
-     *create link between squares
+     * create link between squares according with the chosen map implementation
      * @param squares all square belongs to the map
      * @param semiMapSelected right or left semi map
      * @param j starting point of the cycle
@@ -196,7 +240,7 @@ public class Map {
 
 
     /**
-     *create door of the map end set colour of every square
+     * create door of the map end set colour of every square
      * @param squares all square belongs to the map
      * @param semiMapSelected right or left semi map
      * @param j starting point of the cycle
@@ -234,11 +278,5 @@ public class Map {
         }
     }
 
-    public ArrayList<SpawnSquare> getSpawnSquares() {
-        return spawnSquares;
-    }
 
-    public int getChosenMap() {
-        return chosenMap;
-    }
 }

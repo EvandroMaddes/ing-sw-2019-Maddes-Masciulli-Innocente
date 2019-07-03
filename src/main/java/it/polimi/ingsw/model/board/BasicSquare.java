@@ -5,20 +5,33 @@ import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
 import it.polimi.ingsw.model.player.Player;
 
 /**
+ * Class represents tha square that contains an ammo card
  * @author Evandro Maddes
- * Class represents tha square tnat contains an ammo card
  */
 public class BasicSquare extends Square {
 
+    /**
+     * Is the BasicSquare AmmoTile
+     */
     private AmmoTile ammo;
 
     /**
-     * constructor
-     * @param row
-     * @param column
+     * Constructor: call the Square Constructor to set row and column
+     * @param row is the Square row on the Map squares matrix
+     * @param column is the Square column on the Map squares matrix
      */
     public BasicSquare(int row, int column ){
         super(row,column);
+    }
+
+    /**
+     * Square method implementation: call the checkAmmo method;
+     * @param grabber is the player that would grab from the Square
+     * @return true if there is an ammo to grab
+     */
+    @Override
+    public boolean isGrabbable(Player grabber) {
+        return checkAmmo();
     }
 
     /**
@@ -29,17 +42,26 @@ public class BasicSquare extends Square {
         return ammo;
     }
 
+
+    /**
+     * Setter method set the ammo attribute
+     * @param ammo is the AmmoTile that must be set
+     */
+    public void setAmmo(AmmoTile ammo) {
+        this.ammo = ammo;
+    }
+
     /**
      * it checks if on the square there is an ammo or not
-     * @return
+     * @return true if the ammo isn't set to null, false in the other case
      */
     public boolean checkAmmo(){
         return ammo != null;
     }
 
     /**
-     * it calls metod of AmmoTile to grab Ammo
-     * @param player who receives the ammo
+     * it calls method from AmmoTile to grab an Ammo
+     * @param player is the Player who grabs the ammo
      */
     public void grabAmmoTile( Player player){
 
@@ -52,18 +74,9 @@ public class BasicSquare extends Square {
     }
 
     /**
-     * 
-     * @param ammo
-     */
-    public void setAmmo(AmmoTile ammo) {
-        this.ammo = ammo;
-    }
-
-    /**
-     * if one square(excepted spawn square) do not have a ammo,it adds one.
-     * when replace ammo tiles. notify observers
-     *
-     * @param ammoTileCard card taht is drawed
+     * if the BasicSquare doesn't have a ammo,it adds one;
+     * when an AmmoTile is replaced, notifies the observers
+     * @param ammoTileCard card that was drawn from AmmoTileDeck
      */
     public void replaceAmmoTile(AmmoTile ammoTileCard){
         if(!checkAmmo()) {
@@ -79,9 +92,6 @@ public class BasicSquare extends Square {
         }
     }
 
-    @Override
-    public boolean isGrabbable(Player grabber) {
-        return checkAmmo();
-    }
+
 }
 

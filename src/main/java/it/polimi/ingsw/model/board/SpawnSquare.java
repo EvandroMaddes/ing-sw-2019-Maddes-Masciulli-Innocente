@@ -8,16 +8,19 @@ import it.polimi.ingsw.utils.Encoder;
 import java.util.ArrayList;
 
 /**
+ * Class that implements the SpawnSquares
  * @author Evandro Maddes
- *
  */
 public class SpawnSquare extends Square {
+     /**
+      * An ArrayList that contains the Weapons on the SpawnSquare
+      */
      private ArrayList<Weapon> weapons = new ArrayList<>();
 
      /**
-      * Constructor of a single square
-      * @param row
-      * @param column
+      * Constructor: call the super-class constructor
+      * @param row is the Square row
+      * @param column is the Square column
 
       */
      public SpawnSquare(int row, int column){
@@ -25,8 +28,8 @@ public class SpawnSquare extends Square {
      }
 
      /**
-      *
-      * @return weapons present at the spawn square
+      * Getter method:
+      * @return the weapons on the spawn square
       */
      public ArrayList<Weapon> getWeapons()
      {
@@ -41,7 +44,8 @@ public class SpawnSquare extends Square {
 
      @Override
      /**
-      * return true if there is at least 1 weapon that the player can buy
+      * Implements isGrabbable method from Square
+      * return true if there is at least 1 weapon that the player could take
       */
      public boolean isGrabbable(Player grabber) {
           if (weapons.isEmpty())
@@ -53,12 +57,19 @@ public class SpawnSquare extends Square {
           return false;
      }
 
+     /**
+      * Method that notifies the VirtualViews when a weapon is modified
+      */
      private void notifyView(){
           WeaponUpdateEvent message = new WeaponUpdateEvent(getColumn(), getRow(), Encoder.encodeWeaponsIntoArray(weapons));
           setChanged();
           notifyObservers(message);
      }
 
+     /**
+      * Method that add some weapons and notifies the VirtualViews
+      * @param weapons are the weapons that must be added
+      */
      public void addWeapon(ArrayList<Weapon> weapons){
           this.weapons.addAll(weapons);
           notifyView();
