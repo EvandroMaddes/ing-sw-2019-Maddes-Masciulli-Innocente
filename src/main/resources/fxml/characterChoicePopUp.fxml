@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -20,7 +21,7 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Button fx:id="sprogButton" contentDisplay="TOP" mnemonicParsing="false" text="SPROG" textFill="GREEN">
+                  <Button fx:id="sprogButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#sprogClick" text="SPROG" textFill="GREEN">
                      <graphic>
                         <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -32,7 +33,7 @@
                         <Font name="Arial Black" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bansheeButton" contentDisplay="TOP" mnemonicParsing="false" text="BANSHEE" textFill="BLUE">
+                  <Button fx:id="bansheeButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#bansheeClick" text="BANSHEE" textFill="BLUE">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font>
@@ -44,7 +45,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="dstructorButton" contentDisplay="TOP" mnemonicParsing="false" text="D_STRUCT_OR" textFill="YELLOW">
+                  <Button fx:id="dstructorButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#dstructorClick" text="D_STRUCT_OR" textFill="YELLOW">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font>
@@ -60,7 +61,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" spacing="125.0">
                <children>
-                  <Button fx:id="violetButton" contentDisplay="TOP" mnemonicParsing="false" text="VIOLET" textFill="#ff00fe">
+                  <Button fx:id="violetButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#violetClick" text="VIOLET" textFill="#ff00fe">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font>
@@ -72,7 +73,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="dozerButton" contentDisplay="TOP" mnemonicParsing="false" text="DOZER">
+                  <Button fx:id="dozerButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#dozerClick" text="DOZER">
                      <font>
                         <Font name="Arial Black" size="13.0" />
                      </font>

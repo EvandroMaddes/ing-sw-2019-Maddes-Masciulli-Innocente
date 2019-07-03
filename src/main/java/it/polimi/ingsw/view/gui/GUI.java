@@ -2,14 +2,18 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
+import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
 import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
 import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.view_controller_event.ReconnectedEvent;
 import it.polimi.ingsw.event.view_controller_event.UpdateChoiceEvent;
 import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
 import it.polimi.ingsw.model.game_components.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
+import it.polimi.ingsw.view.cli.CLIHandler;
+import it.polimi.ingsw.view.cli.graph.Color;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +22,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 // TODO: 02/07/2019 chiudere il primary stage prima di mostare la welcomeChoice  modificare mapCharacterChoiceFxml in mapChoice
@@ -107,6 +113,7 @@ public class GUI extends RemoteView {
         mapCharacterStage.setTitle("mapCharacter-ADRENALINE");
         gameBoardStage.setTitle("GameBoard-ADRENALINE");
  */
+
         mapController.setGui(this);
         lobbyScene = new Scene(lobby, 800, 560);
         gameboardScene = new Scene(gameboard, 800, 560);
@@ -235,6 +242,31 @@ public class GUI extends RemoteView {
 
     @Override
     public Event printUserNotification(UsernameModificationEvent usernameEvent) {
+        // TODO: 2019-07-03 VD commentato il metodo della cli 
+        /*String newUser = usernameEvent.getNewUser();
+        Event returnedEvent;
+        if (newUser.equals(usernameEvent.getUser())) {
+            ArrayList<String> disconnectedClients = ((ReconnectionRequestEvent) usernameEvent).getDisconnectedUsers();
+            while (!disconnectedClients.contains(newUser)) {
+                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                        "The disconnected clients are:");
+                CLIHandler.arrayPrint(((ReconnectionRequestEvent) usernameEvent).getDisconnectedUsers());
+                System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                        "Type your old username:\t");
+                newUser = CLIHandler.stringRead();
+            }
+            usernameEvent.setNewUser(newUser);
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
+                    "Reconnecting as " + newUser);
+            returnedEvent = new ReconnectedEvent(newUser);
+        } else {
+            System.out.println("Username already connected, yours is now:\t" + newUser);
+
+            returnedEvent = null;
+        }
+        return returnedEvent;
+
+         */
         return null;
     }
 
@@ -258,40 +290,14 @@ public class GUI extends RemoteView {
         final Task<Event> query = new Task<Event>(){
             @Override
             public Event call() throws Exception {
+                    characterController.setCharacterChoice(availableCharacters);
                     characterController.setWindow(characterStage);
-                    if(availableCharacters.contains(Character.BANSHEE)){
-                        characterController.getBansheeButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getBansheeButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.D_STRUCT_OR)){
-                        characterController.getDstructorButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getDstructorButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.DOZER)){
-                        characterController.getDozerButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getDozerButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.SPROG)){
-                        characterController.getSprogButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getSprogButton().setDisable(true);
-                    }
-                    if(availableCharacters.contains(Character.VIOLET)){
-                        characterController.getVioletButton().setDisable(false);
-                    }
-                    else{
-                        characterController.getVioletButton().setDisable(true);
-                    }
+                File popUpFXML = new File("/fxml/characterChoicePopUp.fxml");
+                //return gameBoardController.askPopUp( characterController,popUpFXML.toPath(), gameboardScene);
                 return  characterController.ask(characterScene);
             }
         };
+        characterController.setGui(this);
         return userChoice(query);
     }
 

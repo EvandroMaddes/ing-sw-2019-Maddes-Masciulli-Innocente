@@ -4,8 +4,10 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * It is a controller
@@ -90,13 +92,18 @@ public abstract class AbstractController {
                 return event;
             }
         };
+        return ask(query);
+    }
+
+
+    public final Event ask(Task<Event> query){
         Platform.runLater(query);
         try{
-            Event event = query.get();
-            return event;
+            return query.get();
         }catch(Exception interrupted){
             CustomLogger.logException(interrupted);
             return null;
         }
     }
+
 }

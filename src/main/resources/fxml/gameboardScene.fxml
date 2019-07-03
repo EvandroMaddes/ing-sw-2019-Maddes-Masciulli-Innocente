@@ -1054,6 +1054,7 @@
                   <RowConstraints />
                </rowConstraints>
             </GridPane>
+            <AnchorPane fx:id="popUpPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 255, 0, 0);" translateX="200.0" translateY="120.0" />
          </children>
       </AnchorPane>
   </content>

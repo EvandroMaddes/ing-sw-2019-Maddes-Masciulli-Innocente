@@ -84,7 +84,7 @@ public class ActionManager {
      * send a message with all possible destination
      */
     public void sendPossibleMoves(){
-        ArrayList<Square> possibleSquare = getValidator().availableMoves(controller);
+        ArrayList<Square> possibleSquare = (ArrayList<Square>) getValidator().availableMoves(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionMoveRequestEvent message = new PositionMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
@@ -105,7 +105,7 @@ public class ActionManager {
      * send a message with possible grab square
      */
     public void sendPossibleGrabs(){
-        ArrayList<Square> possibleSquare = getValidator().availableGrab(controller);
+        ArrayList<Square> possibleSquare = (ArrayList<Square>) getValidator().availableGrab(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
         PositionGrabRequestEvent message = new PositionGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleSquareX, possibleSquareY);
