@@ -1,17 +1,23 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.utils.CustomLogger;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,6 +95,12 @@ public class GameBoardController extends AbstractController{
 
     @FXML
     private HBox spawnRed;
+
+    //prova popUp
+    @FXML
+    private AnchorPane popUpPane;
+
+    AbstractController popUpController;
 
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
     private Map<Integer[],VBox> mapSquareVBox = new HashMap<Integer[], VBox>();
@@ -297,5 +309,62 @@ public class GameBoardController extends AbstractController{
         return curentImageView;
     }
 
-    // TODO: 02/07/2019 setare ammo sugli square playerboard marchi 
+    // TODO: 02/07/2019 setare ammo sugli square playerboard marchi
+
+
+    public AbstractController getPopUpController() {
+        return popUpController;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Event askPopUp(AbstractController popUpController, Path popUpPath, Scene scene){
+        setPopUpPane(popUpPath);
+        //popUpController.setWindow(getWindow());
+
+        Event returnedEvent = ask(scene);
+        cleanPopUpPane();
+        return returnedEvent;
+    }
+
+    /**
+     * set the popUpPane in the invisible AnchorPane and make it visible
+     * @param popUpPath is the popUp fxml Path given to te loader;
+     */
+    private void setPopUpPane(Path popUpPath) {
+        Task query = new Task() {
+            @Override
+            protected AnchorPane call() throws Exception {
+                try{
+                    Pane popUp = FXMLLoader.load(getClass().getResource(popUpPath.toString()));
+                    popUpPane.getChildren().add(popUp);
+                    popUpPane.setStyle("-fx-background-color: grey;");
+                }catch (IOException noFXML){
+                    CustomLogger.logException(noFXML);
+                }
+                return popUpPane;
+            }
+
+        };
+        Platform.runLater(query);
+    }
+
+    /**
+     *
+     */
+    private void cleanPopUpPane(){
+        Task query = new Task() {
+            @Override
+            protected AnchorPane call() throws Exception {
+                popUpPane.getChildren().addAll(popUpPane.getChildren());
+                popUpPane.setStyle("-fx-background-color: rgba(0, 255, 0, 0);");
+                return popUpPane;
+            }
+
+        };
+        Platform.runLater(query);
+    }
+
 }

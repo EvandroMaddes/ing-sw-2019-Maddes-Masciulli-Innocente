@@ -26,7 +26,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -35,7 +35,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -44,7 +44,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -53,7 +53,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -62,7 +62,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -75,7 +75,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -84,7 +84,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -93,7 +93,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -102,7 +102,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ammoboxes/redammobox.png" />
+                              <Image url="@../ammoboxes/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -115,7 +115,7 @@
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/powerUp/down.png" />
+                              <Image url="@../cards/powerUp/down.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -124,7 +124,7 @@
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/powerUp/down.png" />
+                              <Image url="@../cards/powerUp/down.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -133,7 +133,7 @@
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cards/powerUp/down.png" />
+                              <Image url="@../cards/powerUp/down.png" />
                            </image>
                         </ImageView>
                      </graphic>
