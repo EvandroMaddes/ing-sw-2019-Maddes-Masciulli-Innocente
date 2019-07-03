@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
-import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.event.controllerviewevent.ControllerViewEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.ViewControllerEvent;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.Map;
@@ -16,6 +16,12 @@ public class Controller implements Observer {
     private GameManager gameManager;
     private Map<String, VirtualView> usersVirtualView;
 
+    /**
+     * Constructor
+     *
+     * @param usersVirtualView is the mapping between the players username and their virtual view
+     * @param mapChoice        is the chosen map
+     */
     public Controller(Map<String, VirtualView> usersVirtualView, int mapChoice) {
         this.usersVirtualView = usersVirtualView;
         createGameManager(mapChoice);

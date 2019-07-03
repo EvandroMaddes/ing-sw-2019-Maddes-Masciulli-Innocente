@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 
 /**
@@ -10,6 +10,12 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class FirstRoundManager extends RoundManager {
 
+    /**
+     * Constructor
+     *
+     * @param controller    is the controller of the game
+     * @param currentPlayer is the player who play the round
+     */
     FirstRoundManager(Controller controller, Player currentPlayer) {
         super(controller, currentPlayer);
         setPhase(0);

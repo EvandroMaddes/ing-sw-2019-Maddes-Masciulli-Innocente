@@ -1,17 +1,17 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
-import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
-import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.event.controllerviewevent.CharacterRequestEvent;
+import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
+import it.polimi.ingsw.event.viewcontrollerevent.*;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.weapons.LockRifle;
-import it.polimi.ingsw.model.game_components.cards.weapons.ShockWave;
-import it.polimi.ingsw.model.game_components.cards.weapons.Shotgun;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.LockRifle;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.ShockWave;
+import it.polimi.ingsw.model.gamecomponents.cards.weapons.Shotgun;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;

@@ -1,14 +1,14 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.ActionRequestEvent;
-import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.event.controllerviewevent.ActionRequestEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.SkipActionChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.ViewControllerEvent;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.power_ups.TargetingScope;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.TargetingScope;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;

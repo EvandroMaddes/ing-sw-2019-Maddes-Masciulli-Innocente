@@ -1,16 +1,16 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
-import it.polimi.ingsw.event.controller_view_event.*;
+import it.polimi.ingsw.event.controllerviewevent.*;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class to manage the possible actions in a round
+ *
+ * @author Federico Inncoente
+ */
 public class ActionManager {
 
     private Controller controller;
@@ -30,7 +35,12 @@ public class ActionManager {
     private int chosenEffect;
     private boolean reloadPhase;
 
-    public ActionManager(Controller controller) {
+    /**
+     * Constructor
+     *
+     * @param controller is the controller of the game
+     */
+    ActionManager(Controller controller) {
         this.controller = controller;
         this.model = controller.getGameManager().getModel();
         this.currentRoundManager = controller.getGameManager().getCurrentRound();
@@ -38,52 +48,55 @@ public class ActionManager {
     }
 
     /*
-    *
-    * GESTIONE POSSIBILI AZIONI
-    *
+     *
+     * Manage of possible actions choice
+     *
      */
 
-    public Validator getValidator(){
+    /**
+     * Get the validator for the current player and the game situation
+     *
+     * @return the correct validator for the current player
+     */
+    private Validator getValidator() {
         Validator actionValidator;
-        if (model.getGameboard().isFinalFrenzy()){
-           actionValidator = new FinalFrenzyValidator();
-        }
-        else {
+        if (model.getGameboard().isFinalFrenzy()) {
+            actionValidator = new FinalFrenzyValidator();
+        } else {
             switch (currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState()) {
-                case 0: {
+                case 0:
                     actionValidator = new BaseActionValidator();
                     break;
-                }
-                case 1: {
+                case 1:
                     actionValidator = new AdrenalinicGrabValidator();
                     break;
-                }
-                case 2: {
+                case 2:
                     actionValidator = new AdrenalinicShotValidator();
                     break;
-                }
-                default:{
-                    throw new RuntimeException();
-                }
+                default:
+                    throw new IllegalStateException();
             }
         }
         return actionValidator;
     }
 
-    public void askForAction(){
+    /**
+     * Send to the player the request for the action to use
+     */
+    void askForAction() {
         controller.callView(new ActionRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), getValidator().getUsableActions(controller)));
     }
 
     /*
-    *
-    * GESTIONE DEL MOVIMENTO
-    *
+     *
+     * Move action manage
+     *
      */
 
     /**
-     * send a message with all possible destination
+     * Send to the player the possible destination for a move action
      */
-    public void sendPossibleMoves(){
+    public void sendPossibleMoves() {
         ArrayList<Square> possibleSquare = (ArrayList<Square>) getValidator().availableMoves(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
@@ -91,20 +104,26 @@ public class ActionManager {
         controller.callView(message);
     }
 
-    public void performMove(int positionX, int positionY){
-        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
+    /**
+     * Perform the move action of a player
+     *
+     * @param positionX is the row of the destination
+     * @param positionY is the column of the destination
+     */
+    public void performMove(int positionX, int positionY) {
+        currentRoundManager.getCurrentPlayer().setPosition(model.getGameboard().getMap().getSquareMatrix()[positionX][positionY]);
     }
 
     /*
-    *
-    * GESTIONE GRAB
-    *
+     *
+     * Grab action manage
+     *
      */
 
     /**
-     * send a message with possible grab square
+     * Send to the player the possible destination of a grab action
      */
-    public void sendPossibleGrabs(){
+    public void sendPossibleGrabs() {
         ArrayList<Square> possibleSquare = (ArrayList<Square>) getValidator().availableGrab(controller);
         int[] possibleSquareX = Encoder.encodeSquareTargetsX(possibleSquare);
         int[] possibleSquareY = Encoder.encodeSquareTargetsY(possibleSquare);
@@ -113,70 +132,79 @@ public class ActionManager {
     }
 
     /**
-     * move the player on target location. If it is a SpownSquare, send the possible grab weapon to let player choose one
+     * Move the player on target location of the grab action.
+     * If the destination is a basic square, grab the ammo tile.
+     * If the destination is a spawn square, send a request to the player with the weapons he can grab
      *
-     * @param positionX column destination
-     * @param positionY row destination
+     * @param positionX is the row of the destination
+     * @param positionY is the column of the destination
      */
-    public void performGrab(int positionX, int positionY){
-        currentRoundManager.getCurrentPlayer().setPosition( model.getGameboard().getMap().getSquareMatrix()[positionX][positionY] );
+    public void performGrab(int positionX, int positionY) {
+        currentRoundManager.getCurrentPlayer().setPosition(model.getGameboard().getMap().getSquareMatrix()[positionX][positionY]);
         if (model.getGameboard().getMap().getSpawnSquares().contains(currentRoundManager.getCurrentPlayer().getPosition())) {
             ArrayList<String> possibleGrabWeapons = new ArrayList<>();
-            for (Weapon w:((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).getWeapons()) {
-                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getGrabCost())){
+            for (Weapon w : ((SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition()).getWeapons()) {
+                if (currentRoundManager.getCurrentPlayer().canAffortCost(w.getGrabCost())) {
                     possibleGrabWeapons.add(w.getName());
                 }
             }
             WeaponGrabRequestEvent message = new WeaponGrabRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), possibleGrabWeapons);
             controller.callView(message);
-        }
-        else {
+        } else {
             ((BasicSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabAmmoTile(currentRoundManager.getCurrentPlayer());
             currentRoundManager.nextPhase();
         }
     }
 
     /*
-    *
-    * GESTIONE AZIONE COMBATTIMENTO
-    *
+     *
+     * Shot action manage
+     *
      */
 
-    public void manageShot(){
-        if (controller.getGameManager().isFinalFrenzyPhase() || currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState() == 2){
+    /**
+     * Manage the request of a shot action: if the player can perform a move, send the possible destination, otherwise send the possible weapon to shot with
+     */
+    public void manageShot() {
+        if (controller.getGameManager().isFinalFrenzyPhase() || currentRoundManager.getCurrentPlayer().getPlayerBoard().getAdrenalinicState() == 2) {
             ArrayList<Square> possibleDestination = currentRoundManager.getCurrentPlayer().getPosition().reachableInMoves(1);
-            controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
-        }
-        else
+            controller.callView(new ShotMoveRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination)));
+        } else
             sendPossibleWeapons();
     }
 
-    public void managePreEffectShot(int x, int y){
-        performMove(x,y);
-        if (controller.getGameManager().isFinalFrenzyPhase() && !getUnloadedWeapon().isEmpty()){
+    /**
+     * Perform the move before a shot action
+     *
+     * @param x is the destination row
+     * @param y is the destination column
+     */
+    public void managePreEffectShot(int x, int y) {
+        performMove(x, y);
+        if (controller.getGameManager().isFinalFrenzyPhase() && !getUnloadedWeapon().isEmpty()) {
             askForReload();
-        }
-        else {
-            if (!Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()).isEmpty()){
+        } else {
+            if (!Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()).isEmpty()) {
                 sendPossibleWeapons();
-            }
-            else
+            } else
                 controller.getGameManager().getCurrentRound().nextPhase();
         }
     }
 
     /**
-     * Manda le possibili armi
+     * Send a request with the possible weapons to shot with
      */
-    private void sendPossibleWeapons(){
-        controller.callView( new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
+    private void sendPossibleWeapons() {
+        controller.callView(new WeaponRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(Validator.availableToFireWeapons(currentRoundManager.getCurrentPlayer()))));
     }
 
     /**
-     * Salva l'arma scelta
+     * Save the weapons chosen for the shot action in the round manager
+     *
+     * @param weapon is the name of the chosen weapon
      */
-    public void saveWeapon(String weapon){
-        for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+    public void saveWeapon(String weapon) {
+        for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++) {
             if (currentRoundManager.getCurrentPlayer().getWeapons()[i].getName().equals(weapon))
                 chosenWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
         }
@@ -184,7 +212,7 @@ public class ActionManager {
     }
 
     /**
-     * manda i possibili effetti
+     * Send a request to the player with the possible effect to perform with the chosen weapon
      */
     public void sendPossibleEffects() {
         boolean[] usableEffects = new boolean[3];
@@ -193,15 +221,16 @@ public class ActionManager {
         if (Arrays.equals(usableEffects, new boolean[]{false, false, false})) {
             chosenWeapon.setUnloaded();
             currentRoundManager.nextPhase();
-        }
-        else
+        } else
             controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
     }
 
     /**
-     * Richiede le modalità di pagamento
+     * Send a request with the possible payment modes to pay the chosen effect
+     *
+     * @param chosenEffect is the number of the effect chosen by the player
      */
-    public void askForEffectPay(int chosenEffect){
+    public void askForEffectPay(int chosenEffect) {
         this.chosenEffect = chosenEffect;
         if (chosenWeapon.hasToPay(chosenEffect)) {
             int[] effectCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getEffectCost(chosenEffect));
@@ -209,69 +238,84 @@ public class ActionManager {
                 askForTargets();
             else
                 askForPowerUpAsAmmo(effectCost, PaymentRequestEvent.Context.WEAPON_EFFECT);
-        }
-        else
+        } else
             askForTargets();
     }
 
     /**
-     * Paga l'effetto scelto
+     * Perform the effect payment with the powerUp chosen by the player
+     *
+     * @param powerUpsType   is an array with the type of the powerUps chosen by the player
+     * @param powerUpsColour is the colour of the powerUp chosen by the player
      */
-    public void payEffect(String[] powerUpsType, CubeColour[] powerUpsColour){
+    public void payEffect(String[] powerUpsType, CubeColour[] powerUpsColour) {
         int[] effectCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getEffectCost(chosenEffect));
         payCost(effectCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
         askForTargets();
     }
 
     /**
-     * richiede i target per l'effetto
+     * Send to the player a request with the possible targets of the chosen effect of the chosen weapon
      */
-    public void askForTargets(){
+    private void askForTargets() {
         ControllerViewEvent message = chosenWeapon.getTargetEffect(chosenEffect);
-        if (message instanceof TargetPlayerRequestEvent && ((TargetPlayerRequestEvent)message).getMaxTarget() < 0)
+        if (message instanceof TargetPlayerRequestEvent && ((TargetPlayerRequestEvent) message).getMaxTarget() < 0)
             performWeaponEffect(new ArrayList<>());
         else
             controller.callView(message);
     }
 
     /**
-     * Esegue l'effetto scelto
+     * Perform the effect on the chosen target in case of those are other players
+     *
+     * @param targetsLite is a list characters that represent the target players
      */
-    public void performWeaponEffect(List<Character> targetsLite){
+    public void performWeaponEffect(List<Character> targetsLite) {
         ArrayList<Object> targets = Decoder.decodePlayerListAsObject(targetsLite, controller.getGameManager().getModel().getPlayers());
         chosenWeapon.performEffect(chosenEffect, targets);
         checkForWhileActionPowerUp();
     }
 
-    public void performWeaponEffect(int squareX, int squareY){
+    /**
+     * Perform the effect on the chosen target in case of this is a square
+     *
+     * @param squareX is the target's row
+     * @param squareY is the target's column
+     */
+    public void performWeaponEffect(int squareX, int squareY) {
         ArrayList<Object> targets = new ArrayList<>();
-        targets.add(Decoder.decodeSquare(squareX,squareY, controller.getGameManager().getModel().getGameboard().getMap()));
+        targets.add(Decoder.decodeSquare(squareX, squareY, controller.getGameManager().getModel().getGameboard().getMap()));
         chosenWeapon.performEffect(chosenEffect, targets);
         checkForWhileActionPowerUp();
     }
 
-    private void checkForWhileActionPowerUp(){
+    /**
+     * Check if the player can use while-action powerUps. In case he can, send a request to the player about their use
+     */
+    private void checkForWhileActionPowerUp() {
         ArrayList<PowerUp> usablePowerUps = currentRoundManager.getCurrentPlayer().getWhileActionPowerUp();
-        if (!usablePowerUps.isEmpty() && !chosenWeapon.getDamagedPlayer().isEmpty() && !(currentRoundManager.getCurrentPlayer().getAmmo().isEmpty() && currentRoundManager.getCurrentPlayer().getPowerUps().isEmpty())){
+        if (!usablePowerUps.isEmpty() && !chosenWeapon.getDamagedPlayer().isEmpty() && !(currentRoundManager.getCurrentPlayer().getAmmo().isEmpty() && currentRoundManager.getCurrentPlayer().getPowerUps().isEmpty())) {
             controller.callView(new WhileActionPowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(usablePowerUps), Encoder.encodePowerUpColour(usablePowerUps)));
-        }
-        else
+        } else
             sendPossibleEffects();
     }
 
 
     /*
-    *
-    * GESTIONE RACCOLTA ARMI
-    *
+     *
+     * Weapon grab manage
+     *
      */
 
     /**
-     * Raccoglie l'arma
+     * Grab a weapon chosen by the player.
+     * If the grab is free, perform it, otherwise check for the possible grab modality
+     *
+     * @param weaponChoice is the name of the chosen weapon
      */
-    public void grabWeapon(String weaponChoice){
+    public void grabWeapon(String weaponChoice) {
         SpawnSquare grabSquare = (SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition();
-        for (Weapon w: grabSquare.getWeapons()) {
+        for (Weapon w : grabSquare.getWeapons()) {
             if (w.getName().equals(weaponChoice))
                 chosenWeapon = w;
         }
@@ -280,99 +324,111 @@ public class ActionManager {
         if (grabCost[0] + grabCost[1] + grabCost[2] == 0) {
             ((SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
             manageWeaponLimit();
-        }
-        else
+        } else
             askForPowerUpAsAmmo(grabCost, PaymentRequestEvent.Context.WEAPON_GRAB);
     }
 
     /**
-     * Paga l'effetto scelto
+     * Perform the payment of the weapon grab with the chosen powerUps.
+     *
+     * @param powerUpsType   are the chosen powerUps type
+     * @param powerUpsColour are the colour of the chosen powerUps
      */
-    public void payWeaponGrab(String[] powerUpsType, CubeColour[] powerUpsColour){
+    public void payWeaponGrab(String[] powerUpsType, CubeColour[] powerUpsColour) {
         int[] grabCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getGrabCost());
         payCost(grabCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpsType, powerUpsColour));
-        ((SpawnSquare)currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
+        ((SpawnSquare) currentRoundManager.getCurrentPlayer().getPosition()).grabWeapon(chosenWeapon, currentRoundManager.getCurrentPlayer());
         manageWeaponLimit();
     }
 
     /**
-     *
+     * Check if the player grabbed his fourth weapon.
+     * In case he did, send a request of which weapon he want to discard
      */
-    private void manageWeaponLimit(){
+    private void manageWeaponLimit() {
         if (currentRoundManager.getCurrentPlayer().getNumberOfWeapons() > 3) {
             ArrayList<String> playerWeapons = new ArrayList<>();
             for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++) {
                 playerWeapons.add(currentRoundManager.getCurrentPlayer().getWeapons()[i].getName());
                 controller.callView(new WeaponDiscardRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), playerWeapons));
             }
-        }
-        else
+        } else
             currentRoundManager.nextPhase();
     }
 
     /**
-     * Scarta un arma
+     * Discard the extra weapon chosen by the player, putting it back in the player position spawn square, and setting it loaded
+     *
+     * @param weapon is the name of the chosen weapon
      */
-    public void discardWeapon(String weapon){
+    public void discardWeapon(String weapon) {
         Weapon discardWeapon = Decoder.decodePlayerWeapon(currentRoundManager.getCurrentPlayer(), weapon);
         currentRoundManager.getCurrentPlayer().discardWeapon(discardWeapon);
         currentRoundManager.nextPhase();
     }
 
     /*
-    *
-    * GESTIONE RICARICA
-    *
+     *
+     * Reload manage
+     *
      */
 
-    private ArrayList<Weapon> getUnloadedWeapon(){
+    /**
+     * Get all the unloaded weapon of the current player
+     *
+     * @return a list of all the player's unloaded weapons
+     */
+    private ArrayList<Weapon> getUnloadedWeapon() {
         ArrayList<Weapon> possibleReload = new ArrayList<>();
-        for (int i = 0 ; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++){
+        for (int i = 0; i < currentRoundManager.getCurrentPlayer().getNumberOfWeapons(); i++) {
             Weapon currentWeapon = currentRoundManager.getCurrentPlayer().getWeapons()[i];
-            if ( !currentWeapon.isLoaded() && currentRoundManager.getCurrentPlayer().canAffortCost(currentWeapon.getReloadCost()) )
+            if (!currentWeapon.isLoaded() && currentRoundManager.getCurrentPlayer().canAffortCost(currentWeapon.getReloadCost()))
                 possibleReload.add(currentRoundManager.getCurrentPlayer().getWeapons()[i]);
         }
         return possibleReload;
     }
 
     /**
-     * reload phase: if the player has weapon unloaded which cost can be payed, pass them to the player. If the player can't do it, go to the next phase
+     * If the player can perform at leas one weapon reload, send all reloadable and payable weapon to the player to ask him for a reload action.
      */
-    public void askForReload(){
+    void askForReload() {
         ArrayList<Weapon> possibleReload = getUnloadedWeapon();
-        if ( !possibleReload.isEmpty() ) {
+        if (!possibleReload.isEmpty()) {
             controller.callView(new WeaponReloadRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodeWeaponsList(possibleReload)));
             reloadPhase = true;
-        }
-        else if (controller.getGameManager().getCurrentRound().getPhase() == 6 || controller.getGameManager().getCurrentRound().getCurrentPlayer().getNumberOfWeapons() == 0)
+        } else if (controller.getGameManager().getCurrentRound().getPhase() == 6 || controller.getGameManager().getCurrentRound().getCurrentPlayer().getNumberOfWeapons() == 0)
             currentRoundManager.nextPhase();
         else
             sendPossibleWeapons();
     }
 
     /**
-     * Richiede la modalità di pagamento dell'arma raccolta
+     * Send a request for the reload pay modality
+     *
+     * @param weapon is the name of the weapon that the player want to reload
      */
-    public void askForWeaponReloadPay(String weapon){
+    public void askForWeaponReloadPay(String weapon) {
         chosenWeapon = Decoder.decodePlayerWeapon(currentRoundManager.getCurrentPlayer(), weapon);
         int[] reloadCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
         askForPowerUpAsAmmo(reloadCost, PaymentRequestEvent.Context.WEAPON_RELOAD);
     }
 
     /**
-     * Chiama la ricarica dell'arma
+     * Pay the weapon reload, using the chosen powerUp if the player chose some
+     *
+     * @param powerUpType   are the type of the powerUp chosen by the player
+     * @param powerUpColour are the colour of the powerUp chosen by the player
      */
-    public void payWeaponReload(String[] powerUpType, CubeColour[] powerUpColour){
+    public void payWeaponReload(String[] powerUpType, CubeColour[] powerUpColour) {
         int[] reloadCost = AmmoCube.getColoursByAmmoCubeArrayRYB(chosenWeapon.getReloadCost());
         payCost(reloadCost, Decoder.decodePowerUpsList(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour));
         reloadWeapon();
     }
 
     /**
-     *
-     *
+     * Reload the weapon chosen and, if it is the reload phase, send again the reload request with the unloaded weapons
      */
-    private void reloadWeapon(){
+    private void reloadWeapon() {
         chosenWeapon.setLoaded();
         if (reloadPhase)
             askForReload();
@@ -382,18 +438,24 @@ public class ActionManager {
 
 
     /*
-    *
-    * METODI PER GESTIRE I PAGAMENTI
-    *
+     *
+     * Payment manage
+     *
      */
 
+    /**
+     * Send to the player a request for which powerUp use to make a pay
+     *
+     * @param cost    is the pay cost as an integer array in the format Red - Yellow - Blue
+     * @param context is teh context of the pay (WEAPON_EFFECT, WEAPON_RELOAD, WEAPON_GRAB)
+     */
     private void askForPowerUpAsAmmo(int[] cost, PaymentRequestEvent.Context context) {
         int[] playerAmmo = AmmoCube.getColoursByListRYB(currentRoundManager.getCurrentPlayer().getAmmo());
         ArrayList<PowerUp> possiblePowerUp = new ArrayList<>();
-        for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
-            if ( (p.getColour() == CubeColour.Red && cost[0] > 0) ||
+        for (PowerUp p : currentRoundManager.getCurrentPlayer().getPowerUps()) {
+            if ((p.getColour() == CubeColour.Red && cost[0] > 0) ||
                     (p.getColour() == CubeColour.Yellow && cost[1] > 0) ||
-                    (p.getColour() == CubeColour.Blue && cost[2] > 0) )
+                    (p.getColour() == CubeColour.Blue && cost[2] > 0))
                 possiblePowerUp.add(p);
 
 
@@ -408,22 +470,19 @@ public class ActionManager {
                 payWeaponReload(new String[]{}, new CubeColour[]{});
             else if (context == PaymentRequestEvent.Context.WEAPON_GRAB)
                 payWeaponGrab(new String[]{}, new CubeColour[]{});
-        }
-        else {
+        } else {
             minimalPowerUpNumberToUse = AmmoCube.cubeDifference(cost, playerAmmo);
             if (context == PaymentRequestEvent.Context.WEAPON_EFFECT) {
                 EffectPaymentRequestEvent message = new EffectPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
                         Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
                 controller.callView(message);
-            }
-            else if (context == PaymentRequestEvent.Context.WEAPON_RELOAD) {
+            } else if (context == PaymentRequestEvent.Context.WEAPON_RELOAD) {
                 WeaponReloadPaymentRequestEvent message = new WeaponReloadPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
                         Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
                 controller.callView(message);
-            }
-            else if (context == PaymentRequestEvent.Context.WEAPON_GRAB) {
+            } else if (context == PaymentRequestEvent.Context.WEAPON_GRAB) {
                 WeaponGrabPaymentRequestEvent message = new WeaponGrabPaymentRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(),
                         Encoder.encodePowerUpsType(possiblePowerUp),
                         powerUpColoursLite, minimalPowerUpNumberToUse, cost);
@@ -432,8 +491,14 @@ public class ActionManager {
         }
     }
 
-    public void payCost(int[] cost, List<PowerUp> powerUps){
-        for (PowerUp p: powerUps) {
+    /**
+     * Pay a cost, using a list of powerUps chosen by the player and the remaining with the player's ammo
+     *
+     * @param cost     is the pay cost as an integer array in the format Red - Yellow - Blue
+     * @param powerUps is a list of powerUp chosen to pay the effect
+     */
+    public void payCost(int[] cost, List<PowerUp> powerUps) {
+        for (PowerUp p : powerUps) {
             currentRoundManager.getCurrentPlayer().discardPowerUp(p);
             model.getGameboard().getPowerUpDeck().discardCard(p);
             if (p.getColour() == CubeColour.Red)
@@ -444,23 +509,28 @@ public class ActionManager {
                 cost[2]--;
         }
         ArrayList<AmmoCube> playersAmmo = new ArrayList<>(currentRoundManager.getCurrentPlayer().getAmmo());
-        for (AmmoCube a:playersAmmo){
-            if (a.getColour() == CubeColour.Red && cost[0] > 0){
+        for (AmmoCube a : playersAmmo) {
+            if (a.getColour() == CubeColour.Red && cost[0] > 0) {
                 currentRoundManager.getCurrentPlayer().discardAmmo(a);
                 cost[0]--;
-            }
-            else if (a.getColour() == CubeColour.Yellow && cost[1] > 0){
+            } else if (a.getColour() == CubeColour.Yellow && cost[1] > 0) {
                 currentRoundManager.getCurrentPlayer().discardAmmo(a);
                 cost[1]--;
-            }
-            else if (a.getColour() == CubeColour.Blue && cost[2] > 0){
+            } else if (a.getColour() == CubeColour.Blue && cost[2] > 0) {
                 currentRoundManager.getCurrentPlayer().discardAmmo(a);
                 cost[2]--;
             }
         }
     }
 
-    public void askForGenericPay(String powerUpType, CubeColour powerUpColour){
+    /**
+     * Send a request for a payment with no condition, that mean that every colour of ammo can be used to perform it.
+     * This method is used to play only while-action powerUps
+     *
+     * @param powerUpType   is the powerUp type to pay
+     * @param powerUpColour is the powerUp colour to pay
+     */
+    public void askForGenericPay(String powerUpType, CubeColour powerUpColour) {
         PowerUp choice = Decoder.decodePowerUp(currentRoundManager.getCurrentPlayer(), powerUpType, powerUpColour);
         chosenPowerUp = choice;
         ArrayList<PowerUp> usablePowerUp = currentRoundManager.getCurrentPlayer().getPowerUps();
@@ -474,52 +544,55 @@ public class ActionManager {
 
 
     /*
-    *
-    * GESTIONE RICHIESTA POWERUP DA USARE
-    *
+     *
+     * PowerUp request manage
+     *
      */
 
     /**
-     * if the player has at least one Newton or Teleporter, send a PowerUpRequest message to ask if the player want to use it
+     * If the player can use powerUps as action, send him a request with all the usable powerUps
      */
-    public void askForPowerUpAsAction(){
+    void askForPowerUpAsAction() {
         ArrayList<PowerUp> powerUps = new ArrayList<>();
-        for (PowerUp p: currentRoundManager.getCurrentPlayer().getPowerUps()) {
+        for (PowerUp p : currentRoundManager.getCurrentPlayer().getPowerUps()) {
             if (p.whenToUse() == PowerUp.Usability.AS_ACTION && !(controller.getGameManager().isFirstRoundPhase() && currentRoundManager.getCurrentPlayer() == controller.getGameManager().getModel().getPlayers().get(0) && p.getName().equals("Newton")))
                 powerUps.add(p);
         }
         if (!powerUps.isEmpty()) {
             PowerUpRequestEvent message = new AsActionPowerUpRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePowerUpsType(powerUps), Encoder.encodePowerUpColour(powerUps));
             controller.callView(message);
-        }
-        else
+        } else
             currentRoundManager.nextPhase();
     }
 
-
+    /**
+     * Send a request to get the target of the chosen powerUps
+     *
+     * @param powerUpChoice is the chosen powerUp type
+     * @param powerUpColour is the chosen powerUp colour
+     */
     public void usePowerUp(String powerUpChoice, CubeColour powerUpColour) {
         chosenPowerUp = Decoder.decodePowerUp(currentRoundManager.getCurrentPlayer(), powerUpChoice, powerUpColour);
-        if (chosenPowerUp.getName().equals("Teleporter")){
+        if (chosenPowerUp.getName().equals("Teleporter")) {
             askForTargetsTeleporter();
-        }
-        else if (chosenPowerUp.getName().equals("Newton")){
-                askForPlayerTargetsNewton();
+        } else if (chosenPowerUp.getName().equals("Newton")) {
+            askForPlayerTargetsNewton();
         }
     }
 
     /*
-    *
-    * GESTIONE DEI POWERUP
-    *
+     *
+     * PowerUp manage
+     *
      */
 
     /**
-     *
+     * Send a request for the square target of a Teleporter powerUp
      */
-    private void askForTargetsTeleporter(){
+    private void askForTargetsTeleporter() {
         ArrayList<Square> possibleDestination = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 4; j++){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
                 if (controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j] != null)
                     possibleDestination.add(controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix()[i][j]);
             }
@@ -528,13 +601,13 @@ public class ActionManager {
     }
 
     /**
-     *
+     * Send a request for the player target of a Newton powerUp
      */
-    private void askForPlayerTargetsNewton(){
+    private void askForPlayerTargetsNewton() {
         ArrayList<Player> possiblePlayers = controller.getGameManager().getModel().getPlayers();
         possiblePlayers.remove(currentRoundManager.getCurrentPlayer());
         ArrayList<Player> onBoardPlayer = new ArrayList<>();
-        for (Player p: possiblePlayers) {
+        for (Player p : possiblePlayers) {
             if (p.getPosition() != null)
                 onBoardPlayer.add(p);
         }
@@ -542,39 +615,46 @@ public class ActionManager {
     }
 
     /**
-     *
+     * Send a request for the square target of a Newton powerUp
      */
-    public void askForSquareTargetsNewton(){
-        controller.callView(((Newton)chosenPowerUp).getTargets());
+    public void askForSquareTargetsNewton() {
+        controller.callView(((Newton) chosenPowerUp).getTargets());
     }
 
     /**
+     * Perform the effect of the chosen powerUp
      *
+     * @param target is the chosen target, which could be both a character or a square (depends of the chosen powerUp)
      */
-    public void performPowerUp(Object target){
+    public void performPowerUp(Object target) {
         chosenPowerUp.performEffect(target);
     }
 
     /**
-     *
+     * If the player has some, send the request of using end-round powerUps
      */
-    public void endPowerUpPhase(){
+    public void endPowerUpPhase() {
         currentRoundManager.getCurrentPlayer().discardPowerUp(chosenPowerUp);
         model.getGameboard().getPowerUpDeck().discardCard(chosenPowerUp);
         controller.getGameManager().getCurrentRound().nextPhase();
     }
 
-    public void askTargetTargetingScope(){
+    /**
+     * Send a request for the target of the targeting scope powerUp
+     */
+    public void askTargetTargetingScope() {
         controller.callView(new TargetingScopeTargetRequestEvent(currentRoundManager.getCurrentPlayer().getUsername(), Encoder.encodePlayerTargets(chosenWeapon.getDamagedPlayer())));
     }
 
-    public void performTargetingScopeEffect(Character target){
+    /**
+     * Perform the effect of the targeting scope on the chosen target
+     *
+     * @param target is the character of the chosen target
+     */
+    public void performTargetingScopeEffect(Character target) {
         Player decodedTarget = Decoder.decodePlayerFromCharacter(target, controller.getGameManager().getModel().getPlayers());
         chosenPowerUp.performEffect(decodedTarget);
         decodedTarget.removeOneTimesGetDamaged();
         sendPossibleEffects();
     }
-
-
-
 }

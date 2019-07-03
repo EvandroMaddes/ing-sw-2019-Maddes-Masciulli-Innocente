@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.*;
-import it.polimi.ingsw.event.view_controller_event.*;
+import it.polimi.ingsw.event.controllerviewevent.*;
+import it.polimi.ingsw.event.viewcontrollerevent.*;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
-import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
+import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import java.util.ArrayList;
 

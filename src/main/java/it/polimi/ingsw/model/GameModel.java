@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.event.model_view_event.*;
+import it.polimi.ingsw.event.modelviewevent.*;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.GameBoard;
 import it.polimi.ingsw.model.board.KillShotTrack;
 import it.polimi.ingsw.model.board.SpawnSquare;
-import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.player.PlayerBoard;
 import it.polimi.ingsw.utils.Encoder;

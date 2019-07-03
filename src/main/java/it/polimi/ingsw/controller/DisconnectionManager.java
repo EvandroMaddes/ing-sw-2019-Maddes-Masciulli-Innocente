@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.model_view_event.PlayerDisconnectionNotify;
-import it.polimi.ingsw.event.model_view_event.PlayerReconnectionNotify;
+import it.polimi.ingsw.event.modelviewevent.PlayerDisconnectionNotify;
+import it.polimi.ingsw.event.modelviewevent.PlayerReconnectionNotify;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
@@ -24,6 +24,11 @@ public class DisconnectionManager {
     private ArrayList<Player> disconnectingQueue;
     private boolean[] availableCharacter;
 
+    /**
+     * Constructor
+     *
+     * @param controller is the controller of the game
+     */
     DisconnectionManager(Controller controller) {
         this.controller = controller;
         disconnectedPlayers = new ArrayList<>();

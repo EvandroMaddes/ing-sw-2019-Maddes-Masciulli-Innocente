@@ -2,13 +2,12 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.ClientEvent;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.server_view_event.ServerClientEvent;
+import it.polimi.ingsw.event.serverviewevent.ServerClientEvent;
 import it.polimi.ingsw.network.client.ClientInterface;
 import it.polimi.ingsw.network.client.rmi.RMIClient;
 import it.polimi.ingsw.network.client.socket.SocketClient;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.NetConfiguration;
-import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.cli.graph.Color;
 
 import java.net.ConnectException;

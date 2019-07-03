@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.RespawnRequestEvent;
+import it.polimi.ingsw.event.controllerviewevent.RespawnRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.GameTrack;
 import it.polimi.ingsw.model.board.SpawnSquare;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
 import it.polimi.ingsw.utils.Encoder;
@@ -21,9 +21,16 @@ public class DeathManager {
     private Player deadPlayer;
     private RoundManager roundManager;
 
-    DeathManager(Controller controller, GameModel model, Player deadPlayer, RoundManager roundManager) {
+    /**
+     * Constructor
+     *
+     * @param controller   il the controller of the game
+     * @param deadPlayer   is the player that need to respawn
+     * @param roundManager is the current round
+     */
+    DeathManager(Controller controller, Player deadPlayer, RoundManager roundManager) {
         this.controller = controller;
-        this.model = model;
+        this.model = controller.getGameManager().getModel();
         this.deadPlayer = deadPlayer;
         this.roundManager = roundManager;
     }

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.controller_view_event.CharacterRequestEvent;
+import it.polimi.ingsw.event.controllerviewevent.CharacterRequestEvent;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.*;
-import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
-import it.polimi.ingsw.model.game_components.cards.*;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
+import it.polimi.ingsw.model.gamecomponents.cards.*;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
@@ -31,8 +31,12 @@ public class GameManager {
     private DisconnectionManager disconnectionManager;
     private Player currentPlayer;
 
+
     /**
+     * Constructor
      *
+     * @param controller is the controller of the game
+     * @param mapChoice  is the map chosen for teh game
      */
     GameManager(Controller controller, int mapChoice) {
         this.controller = controller;
