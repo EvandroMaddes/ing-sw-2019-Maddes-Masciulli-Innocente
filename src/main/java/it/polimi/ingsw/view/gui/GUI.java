@@ -16,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -121,7 +120,6 @@ public class GUI extends RemoteView {
 
         //primaryStage.close(); non mostra il secondo stage prova con la reduce
         System.out.println("fine configurazione GUI");
-        metodoPROVA();
 
         /***********FUNZIONA**************
          Image weapon = decodeMessage.loadImage(decodeMessage.findWeaponImage("FURNACE"));
@@ -136,9 +134,14 @@ public class GUI extends RemoteView {
     public void metodoPROVA(){
 
         Platform.runLater(()->{
-            Character[] characters = {Character.BANSHEE,Character.VIOLET,Character.SPROG};
-            int[] skulls = {1,2,1,0};
-            gameTrackSkullUpdate(characters,skulls);
+           Image[]map = decodeMessage.mapImage(0);
+            //gameBoardController.setMap(map[0],map[1]);
+            weaponReplaceUpdate(0,2,new String[]{"T.H.O.R.","FURNACE","HELLION"});
+            newPlayerJoinedUpdate("evandro",Character.D_STRUCT_OR);
+            newPlayerJoinedUpdate("evandro",Character.BANSHEE);
+            newPlayerJoinedUpdate("evandro",Character.VIOLET);
+
+
             gameBoardStage.show();
         });
     }
@@ -237,7 +240,9 @@ public class GUI extends RemoteView {
 
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
-        return null;
+
+        gameBoardController.setPosition(x,y,decodeMessage.characterImage(currCharacter));
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
 
@@ -311,12 +316,14 @@ public class GUI extends RemoteView {
 
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
-        return null;
+        gameBoardController.removeAmmoTileOnMap(x,y);
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
-        return null;
+        gameBoardController.addAmmoTileOnMap(x,y,decodeMessage.ammoTileImage(fistColour,secondColour,thirdColour));
+        return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
@@ -431,16 +438,27 @@ public class GUI extends RemoteView {
 
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
+        gameBoardController.setNewPlayer(decodeMessage.playerBoardImage(characterChoice),characterChoice);
+        gameBoardController.setInfo("User "+newPlayer+" join with "+characterChoice.name());
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 
     @Override
     public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
-        Image[] toAdd = new Image[damages.length];
+        Image[] damageToAdd = new Image[damages.length];
+        Image[] marksToAdd = new Image[marks.length];
+
         for (int i=0; i<damages.length;i++){
-             toAdd[i] = decodeMessage.playerTokenImage(damages[i]);
+             damageToAdd[i] = decodeMessage.playerTokenImage(damages[i]);
         }
-        gameBoardController.setDemage(character,toAdd);
+        for (int i=0; i<marks.length;i++){
+            marksToAdd[i] = decodeMessage.playerTokenImage(marks[i]);
+        }
+        gameBoardController.setDamage(character,damageToAdd);
+        gameBoardController.setMark(character,marksToAdd);
+        if (characterChoose == character) {
+            gameBoardController.addPlayerSkull(skullNumber);
+        }
         return new UpdateChoiceEvent(BROADCASTSTRING);
     }
 

@@ -1,85 +1,143 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.player.Character;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * It controls scene of gameboard
  */
-public class GameBoardController extends AbstractController{
+public class GameBoardController extends AbstractController {
 
+    //Square
     @FXML
     private VBox vboxSquare0;
 
     @FXML
+    private VBox vboxSquare1;
+
+    @FXML
+    private VBox vboxSquare2;
+
+    @FXML
+    private VBox vboxSquare3;
+
+    @FXML
+    private VBox vboxSquare4;
+
+    @FXML
+    private VBox vboxSquare5;
+
+    @FXML
+    private VBox vboxSquare6;
+
+    @FXML
+    private VBox vboxSquare7;
+
+    @FXML
+    private VBox vboxSquare8;
+
+    @FXML
+    private VBox vboxSquare9;
+
+
+    @FXML
+    private VBox vboxSquare11;
+
+    @FXML
+    private VBox vboxSquare10;
+
+
+    //game track
+    @FXML
     private GridPane gameTrack;
-    
+
+    //User area
     @FXML
     private HBox yourPowerUp;
-
 
     @FXML
     private HBox yourWeapon;
 
+    @FXML
+    private GridPane yourSkull;
 
+    @FXML
+    private TextArea infoArea;
+
+    //Map
     @FXML
     private ImageView rightMap;
 
     @FXML
     private ImageView leftMap;
 
-    @FXML
-    private TextArea infoArea;
-
-    @FXML
-    private GridPane gridMap;
-
-    @FXML
-    private AnchorPane anchorPane;
-    
     //PLAYERBOARD
     @FXML
-    private GridPane dstructorDamage;
+    private ImageView downLeftPlayerboard;
+    @FXML
+    private ImageView topCenterPlayerboard;
+    @FXML
+    private ImageView downCenterPlayerboard;
+    @FXML
+    private ImageView topLeftPlayerboard;
+    @FXML
+    private ImageView principalPlayerBoard;
+    @FXML
+    private GridPane downCenterDamage;
 
     @FXML
-    private GridPane dstructorAmmoCube;
+    private GridPane downCenterMarks;
 
     @FXML
-    private GridPane bansheeDamage;
+    private GridPane downCenterAmmoCube;
 
     @FXML
-    private GridPane bansheeAmmoCube;
+    private GridPane topLeftDamage;
 
     @FXML
-    private GridPane violetDamage;
+    private GridPane topLeftMarks;
 
     @FXML
-    private GridPane violetAmmoCube;
+    private GridPane topLeftAmmoCube;
 
     @FXML
-    private GridPane dozerDamage;
+    private GridPane principalDamage;
 
     @FXML
-    private GridPane dozerAmmoCube;
+    private GridPane principalMarks;
 
     @FXML
-    private GridPane sprogAmmoCube;
+    private GridPane principalAmmoCube;
 
     @FXML
-    private GridPane sprogDamage;
+    private GridPane topCenterDamage;
 
+    @FXML
+    private GridPane topCenterMarks;
+
+    @FXML
+    private GridPane topCenterAmmoCube;
+
+
+    @FXML
+    private GridPane downLeftDamage;
+
+    @FXML
+    private GridPane downLeftMarks;
+
+    @FXML
+    private GridPane downLeftAmmoCube;
     //SPAWNSQUARE
     @FXML
     private HBox spawnBlue;
@@ -90,212 +148,465 @@ public class GameBoardController extends AbstractController{
     @FXML
     private HBox spawnRed;
 
-    private Map<Character, GridPane[]> mapCharacterAmmoCube = new HashMap<Character,GridPane[]>();
-    private Map<Integer[],VBox> mapSquareVBox = new HashMap<Integer[], VBox>();
-    private int numberOfSkull = 0;
+    private Image skullImage;
 
-    public void init(){
-        mapCharacterAmmoCube.put(Character.BANSHEE,new GridPane[]{bansheeDamage,bansheeAmmoCube});
-        mapCharacterAmmoCube.put(Character.VIOLET,new GridPane[]{violetDamage,violetAmmoCube});
-        mapCharacterAmmoCube.put(Character.DOZER,new GridPane[]{dozerDamage,dozerAmmoCube});
-        mapCharacterAmmoCube.put(Character.SPROG,new GridPane[]{sprogDamage,sprogAmmoCube});
-        mapCharacterAmmoCube.put(Character.D_STRUCT_OR,new GridPane[]{dstructorDamage,dstructorAmmoCube});
-        gridImageAmmoCubeSetting(bansheeAmmoCube);
-        gridImageAmmoCubeSetting(violetAmmoCube);
-        gridImageAmmoCubeSetting(dozerAmmoCube);
-        gridImageAmmoCubeSetting(sprogAmmoCube);
-        gridImageAmmoCubeSetting(dstructorAmmoCube);
-        gridImageClean(bansheeDamage);
-        gridImageClean(violetDamage);
-        gridImageClean(dozerDamage);
-        gridImageClean(sprogDamage);
-        gridImageClean(dstructorDamage);
-        // TODO: 02/07/2019 settare le associazioni square Vbox 
-        // TODO: 02/07/2019 settare tutte le immagini
+    private Map<Character, GridPane[]> mapCharacterAmmoCube = new EnumMap<>(Character.class);
+    private Map<VBox, int[]> mapSquareVBox = new HashMap<>();
+    private int numberOfSkull = 0;
+    private ArrayList<VBox> square = new ArrayList<>();
+    private int numberOfPlayers = 0;
+
+    public void init() {
+
+        gridImageAmmoCubeSetting(topLeftAmmoCube);
+        gridImageAmmoCubeSetting(principalAmmoCube);
+        gridImageAmmoCubeSetting(topCenterAmmoCube);
+        gridImageAmmoCubeSetting(downLeftAmmoCube);
+        gridImageAmmoCubeSetting(downCenterAmmoCube);
+        gridImageClean(topLeftDamage);
+        gridImageClean(principalDamage);
+        gridImageClean(topCenterDamage);
+        gridImageClean(downLeftDamage);
+        gridImageClean(downCenterDamage);
+        int[] position0 = {0, 0};
+        int[] position1 = {1, 0};
+        int[] position2 = {2, 0};
+        int[] position3 = {3, 0};
+        int[] position4 = {0, 1};
+        int[] position5 = {1, 1};
+        int[] position6 = {2, 1};
+        int[] position7 = {3, 1};
+        int[] position8 = {0, 2};
+        int[] position9 = {1, 2};
+        int[] position10 = {2, 2};
+        int[] position11 = {3, 2};
+
+        mapSquareVBox.put(vboxSquare0, position0);
+        mapSquareVBox.put(vboxSquare1, position1);
+        mapSquareVBox.put(vboxSquare2, position2);
+        mapSquareVBox.put(vboxSquare3, position3);
+        mapSquareVBox.put(vboxSquare4, position4);
+        mapSquareVBox.put(vboxSquare5, position5);
+        mapSquareVBox.put(vboxSquare6, position6);
+        mapSquareVBox.put(vboxSquare7, position7);
+        mapSquareVBox.put(vboxSquare8, position8);
+        mapSquareVBox.put(vboxSquare9, position9);
+        mapSquareVBox.put(vboxSquare10, position10);
+        mapSquareVBox.put(vboxSquare11, position11);
+
+        square.add(vboxSquare0);
+        square.add(vboxSquare1);
+        square.add(vboxSquare2);
+        square.add(vboxSquare3);
+        square.add(vboxSquare4);
+        square.add(vboxSquare5);
+        square.add(vboxSquare6);
+        square.add(vboxSquare7);
+        square.add(vboxSquare8);
+        square.add(vboxSquare9);
+        square.add(vboxSquare10);
+        square.add(vboxSquare11);
+
+        skullImage = new Image("skull.png");
+        gameTrack.setVisible(false);
     }
-    
+
 
     /**
      * It set on scene map selected
+     *
      * @param lefMap
      * @param rightmap
      */
-    public void setMap(Image lefMap, Image rightmap){
+    void setMap(Image lefMap, Image rightmap) {
         this.leftMap.setImage(lefMap);
         this.rightMap.setImage(rightmap);
+        gameTrack.setVisible(true);
+    }
+
+    /**
+     * setter: It link one player to his playerboard
+     *
+     * @param playerboard image of a playerboard
+     * @param character   character of playerboard
+     */
+    private void setPrincipalPlayerboard(Image playerboard, Character character) {
+        principalPlayerBoard.setImage(playerboard);
+        mapCharacterAmmoCube.put(character, new GridPane[]{principalDamage, principalAmmoCube, principalMarks});
+
+    }
+
+    /**
+     * setter: It link one player to his playerboard
+     *
+     * @param playerboard image of a playerboard
+     * @param character   character of playerboard
+     */
+    private void setTopLeftPlayerboard(Image playerboard, Character character) {
+        topLeftPlayerboard.setImage(playerboard);
+        mapCharacterAmmoCube.put(character, new GridPane[]{topLeftDamage, topLeftAmmoCube, topLeftMarks});
+    }
+
+    /**
+     * setter: It link one player to his playerboard
+     *
+     * @param playerboard image of a playerboard
+     * @param character   character of playerboard
+     */
+    private void setTopCenterPlayerboard(Image playerboard, Character character) {
+        topCenterPlayerboard.setImage(playerboard);
+        mapCharacterAmmoCube.put(character, new GridPane[]{topCenterDamage, topCenterAmmoCube, topCenterMarks});
+    }
+
+    /**
+     * setter: It link one player to his playerboard
+     *
+     * @param playerboard image of a playerboard
+     * @param character   character of playerboard
+     */
+    private void setDownLeftPlayerboardLeftPlayerboard(Image playerboard, Character character) {
+        downLeftPlayerboard.setImage(playerboard);
+        mapCharacterAmmoCube.put(character, new GridPane[]{downLeftDamage, downLeftAmmoCube, downLeftMarks});
+    }
+
+    /**
+     * setter: It link one player to his playerboard
+     *
+     * @param playerboard image of a playerboard
+     * @param character   character of playerboard
+     */
+    private void setDownCenterPlayerboardPlayerboard(Image playerboard, Character character) {
+        downCenterPlayerboard.setImage(playerboard);
+        mapCharacterAmmoCube.put(character, new GridPane[]{downCenterDamage, downCenterAmmoCube, downCenterMarks});
     }
 
     /**
      * it sets images on a grid pane
-     * @param toAdd images to add on a grid pane
+     *
+     * @param toAdd    images to add on a grid pane
      * @param toRefill grid pane in which add images
      */
-    private void setImageOnGrid(Image[] toAdd,GridPane toRefill){
+    private void setImageOnGrid(Image[] toAdd, GridPane toRefill) {
         gridImageClean(toRefill);
-        for(int i=0; i<toAdd.length;i++){
-            ImageView currImageView = ((ImageView)toRefill.getChildren().get(i));
+        for (int i = 0; i < toAdd.length; i++) {
+            ImageView currImageView = ((ImageView) toRefill.getChildren().get(i));
             currImageView.setImage(toAdd[i]);
         }
     }
 
     /**
      * it removes every single image on a grid pane
+     *
      * @param toClean grid pane to clean
      */
-    private void gridImageClean(GridPane toClean){
-        for (int i=0;i <toClean.getChildren().size();i++){
-            ((ImageView)toClean.getChildren().get(i)).setImage(null);
-            
+    private void gridImageClean(GridPane toClean) {
+        for (int i = 0; i < toClean.getChildren().size(); i++) {
+            ((ImageView) toClean.getChildren().get(i)).setImage(null);
+
         }
+
+
     }
 
     /**
      * /**
      * It removes every single image of a hBox
+     *
      * @param hBox grid pane to clean
      */
-    public void hBoxImageClean(HBox hBox){
-        for (int i=0;i <hBox.getChildren().size();i++){
-            ((ImageView)hBox.getChildren().get(i)).setImage(null);
+    private void hBoxImageClean(HBox hBox) {
+        for (int i = 0; i < hBox.getChildren().size(); i++) {
+            ((ImageView) hBox.getChildren().get(i)).setImage(null);
 
         }
     }
 
     /**
      * it sets dimension of an ammoCube
+     *
      * @param toSet current grid to set
      */
-    private void gridImageAmmoCubeSetting(GridPane toSet){
-        for (int i=0;i <toSet.getChildren().size();i++){
-            ((ImageView)toSet.getChildren().get(i)).setFitHeight(15);
-            ((ImageView)toSet.getChildren().get(i)).setFitWidth(15);
+    private void gridImageAmmoCubeSetting(GridPane toSet) {
+        for (int i = 0; i < toSet.getChildren().size(); i++) {
+            ((ImageView) toSet.getChildren().get(i)).setFitHeight(15);
+            ((ImageView) toSet.getChildren().get(i)).setFitWidth(15);
+            ((ImageView) toSet.getChildren().get(i)).setImage(null);
         }
+
     }
 
     /**
      * It sets ammo on a playerBoard
-     * @param character
-     * @param ammo
+     *
+     * @param character player board of this character
+     * @param ammo      available ammo to add
      */
-    public void setAmmo(Character character, Image[] ammo){
+    void setAmmo(Character character, Image[] ammo) {
         GridPane curr = mapCharacterAmmoCube.get(character)[1];
-        setImageOnGrid(ammo,curr);
+        setImageOnGrid(ammo, curr);
     }
 
     /**
-     * it sets Damages on a playerboard
-     * @param character
-     * @param damages
+     * it sets damages on a player board
+     *
+     * @param character player board of this character
+     * @param damages   damage to add
      */
-    public void setDemage(Character character, Image[] damages){
-            GridPane curr = mapCharacterAmmoCube.get(character)[0];
-            setImageOnGrid(damages,curr);
-        }
+    void setDamage(Character character, Image[] damages) {
+        GridPane curr = mapCharacterAmmoCube.get(character)[0];
+        setImageOnGrid(damages, curr);
+    }
 
     /**
      * It Sets weapons of player
+     *
      * @param weapon weapons to set
      */
-    public void setPlayerWeapon(Image[] weapon){
+    void setPlayerWeapon(Image[] weapon) {
         hBoxImageClean(yourWeapon);
-            for (int i = 0; i< weapon.length; i++){
-                ((ImageView) yourWeapon.getChildren().get(i)).setImage(weapon[i]);
-            }
+        for (int i = 0; i < weapon.length; i++) {
+            ((ImageView) yourWeapon.getChildren().get(i)).setImage(weapon[i]);
         }
+    }
 
     /**
      * It sets weapons on spawn square
-     * @param x column which identifier a spawn square
+     *
+     * @param x           column which identifier a spawn square
      * @param spawnWeapon weapon to add
      */
-    public void setSpawnWeapon(int x, Image[] spawnWeapon){
+    void setSpawnWeapon(int x, Image[] spawnWeapon) {
 
         HBox current = new HBox();
-            if (x==0){
-                hBoxImageClean(spawnRed);
-                current=spawnRed;
-            }else if (x==2){
-                hBoxImageClean(spawnBlue);
-                current=spawnBlue;
-            }else if (x==3){
-                hBoxImageClean(spawnYellow);
-                current=spawnYellow;
-            }
-
-            for (int i=0; i<spawnWeapon.length;i++){
-                ((ImageView)current.getChildren().get(i)).setImage(spawnWeapon[i]);
-            }
+        if (x == 0) {
+            hBoxImageClean(spawnRed);
+            current = spawnRed;
+        } else if (x == 2) {
+            hBoxImageClean(spawnBlue);
+            current = spawnBlue;
+        } else if (x == 3) {
+            hBoxImageClean(spawnYellow);
+            current = spawnYellow;
         }
+
+        for (int i = 0; i < spawnWeapon.length; i++) {
+            ((ImageView) current.getChildren().get(i)).setImage(spawnWeapon[i]);
+        }
+    }
+
     /**
      * It sets power up of player
+     *
      * @param powerUp power up to set
      */
-    public void setPlayerPowerUp(Image[] powerUp) {
-        for (int i = 0; i< powerUp.length; i++){
-            ((ImageView)yourPowerUp.getChildren().get(i)).setImage(powerUp[i]);
+    void setPlayerPowerUp(Image[] powerUp) {
+        for (int i = 0; i < powerUp.length; i++) {
+            ((ImageView) yourPowerUp.getChildren().get(i)).setImage(powerUp[i]);
         }
     }
 
     /**
      * It shows a new information on text area
-     * @param toSet
+     *
+     * @param toSet information to show
      */
-    public void setInfo(String toSet){
+    void setInfo(String toSet) {
         infoArea.setText(toSet);
     }
 
-    public void removeSkull(int numberOfToken,Image token){
-      ImageView current = ((ImageView) gameTrack.getChildren().get(numberOfSkull));
-        if (numberOfSkull<8) {
+    /**
+     * It remove skull from game track
+     *
+     * @param numberOfToken number of player token to replace
+     * @param token         image of token
+     */
+    void removeSkull(int numberOfToken, Image token) {
+        ImageView current = ((ImageView) gameTrack.getChildren().get(numberOfSkull));
+        if (numberOfSkull < 8) {
             current.setImage(token);
             numberOfSkull++;
-            if (numberOfToken==2){
-                ((ImageView)gameTrack.getChildren().get(numberOfSkull+7)).setImage(token);
+            if (numberOfToken == 2) {
+                ((ImageView) gameTrack.getChildren().get(numberOfSkull + 7)).setImage(token);
             }
         }
     }
 
-    public void gameTrackClean(){
-        for (int i = numberOfSkull; i>=0; i--){
+    /**
+     * it cleans game track
+     */
+    void gameTrackClean() {
+        for (int i = numberOfSkull; i >= 0; i--) {
             ((ImageView) gameTrack.getChildren().get(numberOfSkull)).setImage(null);
         }
-        numberOfSkull = 0 ;
+        numberOfSkull = 0;
     }
 
     /**
-     * 
-     * @param square position:{x,y}
-     * @param character
+     * It remove character from old position and it sets character ii  the new one
+     *
+     * @param character character to set
      */
-    public void setPosition(int[] square, Image character){
-        // TODO: 02/07/2019 rimuoverlo dalla precedente posizione
-        VBox currentSquare = ((VBox)(mapSquareVBox.get(square).getChildren()));
-        getFreePosition(currentSquare).setImage(character);
-        
-        
-    }
-
-    /**
-     * IT find in a square the first free position to put an image
-     * @param square
-     * @return
-     */
-    private ImageView getFreePosition(VBox square){
-        ImageView curentImageView = new ImageView();
-        int j=0;
-        for (int i=0;i<3;i++){
-            curentImageView =((ImageView)((HBox)square.getChildren().get(j)).getChildren().get(i));
-            if (curentImageView.getImage()==null){
-                i=3;
-            }
-            if (i==2){
-                j++;
-                i=0;
+    public void setPosition(int x, int y, Image character) {
+        removeCharacter(character);
+        VBox sqare = null;
+        for (VBox currentSquare : square
+        ) {
+            if (mapSquareVBox.get(currentSquare)[0] == x && mapSquareVBox.get(currentSquare)[1] == y) {
+                sqare = currentSquare;
             }
         }
-        
-        return curentImageView;
+        //gli passo null perche mi serve il primo posto libero sul quadrato
+        getPosition(sqare, null).setImage(character);
+
+
     }
 
-    // TODO: 02/07/2019 setare ammo sugli square playerboard marchi 
+    /**
+     * It remove one character from the map
+     *
+     * @param toRemove image of character to remove
+     */
+    private void removeCharacter(Image toRemove) {
+        for (VBox currentSquare : square
+        ) {
+            getPosition(currentSquare, toRemove).setImage(null);
+        }
+    }
+
+
+    /**
+     * It find in a square the first free position to put an image
+     *
+     * @param square square in which search
+     * @return location in which set an image
+     */
+    private ImageView getPosition(VBox square, Image toFind) {
+        // TODO: 03/07/2019 funziona nel mettere più player su uno square quindi nel cercare un toFind=null ma non funziona con toFind = (un'immagine)
+        ImageView position = new ImageView();
+
+        for (int i = 0; i < 3; i++) {
+            ImageView currentImageView = ((ImageView) ((HBox) square.getChildren().get(0)).getChildren().get(i));
+            if (currentImageView.getImage() == toFind) {
+                position = currentImageView;
+            }
+        }
+
+        for (int j = 0; j < 3; j++) {
+            ImageView currentImageViewBis = ((ImageView) ((HBox) square.getChildren().get(1)).getChildren().get(j));
+            if (currentImageViewBis.getImage() == toFind) {
+                position = currentImageViewBis;
+
+            }
+        }
+
+        return position;
+    }
+
+    /**
+     * It adds skull on player board
+     *
+     * @param skullNumber number of skull to add
+     */
+    void addPlayerSkull(int skullNumber) {
+        for (int i = 0; i < skullNumber; i++) {
+            ((ImageView) yourSkull.getChildren().get(i)).setImage(skullImage);
+        }
+    }
+
+    /**
+     * It add an image on a square in section for ammo tile
+     *
+     * @param x     coordinate x
+     * @param y     coordinate y
+     * @param toAdd image to add
+     */
+    private void setAmmoTile(int x, int y, Image toAdd) {
+        for (VBox currentSquare : square
+        ) {
+            if (mapSquareVBox.get(currentSquare)[0] == x && mapSquareVBox.get(currentSquare)[1] == y) {
+                ((ImageView) currentSquare.getChildren().get(2)).setImage(toAdd);
+            }
+        }
+    }
+
+    /**
+     * It remove an ammo tile on a square
+     *
+     * @param x coordinate x
+     * @param y coordinate y
+     */
+    void removeAmmoTileOnMap(int x, int y) {
+        setAmmoTile(x, y, null);
+    }
+
+    /**
+     * It add an image of ammo tile on a square
+     *
+     * @param x     coordinate x
+     * @param y     coordinate y
+     * @param toAdd ammo tile to add
+     */
+    void addAmmoTileOnMap(int x, int y, Image toAdd) {
+        setAmmoTile(x, y, toAdd);
+    }
+
+    /**
+     * it adds marks on player board
+     *
+     * @param character player board in which add marks
+     * @param damages   number of marks
+     */
+    public void setMark(Character character, Image[] damages) {
+        GridPane curr = mapCharacterAmmoCube.get(character)[2];
+        setImageOnGrid(damages, curr);
+    }
+
+    /**
+     * It find free position to add a playerboard
+     *
+     * @param playerBoard image to add
+     * @param character   character choose
+     */
+    void setNewPlayer(Image playerBoard, Character character) {
+        switch (numberOfPlayers) {
+            case 0:
+                setPrincipalPlayerboard(playerBoard, character);
+                initAmmocube(principalAmmoCube);
+                numberOfPlayers++;
+                break;
+            case 1:
+                setTopLeftPlayerboard(playerBoard, character);
+                initAmmocube(topLeftAmmoCube);
+                numberOfPlayers++;
+                break;
+            case 2:
+                setTopCenterPlayerboard(playerBoard, character);
+                initAmmocube(topCenterAmmoCube);
+                numberOfPlayers++;
+                break;
+            case 3:
+                setDownLeftPlayerboardLeftPlayerboard(playerBoard, character);
+                initAmmocube(downLeftAmmoCube);
+                numberOfPlayers++;
+                break;
+            case 4:
+                setDownCenterPlayerboardPlayerboard(playerBoard, character);
+                initAmmocube(downLeftAmmoCube);
+                numberOfPlayers++;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * It adds three ammo cube in a grid map
+     *
+     * @param ammoCubeGrid grid in which put ammo cube
+     */
+    private void initAmmocube(GridPane ammoCubeGrid) {
+        ((ImageView) ammoCubeGrid.getChildren().get(0)).setImage(new Image("ammoboxes/yellowammobox.png"));
+        ((ImageView) ammoCubeGrid.getChildren().get(1)).setImage(new Image("ammoboxes/blueammobox.png"));
+        ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoboxes/redammobox.png"));
+    }
 }

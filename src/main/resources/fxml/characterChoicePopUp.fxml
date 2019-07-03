@@ -24,7 +24,7 @@
                      <graphic>
                         <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../players/Sprog.png" />
+                              <Image url="@../players/sprog.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -51,7 +51,7 @@
                      <graphic>
                         <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../players/distructor.png" />
+                              <Image url="@../players/dstructor.png" />
                            </image>
                         </ImageView>
                      </graphic>
