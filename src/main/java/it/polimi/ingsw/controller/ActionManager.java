@@ -1,16 +1,16 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.validator.*;
-import it.polimi.ingsw.event.controller_view_event.*;
+import it.polimi.ingsw.event.controllerviewevent.*;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.board.BasicSquare;
 import it.polimi.ingsw.model.board.SpawnSquare;
 import it.polimi.ingsw.model.board.Square;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.Weapon;
-import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.Weapon;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.utils.Decoder;
@@ -35,6 +35,11 @@ public class ActionManager {
     private int chosenEffect;
     private boolean reloadPhase;
 
+    /**
+     * Constructor
+     *
+     * @param controller is the controller of the game
+     */
     ActionManager(Controller controller) {
         this.controller = controller;
         this.model = controller.getGameManager().getModel();

@@ -1,0 +1,50 @@
+package it.polimi.ingsw.event.viewcontrollerevent;
+
+import it.polimi.ingsw.controller.Controller;
+
+/**
+ * @author Francesco Masciulli
+ * represent the selected Action after a request
+ */
+public class ActionChoiceEvent extends ViewControllerEvent {
+
+    private int action;
+
+    /**
+     * action:
+     * 1 = move
+     * 2 = grab
+     * 3 = shot
+     * everithing else: skip action
+     *
+     * Constructor
+     * @param user the Client user
+     * @param action the chosen action encoding
+     *
+     */
+    public ActionChoiceEvent(String user, int action){
+        super(user);
+        this.action = action;
+    }
+
+    @Override
+    public void performAction(Controller controller) {
+        switch (action){
+            case 1:{
+                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleMoves();
+                break;
+            }
+            case 2:{
+                controller.getGameManager().getCurrentRound().getActionManager().sendPossibleGrabs();
+                break;
+            }
+            case 3:{
+                controller.getGameManager().getCurrentRound().getActionManager().manageShot();
+                break;
+            }
+            default:{
+                controller.getGameManager().getCurrentRound().nextPhase();
+            }
+        }
+    }
+}

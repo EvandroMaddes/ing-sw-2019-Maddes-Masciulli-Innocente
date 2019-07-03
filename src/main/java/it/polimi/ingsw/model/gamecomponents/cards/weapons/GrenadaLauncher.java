@@ -1,0 +1,126 @@
+package it.polimi.ingsw.model.gamecomponents.cards.weapons;
+
+import it.polimi.ingsw.event.controllerviewevent.ControllerViewEvent;
+import it.polimi.ingsw.event.controllerviewevent.TargetPlayerRequestEvent;
+import it.polimi.ingsw.event.controllerviewevent.TargetSquareRequestEvent;
+import it.polimi.ingsw.model.board.Square;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.OneOptionalEffectWeapon;
+import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.utils.Encoder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GrenadaLauncher extends OneOptionalEffectWeapon {
+    private boolean intermediateEffectState;
+
+    public GrenadaLauncher() {
+        super(CubeColour.Red, "GRENADE LAUNCHER",
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)},
+                new AmmoCube[]{new AmmoCube(CubeColour.Red)});
+    }
+
+    @Override
+    public void setLoaded() {
+        super.setLoaded();
+        intermediateEffectState = false;
+    }
+
+    @Override
+    protected void setUsableEffect() {
+        updateUsableEffect(new boolean[]{true, true, false});
+    }
+
+    @Override
+    public void effectControlFlow(int effectUsed) {
+        effectUsed--;
+        if (effectUsed == 0 && !intermediateEffectState)
+            intermediateEffectState = true;
+        else if (effectUsed == 1 && intermediateEffectState)
+            updateUsableEffect(new boolean[]{false, false, false});
+        else if (effectUsed == 0 || effectUsed == 1)
+            getUsableEffect()[effectUsed] = false;
+    }
+
+    @Override
+    public void performEffectOne(List<Object> targets) {
+        if (!intermediateEffectState){
+            performEffectOneFirstStep(targets);
+        }
+        else
+            performEffectOneSecondStep(targets);
+        effectControlFlow(1);
+    }
+
+    private void performEffectOneFirstStep(List<Object> targets){
+        checkEmptyTargets(targets);
+        damage((Player)targets.get(0), 1);
+        getDamagedPlayer().add((Player)targets.get(0));
+        getFirstEffectTarget().add((Player)targets.get(0));
+    }
+
+    private void performEffectOneSecondStep(List<Object> targets){
+        checkEmptyTargets(targets);
+        move(getFirstEffectTarget().get(0), (Square)targets.get(0));
+    }
+
+    @Override
+    public ControllerViewEvent getTargetEffectOne() {
+        if (!intermediateEffectState)
+            return getTargetEffectOneFirstStep();
+        else
+            return getTargetEffectOneSecondStep();
+    }
+
+    private ControllerViewEvent getTargetEffectOneFirstStep(){
+        ArrayList<Player> possibleTargets = getOwner().getPosition().findVisiblePlayers();
+        possibleTargets.remove(getOwner());
+        return new TargetPlayerRequestEvent(getOwner().getUsername(), Encoder.encodePlayerTargets(possibleTargets), 1);
+    }
+
+    private ControllerViewEvent getTargetEffectOneSecondStep(){
+        ArrayList<Square> possibleDestination = new ArrayList<>();
+        for (int i = 0; i < 4; i++)
+            if (getFirstEffectTarget().get(0).getPosition().checkDirection(i))
+                possibleDestination.add(getFirstEffectTarget().get(0).getPosition().getNextSquare(i));
+        return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleDestination), Encoder.encodeSquareTargetsY(possibleDestination));
+    }
+
+    @Override
+    public boolean isUsableEffectOne() {
+        if (!intermediateEffectState)
+            return getUsableEffect()[0] && getEffectsEnable()[0] && !((TargetPlayerRequestEvent)getTargetEffectOne()).getPossibleTargets().isEmpty();
+        else
+            return getUsableEffect()[0];
+    }
+
+    @Override
+    public void performEffectTwo(List<Object> targets) {
+        checkEmptyTargets(targets);
+        Square targetSquare = (Square)targets.get(0);
+        for (Player p:targetSquare.getSquarePlayers()){
+            if (p != getOwner()) {
+                damage(p, 1);
+                getDamagedPlayer().add(p);
+            }
+        }
+        effectControlFlow(2);
+    }
+
+    @Override
+    public ControllerViewEvent getTargetEffectTwo() {
+        ArrayList<Square> possibleTargets = new ArrayList<>();
+        for (Player p:getOwner().getPosition().findVisiblePlayers()){
+            if (!possibleTargets.contains(p.getPosition()))
+                possibleTargets.add(p.getPosition());
+        }
+        return new TargetSquareRequestEvent(getOwner().getUsername(), Encoder.encodeSquareTargetsX(possibleTargets), Encoder.encodeSquareTargetsY(possibleTargets));
+    }
+
+    @Override
+    public boolean isUsableEffectTwo() {
+        return getUsableEffect()[1] && getOwner().canAffortCost(getSecondEffectCost()) && ((TargetSquareRequestEvent)getTargetEffectTwo()).getPossibleTargetsY().length != 0;
+    }
+}

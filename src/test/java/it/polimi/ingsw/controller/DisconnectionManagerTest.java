@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.view_controller_event.ActionChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.DisconnectedEvent;
-import it.polimi.ingsw.event.view_controller_event.SkipActionChoiceEvent;
-import it.polimi.ingsw.event.view_controller_event.ViewControllerEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.ActionChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.DisconnectedEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.SkipActionChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.ViewControllerEvent;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;

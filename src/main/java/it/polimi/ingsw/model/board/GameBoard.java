@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.game_components.cards.AmmoTilesDeck;
-import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
-import it.polimi.ingsw.model.game_components.cards.WeaponDeck;
+import it.polimi.ingsw.model.gamecomponents.cards.AmmoTilesDeck;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUpDeck;
+import it.polimi.ingsw.model.gamecomponents.cards.WeaponDeck;
 
 public class GameBoard {
 

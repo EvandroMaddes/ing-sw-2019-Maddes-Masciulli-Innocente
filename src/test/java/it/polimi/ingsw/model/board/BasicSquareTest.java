@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.AmmoTile;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import org.junit.Assert;

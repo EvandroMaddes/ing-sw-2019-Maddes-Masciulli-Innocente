@@ -1,15 +1,14 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.AsActionPowerUpRequestEvent;
-import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
-import it.polimi.ingsw.event.controller_view_event.RespawnRequestEvent;
-import it.polimi.ingsw.event.view_controller_event.SpawnChoiceEvent;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.PowerUp;
-import it.polimi.ingsw.model.game_components.cards.PowerUpDeck;
-import it.polimi.ingsw.model.game_components.cards.power_ups.Newton;
-import it.polimi.ingsw.model.game_components.cards.power_ups.Teleporter;
+import it.polimi.ingsw.event.controllerviewevent.AsActionPowerUpRequestEvent;
+import it.polimi.ingsw.event.controllerviewevent.ControllerViewEvent;
+import it.polimi.ingsw.event.controllerviewevent.RespawnRequestEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.SpawnChoiceEvent;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
+import it.polimi.ingsw.model.gamecomponents.cards.PowerUpDeck;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Newton;
+import it.polimi.ingsw.model.gamecomponents.cards.power_ups.Teleporter;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.view.VirtualView;

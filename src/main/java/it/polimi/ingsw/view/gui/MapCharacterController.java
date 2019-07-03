@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 
-import it.polimi.ingsw.event.view_controller_event.GameChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.GameChoiceEvent;
 import it.polimi.ingsw.model.player.Character;
 
 import javafx.collections.FXCollections;

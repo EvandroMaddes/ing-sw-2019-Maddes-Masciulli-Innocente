@@ -2,8 +2,8 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.PlayerPositionUpdateEvent;
-import it.polimi.ingsw.event.view_controller_event.CharacterChoiceEvent;
+import it.polimi.ingsw.event.modelviewevent.PlayerPositionUpdateEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.CharacterChoiceEvent;
 
 import it.polimi.ingsw.model.player.Character;
 import org.junit.Before;

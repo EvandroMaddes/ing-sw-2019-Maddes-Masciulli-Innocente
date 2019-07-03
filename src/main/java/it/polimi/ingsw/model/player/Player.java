@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.event.model_view_event.AmmoUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.PlayerPowerUpUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.PlayerWeaponUpdateEvent;
-import it.polimi.ingsw.event.model_view_event.PlayerPositionUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.AmmoUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.PlayerPowerUpUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.PlayerWeaponUpdateEvent;
+import it.polimi.ingsw.event.modelviewevent.PlayerPositionUpdateEvent;
 import it.polimi.ingsw.model.board.SpawnSquare;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
-import it.polimi.ingsw.model.game_components.cards.*;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.cards.*;
 import it.polimi.ingsw.model.board.Square;
 import it.polimi.ingsw.utils.Encoder;
 

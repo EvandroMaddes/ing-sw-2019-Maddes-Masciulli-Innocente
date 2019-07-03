@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.controller_view_event.ControllerViewEvent;
+import it.polimi.ingsw.event.controllerviewevent.ControllerViewEvent;
 
 import java.util.*;
 

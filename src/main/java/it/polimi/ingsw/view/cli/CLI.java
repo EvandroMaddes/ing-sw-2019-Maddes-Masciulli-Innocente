@@ -1,14 +1,14 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.model_view_event.EndGameUpdate;
-import it.polimi.ingsw.event.server_view_event.ReconnectionRequestEvent;
-import it.polimi.ingsw.event.server_view_event.UsernameModificationEvent;
-import it.polimi.ingsw.event.view_controller_event.*;
-import it.polimi.ingsw.event.view_server_event.LobbyChoiceEvent;
-import it.polimi.ingsw.event.view_server_event.NewGameChoiceEvent;
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
+import it.polimi.ingsw.event.serverviewevent.ReconnectionRequestEvent;
+import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.*;
+import it.polimi.ingsw.event.viewserverevent.LobbyChoiceEvent;
+import it.polimi.ingsw.event.viewserverevent.NewGameChoiceEvent;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;

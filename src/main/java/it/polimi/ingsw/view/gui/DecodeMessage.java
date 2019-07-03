@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.model.game_components.ammo.AmmoCube;
-import it.polimi.ingsw.model.game_components.ammo.CubeColour;
+import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
+import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
 import javafx.scene.image.Image;
 import java.io.File;
