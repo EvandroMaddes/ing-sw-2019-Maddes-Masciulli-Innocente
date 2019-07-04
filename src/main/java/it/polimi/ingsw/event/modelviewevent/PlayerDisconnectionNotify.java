@@ -4,14 +4,33 @@ import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.view.RemoteView;
 
+/**
+ * Message to notify the disconnection of a player to other clients
+ *
+ * @author Federico Innocente
+ * @author Francesco Masciulli
+ */
 public class PlayerDisconnectionNotify extends ModelViewBroadcastEvent {
-    Character disconnectedCharacter;
+    /**
+     * Is the disconnected character
+     */
+    private Character disconnectedCharacter;
 
+    /**
+     * Constructor
+     * @param disconnectedCharacter is the disconnected character
+     */
     public PlayerDisconnectionNotify(Character disconnectedCharacter) {
         super();
         this.disconnectedCharacter = disconnectedCharacter;
     }
 
+    /**
+     * performAction implementation: handle the player disconnection
+     *
+     * @param remoteView is the Client RemoteView implementation
+     * @return an UpdateChoiceEvent
+     */
     @Override
     public Event performAction(RemoteView remoteView) {
         remoteView.playerReconnectionNotify(getUser(), disconnectedCharacter, true);
