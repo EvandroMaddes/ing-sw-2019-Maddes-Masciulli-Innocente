@@ -3,8 +3,8 @@ package it.polimi.ingsw.view.cli.graph;
 /**
  * this class represents a square on map
  */
-public class CLISquare {
-    public static final int MAXSQUARECOLUMN = 10;
+ class CLISquare {
+     static final int MAXSQUARECOLUMN = 10;
     public static final int MAXSQUAREROW = 5;
     private String[][] squareString = new String[MAXSQUARECOLUMN][MAXSQUAREROW];
     private String currColorEscape;
@@ -16,7 +16,7 @@ public class CLISquare {
      * @param color color of the square
      * @param isSpawnSquare property of spawn
      */
-    public CLISquare(Color color, boolean isSpawnSquare){
+    CLISquare(Color color, boolean isSpawnSquare){
         this.isSpawnSquare = isSpawnSquare;
         currColorEscape = Color.ANSI_BLACK_BACKGROUND.escape()+color.escape();
         for (int i = 1; i < MAXSQUARECOLUMN; i++) {
@@ -49,7 +49,7 @@ public class CLISquare {
      * getter:
      * @return SQUARESTRING
      */
-    public String[][] getSquareString() {
+     String[][] getSquareString() {
         return squareString;
     }
 
@@ -59,7 +59,7 @@ public class CLISquare {
      * @param isLastLane is true if the door must be added on the right/bottom side of the square
      *                     (respectively if isRow is false/true)
      */
-    public void insertDoor(boolean isRow, boolean isLastLane){
+     void insertDoor(boolean isRow, boolean isLastLane){
         int constantIndex;
 
 
@@ -113,7 +113,7 @@ public class CLISquare {
      * @param isLastLane is true if the door must be added on the right/bottom side of the square
      *                     (respectively if isRow is false/true)
      */
-    public void eraseWall(boolean isRow, boolean isLastLane){
+     void eraseWall(boolean isRow, boolean isLastLane){
         int constantIndex;
         String[] replacedStrings = new String[3];
 
