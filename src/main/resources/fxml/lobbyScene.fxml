@@ -17,12 +17,13 @@
             <children>
                 <VBox alignment="BOTTOM_CENTER" layoutX="1.0" prefHeight="486.0" prefWidth="671.0" spacing="40.0">
                     <children>
-                        <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGameClick" prefHeight="42.0"
-                                prefWidth="134.0" text="NEW GAME" VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGameClick" prefHeight="50.0"
+                                prefWidth="120.0" text="NEW GAME" VBox.vgrow="ALWAYS"/>
                         <ComboBox fx:id="waitingLobbyComboBox" blendMode="MULTIPLY" onAction="#waitLobbyClick"
-                                  prefHeight="38.0" prefWidth="165.0" promptText="waiting lobbies"/>
-                        <ComboBox fx:id="startedLobbyComboBox" onAction="#startedLobbyClick" prefHeight="40.0"
-                                  prefWidth="171.0" promptText="started lobbies" visibleRowCount="20"/>
+                                  prefHeight="50.0" prefWidth="150.0" promptText="WAITING LOBBIES"
+                                  visibleRowCount="20"/>
+                        <ComboBox fx:id="startedLobbyComboBox" onAction="#startedLobbyClick" prefHeight="50.0"
+                                  prefWidth="150.0" promptText="STARTED LOBBIES" visibleRowCount="20"/>
                     </children>
                     <padding>
                         <Insets left="20.0"/>

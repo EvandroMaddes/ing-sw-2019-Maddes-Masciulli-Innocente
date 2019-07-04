@@ -222,6 +222,7 @@ public class GameBoardController extends AbstractController {
         square.add(vboxSquare10);
         square.add(vboxSquare11);
 
+        infoArea.setDisable(true);
         skullImage = new Image("skull.png");
         gameTrack.setVisible(false);
     }
