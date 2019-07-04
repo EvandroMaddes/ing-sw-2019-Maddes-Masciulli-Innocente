@@ -194,11 +194,18 @@ public class GameManager {
      * @param character is the chosen character
      */
     public void addPlayer(String user, Character character) {
-        Player newPlayer = new Player(user, character);
-        if (model.getPlayers().isEmpty()) {
-            newPlayer.setFirstPlayer();
+        boolean characterChosen = false;
+        for (Player p : model.getPlayers()) {
+            if (p.getCharacter() == character)
+                characterChosen = true;
         }
-        model.addPlayer(newPlayer);
+        if (!characterChosen) {
+            Player newPlayer = new Player(user, character);
+            if (model.getPlayers().isEmpty()) {
+                newPlayer.setFirstPlayer();
+            }
+            model.addPlayer(newPlayer);
+        }
         characterSelect();
     }
 
@@ -534,7 +541,7 @@ public class GameManager {
     /**
      * Add one to the count of the player turn
      */
-    void goNextPlayerTurn(){
+    void goNextPlayerTurn() {
         playerTurn++;
     }
 }
