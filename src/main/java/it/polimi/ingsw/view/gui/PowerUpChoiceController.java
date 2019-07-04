@@ -10,8 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
+/**
+ * It controls powerUp choice scene
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
+ */
 public class PowerUpChoiceController extends AbstractController {
 
     @FXML
@@ -41,32 +49,40 @@ public class PowerUpChoiceController extends AbstractController {
     @FXML
     private Label infoLabel;
 
-    private String powerUp1;
-    private CubeColour color1;
-
-    private String powerUp2;
-    private CubeColour color2;
-
-    private String powerUp3;
-    private CubeColour color3;
-
-    private ArrayList<String> powerUpChoice = new ArrayList<>();
-    private ArrayList<CubeColour> colorChoice = new ArrayList<>();
-
+    /**
+     * Contains user choices
+     */
+    private ArrayList<String> powerUpChoice ;
+    /**
+     *   * Contains user choices
+     */
+    private ArrayList<CubeColour> colorChoice;
+    /**
+     * type of choice
+     */
     private boolean endOfRoundPowerUp= false;
+    /**
+     * parameter to GUI
+     */
     private boolean wantToUse = false;
 
+    /**
+     * Number of powerUp to choose
+     */
     private int toChose = 1;
 
 
     public void setController(String[] powerUpNames, CubeColour[] powerUpColours, int toChose) {
         this.toChose = toChose;
+        powerUpChoice = new ArrayList<>(Arrays.asList(powerUpNames));
+        colorChoice = new ArrayList<>(Arrays.asList(powerUpColours));
         DecodeMessage decoder = new DecodeMessage();
         for (int i = 0; i < powerUpNames.length; i++) {
             whichImage(i).setImage(decoder.powerUpImage(powerUpNames[i], powerUpColours[i]));
             whichButton(i).setDisable(false);
         }
         finishButtom.setDisable(true);
+
     }
 
     private ImageView whichImage(int i) {
@@ -93,21 +109,21 @@ public class PowerUpChoiceController extends AbstractController {
     void powerUp1Click(ActionEvent event) {
         powerUp1Button.setDisable(true);
         wantToUse=true;
-        checkChoice(powerUp1, color1);
+        checkChoice(powerUpChoice.get(0), colorChoice.get(0));
     }
 
     @FXML
     void powerUp2Click(ActionEvent event) {
         wantToUse=true;
         powerUp2Button.setDisable(true);
-        checkChoice(powerUp2, color2);
+        checkChoice(powerUpChoice.get(1), colorChoice.get(1));
     }
 
     @FXML
     void powerUp3Click(ActionEvent event) {
         wantToUse=true;
         powerUp3Button.setDisable(true);
-        checkChoice(powerUp3, color3);
+        checkChoice(powerUpChoice.get(1), colorChoice.get(1));
     }
 
     @FXML

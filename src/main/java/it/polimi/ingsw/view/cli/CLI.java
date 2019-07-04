@@ -373,7 +373,6 @@ public class CLI extends RemoteView {
         }else {
             message = new SkipActionChoiceEvent(getUser());
         }
-        System.out.println(((WeaponEffectChioceEvent)message).getEffectChoice());
         return message;
     }
 
