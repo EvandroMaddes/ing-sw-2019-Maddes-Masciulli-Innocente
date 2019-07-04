@@ -3,8 +3,8 @@ package it.polimi.ingsw.view.cli.graph;
 /**
  * Char 'I'
  */
-public class ITitleCharacter extends TitleCharacter {
-    public ITitleCharacter(){
+ class ITitleCharacter extends TitleCharacter {
+     ITitleCharacter(){
         String upperTopString = "_/\\\\\\\\\\\\\\\\\\";
         String lowerTopString = "\\////\\\\\\//_";
         String bodyString = "___\\/\\\\\\___";

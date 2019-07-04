@@ -12,7 +12,7 @@ public class CLIGameTrack {
      * getter
      * @return TRACK
      */
-    public String[][] getTrack() {
+    String[][] getTrack() {
         return track;
     }
 
@@ -44,14 +44,11 @@ public class CLIGameTrack {
      * @param column column of skull
      */
     public void removeSkull(int damageToken, String colorEscape,int column){
-          if(damageToken!=0) {
-              if (track[column][1].contains("☠")) {
+          if(damageToken!=0 && track[column][1].contains("☠")) {
                   track[column][1] = Color.ANSI_BLACK_BACKGROUND.escape()+ colorEscape + "| ▼";
                   if (damageToken == 2) {
                       track[column + 1][1] = Color.ANSI_BLACK_BACKGROUND.escape()+colorEscape + "▼";
                   }
-              }
-
           }
     }
 

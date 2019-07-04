@@ -333,7 +333,6 @@ public class GameBoardController extends AbstractController {
     private void hBoxImageClean(HBox hBox) {
         for (int i = 0; i < hBox.getChildren().size(); i++) {
             ((ImageView) hBox.getChildren().get(i)).setImage(null);
-
         }
     }
 
