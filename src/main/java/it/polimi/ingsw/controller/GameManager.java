@@ -19,16 +19,45 @@ import java.util.ArrayList;
  * @author Federico Innocente
  */
 public class GameManager {
-
+    /**
+     * The game controller
+     */
     private Controller controller;
+    /**
+     * The current round manager
+     */
     private RoundManager currentRound;
+    /**
+     * The game model
+     */
     private final GameModel model;
+    /**
+     * Current player that is playing
+     */
     private int playerTurn;
+    /**
+     * Flag for the final frenzy phase
+     */
     private boolean finalFrenzyPhase;
+    /**
+     * Flag for the first round phase
+     */
     private boolean firstRoundPhase;
+    /**
+     * Flag to see if the first player playerd his round in the final frenzy phase
+     */
     private boolean firsPlayerPlayed;
+    /**
+     * Player that will play the last round
+     */
     private int lastPlayer;
+    /**
+     * The disconnection manager of the game
+     */
     private DisconnectionManager disconnectionManager;
+    /**
+     * Player that is actually playing his round
+     */
     private Player currentPlayer;
 
 

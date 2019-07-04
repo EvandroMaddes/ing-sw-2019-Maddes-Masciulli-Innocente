@@ -27,12 +27,33 @@ import java.util.List;
  */
 public class ActionManager {
 
+    /**
+     * Is the game controller
+     */
     private Controller controller;
+    /**
+     * Is the game model
+     */
     private GameModel model;
+    /**
+     * The manager of the current round
+     */
     private RoundManager currentRoundManager;
+    /**
+     * When a player use a powerUp, it is saved to allowed to perform different requests to the client
+     */
     private PowerUp chosenPowerUp;
+    /**
+     * When a player use a weapon, it is saved to allowed to perform different requests to the client
+     */
     private Weapon chosenWeapon;
+    /**
+     * When a player use an effect, it is saved to allowed to perform different requests to the client
+     */
     private int chosenEffect;
+    /**
+     * Flag to determinate the reload phase
+     */
     private boolean reloadPhase;
 
     /**

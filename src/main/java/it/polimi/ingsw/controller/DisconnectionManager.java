@@ -18,10 +18,26 @@ import java.util.ArrayList;
  * @author Federico Innocente
  */
 public class DisconnectionManager {
+    /**
+     * The game controller
+     */
     private Controller controller;
+    /**
+     * A list of all the player disconnected and removed from the game
+     */
     private ArrayList<Player> disconnectedPlayers;
+    /**
+     * A list of all the players who joined the game
+     */
     private ArrayList<Player> gamePlayers;
+    /**
+     * A list of the players that disconnected but didn't play their round since their disconnection.
+     * If tehy will join back the game before their round, they will be readded to the game with no penalties
+     */
     private ArrayList<Player> disconnectingQueue;
+    /**
+     * A vector with the avaiable characters to give the default ones
+     */
     private boolean[] availableCharacter;
 
     /**

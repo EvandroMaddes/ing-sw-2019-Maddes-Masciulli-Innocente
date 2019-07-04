@@ -13,7 +13,13 @@ import java.util.Observer;
  * Receive the updates from the virtual view perform the correlated methods and send to the virtual view the request message for the clients
  */
 public class Controller implements Observer {
+    /**
+     * The game manager
+     */
     private GameManager gameManager;
+    /**
+     * The mapping between players username and their virtual view
+     */
     private Map<String, VirtualView> usersVirtualView;
 
     /**

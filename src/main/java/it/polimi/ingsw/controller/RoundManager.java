@@ -19,12 +19,33 @@ import java.util.List;
  */
 public class RoundManager {
 
+    /**
+     * Controller of the game
+     */
     private final Controller controller;
+    /**
+     * Game model
+     */
     protected final GameModel model;
+    /**
+     * Game manager
+     */
     private final GameManager gameManager;
+    /**
+     * Player that is actually playing the rpund
+     */
     private final Player currentPlayer;
+    /**
+     * Action manager of the round
+     */
     private ActionManager actionManager;
+    /**
+     * Death manager of the round
+     */
     private DeathManager deathManager;
+    /**
+     * Actual round phase
+     */
     private int phase;
 
     /**

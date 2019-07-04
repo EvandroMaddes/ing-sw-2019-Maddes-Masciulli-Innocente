@@ -16,9 +16,21 @@ import it.polimi.ingsw.utils.Encoder;
  * @author Federico Innocente
  */
 public class DeathManager {
+    /**
+     * The game controller
+     */
     private Controller controller;
+    /**
+     * The game model
+     */
     private GameModel model;
+    /**
+     * The player that is gonna be respawned
+     */
     private Player deadPlayer;
+    /**
+     * The current round manager
+     */
     private RoundManager roundManager;
 
     /**
