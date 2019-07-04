@@ -330,7 +330,7 @@ public class GameBoardController extends AbstractController {
      * @param hBox grid pane to clean
      */
     private void hBoxImageClean(HBox hBox) {
-        for (int i = 0; i < hBox.getChildren().size(); i++) { 
+        for (int i = 0; i < hBox.getChildren().size(); i++) {
             ((ImageView) hBox.getChildren().get(i)).setImage(null);
         }
     }
