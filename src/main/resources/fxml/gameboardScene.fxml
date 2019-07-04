@@ -155,10 +155,9 @@
                         <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </HBox>
-                <HBox id="blue spawn weapon" fx:id="spawnBlue" alignment="CENTER" layoutX="419.0" layoutY="80.0" prefHeight="120.0" prefWidth="302.0" spacing="2.0">
+                <HBox fx:id="spawnBlue" alignment="CENTER" layoutX="419.0" layoutY="80.0" prefHeight="120.0" prefWidth="302.0" spacing="2.0">
                     <children>
                         <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true" />
-                        <AnchorPane fx:id="popUpPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 255, 0, 0);" />
                         <ImageView fitHeight="110.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
