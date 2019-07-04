@@ -459,6 +459,7 @@ public class CLI extends RemoteView {
         display.printDisplay();
     }
 
+
     @Override
     public Event playerReconnectionNotify(String user, Character character, boolean disconnected) {
         String optional;
