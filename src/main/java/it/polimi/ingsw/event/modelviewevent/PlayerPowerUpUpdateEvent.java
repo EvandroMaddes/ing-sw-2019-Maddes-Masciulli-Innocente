@@ -41,37 +41,13 @@ public class PlayerPowerUpUpdateEvent extends ModelViewBroadcastEvent {
     }
 
     /**
-     * Getter method
-     * @return the current character
-     */
-    private Character getCurrCharacter() {
-        return currCharacter;
-    }
-
-    /**
-     * Getter method
-     * @return the list of powerUps type
-     */
-    public String[] getPowerUps() {
-        return powerUps;
-    }
-
-    /**
-     * Getter method
-     * @return the list of powerUps colour
-     */
-    private CubeColour[] getColours() {
-        return colours;
-    }
-
-    /**
      * performAction implementation: handle the player's powerUps chance
      * @param remoteView is the Client RemoteView implementation
      * @return an UpdateChoiceEvent
      */
     @Override
     public Event performAction(RemoteView remoteView) {
-        return remoteView.playerPowerUpUpdate(getCurrCharacter(),getPowerUps(),getColours());
+        return remoteView.playerPowerUpUpdate(currCharacter,powerUps,colours);
     }
 
 }

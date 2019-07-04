@@ -15,7 +15,7 @@ public abstract class PaymentRequestEvent extends PowerUpRequestEvent {
     public enum Context {
         WEAPON_EFFECT,
         WEAPON_GRAB,
-        WEAPON_RELOAD;
+        WEAPON_RELOAD
     }
 
     /**

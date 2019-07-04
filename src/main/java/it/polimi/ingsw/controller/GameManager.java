@@ -58,7 +58,7 @@ public class GameManager {
     /**
      * Player that is actually playing his round
      */
-    private Player currentPlayer;
+    private Player actualPlayer;
 
 
     /**
@@ -75,7 +75,7 @@ public class GameManager {
         firsPlayerPlayed = false;
         lastPlayer = -2;
         model = new GameModel(buildGameBoard(mapChoice));
-        currentPlayer = null;
+        actualPlayer = null;
     }
 
     /*
@@ -228,7 +228,7 @@ public class GameManager {
         if (gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
 
-        if (playerTurn < 0 || !getDisconnectionManager().getDisconnectedPlayers().contains(currentPlayer))
+        if (playerTurn < 0 || !getDisconnectionManager().getDisconnectedPlayers().contains(actualPlayer))
             playerTurn++;
         if (playerTurn >= model.getPlayers().size()) {
             firstRoundPhase = false;
@@ -236,9 +236,9 @@ public class GameManager {
             if (finalFrenzyPhase)
                 firsPlayerPlayed = true;
         }
-        currentPlayer = model.getPlayers().get(playerTurn);
+        actualPlayer = model.getPlayers().get(playerTurn);
 
-        if (getDisconnectionManager().getDisconnectingQueue().contains(currentPlayer)) {
+        if (getDisconnectionManager().getDisconnectingQueue().contains(actualPlayer)) {
             manageDisconnectedPlayer();
         } else {
             if (firstRoundPhase)
