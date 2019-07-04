@@ -148,7 +148,10 @@ public class DisconnectionManager {
      * @param disconnectedPlayer is the removed player
      */
     void removePlayer(Player disconnectedPlayer) {
-        disconnectingQueue.remove(disconnectedPlayer);
+        if (disconnectingQueue.contains(disconnectedPlayer)) {
+            controller.getGameManager().goNextPlayerTurn();
+            disconnectingQueue.remove(disconnectedPlayer);
+        }
         controller.getGameManager().getModel().getPlayers().remove(disconnectedPlayer);
         this.disconnectedPlayers.add(disconnectedPlayer);
         controller.getUsersVirtualView().get(disconnectedPlayer.getUsername()).setPlayerDisonnected();
@@ -164,7 +167,7 @@ public class DisconnectionManager {
      * Method called after a player remove because of disconnection:
      * if at least 3 players are still connected, start a new round, otherwise edn the game
      */
-    void roundFlowManaging() {
+    private void roundFlowManaging() {
         if (controller.getGameManager().getModel().getPlayers().size() < 3)
             controller.getGameManager().endGame();
         else

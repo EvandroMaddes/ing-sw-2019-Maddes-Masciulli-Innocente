@@ -263,11 +263,11 @@ public class GameManager {
      * If only 2 or less players are still connected, terminate the game; if they are 3 or more, generate the round for the next player.
      */
     private void manageDisconnectedPlayer() {
-        getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn));
         playerTurn--;
         if (playerTurn < 0)
             playerTurn = model.getPlayers().size() - 1;
-        getDisconnectionManager().roundFlowManaging();
+        getDisconnectionManager().removePlayer(model.getPlayers().get(playerTurn + 1));
+        //getDisconnectionManager().roundFlowManaging();
     }
 
     /**
@@ -529,5 +529,12 @@ public class GameManager {
      */
     public void setCurrentRound(RoundManager roundManager) {
         this.currentRound = roundManager;
+    }
+
+    /**
+     * Add one to the count of the player turn
+     */
+    void goNextPlayerTurn(){
+        playerTurn++;
     }
 }
