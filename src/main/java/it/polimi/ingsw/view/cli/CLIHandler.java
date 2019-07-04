@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * It menages reading and printing on screen
  */
-public class CLIHandler {
+ class CLIHandler {
     private static final Scanner inputScanner = new Scanner(System.in);
 
     /**
@@ -16,7 +16,7 @@ public class CLIHandler {
      * @param printedString string to print
      * @return string typed
      */
-    public static String stringPrintAndRead(String printedString){
+    static String stringPrintAndRead(String printedString){
         String returnedString = "";
         System.out.flush();
         while(returnedString.isEmpty()) {
@@ -32,7 +32,7 @@ public class CLIHandler {
      * It print an array
      * @param printedStrings array to print
      */
-    public static void arrayPrint(ArrayList<String> printedStrings){
+     static void arrayPrint(ArrayList<String> printedStrings){
 
         for (String currObject: printedStrings) {
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+currObject+"\t\t");
@@ -51,7 +51,7 @@ public class CLIHandler {
      * @param Y row
      * @return square selected
      */
-    public static int[] coordinatePrintAndRead(int X[], int Y[]){
+     static int[] coordinatePrintAndRead(int X[], int Y[]){
         int index = 404;
         System.out.print(Color.RESET.escape());
 
@@ -79,7 +79,7 @@ public class CLIHandler {
      * This method reads an input number
      * @return integer selected
      */
-    public static int intRead(){
+     static int intRead(){
         try {
             int returned = inputScanner.nextInt();
             inputScanner.nextLine();
@@ -96,7 +96,7 @@ public class CLIHandler {
      * @param available ArrayList to print
      * @return index of element selected
      */
-    public static int arraylistPrintRead(ArrayList<String> available){
+     static int arraylistPrintRead(ArrayList<String> available){
         int choice = 404;
         int i=0;
         for (String current:available
@@ -116,7 +116,7 @@ public class CLIHandler {
      * it reads an input string
      * @return string typed
      */
-    public static String stringRead(){
+     static String stringRead(){
 
         return inputScanner.nextLine();
 

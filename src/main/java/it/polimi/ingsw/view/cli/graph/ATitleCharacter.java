@@ -3,9 +3,9 @@ package it.polimi.ingsw.view.cli.graph;
 /**
  * Char 'A'
  */
-public class ATitleCharacter extends TitleCharacter{
+ class ATitleCharacter extends TitleCharacter{
 
-    public ATitleCharacter(){
+     ATitleCharacter(){
         string[0]="_____/\\\\\\\\\\\\\\____";
         string[1]="___/\\\\\\\\\\\\\\\\\\\\\\_";
         string[2]="__/\\\\\\///////\\\\\\";

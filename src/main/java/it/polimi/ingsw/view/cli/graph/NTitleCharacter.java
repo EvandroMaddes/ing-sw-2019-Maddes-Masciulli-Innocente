@@ -3,8 +3,8 @@ package it.polimi.ingsw.view.cli.graph;
 /**
  * Char 'N'
  */
-public class NTitleCharacter extends TitleCharacter {
-    public NTitleCharacter(){
+ class NTitleCharacter extends TitleCharacter {
+     NTitleCharacter(){
         string[0]="_/\\\\\\\\\\_____/\\\\\\";
         string[1]="_\\/\\\\\\\\\\\\___\\/\\\\\\";
         string[2]="_\\/\\\\\\/\\\\\\__\\/\\\\\\";
