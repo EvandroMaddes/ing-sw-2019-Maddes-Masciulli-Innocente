@@ -39,7 +39,7 @@ public class VirtualView extends Observable implements Observer {
     /**
      * Every player has a his own view
      *
-     * @param user
+     * @param user is the username of the player associated with teh virtual view
      */
     public VirtualView(String user) {
         this.user = user;

@@ -14,16 +14,23 @@ public class AsActionPowerUpRequestEvent extends PowerUpRequestEvent {
 
     /**
      * Constructor
-     * @param user is the username of the player to who send teh message
-     * @param powerUpNames is an array of possible powerUps type
+     *
+     * @param user           is the username of the player to who send teh message
+     * @param powerUpNames   is an array of possible powerUps type
      * @param powerUpColours is an array of possible powerUps colour
      */
     public AsActionPowerUpRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours) {
         super(user, powerUpNames, powerUpColours);
     }
 
+    /**
+     * performAction implementation: ask to the player if he want to use powerUps
+     *
+     * @param remoteView is the Client RemoteView implementation
+     * @return an AsActionPowerUpChoiceEvent
+     */
     @Override
     public Event performAction(RemoteView remoteView) {
-        return remoteView.powerUpChoice(getPowerUpNames(),getPowerUpColours());
+        return remoteView.powerUpChoice(getPowerUpNames(), getPowerUpColours());
     }
 }

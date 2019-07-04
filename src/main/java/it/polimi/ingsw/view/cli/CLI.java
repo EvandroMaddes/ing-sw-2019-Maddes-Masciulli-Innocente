@@ -221,9 +221,7 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
         PositionChoiceEvent message = (PositionChoiceEvent) positionMoveChoice(possibleSquareX, possibleSquareY);
-        Event choice = new WeaponSquareTargetChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
-
-        return choice;
+        return new WeaponSquareTargetChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
 
     }
 
