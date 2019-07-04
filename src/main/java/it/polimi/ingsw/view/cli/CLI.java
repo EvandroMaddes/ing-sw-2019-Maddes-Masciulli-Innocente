@@ -10,6 +10,7 @@ import it.polimi.ingsw.event.viewserverevent.NewGameChoiceEvent;
 import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.cli.graph.*;
 
@@ -46,7 +47,7 @@ public class CLI extends RemoteView {
      *
      * @return DISPLAY
      */
-    public CLIDisplay getDisplay() {
+    private CLIDisplay getDisplay() {
         return display;
     }
 
@@ -112,7 +113,7 @@ public class CLI extends RemoteView {
         ArrayList<String> stringCharacter = new ArrayList<>();
         ArrayList<String> cliCharacters = new ArrayList<>();
         String chosenStringCharacter = "init";
-        int index = 404;
+        int index;
         for (Character currCharacter : availableCharacters) {
             cliCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name());
             stringCharacter.add(currCharacter.name().toUpperCase());
@@ -123,7 +124,7 @@ public class CLI extends RemoteView {
                 CLIHandler.arrayPrint(cliCharacters);
                 chosenStringCharacter = CLIHandler.stringRead();
             } catch (IllegalArgumentException e) {
-                chosenCharacter = null;
+                CustomLogger.logException(e);
             }
 
         }
@@ -161,9 +162,7 @@ public class CLI extends RemoteView {
                 map = 404;
             }
         }
-
-        GameChoiceEvent message = new GameChoiceEvent(getUser(), map);//TODO cambiare messaggio:togliere scelta mdalità
-        return message;
+        return new GameChoiceEvent(getUser(), map);
     }
 
 
@@ -238,9 +237,6 @@ public class CLI extends RemoteView {
                 }
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Discard your powerUp:[option number]");
                 chosenPowerUp = CLIHandler.intRead();
-                if (chosenPowerUp < 0 || chosenPowerUp > powerUpNames.length) {
-
-                }
             } catch (IllegalArgumentException e) {
                 chosenPowerUp = 404;
             }
@@ -353,7 +349,7 @@ public class CLI extends RemoteView {
 
             for (int i = 0; i < availableWeaponEffects.length; i++) // print only available effects
             {
-                if (availableWeaponEffects[i] == true) {
+                if (availableWeaponEffects[i]) {
                     System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "effect " + i);
                 }
             }
@@ -373,7 +369,6 @@ public class CLI extends RemoteView {
         }else {
             message = new SkipActionChoiceEvent(getUser());
         }
-        System.out.println(((WeaponEffectChioceEvent)message).getEffectChoice());
         return message;
     }
 
