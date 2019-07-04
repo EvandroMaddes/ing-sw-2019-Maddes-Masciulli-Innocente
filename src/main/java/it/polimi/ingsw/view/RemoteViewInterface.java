@@ -151,7 +151,7 @@ public interface RemoteViewInterface {
      *
      * @param possibleSquareX row of possible destination square
      * @param possibleSquareY column of possible destination square
-     * @return
+     * @return a ShotMoveChoiceEvent that contains the chosen position
      */
     Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY);
 
@@ -363,9 +363,8 @@ public interface RemoteViewInterface {
     /**
      * It shows winner of the game and his point
      *
-     * @param endGameUpdate
+     * @param endGameUpdate is the end-game notification
      */
-    // TODO: 03/07/2019 fra
     Event winnerUpdate(EndGameUpdate endGameUpdate);
 
     /**
