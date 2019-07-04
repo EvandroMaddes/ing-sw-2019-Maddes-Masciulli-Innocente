@@ -18,17 +18,12 @@ import java.util.logging.Logger;
 public abstract class RemoteView implements RemoteViewInterface{
 
     private String user;
-    private Event toVirtualView;
     private static final Logger log = Logger.getLogger("CLILogger");
     private ClientInterface clientImplementation;
     private boolean connected;
     private Event currentMessage;
-    public static final String BROADCASTSTRING = "BROADCAST";
+    protected static final String BROADCASTSTRING = "BROADCAST";
 
-
-    public ClientInterface getClientImplementation() {
-        return clientImplementation;
-    }
 
     public void disconnect(){
         connected = false;
@@ -38,7 +33,7 @@ public abstract class RemoteView implements RemoteViewInterface{
         }catch (Exception e){
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+
                         "Unable to disconnect client: ");
-            e.printStackTrace();
+            CustomLogger.logException(e);
         }
     }
 
@@ -65,45 +60,8 @@ public abstract class RemoteView implements RemoteViewInterface{
             CustomLogger.logException(e);
         }
 
-        //todo sempre connected finchè non si sconnette il server
         while(connected) {
-            boolean waiting = clientImplementation.isConnected();
-
-            while (waiting) {
-                try {
-                    currentMessage = clientImplementation.listenMessage();
-                    log.info("Listened message for:\t".concat(currentMessage.getUser()).concat("\n\t"+currentMessage.toString()));
-                    if(isGameSet()&&!currentMessage.getUser().equals("BROADCAST")){
-                        printScreen();
-                    }
-                    //todo i ModelUpdate, eseguendo performAction ritornano null?, non un Event;
-                    currentMessage = ((ClientEvent)currentMessage).performAction(this);
-                    //invia il messaggio solo se non è Update -> BROADCAST
-                    if(!currentMessage.getUser().equals("BROADCAST")){
-                        clientImplementation.sendMessage(currentMessage);
-                    }
-
-
-                    waiting = false;
-                } catch (NullPointerException e) {
-
-                    waiting = true;
-                }
-                catch (ClassCastException e){
-                    Event returnedEvent = ((ServerClientEvent)currentMessage).performAction(clientImplementation,this);
-                    if(returnedEvent != null){
-                        clientImplementation.sendMessage(returnedEvent);
-                    }
-                    waiting = true;
-                }
-                catch (Exception e){
-                    waiting = false;
-                    connected = false;
-                    CustomLogger.logException(e);
-                    log.info("Lobby was disconnected!");
-                }
-                connected = clientImplementation.isConnected();
-            }
+            messageControl();
         }
 
         try {
@@ -119,6 +77,46 @@ public abstract class RemoteView implements RemoteViewInterface{
             log.info("Shutting-down the game.");
         }
     }
+
+    private void messageControl(){
+        boolean waiting = clientImplementation.isConnected();
+
+        while (waiting) {
+            try {
+                currentMessage = clientImplementation.listenMessage();
+                log.info("Listened message for:\t".concat(currentMessage.getUser()).concat("\n\t"+currentMessage.toString()));
+                if(isGameSet()&&!currentMessage.getUser().equals(BROADCASTSTRING)){
+                    printScreen();
+                }
+                currentMessage = ((ClientEvent)currentMessage).performAction(this);
+                //invia il messaggio solo se non è Update -> BROADCAST
+                if(!currentMessage.getUser().equals(BROADCASTSTRING)){
+                    clientImplementation.sendMessage(currentMessage);
+                }
+
+
+                waiting = false;
+            } catch (NullPointerException e) {
+
+                waiting = true;
+            }
+            catch (ClassCastException e){
+                Event returnedEvent = ((ServerClientEvent)currentMessage).performAction(clientImplementation,this);
+                if(returnedEvent != null){
+                    clientImplementation.sendMessage(returnedEvent);
+                }
+                waiting = true;
+            }
+            catch (Exception e){
+                waiting = false;
+                connected = false;
+                CustomLogger.logException(e);
+                log.info("Lobby was disconnected!");
+            }
+            connected = clientImplementation.isConnected();
+        }
+    }
+
     public String getUser() {
         return user;
     }
