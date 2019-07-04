@@ -12,13 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * It links an image and a card, map, character, playerboard
+ * It links an image with a card, map, character, player board, player token, ammo tile, power up
+ *
+ * @author Evandro Maddes
  */
 public class DecodeMessage {
 
+    /**
+     * link between character and his own player board image
+     */
     private Map<Character, Path> mapCharacterPlayerboard = new EnumMap<Character, Path>(Character.class);
-    private Map<String, Path> mapWeapon = new HashMap<String, Path>();
-    private Map<String, Path> mapPowerUpColor = new HashMap<String, Path>();
+
+    /**
+     * link between weapon name and his own image
+     */
+    private Map<String, Path> mapWeapon = new HashMap<>();
+    /**
+     * link between powerUp name and his own image
+     */
+    private Map<String, Path> mapPowerUpColor = new HashMap<>();
 
 
     /**
@@ -28,7 +40,7 @@ public class DecodeMessage {
      * powerUp and card,
      * ammoTile and card.
      */
-    public DecodeMessage() {
+    DecodeMessage() {
         Path dstructor = getPath("playerBoard/yellowPlayerBoard.png");
         Path banshee = getPath("playerBoard/bluePlayerBoard.png");
         Path violet = getPath("playerBoard/violetPlayerBoard.png");
@@ -125,6 +137,8 @@ public class DecodeMessage {
         try {
             path = resources.toPath();
         } catch (NullPointerException e) {
+
+
             System.out.println("errore acceso file");
         }
         return path;
@@ -175,11 +189,11 @@ public class DecodeMessage {
     private Path findAmmoCubeImage(AmmoCube ammo) {
         Path path = null;
         if (ammo.getColour() == CubeColour.Red) {
-            path = getPath("ammoboxes/redammobox.png");
+            path = getPath("ammoCube/redammobox.png");
         } else if (ammo.getColour() == CubeColour.Yellow) {
-            path = getPath("ammoboxes/yellowammobox.png");
+            path = getPath("ammoCube/yellowammobox.png");
         } else {
-            path = getPath("ammoboxes/blueammobox.png");
+            path = getPath("ammoCube/blueammobox.png");
         }
 
         return path;
@@ -242,7 +256,7 @@ public class DecodeMessage {
      * @param character playerboard to find
      * @return image of a playerboard
      */
-    public Image playerBoardImage(Character character) {
+     Image playerBoardImage(Character character) {
         Path path = findPlayerBoardImage(character);
         return loadImage(path);
     }
@@ -253,7 +267,7 @@ public class DecodeMessage {
      * @param weapon weapon name
      * @return weapon image
      */
-    public Image weaponImage(String weapon) {
+     Image weaponImage(String weapon) {
         Path path = findWeaponImage(weapon);
         return loadImage(path);
     }
@@ -265,7 +279,7 @@ public class DecodeMessage {
      * @param colour color of a powerUp
      * @return powerUp image
      */
-    public Image powerUpImage(String name, CubeColour colour) {
+     Image powerUpImage(String name, CubeColour colour) {
         Path path = findPowerUpImage(name, colour);
         return loadImage(path);
     }
@@ -276,7 +290,7 @@ public class DecodeMessage {
      * @param number nember of a map
      * @return both images(semimap) of a map
      */
-    public Image[] mapImage(int number) {
+     Image[] mapImage(int number) {
         Path pathLeft = findMapImages(number)[0];
         Path pathRight = findMapImages(number)[1];
         Image[] map = new Image[2];
@@ -293,7 +307,7 @@ public class DecodeMessage {
      * @param thrirdColor ammo cube or powerUp
      * @return image of an ammo Tile
      */
-    public Image ammoTileImage(String firstColor, String secondColor, String thrirdColor) {
+     Image ammoTileImage(String firstColor, String secondColor, String thrirdColor) {
         Path path = findAmmoTileImage(firstColor, secondColor, thrirdColor);
         return loadImage(path);
     }
@@ -304,7 +318,7 @@ public class DecodeMessage {
      * @param ammoCube ammo cube to find
      * @return image of the ammo cube
      */
-    public Image ammoCubeImage(AmmoCube ammoCube) {
+     Image ammoCubeImage(AmmoCube ammoCube) {
         Path path = findAmmoCubeImage(ammoCube);
         return loadImage(path);
     }
@@ -372,7 +386,7 @@ public class DecodeMessage {
      * @param character character to find
      * @return image of character token
      */
-    public Image playerTokenImage(Character character) {
+     Image playerTokenImage(Character character) {
         Path path = findPlayerTokenImage(character);
         return loadImage(path);
 
@@ -385,9 +399,10 @@ public class DecodeMessage {
      * @param character character to find
      * @return image of character
      */
-    public Image characterImage(Character character) {
+     Image characterImage(Character character) {
         Path path = findCharacterImage(character);
         return loadImage(path);
     }
+
 }
 

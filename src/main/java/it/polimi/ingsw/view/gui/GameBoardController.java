@@ -222,6 +222,7 @@ public class GameBoardController extends AbstractController {
         square.add(vboxSquare10);
         square.add(vboxSquare11);
 
+        infoArea.setDisable(true);
         skullImage = new Image("skull.png");
         gameTrack.setVisible(false);
     }
@@ -616,9 +617,9 @@ public class GameBoardController extends AbstractController {
      * @param ammoCubeGrid grid in which put ammo cube
      */
     private void initAmmocube(GridPane ammoCubeGrid) {
-        ((ImageView) ammoCubeGrid.getChildren().get(0)).setImage(new Image("ammoboxes/yellowammobox.png"));
-        ((ImageView) ammoCubeGrid.getChildren().get(1)).setImage(new Image("ammoboxes/blueammobox.png"));
-        ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoboxes/redammobox.png"));
+        ((ImageView) ammoCubeGrid.getChildren().get(0)).setImage(new Image("ammoCube/yellowammobox.png"));
+        ((ImageView) ammoCubeGrid.getChildren().get(1)).setImage(new Image("ammoCube/blueammobox.png"));
+        ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoCube/redammobox.png"));
     }
 
 

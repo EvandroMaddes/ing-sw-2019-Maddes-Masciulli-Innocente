@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="528.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.PositionChoiceController">
+<AnchorPane fx:id="ancorPane" prefHeight="447.0" prefWidth="539.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.PositionChoiceController">
    <children>
       <GridPane prefHeight="400.0" prefWidth="528.0">
         <columnConstraints>
@@ -21,7 +21,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="square0Buttom" mnemonicParsing="false" onAction="#square0Click" prefHeight="167.0" prefWidth="189.0" />
+            <Button fx:id="square0Button" mnemonicParsing="false" onAction="#square0Click" prefHeight="167.0" prefWidth="189.0" />
             <Button fx:id="square1Button" mnemonicParsing="false" onAction="#square1Click" prefHeight="167.0" prefWidth="189.0" GridPane.columnIndex="1" />
             <Button fx:id="square2Button" mnemonicParsing="false" onAction="#square2Click" prefHeight="167.0" prefWidth="189.0" GridPane.columnIndex="2" />
             <Button fx:id="square3Button" mnemonicParsing="false" onAction="#square3Click" prefHeight="167.0" prefWidth="189.0" GridPane.columnIndex="3" />
@@ -35,10 +35,19 @@
             <Button fx:id="square11Button" mnemonicParsing="false" onAction="#square11Button" prefHeight="167.0" prefWidth="189.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <ImageView fx:id="mapImage" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../map/map0.png" />
-         </image>
-      </ImageView>
+      <VBox prefHeight="450.0" prefWidth="528.0">
+         <children>
+            <ImageView fx:id="mapImage" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../map/map0.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="31.0" prefWidth="525.0" text="SELECT ONE POSITION :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -3,12 +3,9 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.viewserverevent.LobbyChoiceEvent;
 import it.polimi.ingsw.event.viewserverevent.NewGameChoiceEvent;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
@@ -17,26 +14,24 @@ import java.util.ArrayList;
 
 /**
  * It menage lobby choice scene
+ * @author Evandro Maddes
  */
 public class LobbyChioceController extends AbstractController {
-
-
-    @FXML
-    private AnchorPane gameChoicePanel;
 
     @FXML
     public Button newGameButton;
 
     @FXML
     private ComboBox<String> waitingLobbyComboBox;
+
     @FXML
     private ComboBox<String> startedLobbyComboBox;
 
 
-
     /**
      * It sets available lobby of started game or waiting one
-     * @param available
+     *
+     * @param available It use to set button on screen
      * @param startedLobbies started game
      * @param waitingLobbies waiting game
      */
@@ -53,6 +48,7 @@ public class LobbyChioceController extends AbstractController {
         if (available[1]) {
             ObservableList<String> list = FXCollections.observableArrayList(waitingLobbies);
             waitingLobbyComboBox.setItems(list);
+
         } else {
             waitingLobbyComboBox.setDisable(true);
         }
@@ -70,25 +66,27 @@ public class LobbyChioceController extends AbstractController {
      */
     public void newGameClick() {
 
-        setMessage(new NewGameChoiceEvent(getGui().getUser())) ;
-        getWindow().close();    }
+        setMessage(new NewGameChoiceEvent(getGui().getUser()));
+        getWindow().close();
+    }
 
     /**
      * It checks selection of a waiting lobby
      */
     @FXML
     public void waitLobbyClick() {
-        setMessage(new LobbyChoiceEvent(getGui().getUser(),waitingLobbyComboBox.getValue()));
-        getWindow().close();    }
+        setMessage(new LobbyChoiceEvent(getGui().getUser(), waitingLobbyComboBox.getValue()));
+        getWindow().close();
+    }
 
     /**
      * * It checks selection of a starting lobby
      */
     @FXML
     public void startedLobbyClick() {
-       setMessage(new LobbyChoiceEvent(getGui().getUser(),startedLobbyComboBox.getValue()));
+        setMessage(new LobbyChoiceEvent(getGui().getUser(), startedLobbyComboBox.getValue()));
         getWindow().close();
     }
 
-    }
+}
 

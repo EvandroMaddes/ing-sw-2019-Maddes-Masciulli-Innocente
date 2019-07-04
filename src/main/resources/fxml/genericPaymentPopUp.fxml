@@ -8,101 +8,43 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="505.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GenericPaymentController">
    <children>
-      <VBox prefHeight="456.0" prefWidth="411.0" spacing="10.0">
+      <VBox alignment="CENTER" prefHeight="456.0" prefWidth="505.0" spacing="10.0">
          <children>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="500.0" text="Chose how to pay clicking on it" textFill="YELLOW">
+            <Label prefHeight="20.0" prefWidth="276.0" text="CHOSE HOW TO PAY CLICKING ON IT:" textFill="YELLOW">
                <font>
-                  <Font name="Arial Black" size="22.0" />
+                  <Font name="Arial Black" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="payLabel" alignment="CENTER" prefHeight="35.0" prefWidth="500.0" text="you have to pay:" textFill="YELLOW">
+            <Label fx:id="payRquest" prefHeight="25.0" prefWidth="148.0" text="YOU HAVE TO PAY:" textFill="YELLOW">
                <font>
-                  <Font name="Arial Black" size="22.0" />
+                  <Font name="Arial Black" size="13.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="64.0" prefWidth="411.0" spacing="40.0">
-               <children>
-                  <Button fx:id="firstRedAmmoButton" mnemonicParsing="false" onAction="#firstRedAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="firstRedAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="secondRedAmmoButton" mnemonicParsing="false" onAction="#secondRedAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="secondRedAmmoImmage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="thirdRedAmmoButton" mnemonicParsing="false" onAction="#thirdRedAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="thirdRedAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="firstBlueAmmoButton" mnemonicParsing="false" onAction="#firstBlueAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="firstBlueAmmoImmage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="secondBlueAmmoButton" mnemonicParsing="false" onAction="#secondBlueAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="secondBlueAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </HBox>
             <HBox alignment="CENTER" prefHeight="105.0" prefWidth="500.0" spacing="50.0">
                <children>
-                  <Button fx:id="thirdBlueAmmoButton" mnemonicParsing="false" onAction="#thirdBlueAmmoClick" style="-fx-background-color: grey;">
+                  <Button fx:id="button1" mnemonicParsing="false" onAction="#button1Click" style="-fx-background-color: grey;">
                      <graphic>
-                        <ImageView fx:id="thirdBlueAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ammo1Image" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
+                              <Image url="@../ammoCube/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="firstYellowAmmoButton" mnemonicParsing="false" onAction="#firstYellowAmmoClick" style="-fx-background-color: grey;">
+                  <Button fx:id="button2" mnemonicParsing="false" onAction="#button2Click" style="-fx-background-color: grey;">
                      <graphic>
-                        <ImageView fx:id="firstYellowAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ammo2Image" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
+                              <Image url="@../ammoCube/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="secondYellowAmmoButton" mnemonicParsing="false" onAction="#secondYellowAmmoClick" style="-fx-background-color: grey;">
+                  <Button fx:id="button8" mnemonicParsing="false" onAction="#button3Click" style="-fx-background-color: grey;">
                      <graphic>
-                        <ImageView fx:id="secondYellowAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ammo3Image" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="thirdYellowAmmoButton" mnemonicParsing="false" onAction="#thirdYellowAmmoClick" style="-fx-background-color: grey;">
-                     <graphic>
-                        <ImageView fx:id="thirdYellowAmmoImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../ammoboxes/redammobox.png" />
+                              <Image url="@../ammoCube/redammobox.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -140,6 +82,11 @@
                   </Button>
                </children>
             </HBox>
+            <Button fx:id="finishButton" mnemonicParsing="false" onAction="#finishClick" text="Finish">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>

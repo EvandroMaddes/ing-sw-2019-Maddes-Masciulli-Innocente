@@ -37,4 +37,13 @@ public class NewtonPlayerTargetChoiceEvent extends ViewControllerEvent {
         controller.getGameManager().getCurrentRound().getActionManager().performPowerUp(target);
         controller.getGameManager().getCurrentRound().getActionManager().askForSquareTargetsNewton();
     }
+
+    /**
+     * getter
+     *
+     * @return chosen character
+     */
+    public Character getChosenTarget() {
+        return chosenTarget;
+    }
 }

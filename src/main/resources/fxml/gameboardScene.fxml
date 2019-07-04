@@ -426,47 +426,47 @@
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="65.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -541,47 +541,47 @@
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="65.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -600,47 +600,47 @@
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="65.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -659,47 +659,47 @@
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="65.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -718,47 +718,47 @@
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/redammobox.png" />
+                                <Image url="@../ammoCube/redammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="65.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/blueammobox.png" />
+                                <Image url="@../ammoCube/blueammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="37.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                             <image>
-                                <Image url="@../ammoboxes/yellowammobox.png" />
+                                <Image url="@../ammoCube/yellowammobox.png" />
                             </image>
                         </ImageView>
                     </children>

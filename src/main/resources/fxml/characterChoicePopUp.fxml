@@ -7,11 +7,11 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="500.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.CharacterChoiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="500.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.CharacterChoiceController">
    <children>
-      <VBox prefHeight="250.0" prefWidth="500.0">
+      <VBox prefHeight="309.0" prefWidth="500.0">
          <children>
-            <Label prefHeight="44.0" prefWidth="401.0" text="Chose your character between:" textFill="YELLOW" translateX="55.0">
+            <Label fx:id="infoText" prefHeight="44.0" prefWidth="401.0" text="Chose your character between:" textFill="YELLOW" translateX="55.0">
                <font>
                   <Font name="Arial Black" size="22.0" />
                </font>
@@ -59,7 +59,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" spacing="125.0">
+            <HBox alignment="CENTER" prefHeight="147.0" prefWidth="500.0" spacing="125.0">
                <children>
                   <Button fx:id="violetButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#violetClick" text="VIOLET" textFill="#ff00fe">
                      <font>
@@ -89,5 +89,10 @@
             </HBox>
          </children>
       </VBox>
+      <Button fx:id="finishButtom" layoutX="380.0" layoutY="334.0" mnemonicParsing="false" onAction="#finishClick" prefHeight="0.0" prefWidth="115.0" text="Finish">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

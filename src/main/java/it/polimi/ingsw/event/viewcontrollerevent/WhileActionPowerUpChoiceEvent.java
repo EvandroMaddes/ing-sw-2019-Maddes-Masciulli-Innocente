@@ -18,8 +18,8 @@ public class WhileActionPowerUpChoiceEvent extends PowerUpChoiceEvent {
      * Constuctor
      *
      * @param user          player username
-     * @param wantToUse     falg choce
-     * @param powerUpType   ouwerUps type
+     * @param wantToUse     slag choce
+     * @param powerUpType   powerUps type
      * @param powerUpColour powerUps colour
      */
     public WhileActionPowerUpChoiceEvent(String user, boolean wantToUse, String powerUpType, CubeColour powerUpColour) {
