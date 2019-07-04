@@ -19,7 +19,7 @@ public class SpawnChoiceEvent extends CardChoiceEvent {
      *
      * @return the powerUp colour
      */
-    private CubeColour getCardColour() {
+    public CubeColour getCardColour() {
         return cardColour;
     }
 

@@ -34,4 +34,13 @@ public class TargetingScopeTargetChoiceEvent extends ViewControllerEvent {
     public void performAction(Controller controller) {
         controller.getGameManager().getCurrentRound().getActionManager().performTargetingScopeEffect(target);
     }
+
+    /**
+     * getter
+     *
+     * @return target
+     */
+    public Character getTarget() {
+        return target;
+    }
 }

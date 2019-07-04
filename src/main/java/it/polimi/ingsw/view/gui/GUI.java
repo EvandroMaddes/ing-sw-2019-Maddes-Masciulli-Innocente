@@ -3,9 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.event.modelviewevent.EndGameUpdate;
 import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
-import it.polimi.ingsw.event.viewcontrollerevent.CharacterChoiceEvent;
-import it.polimi.ingsw.event.viewcontrollerevent.GameChoiceEvent;
-import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
+import it.polimi.ingsw.event.viewcontrollerevent.*;
 import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import it.polimi.ingsw.model.player.Character;
@@ -35,6 +33,7 @@ public class GUI extends RemoteView {
     private ActionChoiceController actionChoiceController;
     private WeaponChoiceController weaponChoiceController;
     private GenericPaymentController genericPaymentController;
+    private EffectChoiceController effectChoiceController;
 
     private Stage primaryStage;
     private Stage lobbyStage;
@@ -45,6 +44,7 @@ public class GUI extends RemoteView {
     private Stage actionChoiceStage;
     private Stage weaponChoiceStage;
     private Stage genericPaymentStage;
+    private Stage effectChoiceStage;
 
     private Scene gameboardScene;
     private Scene lobbyScene;
@@ -54,6 +54,7 @@ public class GUI extends RemoteView {
     private Scene actionChoiceScene;
     private Scene weaponChoiceScene;
     private Scene genericPaymentScene;
+    private Scene effectChoiceScene;
 
     private String[] clientChoices = new String[3];
     private Character characterChoose;
@@ -91,6 +92,7 @@ public class GUI extends RemoteView {
         Parent action = null;
         Parent weapon = null;
         Parent genericPayment = null;
+        Parent effectChoice = null;
 
         FXMLLoader lobbyFxml = new FXMLLoader(getClass().getResource("/fxml/lobbyScene.fxml"));
         FXMLLoader gameBoardFxml = new FXMLLoader(getClass().getResource("/fxml/gameboardScene.fxml"));
@@ -100,6 +102,8 @@ public class GUI extends RemoteView {
         FXMLLoader actionFxml = new FXMLLoader(getClass().getResource("/fxml/actionChoicePopUp.fxml"));
         FXMLLoader weaponFxml = new FXMLLoader(getClass().getResource("/fxml/weaponChoicePopUp.fxml"));
         FXMLLoader genericPaymentFxml = new FXMLLoader(getClass().getResource("/fxml/genericPaymentPopUp.fxml"));
+        FXMLLoader effectChoiceFxml = new FXMLLoader(getClass().getResource("/fxml/effectChoice.fxml"));
+
 
         try {
             lobby = lobbyFxml.load();
@@ -110,8 +114,10 @@ public class GUI extends RemoteView {
             action = actionFxml.load();
             weapon = weaponFxml.load();
             genericPayment = genericPaymentFxml.load();
+            effectChoice = effectChoiceFxml.load();
+
         } catch (IOException e) {
-            e.printStackTrace();
+            CustomLogger.logException(e);
         }
         lobbyController = lobbyFxml.getController();
         gameBoardController = gameBoardFxml.getController();
@@ -121,6 +127,7 @@ public class GUI extends RemoteView {
         actionChoiceController = actionFxml.getController();
         weaponChoiceController = weaponFxml.getController();
         genericPaymentController = genericPaymentFxml.getController();
+        effectChoiceController = effectChoiceFxml.getController();
 
         gameBoardController.setGui(this);
         lobbyController.setGui(this);
@@ -140,6 +147,7 @@ public class GUI extends RemoteView {
         characterStage.setTitle("CharacterChoice-ADRENALINE");
         powerUpStage.setTitle("PowerUpChoice-ADRENALINE");
         genericPaymentStage.setTitle("PaymentChoice-ADRENALINE");
+        effectChoiceStage.setTitle("EffectChoice-ADRENALINE");
 
         mapController.setGui(this);
         characterController.setGui(this);
@@ -147,6 +155,7 @@ public class GUI extends RemoteView {
         actionChoiceController.setGui(this);
         weaponChoiceController.setGui(this);
         genericPaymentController.setGui(this);
+        effectChoiceController.setGui(this);
 
 
         lobbyScene = new Scene(lobby, 880, 620);
@@ -157,7 +166,7 @@ public class GUI extends RemoteView {
         actionChoiceScene = new Scene(action, 500, 250);
         weaponChoiceScene = new Scene(weapon, 500, 400);
         genericPaymentScene = new Scene(genericPayment, 505, 456);
-
+        effectChoiceScene = new Scene(effectChoice,500,450);
 
         lobbyStage.setScene(lobbyScene);
         gameBoardStage.setScene(gameboardScene);
@@ -167,6 +176,7 @@ public class GUI extends RemoteView {
         actionChoiceStage.setScene(actionChoiceScene);
         weaponChoiceStage.setScene(weaponChoiceScene);
         genericPaymentStage.setScene(genericPaymentScene);
+        effectChoiceStage.setScene(effectChoiceScene);
 
     }
 
@@ -266,7 +276,21 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                try {
+                    powerUpController.setInfoLabel("Select one power up to use:");
+                    powerUpController.setController(powerUpNames, powerUpColours, 1);
+                    powerUpController.setWindow(powerUpStage);
+                } catch (Exception e) {
+                }
+                PowerUpChoiceEvent event = (PowerUpChoiceEvent) lobbyController.ask(lobbyScene);
+
+                return new WhileActionPowerUpChoiceEvent(get().getUser(), powerUpController.isWantToUse(), event.getCard(), event.getPowerUpColour());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -311,7 +335,21 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                try {
+                    powerUpController.setTrueEndOfRoundPowerUp();
+                    powerUpController.setInfoLabel("Select max " + maxUsablePowerUps + " powerUp to use:");
+                    powerUpController.setController(powerUpNames, powerUpColours, maxUsablePowerUps);
+                    powerUpController.setWindow(powerUpStage);
+                } catch (Exception e) {
+                }
+                return lobbyController.ask(lobbyScene);
+
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -428,7 +466,17 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                characterController.setInfoText("Choose your target:");
+                characterController.setCharacterChoice(availableTargets);
+                characterController.setWindow(characterStage);
+                NewtonPlayerTargetChoiceEvent message = (NewtonPlayerTargetChoiceEvent) characterController.ask(characterScene);
+                return new NewtonPlayerTargetChoiceEvent(get().getUser(), message.getChosenTarget());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -462,7 +510,18 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                characterController.trueWeaponTarget();
+                characterController.setInfoText("You can choose max " + numTarget + " target:");
+                characterController.setCharacterChoice(availableTargets);
+                characterController.setWindow(characterStage);
+                return characterController.ask(characterScene);
+
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -485,7 +544,17 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                weaponChoiceController.setText("Select weapon to grab:");
+                weaponChoiceController.setController(availableWeapon);
+                weaponChoiceController.setWindow(weaponChoiceStage);
+                WeaponChoiceEvent message = (WeaponChoiceEvent) weaponChoiceController.ask(weaponChoiceScene);
+                return new WeaponGrabChoiceEvent(getUser(), message.getCard());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -525,8 +594,19 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event weaponDiscardChoice(ArrayList<String> yourWeapon) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                weaponChoiceController.setText("Select weapon to discard:");
+                weaponChoiceController.setController(yourWeapon);
+                weaponChoiceController.setWindow(weaponChoiceStage);
+                WeaponChoiceEvent message = (WeaponChoiceEvent) weaponChoiceController.ask(weaponChoiceScene);
+                return new WeaponDiscardChoiceEvent(getUser(), message.getCard());
+            }
+        };
+        return userChoice(query);
     }
+
 
     /**
      * RemoteViewInterface method implementation: user choice for map
@@ -586,7 +666,17 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                weaponChoiceController.setText("Select weapon to reload:");
+                weaponChoiceController.setController(reloadableWeapons);
+                weaponChoiceController.setWindow(weaponChoiceStage);
+                WeaponChoiceEvent message = (WeaponChoiceEvent) weaponChoiceController.ask(weaponChoiceScene);
+                return new WeaponReloadChoiceEvent(getUser(), message.getCard());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -598,7 +688,21 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
-        return null;
+
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                try {
+                    powerUpController.setInfoLabel("Select your power up to respawn:");
+                    powerUpController.setController(powerUpNames, powerUpColours, 1);
+                    powerUpController.setWindow(powerUpStage);
+                } catch (Exception e) {
+                }
+                PowerUpChoiceEvent event = (PowerUpChoiceEvent) lobbyController.ask(lobbyScene);
+                return new SpawnChoiceEvent(get().getUser(), event.getCard(), event.getPowerUpColour());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -633,7 +737,16 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event weaponChoice(ArrayList<String> availableWeapons) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                weaponChoiceController.setText("Select weapon to fire:");
+                weaponChoiceController.setController(availableWeapons);
+                weaponChoiceController.setWindow(weaponChoiceStage);
+                return weaponChoiceController.ask(weaponChoiceScene);
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -644,7 +757,16 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
-        return null;
+
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                effectChoiceController.setController(availableWeaponEffects);
+                effectChoiceController.setWindow(effectChoiceStage);
+                return weaponChoiceController.ask(effectChoiceScene);
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -655,7 +777,17 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                characterController.setInfoText("Choose your target:");
+                characterController.setCharacterChoice(possibleTargets);
+                characterController.setWindow(characterStage);
+                CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
+                return new TargetingScopeTargetChoiceEvent(get().getUser(), message.getChosenCharacter());
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -667,7 +799,21 @@ public class GUI extends RemoteView {
      */
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
-        return null;
+        final Task<Event> query = new Task<Event>() {
+            @Override
+            public Event call() throws Exception {
+                try {
+                    powerUpController.setSkipChoiceButtonDisable(true);
+                    powerUpController.setInfoLabel("Select one power up:");
+                    powerUpController.setController(powerUpNames, powerUpColours, 1);
+                    powerUpController.setWindow(powerUpStage);
+                } catch (Exception e) {
+                }
+                Event event = lobbyController.ask(lobbyScene);
+                return event;
+            }
+        };
+        return userChoice(query);
     }
 
     /**
@@ -697,24 +843,6 @@ public class GUI extends RemoteView {
         return userChoice(query);
     }
 
-    /**
-     * It "takes" choice from controller
-     *
-     * @param query
-     * @return event that contains player's choice
-     */
-    // TODO: 03/07/2019 fra completa javadoc grazie
-    private Event userChoice(Task<Event> query) {
-        Thread th = new Thread(query);
-        th.start();
-        try {
-            Event event = query.get();
-            return event;
-        } catch (Exception interrupted) {
-            CustomLogger.logException(interrupted);
-            return null;
-        }
-    }
 
     /**
      * RemoteViewInterface method implementation: every time one player joins the game it's notified to other player
@@ -859,5 +987,24 @@ public class GUI extends RemoteView {
         // TODO: 02/07/2019 chiedi a fra come funziona
         //si chiama gameboard.setInfo() e si passa la stringa da mostrare
         return null;
+    }
+
+    /**
+     * It "takes" choice from controller
+     *
+     * @param query
+     * @return event that contains player's choice
+     */
+    // TODO: 03/07/2019 fra completa javadoc grazie
+    private Event userChoice(Task<Event> query) {
+        Thread th = new Thread(query);
+        th.start();
+        try {
+            Event event = query.get();
+            return event;
+        } catch (Exception interrupted) {
+            CustomLogger.logException(interrupted);
+            return null;
+        }
     }
 }

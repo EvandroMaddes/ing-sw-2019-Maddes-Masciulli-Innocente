@@ -221,9 +221,7 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
         PositionChoiceEvent message = (PositionChoiceEvent) positionMoveChoice(possibleSquareX, possibleSquareY);
-        Event choice = new WeaponSquareTargetChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
-
-        return choice;
+        return new WeaponSquareTargetChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
 
     }
 
@@ -327,44 +325,55 @@ public class CLI extends RemoteView {
     @Override
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
         int effectChoice = 40;
-        int first = 404, second = 404, third = 404;
+        int first = 404;
+        int second = 404;
+        int third = 404;
         Event message;
 
-        if (availableWeaponEffects[0]) {
-            first = 0;
+        String choice = "";
+        while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Would you like to use one of weapon EFFECT?[Y/N]");
+            choice = CLIHandler.stringRead();
         }
-
-        if (availableWeaponEffects[1]) {
-            second = 1;
-        }
-
-        if (availableWeaponEffects[2]) {
-            third = 2;
-        }
-
-
-        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Available effect for your weapon:");
-
-        for (int i = 0; i < availableWeaponEffects.length; i++) // print only available effects
-        {
-            if (availableWeaponEffects[i] == true) {
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "effect " + i);
+        if(choice.equalsIgnoreCase("Y")) {
+            if (availableWeaponEffects[0]) {
+                first = 0;
             }
-        }
-        while (!(effectChoice == first || effectChoice == second || effectChoice == third)) {
-            try {
-                System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select at least one effect[number]");
 
-                System.out.flush();
-
-                effectChoice = CLIHandler.intRead();
-            } catch (IllegalArgumentException e) {
-                effectChoice = 404;
+            if (availableWeaponEffects[1]) {
+                second = 1;
             }
-        }
-        effectChoice++;
-        message = new WeaponEffectChioceEvent(getUser(), effectChoice);
 
+            if (availableWeaponEffects[2]) {
+                third = 2;
+            }
+
+
+            System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Available effect for your weapon:");
+
+            for (int i = 0; i < availableWeaponEffects.length; i++) // print only available effects
+            {
+                if (availableWeaponEffects[i] == true) {
+                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "effect " + i);
+                }
+            }
+            while (!(effectChoice == first || effectChoice == second || effectChoice == third)) {
+                try {
+                    System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Select at least one effect[number]");
+
+                    System.out.flush();
+
+                    effectChoice = CLIHandler.intRead();
+                } catch (IllegalArgumentException e) {
+                    effectChoice = 404;
+                }
+            }
+            effectChoice++;
+            message = new WeaponEffectChioceEvent(getUser(), effectChoice);
+        }else {
+            message = new SkipActionChoiceEvent(getUser());
+        }
+        System.out.println(((WeaponEffectChioceEvent)message).getEffectChoice());
         return message;
     }
 
