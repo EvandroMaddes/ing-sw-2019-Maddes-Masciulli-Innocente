@@ -525,7 +525,7 @@ public class ActionManager {
      * @param cost     is the pay cost as an integer array in the format Red - Yellow - Blue
      * @param powerUps is a list of powerUp chosen to pay the effect
      */
-    public void payCost(int[] cost, List<PowerUp> powerUps) {
+    public void payCost(int[] cost, ArrayList<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
             currentRoundManager.getCurrentPlayer().discardPowerUp(p);
             model.getGameboard().getPowerUpDeck().discardCard(p);
@@ -632,7 +632,7 @@ public class ActionManager {
      * Send a request for the player target of a Newton powerUp
      */
     private void askForPlayerTargetsNewton() {
-        ArrayList<Player> possiblePlayers = controller.getGameManager().getModel().getPlayers();
+        ArrayList<Player> possiblePlayers = new ArrayList<>(controller.getGameManager().getModel().getPlayers());
         possiblePlayers.remove(currentRoundManager.getCurrentPlayer());
         ArrayList<Player> onBoardPlayer = new ArrayList<>();
         for (Player p : possiblePlayers) {
@@ -645,8 +645,18 @@ public class ActionManager {
     /**
      * Send a request for the square target of a Newton powerUp
      */
-    public void askForSquareTargetsNewton() {
+    private void askForSquareTargetsNewton() {
         controller.callView(((Newton) chosenPowerUp).getTargets());
+    }
+
+    /**
+     * Perform the effect of a newton powerUp
+     * @param chosenTarget is the newton target
+     */
+    public void performEffetcNewton(Character chosenTarget){
+        Object target = Decoder.decodePlayerFromCharacter(chosenTarget, controller.getGameManager().getModel().getPlayers());
+        controller.getGameManager().getCurrentRound().getActionManager().performPowerUp(target);
+        controller.getGameManager().getCurrentRound().getActionManager().askForSquareTargetsNewton();
     }
 
     /**
@@ -654,17 +664,26 @@ public class ActionManager {
      *
      * @param target is the chosen target, which could be both a character or a square (depends of the chosen powerUp)
      */
-    public void performPowerUp(Object target) {
+    private void performPowerUp(Object target) {
         chosenPowerUp.performEffect(target);
     }
 
     /**
      * If the player has some, send the request of using end-round powerUps
      */
-    public void endPowerUpPhase() {
+    private void endPowerUpPhase() {
         currentRoundManager.getCurrentPlayer().discardPowerUp(chosenPowerUp);
         model.getGameboard().getPowerUpDeck().discardCard(chosenPowerUp);
         controller.getGameManager().getCurrentRound().nextPhase();
+    }
+
+    /**
+     * Perform the powerUp square targets
+     */
+    public void performPowerUpSquareTarget(int x, int y) {
+        Object destination = Decoder.decodeSquare(x, y, controller.getGameManager().getModel().getGameboard().getMap());
+        controller.getGameManager().getCurrentRound().getActionManager().performPowerUp(destination);
+        controller.getGameManager().getCurrentRound().getActionManager().endPowerUpPhase();
     }
 
     /**

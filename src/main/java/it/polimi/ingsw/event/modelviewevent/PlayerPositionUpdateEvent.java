@@ -21,6 +21,7 @@ public class PlayerPositionUpdateEvent extends PositionUpdateEvent {
     /**
      * Constructor
      *
+     * @param character is the subject of the position update
      * @param positionX his next position X coordinate
      * @param positionY his next position Y coordinate
      */

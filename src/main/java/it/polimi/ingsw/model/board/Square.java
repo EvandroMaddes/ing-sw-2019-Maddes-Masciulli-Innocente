@@ -64,6 +64,7 @@ public abstract class Square extends Observable {
     /**
      * Will'be implemented in the concrete Classes;
      *
+     * @param grabber is the player that would grab from the Square
      * @return true if the square have ammo or at least a weapon to grab
      */
     public abstract boolean isGrabbable(Player grabber);

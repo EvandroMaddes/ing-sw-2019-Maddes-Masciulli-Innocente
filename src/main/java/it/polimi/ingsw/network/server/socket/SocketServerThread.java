@@ -167,7 +167,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     /**
      * Wait for a message wrote on its input stream
      *
-     * @return
+     * @return the listened message
      */
     @Override
     public Event listenMessage() {

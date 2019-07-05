@@ -482,7 +482,10 @@ public class GameBoardController extends AbstractController {
     /**
      * It remove characterImage from old position and it sets characterImage ii  the new one
      *
-     * @param character characterImage to set
+     * @param x              is the Square column on the map
+     * @param y              is the Square row on the map
+     * @param character      characterImage to set
+     * @param characterImage is the character image
      */
     public void setPosition(int x, int y, Image characterImage, Character character) {
         removeCharacter(character);

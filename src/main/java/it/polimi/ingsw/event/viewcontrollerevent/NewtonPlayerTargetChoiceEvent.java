@@ -33,17 +33,7 @@ public class NewtonPlayerTargetChoiceEvent extends ViewControllerEvent {
      */
     @Override
     public void performAction(Controller controller) {
-        Object target = Decoder.decodePlayerFromCharacter(chosenTarget, controller.getGameManager().getModel().getPlayers());
-        controller.getGameManager().getCurrentRound().getActionManager().performPowerUp(target);
-        controller.getGameManager().getCurrentRound().getActionManager().askForSquareTargetsNewton();
+        controller.getGameManager().getCurrentRound().getActionManager().performEffetcNewton(chosenTarget);
     }
 
-    /**
-     * getter
-     *
-     * @return chosen character
-     */
-    public Character getChosenTarget() {
-        return chosenTarget;
-    }
 }

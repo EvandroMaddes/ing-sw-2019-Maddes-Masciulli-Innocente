@@ -224,18 +224,6 @@ public class GUI extends RemoteView {
         genericPaymentController.init();
     }
 
-    // TODO: 03/07/2019 da eliminare!!
-    public void metodoPROVA() {
-        Platform.runLater(() ->
-        {
-            Image[] map = decodeMessage.mapImage(2);
-            gameBoardController.setMap(map[0], map[1]);
-            gameBoardController.setPosition(2, 2, decodeMessage.characterImage(Character.VIOLET), Character.VIOLET);
-            gameBoardController.setPosition(1, 1, decodeMessage.characterImage(Character.VIOLET), Character.VIOLET);
-            gameBoardStage.show();
-        });
-
-    }
 
     /**
      * setter:
@@ -252,7 +240,7 @@ public class GUI extends RemoteView {
      *
      * @param possibleSquareX row of possible destination square
      * @param possibleSquareY column of possible destination square
-     * @return
+     * @return the event representing the user choice
      */
     @Override
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
@@ -931,7 +919,7 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 characterController.setInfoText("Choose your target:");
-                characterController.setCharacterChoice(possibleTargets,1);
+                characterController.setCharacterChoice(possibleTargets, 1);
                 characterController.setWindow(characterStage);
                 CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
                 return new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
