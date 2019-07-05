@@ -205,7 +205,6 @@ public abstract class Weapon extends Card {
      * Reset the list of the players damaged by the weapon
      */
     public void resetDamagedplayer(){
-        // TODO: 2019-07-03
         damagedPlayer.clear();
     }
 

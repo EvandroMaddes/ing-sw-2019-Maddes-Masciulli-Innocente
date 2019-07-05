@@ -258,7 +258,6 @@ public class Lobby extends Thread {
             }
 
 
-            //todo controllo se gioco terminato || dopo WinnerEvent??
             shutDown = !gameCouldStart;
 
         }
