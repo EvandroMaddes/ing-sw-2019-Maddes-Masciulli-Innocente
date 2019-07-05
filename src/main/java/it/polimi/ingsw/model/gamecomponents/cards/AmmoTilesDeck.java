@@ -64,7 +64,7 @@ public class AmmoTilesDeck extends DeckManagement {
      *
      * @return the discardDeck;
      */
-    public ArrayList<AmmoTile> getDiscardDeck() {
+    ArrayList<AmmoTile> getDiscardDeck() {
         return discardDeck;
     }
 
@@ -73,7 +73,7 @@ public class AmmoTilesDeck extends DeckManagement {
      *
      * @param discardedAmmoTile is the card that a player discard (if he grab the 4th one)
      */
-    public void discardCard(AmmoTile discardedAmmoTile) {
+    void discardCard(AmmoTile discardedAmmoTile) {
         discardDeck.add(discardedAmmoTile);
     }
 
@@ -93,7 +93,7 @@ public class AmmoTilesDeck extends DeckManagement {
     /**
      * When the Deck's empty, it is filled with the discardDeck Elements end shuffled;
      */
-    public void reshuffle() {
+    void reshuffle() {
         setDeck((ArrayList<Object>) discardDeck.clone());
         shuffle();
         discardDeck.clear();

@@ -309,7 +309,7 @@ public class GUI extends RemoteView {
         for (int i = 0; skullNumber[i] != 0; i++) {
             gameBoardController.removeSkull(skullNumber[i], decodeMessage.playerTokenImage(killerCharacter[i]));
         }
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -454,7 +454,7 @@ public class GUI extends RemoteView {
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
         gameBoardController.setPosition(x, y, decodeMessage.characterImage(currCharacter));
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -567,7 +567,7 @@ public class GUI extends RemoteView {
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
         gameBoardController.removeAmmoTileOnMap(x, y);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -583,7 +583,7 @@ public class GUI extends RemoteView {
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
         gameBoardController.addAmmoTileOnMap(x, y, decodeMessage.ammoTileImage(fistColour, secondColour, thirdColour));
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -857,7 +857,7 @@ public class GUI extends RemoteView {
             gameBoardController.setNewPlayer(decodeMessage.playerBoardImage(characterChoice), characterChoice);
         }
         gameBoardController.setInfo("User " + newPlayer + " join with " + characterChoice.name());
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -885,7 +885,7 @@ public class GUI extends RemoteView {
         if (characterChoose == character) {
             gameBoardController.addPlayerSkull(skullNumber);
         }
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -903,7 +903,7 @@ public class GUI extends RemoteView {
             ammoToAdd[i] = decodeMessage.ammoCubeImage(ammo.get(i));
         }
         gameBoardController.setAmmo(currCharacter, ammoToAdd);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -929,7 +929,7 @@ public class GUI extends RemoteView {
                 gameBoardController.setPlayerWeapon(toAdd);
             }
         }
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -951,7 +951,7 @@ public class GUI extends RemoteView {
 
         }
         gameBoardController.setSpawnWeapon(x, toAdd);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**

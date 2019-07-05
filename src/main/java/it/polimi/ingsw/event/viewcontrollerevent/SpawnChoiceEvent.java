@@ -14,14 +14,7 @@ public class SpawnChoiceEvent extends CardChoiceEvent {
      */
     private CubeColour cardColour;
 
-    /**
-     * Getter method
-     *
-     * @return the powerUp colour
-     */
-    public CubeColour getCardColour() {
-        return cardColour;
-    }
+
 
     /**
      * Constructor
@@ -35,6 +28,7 @@ public class SpawnChoiceEvent extends CardChoiceEvent {
         this.cardColour = cardColour;
     }
 
+
     /**
      * Perform the action according with the player choice
      *
@@ -42,6 +36,6 @@ public class SpawnChoiceEvent extends CardChoiceEvent {
      */
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().getDeathManager().spawn(getCard(), getCardColour());
+        controller.getGameManager().getCurrentRound().getDeathManager().spawn(getCard(), cardColour);
     }
 }

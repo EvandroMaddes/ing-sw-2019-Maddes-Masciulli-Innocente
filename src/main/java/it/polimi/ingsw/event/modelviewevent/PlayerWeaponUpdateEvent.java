@@ -24,14 +24,7 @@ public class PlayerWeaponUpdateEvent extends ModelViewBroadcastEvent {
      */
     private boolean[] loadedWeapons;
 
-    /**
-     * Getter method
-     *
-     * @return the current character
-     */
-    private Character getCurrCharacter() {
-        return currCharacter;
-    }
+
 
     /**
      * Constructor
@@ -45,6 +38,15 @@ public class PlayerWeaponUpdateEvent extends ModelViewBroadcastEvent {
         this.playerWeapon = playerWeapon;
         this.currCharacter = currCharacter;
         this.loadedWeapons = loadedWeapons;
+    }
+
+    /**
+     * Getter method
+     *
+     * @return the current character
+     */
+    private Character getCurrCharacter() {
+        return currCharacter;
     }
 
     /**

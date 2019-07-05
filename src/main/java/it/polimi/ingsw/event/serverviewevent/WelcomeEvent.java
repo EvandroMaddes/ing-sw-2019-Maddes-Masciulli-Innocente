@@ -16,9 +16,9 @@ public class WelcomeEvent extends ClientEvent {
     /**
      * Represent the available choices for a client:
      * each client, on connection, could chose between:
-     * availableChoice[0] -> new lobby is always true
-     * availableChoice[1] -> true if exist some lobby that isn't started
-     * availableChoice[2] -> true if exist some started lobby with at least a disconnected client
+     * availableChoice[0] is new lobby and is always true
+     * availableChoice[1] is true if exist some lobby that isn't started
+     * availableChoice[2] is true if exist some started lobby with at least a disconnected client
      */
     private boolean[] availableChoices;
     /**

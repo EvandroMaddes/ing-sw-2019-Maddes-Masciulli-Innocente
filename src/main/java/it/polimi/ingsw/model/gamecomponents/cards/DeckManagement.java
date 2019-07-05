@@ -21,7 +21,7 @@ public abstract class DeckManagement {
      * @param deck is the standard ArrayList given in the initializing phase of the game
      *
      */
-    public void setDeck(ArrayList<Object> deck) {
+    void setDeck(ArrayList<Object> deck) {
         this.deck = deck;
     }
 
@@ -36,7 +36,7 @@ public abstract class DeckManagement {
     /**
      * Using the java.util.Collection, the method randomly shuffle the deck elements
      */
-    public void shuffle() {
+    void shuffle() {
         Collections.shuffle(deck);
     }
 

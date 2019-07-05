@@ -24,13 +24,6 @@ public class PlayerReconnectionNotify extends ModelViewBroadcastEvent {
         this.reconnectedCharacter = reconnectedCharacter;
     }
 
-    /**
-     * Getter method
-     * @return the reconnected character
-     */
-    private Character getReconnectedCharacter() {
-        return reconnectedCharacter;
-    }
 
     /**
      * PerformAction implementation: handle the player reconnection
@@ -39,6 +32,6 @@ public class PlayerReconnectionNotify extends ModelViewBroadcastEvent {
      */
     @Override
     public Event performAction(RemoteView remoteView) {
-        return remoteView.playerReconnectionNotify(getUser(),getReconnectedCharacter(), false);
+        return remoteView.playerReconnectionNotify(getUser(),reconnectedCharacter, false);
     }
 }

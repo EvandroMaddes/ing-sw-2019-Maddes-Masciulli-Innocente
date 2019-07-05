@@ -61,8 +61,8 @@ public class PowerUpDeck extends DeckManagement {
     }
 
     /**
-     * @return The first Weapon Card element from the Deck, if the last one is not empty;
      * the super method couldn't throw an exception, because the reshuffle method calling prevent it
+     * @return The first Weapon Card element from the Deck, if the last one is not empty;
      */
     @Override
     public Object draw() {

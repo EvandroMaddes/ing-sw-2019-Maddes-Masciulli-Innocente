@@ -45,7 +45,7 @@ public abstract class RemoteView implements RemoteViewInterface {
     /**
      * This final string is used as addressee for broadcast messages
      */
-    protected static final String BROADCASTSTRING = "BROADCAST";
+    protected static final String BROADCAST_STRING = "BROADCAST";
 
     /**
      * Getter method:
@@ -116,12 +116,12 @@ public abstract class RemoteView implements RemoteViewInterface {
         while (waiting) {
             try {
                 currentMessage = clientImplementation.listenMessage();
-                if (isGameSet() && !currentMessage.getUser().equals(BROADCASTSTRING)) {
+                if (isGameSet() && !currentMessage.getUser().equals(BROADCAST_STRING)) {
                     printScreen();
                 }
                 currentMessage = ((ClientEvent) currentMessage).performAction(this);
                 //invia il messaggio solo se non è Update -> BROADCAST
-                if (!currentMessage.getUser().equals(BROADCASTSTRING)) {
+                if (!currentMessage.getUser().equals(BROADCAST_STRING)) {
                     clientImplementation.sendMessage(currentMessage);
                 }
 

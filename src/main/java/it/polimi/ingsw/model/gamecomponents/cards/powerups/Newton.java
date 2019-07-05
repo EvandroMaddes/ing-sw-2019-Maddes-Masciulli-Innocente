@@ -49,7 +49,7 @@ public class Newton extends PowerUp {
     /**
      * Get the possible destination of the targetPlayer after the Newton usage
      *
-     * @returna NewtonTargetRequestEvent containing the possible Squares positions
+     * @return a NewtonTargetRequestEvent containing the possible Squares positions
      */
     public ControllerViewEvent getTargets() {
         ArrayList<Square> possibleDestination = new ArrayList<>();
