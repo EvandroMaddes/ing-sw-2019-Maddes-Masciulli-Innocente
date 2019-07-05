@@ -33,7 +33,7 @@ public class GameModel extends Observable {
     /**
      * Constructor: set the given GameBoard and allocate an empty ArrayList for players attribute
      *
-     * @param gameboard
+     * @param gameboard is the given GameBoard
      */
     public GameModel(GameBoard gameboard) {
         this.players = new ArrayList<>();
@@ -61,7 +61,7 @@ public class GameModel extends Observable {
     /**
      * when a player is added in the match, this method notifies the VirtualViews
      *
-     * @param newPlayer
+     * @param newPlayer is the new connected player
      */
     public void addPlayer(Player newPlayer) {
         players.add(newPlayer);

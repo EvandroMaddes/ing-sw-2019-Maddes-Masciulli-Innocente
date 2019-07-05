@@ -49,6 +49,7 @@ public class VirtualView extends Observable implements Observer {
 
     /**
      * Getter method
+     *
      * @return the message that has to go to the client
      */
     public Event getToRemoteView() {
@@ -57,6 +58,7 @@ public class VirtualView extends Observable implements Observer {
 
     /**
      * Getter method
+     *
      * @return the update messages queue
      */
     public Queue<Event> getModelUpdateQueue() {
@@ -67,6 +69,8 @@ public class VirtualView extends Observable implements Observer {
      * this method is called by the server when a message arrives from Remote view;
      * this means that message should be send to controller.
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
+     *
+     * @param message is the message from client, notified to the Controller
      */
     public void toController(Event message) {
         setToController(message);
@@ -79,7 +83,7 @@ public class VirtualView extends Observable implements Observer {
      * this method set event that should be send to RemoteView.
      * Remember: VIRTUAL_VIEW IS AN OBSERVER OF THE MODEL
      *
-     * @param o Is the observable
+     * @param o   Is the observable
      * @param arg message
      */
     @Override
@@ -92,6 +96,7 @@ public class VirtualView extends Observable implements Observer {
 
     /**
      * Set the message from the server to the controller
+     *
      * @param toController is the message
      */
     private void setToController(Event toController) {
@@ -100,6 +105,7 @@ public class VirtualView extends Observable implements Observer {
 
     /**
      * Getter method
+     *
      * @return the message to the controller
      */
     private Event getToController() {
@@ -108,6 +114,7 @@ public class VirtualView extends Observable implements Observer {
 
     /**
      * Method called by the controller to set the request messages to send to the client
+     *
      * @param message is the message for the client
      */
     public void callRemoteView(ControllerViewEvent message) {

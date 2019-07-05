@@ -6,10 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 
 import java.util.HashMap;
 
+/**
+ * It controls scene of position choice
+ *
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
+ */
 public class PositionChoiceController extends AbstractController {
     @FXML
     private ImageView mapImageView;
@@ -56,7 +61,9 @@ public class PositionChoiceController extends AbstractController {
      */
     private HashMap<Integer, Button[]> mapSquareButton = new HashMap<>();
 
-
+    /**
+     * It sets mapping between square and button
+     */
     void init() {
         mapSquareButton.put(0, new Button[]{square0Button, square1Button, square2Button, square3Button});
         mapSquareButton.put(1, new Button[]{square4Button, square5Button, square6Button, square7Button});
@@ -64,6 +71,12 @@ public class PositionChoiceController extends AbstractController {
 
     }
 
+    /**
+     * It sets button and their opacity
+     *
+     * @param x x position of button
+     * @param y y position of button
+     */
     void setController(int[] x, int[] y) {
         for (int i = 0; i < 4; i++) {
             mapSquareButton.get(0)[i].setDisable(true);
@@ -111,13 +124,13 @@ public class PositionChoiceController extends AbstractController {
     void square3Click() {
         System.out.println("pressato");
 
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 0,3));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 3));
         getWindow().close();
     }
 
     @FXML
     void square4Click() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 1,0));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 0));
         getWindow().close();
     }
 
@@ -166,25 +179,26 @@ public class PositionChoiceController extends AbstractController {
 
     /**
      * setter: it seta image on image view
+     *
      * @param mapNumber map selected
      */
-     void setMapImage(int mapNumber) {
-       Image image;
-        switch (mapNumber){
+    void setMapImage(int mapNumber) {
+        Image image;
+        switch (mapNumber) {
             case 0:
-               image = new Image("map/map0.png");
+                image = new Image("map/map0.png");
                 break;
             case 1:
-               image = new Image("map/map1.png");
+                image = new Image("map/map1.png");
                 break;
             case 2:
-              image =  new Image("map/map2.png");
+                image = new Image("map/map2.png");
                 break;
             case 3:
-              image =  new Image("map/map3.png");
+                image = new Image("map/map3.png");
                 break;
-                default:
-                    image = new Image("map/map0.png");
+            default:
+                image = new Image("map/map0.png");
 
         }
 

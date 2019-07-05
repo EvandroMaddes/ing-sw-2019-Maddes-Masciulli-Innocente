@@ -34,6 +34,7 @@ public class AmmoTileUpdateEvent extends PositionUpdateEvent {
      * @param firstColour  the first ammo colour
      * @param secondColour the second ammo colour
      * @param thirdColour  the third ammo colour OR must be setted  "POWERUP"
+     * @param replace is true if the AmmoTile must be set on the map
      */
     public AmmoTileUpdateEvent(boolean replace, int squareX, int squareY, String firstColour, String secondColour, String thirdColour) {
         super(squareX, squareY);

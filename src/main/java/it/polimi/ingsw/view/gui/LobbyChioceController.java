@@ -8,12 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
 /**
  * It menage lobby choice scene
+ *
  * @author Evandro Maddes
  */
 public class LobbyChioceController extends AbstractController {
@@ -31,7 +31,7 @@ public class LobbyChioceController extends AbstractController {
     /**
      * It sets available lobby of started game or waiting one
      *
-     * @param available It use to set button on screen
+     * @param available      It use to set button on screen
      * @param startedLobbies started game
      * @param waitingLobbies waiting game
      */

@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -151,22 +150,39 @@ public class GameBoardController extends AbstractController {
     @FXML
     private HBox spawnRed;
 
+    /**
+     * Image of one skull
+     */
     private Image skullImage;
-
+    /**
+     * link between character and his damage, mark and ammo cube
+     */
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new EnumMap<>(Character.class);
+    /**
+     * link between character and his position
+     */
     private Map<Character, ImageView> mapCharcaterPosition = new EnumMap<Character, ImageView>(Character.class);
+    /**
+     * link between square and its vbox
+     */
     private Map<VBox, int[]> mapSquareVBox = new HashMap<>();
+    /**
+     * number of skull's player
+     */
     private int numberOfSkull = 0;
+    /**
+     * List of square(vbox)
+     */
     private ArrayList<VBox> square = new ArrayList<>();
+    /**
+     * Number of player in game
+     */
     private int numberOfPlayers = 0;
 
 
-    //prova popUp
-    @FXML
-    private AnchorPane popUpPane;
-    private AbstractController popUpController;
-
-
+    /**
+     * It initializes controller and sets its attributes
+     */
     void init() {
 
         gridImageAmmoCubeSetting(topLeftAmmoCube);
@@ -466,7 +482,10 @@ public class GameBoardController extends AbstractController {
     /**
      * It remove characterImage from old position and it sets characterImage ii  the new one
      *
-     * @param character characterImage to set
+     * @param x              is the Square column on the map
+     * @param y              is the Square row on the map
+     * @param character      characterImage to set
+     * @param characterImage is the character image
      */
     public void setPosition(int x, int y, Image characterImage, Character character) {
         removeCharacter(character);

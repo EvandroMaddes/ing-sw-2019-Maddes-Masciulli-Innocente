@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * This class implements the basic mod (KillShot mod) GameTrack of the game
  *
- * @Evandro Maddes
+ * @author Evandro Maddes
  */
 public class KillShotTrack extends GameTrack {
 

@@ -14,6 +14,7 @@ public abstract class ViewServerEvent extends Event {
      * Constructor: call the Event constructor and set isNewGame value
      *
      * @param user is the client username
+     * @param isNewGame is true if is a new game request
      */
     public ViewServerEvent(String user, boolean isNewGame) {
         super(user);

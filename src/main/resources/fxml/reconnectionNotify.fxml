@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="150.0" prefWidth="354.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.ReconnectionController">
+   <children>
+      <ComboBox fx:id="disconnectedClient" layoutX="67.0" layoutY="52.0" onAction="#disconnetionSelection" prefHeight="39.0" prefWidth="226.0" promptText="DISCONNECTED CLIENT" />
+      <Label layoutX="13.0" layoutY="14.0" prefHeight="17.0" prefWidth="356.0" text="SELECT ONE DISCONNECTED CLIENT:" textFill="YELLOW">
+         <font>
+            <Font name="Arial Black" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

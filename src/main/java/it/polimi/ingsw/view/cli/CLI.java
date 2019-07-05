@@ -23,7 +23,13 @@ import java.util.Map;
  */
 public class CLI extends RemoteView {
 
+    /**
+     * It's command line screen
+     */
     private CLIDisplay display;
+    /**
+     * link between character and color on screen
+     */
     private Map<Character, String> mapCharacterNameColors = new EnumMap<>(Character.class);
 
 
@@ -692,7 +698,7 @@ public class CLI extends RemoteView {
      *
      * @param currCharacter modified player board
      * @param powerUp       power up of player
-     * @param colour         colour of power up
+     * @param colour        colour of power up
      * @return message notify the success of updating
      */
     @Override
@@ -757,10 +763,10 @@ public class CLI extends RemoteView {
      * RemoteViewInterface implementation: It updates number of skull on the game track
      *
      * @param damageTokenNumber player who takes the skull
-     * @param skullNumber     number of skull left:
-     *                        0-one skull;
-     *                        1-one damage;
-     *                        2-two damage;
+     * @param skullNumber       number of skull left:
+     *                          0-one skull;
+     *                          1-one damage;
+     *                          2-two damage;
      * @return message notify the success of updating
      */
     @Override
@@ -846,7 +852,7 @@ public class CLI extends RemoteView {
         String[] nameSelected = new String[index.length];
         CubeColour[] colourSelected = new CubeColour[index.length];
         if (index[0] == 404) {
-            message = new WeaponEffectPaymentChoiceEvent(getUser(), new String[]{},new CubeColour[]{});
+            message = new WeaponEffectPaymentChoiceEvent(getUser(), new String[]{}, new CubeColour[]{});
         } else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
@@ -1085,7 +1091,7 @@ public class CLI extends RemoteView {
 
 
         } else if (choice.equalsIgnoreCase("n")) {
-            message = new EndRoundPowerUpChoiceEvent(getUser(), new String[]{},new CubeColour[]{});
+            message = new EndRoundPowerUpChoiceEvent(getUser(), new String[]{}, new CubeColour[]{});
         }
         return message;
     }
@@ -1203,7 +1209,7 @@ public class CLI extends RemoteView {
                     }
                 }
             }
-        } else if (choice.equalsIgnoreCase("N")){
+        } else if (choice.equalsIgnoreCase("N")) {
             return new int[]{404};
         }
 

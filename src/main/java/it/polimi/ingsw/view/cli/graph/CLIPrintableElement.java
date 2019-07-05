@@ -5,27 +5,37 @@ import it.polimi.ingsw.model.player.Character;
 
 /**
  * Its constructors allocate an AmmoTile or a Player representation by a string, depending on the arguments given
+ *
+ * @author Francesco Masciulli
+ * @author Evandro Maddes
  */
 public class CLIPrintableElement {
+    /**
+     * background color
+     */
     private String resource = Color.ANSI_BLACK_BACKGROUND.escape();
+    /**
+     * used to set position of one player
+     */
     private boolean isPlayer;
 
 
     /**
      * constructor: it sets one player on the map
+     *
      * @param player character to set
-     * @param color color of his character
+     * @param color  color of his character
      */
-    public CLIPrintableElement(Character player, String color){
+    public CLIPrintableElement(Character player, String color) {
         char firstChar = player.name().charAt(0);
-        resource =  resource+ color+firstChar;
+        resource = resource + color + firstChar;
         isPlayer = true;
     }
 
 
-
     /**
      * getter
+     *
      * @return RESOURCE
      */
     public String getResource() {
@@ -34,6 +44,7 @@ public class CLIPrintableElement {
 
     /**
      * getter
+     *
      * @return isPlayer
      */
     public boolean isPlayer() {
@@ -43,13 +54,13 @@ public class CLIPrintableElement {
 
     /**
      * is called when an update require removing an ammotile or a weapon on the CLIMap
+     *
      * @param isWeapon is true if the replaced resource is a weapon, false if is an ammotile
      */
-    public CLIPrintableElement(boolean isWeapon){
-        if(!isWeapon){
+    public CLIPrintableElement(boolean isWeapon) {
+        if (!isWeapon) {
             resource = resource + " " + " " + " ";
-        }
-        else{
+        } else {
             resource = " ";
         }
 
@@ -57,25 +68,25 @@ public class CLIPrintableElement {
 
     /**
      * constructor: it sets ammoTile on one square
+     *
      * @param isPowerUp if ammoTile contains one power up
-     * @param colors colors of ammoCube
+     * @param colors    colors of ammoCube
      */
-    public CLIPrintableElement(boolean isPowerUp, String[] colors){
+    public CLIPrintableElement(boolean isPowerUp, String[] colors) {
         Color[] colorPrint = new Color[3];
-        for(int i=0; i<colors.length; i++) {
+        for (int i = 0; i < colors.length; i++) {
             if (colors[i].equalsIgnoreCase("red"))
                 colorPrint[i] = Color.ANSI_RED;
             else if (colors[i].equalsIgnoreCase("yellow"))
                 colorPrint[i] = Color.ANSI_YELLOW;
             else if (colors[i].equalsIgnoreCase("blue"))
-                colorPrint[i]= Color.ANSI_BLUE;
+                colorPrint[i] = Color.ANSI_BLUE;
             else colorPrint[i] = Color.ANSI_WHITE;
         }
-        resource = resource + colorPrint[0].escape()+"A"+ resource + colorPrint[1].escape() + "A";
-        if(isPowerUp) {
-                    resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape()+"P";
-        }
-        else{
+        resource = resource + colorPrint[0].escape() + "A" + resource + colorPrint[1].escape() + "A";
+        if (isPowerUp) {
+            resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape() + "P";
+        } else {
             resource = resource + Color.ANSI_BLACK_BACKGROUND.escape() + colorPrint[2].escape() + "A";
 
         }

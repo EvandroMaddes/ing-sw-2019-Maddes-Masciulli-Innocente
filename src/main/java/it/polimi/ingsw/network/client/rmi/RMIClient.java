@@ -130,7 +130,6 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      * Getter method:
      *
      * @return currMessage
-     * @throws RemoteException
      */
     @Override
     public Event getCurrMessage() {
@@ -238,8 +237,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      * connect the client to the server
      *
      * @param remotePort      is the server Port, from the NetConfiguration Class
-     * @param remoteIPAddress
-     * @throws RemoteException
+     * @param remoteIPAddress is the remote host ip address
+     * @throws RemoteException if couldn't connect a client properly
      */
     @Override
     public void acceptRemoteClient(int remotePort, String remoteIPAddress, String bindName) throws RemoteException {
@@ -255,7 +254,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
     /**
      * this method is call by server to check the client livability
      *
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public void clientConnectionGuard() throws RemoteException {
@@ -265,7 +264,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
     /**
      * clean the currMessage, is called by server when the client message is retrieved
      *
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public void remoteCleanCurrEvent() throws RemoteException {
@@ -307,8 +306,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      * wasn't implemented, just the server could send Broadcast;
      * it could be implemented, in the future, to send broadcast defined messages to each client
      *
-     * @param message
-     * @throws RemoteException
+     * @param message could be a client broadcast message
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public void remoteSendBroadcast(Event message) throws RemoteException {
@@ -320,7 +319,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface, R
      * remoteListenMessage implementation
      *
      * @return the listened message, null if the currMessage isn't updated
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public Event remoteListenMessage() throws RemoteException {

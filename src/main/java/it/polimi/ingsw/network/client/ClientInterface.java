@@ -21,6 +21,7 @@ public interface ClientInterface extends NetworkHandler {
 
     /**
      * this method handle the ClientInterface disconnection
+     * @throws Exception is couldn't disconnect properly
      */
     void disconnectClient() throws Exception;
 

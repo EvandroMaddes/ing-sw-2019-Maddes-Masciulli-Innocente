@@ -1,16 +1,22 @@
 package it.polimi.ingsw.view.cli.graph;
 
+/**
+ * It's title adrenaline
+ *
+ * @author Francesco Masciulli
+ */
 public abstract class TitleCharacter {
 
-   public static final int HEIGHT = 9;
-   public static final Color color = Color.ANSI_GREEN;
-   protected String[] string=new String[HEIGHT];
+    public static final int HEIGHT = 9;
+    public static final Color color = Color.ANSI_GREEN;
+    protected String[] string = new String[HEIGHT];
 
 
     /**
      * getter
+     *
      * @param row row
-     * @return
+     * @return the row String representation
      */
     public String getRow(int row) {
         return string[row];
@@ -19,6 +25,7 @@ public abstract class TitleCharacter {
 
     /**
      * getter
+     *
      * @return COLOR
      */
     public Color getColor() {
