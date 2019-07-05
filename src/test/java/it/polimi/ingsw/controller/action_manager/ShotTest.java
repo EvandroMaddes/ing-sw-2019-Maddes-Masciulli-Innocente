@@ -54,7 +54,10 @@ public class ShotTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
-
+    /**
+     * Check the correctness of the interaction with the player for a shot action.
+     * This test is done with the weapon "Lock Rifle" as an example
+     */
     @Test
     public void fireTest() {
         player1.setPosition(map[0][0]);
@@ -79,31 +82,31 @@ public class ShotTest {
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         //richiesta target effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().contains(player2.getCharacter()));
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().contains(player3.getCharacter()));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().contains(player3.getCharacter()));
         ArrayList<Character> target = new ArrayList<>();
         target.add(player2.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 2);
         choiceMessage.performAction(controller);
         // richiesta target effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().contains(player3.getCharacter()));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().contains(player3.getCharacter()));
         target = new ArrayList<>();
         target.add(player3.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
@@ -114,8 +117,11 @@ public class ShotTest {
         Assert.assertFalse(lockRifle.isLoaded());
     }
 
+    /**
+     * Check that not payable effect are not provided to the player as a choice for a shot action
+     */
     @Test
-    public void shotActionWithUnpayableEffectTest(){
+    public void shotActionWithUnpayableEffectTest() {
         player1.setPosition(map[0][0]);
         player2.setPosition(map[0][0]);
         player3.setPosition(map[1][0]);
@@ -143,32 +149,32 @@ public class ShotTest {
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         //richiesta target effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().contains(player2.getCharacter()));
         ArrayList<Character> target = new ArrayList<>();
         target.add(player2.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 2);
         choiceMessage.performAction(controller);
         // richiesta target effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)requestMessage).getPossibleTargetsX().length);
-        TestPattern.checkSquares(new int[]{0,1,0}, new int[]{1,0,0}, ((TargetSquareRequestEvent)requestMessage).getPossibleTargetsX(), ((TargetSquareRequestEvent)requestMessage).getPossibleTargetsY());
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) requestMessage).getPossibleTargetsX().length);
+        TestPattern.checkSquares(new int[]{0, 1, 0}, new int[]{1, 0, 0}, ((TargetSquareRequestEvent) requestMessage).getPossibleTargetsX(), ((TargetSquareRequestEvent) requestMessage).getPossibleTargetsY());
 
-        choiceMessage = new WeaponSquareTargetChoiceEvent(player1.getUsername(), 1 , 0);
+        choiceMessage = new WeaponSquareTargetChoiceEvent(player1.getUsername(), 1, 0);
         choiceMessage.performAction(controller);
         // fine azione
         Assert.assertEquals(map[1][0], player1.getPosition());
@@ -176,18 +182,24 @@ public class ShotTest {
         Assert.assertFalse(cyberblade.isLoaded());
     }
 
+    /**
+     * Check that, even if he can move before, a player with no weapons can not perform an adrenalinic shot
+     */
     @Test
-    public void adrenalinicShotWithNoWeaponTest(){
+    public void adrenalinicShotWithNoWeaponTest() {
         player1.setPosition(map[0][0]);
         player2.setPosition(map[1][0]);
         player1.getPlayerBoard().addDamages(player2, 8);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertFalse(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
     }
 
+    /**
+     * Check that a player can correctly have a move before an adrenalinic shot
+     */
     @Test
-    public void adrenalinicShotWithWeaponTest(){
+    public void adrenalinicShotWithWeaponTest() {
         player1.setPosition(map[0][0]);
         player2.setPosition(map[1][0]);
         Weapon electroscythe = new Electroscythe();
@@ -195,19 +207,19 @@ public class ShotTest {
         player1.getPlayerBoard().addDamages(player2, 8);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(3, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{0,0,1};
-        int[] expectedY = new int[]{0,1,0};
-        TestPattern.checkSquares(expectedX, expectedY, ((ShotMoveRequestEvent)requestMessage).getPossibleSquareX(), ((ShotMoveRequestEvent)requestMessage).getPossibleSquareY());
-        choiceMessage = new ShotMoveChoiceEvent(player1.getUsername(), 1,0);
+        Assert.assertEquals(3, ((ShotMoveRequestEvent) requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0, 0, 1};
+        int[] expectedY = new int[]{0, 1, 0};
+        TestPattern.checkSquares(expectedX, expectedY, ((ShotMoveRequestEvent) requestMessage).getPossibleSquareX(), ((ShotMoveRequestEvent) requestMessage).getPossibleSquareY());
+        choiceMessage = new ShotMoveChoiceEvent(player1.getUsername(), 1, 0);
         choiceMessage.performAction(controller);
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponRequestEvent)requestMessage).getWeapons().size());
-        Assert.assertTrue(((WeaponRequestEvent)requestMessage).getWeapons().contains(electroscythe.getName()));
+        Assert.assertEquals(1, ((WeaponRequestEvent) requestMessage).getWeapons().size());
+        Assert.assertTrue(((WeaponRequestEvent) requestMessage).getWeapons().contains(electroscythe.getName()));
     }
 }

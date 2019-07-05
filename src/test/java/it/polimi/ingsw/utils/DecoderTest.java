@@ -23,7 +23,7 @@ public class DecoderTest {
     ArrayList<Player> playersList;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         player1 = new Player("Federico", Character.SPROG);
         player2 = new Player("Francesco", Character.D_STRUCT_OR);
         player3 = new Player("Evandro", Character.DOZER);
@@ -33,8 +33,11 @@ public class DecoderTest {
         playersList.add(player3);
     }
 
+    /**
+     * Check that a powerUp list is correcly decoded from his lite version
+     */
     @Test
-    public void decodePowerUpTest(){
+    public void decodePowerUpTest() {
         PowerUp powerUp1 = new Newton(CubeColour.Blue);
         PowerUp powerUp2 = new Newton(CubeColour.Blue);
         PowerUp powerUp3 = new Newton(CubeColour.Red);
@@ -51,12 +54,14 @@ public class DecoderTest {
         Assert.assertEquals(expectedList, decodedPowerUpList);
 
         PowerUp decodedPowerUp = Decoder.decodePowerUp(player1, "Newton", CubeColour.Red);
-        PowerUp expectedPowerUp = powerUp3;
-        Assert.assertEquals(decodedPowerUp, expectedPowerUp);
+        Assert.assertEquals(decodedPowerUp, powerUp3);
     }
 
+    /**
+     * Check that a square is correctly decoded from his lite version
+     */
     @Test
-    public void decodeSquareTest(){
+    public void decodeSquareTest() {
         Map map = new Map(Map.BIG_LEFT, Map.SMALL_RIGHT);
         int toDecodeX = 2;
         int toDecodeY = 1;
@@ -65,8 +70,11 @@ public class DecoderTest {
         Assert.assertEquals(expectedSquare, decodedSquare);
     }
 
+    /**
+     * Check that a player list is correctly decoded by their character from his lite version
+     */
     @Test
-    public void decodePlayerListTest(){
+    public void decodePlayerListTest() {
         ArrayList<Character> characterList = new ArrayList<>();
         characterList.add(Character.SPROG);
         characterList.add(Character.DOZER);
@@ -77,16 +85,22 @@ public class DecoderTest {
         Assert.assertEquals(expectedPlayers, decodedPlayers);
     }
 
+    /**
+     * Check that a player is correctly decoded from his lite version
+     */
     @Test
-    public void decodePlayerTest(){
+    public void decodePlayerTest() {
         Player decodedPlayer = Decoder.decodePlayerFromUsername("Federico", playersList);
         Assert.assertEquals(player1, decodedPlayer);
         decodedPlayer = Decoder.decodePlayerFromCharacter(Character.D_STRUCT_OR, playersList);
         Assert.assertEquals(player2, decodedPlayer);
     }
 
+    /**
+     * Check that the player weapons are correctly decoded from his lite version
+     */
     @Test
-    public void decodePlayerWeaponTest(){
+    public void decodePlayerWeaponTest() {
         Weapon weapon1 = new LockRifle();
         Weapon weapon2 = new Electroscythe();
         player1.addWeapon(weapon1);

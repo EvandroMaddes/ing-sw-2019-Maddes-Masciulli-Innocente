@@ -22,8 +22,11 @@ import java.util.ArrayList;
 
 public class EncoderTest {
 
+    /**
+     * Check that a list of players is correctly encoded into their character
+     */
     @Test
-    public void encodePlayersTest(){
+    public void encodePlayersTest() {
         Player player1 = new Player("Federico", Character.BANSHEE);
         Player player2 = new Player("Francesco", Character.D_STRUCT_OR);
         Player player3 = new Player("Evandro", Character.SPROG);
@@ -39,30 +42,36 @@ public class EncoderTest {
         Assert.assertEquals(expectedLiteList, playerListLite);
     }
 
+    /**
+     * Check that a list of squares is correctly encoded into their row and column coordinate
+     */
     @Test
-    public void encodeSquaresXYTest(){
-        Square  square1 = new BasicSquare(0,1);
-        Square  square2 = new BasicSquare(2, 2);
-        Square  square3 = new SpawnSquare(1,1);
+    public void encodeSquaresXYTest() {
+        Square square1 = new BasicSquare(0, 1);
+        Square square2 = new BasicSquare(2, 2);
+        Square square3 = new SpawnSquare(1, 1);
         ArrayList<Square> squaresList = new ArrayList<>();
         squaresList.add(square1);
         squaresList.add(square2);
         squaresList.add(square3);
-        int[] squareX= Encoder.encodeSquareTargetsX(squaresList);
+        int[] squareX = Encoder.encodeSquareTargetsX(squaresList);
         int[] squareY = Encoder.encodeSquareTargetsY(squaresList);
-        int[] expectedSquareX = new int[]{0,2,1};
-        int[] expectedSquareY = new int[]{1,2,1};
+        int[] expectedSquareX = new int[]{0, 2, 1};
+        int[] expectedSquareY = new int[]{1, 2, 1};
         for (int i = 0; i < squareX.length; i++) {
             Assert.assertEquals(expectedSquareX[i], squareX[i]);
             Assert.assertEquals(expectedSquareY[i], squareY[i]);
         }
     }
 
+    /**
+     * Check that a list of weapons is correctly encoded into their names
+     */
     @Test
     public void encodeWeaponsTest() {
-        Weapon  weapon1 = new LockRifle();
-        Weapon  weapon2 = new Electroscythe();
-        Weapon  weapon3 = new MachineGun();
+        Weapon weapon1 = new LockRifle();
+        Weapon weapon2 = new Electroscythe();
+        Weapon weapon3 = new MachineGun();
         ArrayList<Weapon> weaponsList = new ArrayList<>();
         weaponsList.add(weapon1);
         weaponsList.add(weapon2);
@@ -80,8 +89,11 @@ public class EncoderTest {
         }
     }
 
+    /**
+     * Check that a list of powerUps is correctly encoded into they types and colours
+     */
     @Test
-    public void encodePowerUpsTest(){
+    public void encodePowerUpsTest() {
         PowerUp powerUp1 = new TagbackGrenade(CubeColour.Blue);
         PowerUp powerUp2 = new TargetingScope(CubeColour.Red);
         PowerUp powerUp3 = new Newton(CubeColour.Blue);
@@ -99,8 +111,11 @@ public class EncoderTest {
         }
     }
 
+    /**
+     * Check that a list of damage tokens is correctly encoded into their character
+     */
     @Test
-    public void encodeDamageTokensTest(){
+    public void encodeDamageTokensTest() {
         Player player1 = new Player("Federico", Character.BANSHEE);
         Player player2 = new Player("Francesco", Character.D_STRUCT_OR);
         Player player3 = new Player("Evandro", Character.SPROG);

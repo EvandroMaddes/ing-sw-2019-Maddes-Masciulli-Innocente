@@ -37,7 +37,7 @@ public class GameManagerTest {
     private GameModel model;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -56,8 +56,11 @@ public class GameManagerTest {
         SetUpObserverObservable.connect(model.getPlayers(), hashMap, model);
     }
 
+    /**
+     * Check that the buildGameBoard(int ) method of the GameManager build and return the chosen map
+     */
     @Test
-    public void buildGameBoardTest(){
+    public void buildGameBoardTest() {
         GameManager gameManager = new GameManager(null, 0);
         Square[][] map = gameManager.getModel().getGameboard().getMap().getSquareMatrix();
         Assert.assertEquals("Grey", map[2][0].getSquareColour());
@@ -78,17 +81,19 @@ public class GameManagerTest {
         Assert.assertNull(map[2][0]);
         Assert.assertNull(map[0][3]);
 
-        try{
+        try {
             gameManager = new GameManager(null, 5);
             Assert.fail();
-        }
-        catch (InvalidParameterException e){
+        } catch (InvalidParameterException e) {
             Assert.assertTrue(true);
         }
     }
 
+    /**
+     * Check that the refillMap method of the gameManager correctly refill all and only the empty squares of the map, drawing ammo and weapons from their decks
+     */
     @Test
-    public void refillMapTest(){
+    public void refillMapTest() {
         AmmoTile ammoTile1 = new AmmoTile(new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow), null, true);
         ((BasicSquare) map[0][0]).setAmmo(ammoTile1);
         gameManager.newRound();
@@ -98,17 +103,17 @@ public class GameManagerTest {
                     if (!gameBoard.getMap().getSpawnSquares().contains(map[i][j]))
                         Assert.assertTrue(((BasicSquare) map[i][j]).checkAmmo());
                     else
-                        Assert.assertEquals(3, ((SpawnSquare)map[i][j]).getWeapons().size() );
+                        Assert.assertEquals(3, ((SpawnSquare) map[i][j]).getWeapons().size());
                 }
             }
         }
-        Assert.assertEquals(ammoTile1, ((BasicSquare)map[0][0]).getAmmo());
-        Assert.assertNotEquals(((BasicSquare)map[0][1]).getAmmo(), ((BasicSquare)map[1][1]).getAmmo());
+        Assert.assertEquals(ammoTile1, ((BasicSquare) map[0][0]).getAmmo());
+        Assert.assertNotEquals(((BasicSquare) map[0][1]).getAmmo(), ((BasicSquare) map[1][1]).getAmmo());
         ArrayList<Weapon> weapons = new ArrayList<>();
-        for (SpawnSquare s:gameBoard.getMap().getSpawnSquares()) {
+        for (SpawnSquare s : gameBoard.getMap().getSpawnSquares()) {
             weapons.addAll(s.getWeapons());
         }
-        for (Weapon w: weapons) {
+        for (Weapon w : weapons) {
             for (int i = 0; i < weapons.size(); i++) {
                 if (weapons.indexOf(w) != i)
                     Assert.assertNotEquals(w, weapons.get(i));
@@ -116,8 +121,11 @@ public class GameManagerTest {
         }
     }
 
+    /**
+     * Check that a CharacterChoiceEvent correctly add the player with the chosen character to the game and, if needed, send a request to the next one
+     */
     @Test
-    public void characterChoiceTest(){
+    public void characterChoiceTest() {
         VirtualView virtualView1 = new VirtualView("Federico");
         VirtualView virtualView2 = new VirtualView("Francesco");
         hashMap = new HashMap<>();
@@ -135,7 +143,7 @@ public class GameManagerTest {
 
         CharacterRequestEvent messageRequest = (CharacterRequestEvent) hashMap.get("Federico").getToRemoteView();
         Assert.assertEquals(5, messageRequest.getAvailableCharacter().size());
-        for (Character c: expectedCharacter ) {
+        for (Character c : expectedCharacter) {
             Assert.assertTrue(messageRequest.getAvailableCharacter().contains(c));
         }
 
@@ -151,7 +159,7 @@ public class GameManagerTest {
         Assert.assertEquals(4, messageRequest.getAvailableCharacter().size());
         expectedCharacter.remove(Character.SPROG);
 
-        for (Character c: expectedCharacter ) {
+        for (Character c : expectedCharacter) {
             Assert.assertTrue(messageRequest.getAvailableCharacter().contains(c));
         }
 
@@ -164,8 +172,11 @@ public class GameManagerTest {
         Assert.assertNotNull(gameManager.getCurrentRound());
     }
 
+    /**
+     * Check that the endGameMethod correctly end the game and calculate the right winner
+     */
     @Test
-    public void endGameTest(){
+    public void endGameTest() {
         controller = new Controller(hashMap, 3);
         hashMap.put("Evandro", new VirtualView("Evandro"));
         hashMap.put("Test1", new VirtualView("Test1"));
@@ -199,7 +210,7 @@ public class GameManagerTest {
         gameTrack.evaluateDamage(new DamageToken(player3), 1);
         gameTrack.evaluateDamage(new DamageToken(player4), 2);
         Assert.assertTrue(gameTrack.checkEndTrack());
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
             hashMap.get(p.getUsername()).getModelUpdateQueue().clear();
         }
         gameManager.endGame();
@@ -208,13 +219,16 @@ public class GameManagerTest {
         Assert.assertEquals(13, player3.getPoints());
         Assert.assertEquals(22, player4.getPoints());
         Assert.assertEquals(0, player5.getPoints());
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Assert.assertEquals("BANSHEE (Test1) win with 22 points!", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("BANSHEE (Test1) win with 22 points!", ((EndGameUpdate) hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
+    /**
+     * Check that the right winner is calculate in case of a draw with no points done
+     */
     @Test
-    public void calculateWinnerDrawCaseWithNoPointsTest(){
+    public void calculateWinnerDrawCaseWithNoPointsTest() {
         controller = new Controller(hashMap, 3);
         hashMap.put("Evandro", new VirtualView("Evandro"));
         hashMap.put("Test1", new VirtualView("Test1"));
@@ -226,25 +240,31 @@ public class GameManagerTest {
         model.addPlayer(player4);
         model.addPlayer(player5);
         controller.getGameManager().endGame();
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Assert.assertEquals("Draw ", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("Draw ", ((EndGameUpdate) hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
+    /**
+     * Check that the right winner is calculate in caso of draw
+     */
     @Test
-    public void calculateWinnerDrawCaseTest(){
+    public void calculateWinnerDrawCaseTest() {
         controller.getGameManager().setPlayerTurn(0);
         player1.addPoints(9);
         player2.addPoints(9);
-        ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
+        ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().add(new DamageToken(player3));
         controller.getGameManager().endGame();
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Assert.assertEquals("Draw of SPROG (Federico), VIOLET (Evandro), with 9 points", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("Draw of SPROG (Federico), VIOLET (Evandro), with 9 points", ((EndGameUpdate) hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
+    /**
+     * Check that the end game points are correctly given to the players
+     */
     @Test
-    public void giveEndGamePointsTest(){
+    public void giveEndGamePointsTest() {
         player1.getPlayerBoard().addDamages(player2, 3);
         player1.getPlayerBoard().addDamages(player3, 1);
         player2.getPlayerBoard().addDamages(player1, 1);
@@ -269,7 +289,7 @@ public class GameManagerTest {
         //skip player2 round
         Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
         choiceMessage.performAction(controller);
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
             hashMap.get(p.getUsername()).getModelUpdateQueue().clear();
         }
         choiceMessage.performAction(controller);
@@ -280,13 +300,16 @@ public class GameManagerTest {
         Assert.assertEquals(15, player2.getPoints());
         Assert.assertEquals(6, player3.getPoints());
 
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
-            Assert.assertEquals("DOZER (Francesco) win with 15 points!", ((EndGameUpdate)hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
+            Assert.assertEquals("DOZER (Francesco) win with 15 points!", ((EndGameUpdate) hashMap.get(p.getUsername()).getModelUpdateQueue().poll()).getEndGameMessage());
         }
     }
 
+    /**
+     * Check that the spawn squares are correctly refilled with the missing weapons
+     */
     @Test
-    public void refillSpawnSquareTest(){
+    public void refillSpawnSquareTest() {
         controller.getGameManager().setPlayerTurn(2);
         player1.setPosition(map[0][0]);
         player2.setPosition(map[1][0]);
@@ -303,16 +326,16 @@ public class GameManagerTest {
         addedWeapon.add(lockRifle);
         addedWeapon.add(shockWave);
         addedWeapon.add(shotgun);
-        ((SpawnSquare)map[1][0]).addWeapon(addedWeapon);
-        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        ((SpawnSquare) map[1][0]).addWeapon(addedWeapon);
+        Assert.assertEquals(3, ((SpawnSquare) map[1][0]).getWeapons().size());
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shockWave));
         controller.getGameManager().newRound();
-        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        Assert.assertEquals(3, ((SpawnSquare) map[1][0]).getWeapons().size());
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shockWave));
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 2);
         choiceMessage.performAction(controller);
@@ -320,16 +343,16 @@ public class GameManagerTest {
         choiceMessage.performAction(controller);
         choiceMessage = new WeaponGrabChoiceEvent(player1.getUsername(), lockRifle.getName());
         choiceMessage.performAction(controller);
-        Assert.assertEquals(2, ((SpawnSquare)map[1][0]).getWeapons().size());
-        Assert.assertFalse(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        Assert.assertEquals(2, ((SpawnSquare) map[1][0]).getWeapons().size());
+        Assert.assertFalse(((SpawnSquare) map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shockWave));
         choiceMessage = new SkipActionChoiceEvent(player1.getUsername());
         choiceMessage.performAction(controller);
         Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
-        Assert.assertEquals(3, ((SpawnSquare)map[1][0]).getWeapons().size());
-        Assert.assertFalse(((SpawnSquare)map[1][0]).getWeapons().contains(lockRifle));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shotgun));
-        Assert.assertTrue(((SpawnSquare)map[1][0]).getWeapons().contains(shockWave));
+        Assert.assertEquals(3, ((SpawnSquare) map[1][0]).getWeapons().size());
+        Assert.assertFalse(((SpawnSquare) map[1][0]).getWeapons().contains(lockRifle));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shotgun));
+        Assert.assertTrue(((SpawnSquare) map[1][0]).getWeapons().contains(shockWave));
     }
 }

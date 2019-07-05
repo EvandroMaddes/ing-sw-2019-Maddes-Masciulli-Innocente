@@ -26,7 +26,7 @@ public class RoundManagerTest {
     private Square[][] map;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -38,8 +38,12 @@ public class RoundManagerTest {
         map = controller.getGameManager().getModel().getGameboard().getMap().getSquareMatrix();
     }
 
+    /**
+     * Check that a SkipActionRequestEvent correctly move the player to the next phase of the round
+     */
     @Test
-    public void skipActionTest(){
+    public void skipActionTest() {
+
         controller.getGameManager().setCurrentRound(new RoundManager(controller, player1));
         RoundManager roundManager = controller.getGameManager().getCurrentRound();
         controller.getGameManager().setPlayerTurn(0);
@@ -47,15 +51,15 @@ public class RoundManagerTest {
         player1.setPosition(map[0][0]);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
-        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[1]);
+        Assert.assertFalse(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
 
         ViewControllerEvent choiceEvent = new SkipActionChoiceEvent(player1.getUsername());
         choiceEvent.performAction(controller);
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
-        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[1]);
+        Assert.assertFalse(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
 
         choiceEvent = new SkipActionChoiceEvent(player1.getUsername());
         choiceEvent.performAction(controller);
@@ -64,16 +68,19 @@ public class RoundManagerTest {
         Assert.assertEquals(player2, roundManager.getCurrentPlayer());
     }
 
+    /**
+     * Check that the refillMap method of the GameManager correctly refill all and only the empty squares of the map
+     */
     @Test
-    public void mapRefillTest(){
+    public void mapRefillTest() {
         controller.getGameManager().newRound();
-        for (SpawnSquare s:controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares()) {
+        for (SpawnSquare s : controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares()) {
             Assert.assertEquals(3, s.getWeapons().size());
         }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 if (!controller.getGameManager().getModel().getGameboard().getMap().getSpawnSquares().contains(map[i][j]))
-                    Assert.assertTrue(((BasicSquare)map[i][j]).checkAmmo());
+                    Assert.assertTrue(((BasicSquare) map[i][j]).checkAmmo());
             }
         }
     }

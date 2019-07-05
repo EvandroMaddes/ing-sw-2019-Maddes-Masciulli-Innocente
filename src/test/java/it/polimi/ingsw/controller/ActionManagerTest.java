@@ -23,7 +23,7 @@ public class ActionManagerTest {
     private RoundManager roundManager;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -43,24 +43,27 @@ public class ActionManagerTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
+    /**
+     * Check that a player is moved on the chosen destination after a MoveChoiceEvent
+     */
     @Test
-    public void moveTest(){
+    public void moveTest() {
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[0]);
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[1]);
-        Assert.assertFalse(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[0]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[1]);
+        Assert.assertFalse(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
 
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(9, ((PositionMoveRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{0,0,0,0,1,1,1,2,2};
-        int[] expectedY = new int[]{0,1,2,3,0,1,2,0,1};
+        Assert.assertEquals(9, ((PositionMoveRequestEvent) requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0, 0, 0, 0, 1, 1, 1, 2, 2};
+        int[] expectedY = new int[]{0, 1, 2, 3, 0, 1, 2, 0, 1};
         for (int i = 0; i < 9; i++) {
             boolean check = false;
             for (int j = 0; j < 9; j++) {
-                if (expectedX[i] == ((PositionMoveRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((PositionMoveRequestEvent)requestMessage).getPossibleSquareY()[j])
+                if (expectedX[i] == ((PositionMoveRequestEvent) requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((PositionMoveRequestEvent) requestMessage).getPossibleSquareY()[j])
                     check = true;
             }
             Assert.assertTrue(check);

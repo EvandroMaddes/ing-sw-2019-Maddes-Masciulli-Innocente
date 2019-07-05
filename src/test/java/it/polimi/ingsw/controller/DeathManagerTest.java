@@ -31,7 +31,7 @@ public class DeathManagerTest {
     private RoundManager roundManager;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -50,8 +50,11 @@ public class DeathManagerTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
+    /**
+     * Check that a dead player can correctly respawn at the end of the round
+     */
     @Test
-    public void endRoundRespawnTest(){
+    public void endRoundRespawnTest() {
         controller.getGameManager().setPlayerTurn(3);
         player1.setPosition(map[0][0]);
         player2.setPosition(map[0][0]);
@@ -81,15 +84,15 @@ public class DeathManagerTest {
         Assert.assertEquals(1, player2.getPlayerBoard().getSkullsNumber());
         Assert.assertEquals(0, player2.getPlayerBoard().getDamageAmount());
         Assert.assertEquals(7, controller.getGameManager().getModel().getGameboard().getGameTrack().getSkullBox());
-        Assert.assertEquals(player3, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(0).getPlayer());
-        Assert.assertEquals(1, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().size());
+        Assert.assertEquals(player3, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(0).getPlayer());
+        Assert.assertEquals(1, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().size());
         Assert.assertEquals(1, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[0]);
         Assert.assertEquals(0, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[2]);
         Assert.assertEquals(0, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[1]);
         Event requestEvent = hashMap.get(player2.getUsername()).getToRemoteView();
-        Assert.assertEquals(2 ,((RespawnRequestEvent)requestEvent).getPowerUpNames().length);
-        Assert.assertEquals("TagbackGrenade", ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0]);
-        Assert.assertEquals(CubeColour.Blue, ((RespawnRequestEvent)requestEvent).getPowerUpColours()[0]);
+        Assert.assertEquals(2, ((RespawnRequestEvent) requestEvent).getPowerUpNames().length);
+        Assert.assertEquals("TagbackGrenade", ((RespawnRequestEvent) requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(CubeColour.Blue, ((RespawnRequestEvent) requestEvent).getPowerUpColours()[0]);
         choiceMessage = new SpawnChoiceEvent(player2.getUsername(), "TagbackGrenade", CubeColour.Blue);
         choiceMessage.performAction(controller);
         Assert.assertEquals(1, player2.getPowerUps().size());
@@ -106,21 +109,21 @@ public class DeathManagerTest {
         Assert.assertEquals(1, player3.getPlayerBoard().getSkullsNumber());
         Assert.assertEquals(0, player3.getPlayerBoard().getDamageAmount());
         Assert.assertEquals(6, controller.getGameManager().getModel().getGameboard().getGameTrack().getSkullBox());
-        Assert.assertEquals(3, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().size());
-        Assert.assertEquals(player3, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(0).getPlayer());
-        Assert.assertEquals(player2, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(1).getPlayer());
-        Assert.assertEquals(player2, ((KillShotTrack)controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(2).getPlayer());
+        Assert.assertEquals(3, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().size());
+        Assert.assertEquals(player3, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(0).getPlayer());
+        Assert.assertEquals(player2, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(1).getPlayer());
+        Assert.assertEquals(player2, ((KillShotTrack) controller.getGameManager().getModel().getGameboard().getGameTrack()).getTokenTrack().get(2).getPlayer());
         Assert.assertEquals(1, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[0]);
         Assert.assertEquals(2, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[1]);
         Assert.assertEquals(0, controller.getGameManager().getModel().getGameboard().getGameTrack().getTokenSequence()[2]);
         requestEvent = hashMap.get(player3.getUsername()).getToRemoteView();
-        Assert.assertEquals(4 ,((RespawnRequestEvent)requestEvent).getPowerUpNames().length);
-        Assert.assertEquals(teleporter.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[0]);
-        Assert.assertEquals(teleporter.getName(), ((RespawnRequestEvent)requestEvent).getPowerUpNames()[1]);
-        Assert.assertEquals("TagbackGrenade", ((RespawnRequestEvent)requestEvent).getPowerUpNames()[2]);
-        Assert.assertEquals(CubeColour.Blue, ((RespawnRequestEvent)requestEvent).getPowerUpColours()[0]);
-        Assert.assertEquals(CubeColour.Yellow, ((RespawnRequestEvent)requestEvent).getPowerUpColours()[1]);
-        Assert.assertEquals(CubeColour.Yellow, ((RespawnRequestEvent)requestEvent).getPowerUpColours()[2]);
+        Assert.assertEquals(4, ((RespawnRequestEvent) requestEvent).getPowerUpNames().length);
+        Assert.assertEquals(teleporter.getName(), ((RespawnRequestEvent) requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(teleporter.getName(), ((RespawnRequestEvent) requestEvent).getPowerUpNames()[1]);
+        Assert.assertEquals("TagbackGrenade", ((RespawnRequestEvent) requestEvent).getPowerUpNames()[2]);
+        Assert.assertEquals(CubeColour.Blue, ((RespawnRequestEvent) requestEvent).getPowerUpColours()[0]);
+        Assert.assertEquals(CubeColour.Yellow, ((RespawnRequestEvent) requestEvent).getPowerUpColours()[1]);
+        Assert.assertEquals(CubeColour.Yellow, ((RespawnRequestEvent) requestEvent).getPowerUpColours()[2]);
         choiceMessage = new SpawnChoiceEvent(player2.getUsername(), "Teleporter", CubeColour.Yellow);
         choiceMessage.performAction(controller);
         Assert.assertEquals(3, player3.getPowerUps().size());
