@@ -198,7 +198,7 @@ public class GUI extends RemoteView {
         weaponChoiceController.init();
         positionChoiceController.init();
         genericPaymentController.init();
-        metodoPROVA();
+
     }
 
     // TODO: 03/07/2019 da eliminare!!
