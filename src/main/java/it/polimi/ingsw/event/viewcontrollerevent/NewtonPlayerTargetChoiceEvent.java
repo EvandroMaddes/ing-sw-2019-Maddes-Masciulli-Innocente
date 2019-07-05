@@ -2,7 +2,6 @@ package it.polimi.ingsw.event.viewcontrollerevent;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.utils.Decoder;
 
 /**
  * Message to notify the target choice of a Newton powerUp

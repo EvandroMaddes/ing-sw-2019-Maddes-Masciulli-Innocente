@@ -252,6 +252,7 @@ public abstract class Weapon extends Card {
      */
     public void setLoaded() {
         this.loaded = true;
+        resetDamagedplayer();
         setUsableEffect();
         if (getOwner() != null)
             getOwner().notifyWeaponsChange();
