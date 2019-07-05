@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class WeaponChoiceController extends AbstractController {
 
     @FXML
-    private Label infoText;
+    private TextField infoText;
 
     @FXML
     private Button weapon3Button;
@@ -127,6 +128,8 @@ public class WeaponChoiceController extends AbstractController {
 
     void  setText(String info){
         infoText.setText(info);
+        infoText.setDisable(true);
+        infoText.setOpacity(1.0);
     }
 
 }
