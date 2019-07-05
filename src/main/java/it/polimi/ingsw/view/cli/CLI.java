@@ -207,7 +207,7 @@ public class CLI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
         int chosenAction = 404;
-        while (chosenAction < 1 || chosenAction >= 5) {
+        while (chosenAction < 1 || chosenAction >= 5 || (!fireEnable && chosenAction==3)) {
             try {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
                         "option 1 for MOVE"
