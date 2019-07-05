@@ -45,10 +45,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      * Is the server registry
      */
     private transient Registry registry;
-    /**
-     * Is the server Stub
-     */
-    private transient RemoteInterface serverStub;
+
     /**
      * Is the server IP address
      */
@@ -111,6 +108,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      *
      * @return the connected Clients ArrayList
      */
+    @Override
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
         Iterator iterator = clientList.iterator();
@@ -224,7 +222,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      */
     @Override
     public void runServer() {
-
+        RemoteInterface serverStub;
         try {
             serverStub = (RemoteInterface) UnicastRemoteObject.exportObject(this, portRMI);
             registry = LocateRegistry.createRegistry(portRMI);

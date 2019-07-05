@@ -41,6 +41,9 @@ public class SocketClient implements ClientInterface {
      * Is the clientSocket output stream
      */
     private ObjectOutputStream outputStream;
+    /**
+     * Boolean that indicate the state of connection
+     */
     private boolean connected = false;
 
     /**
