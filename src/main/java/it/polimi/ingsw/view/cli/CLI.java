@@ -1203,7 +1203,7 @@ public class CLI extends RemoteView {
                     }
                 }
             }
-        } else if (choice.equals("N"))
+        } else if (choice.equalsIgnoreCase("N"))
             selected = null;
 
         int[] indexChoose = new int[selected.size()];
