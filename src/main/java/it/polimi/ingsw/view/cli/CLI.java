@@ -501,8 +501,10 @@ public class CLI extends RemoteView {
                 i = numTarget + 1;
             } else if (cliStringCharacter.contains(chosenStringCharacter.toUpperCase())) {
                 int index = cliStringCharacter.indexOf(chosenStringCharacter.toUpperCase());
-                chosenCharacter = availableTargets.get(index);
-                targetCharacter.add(chosenCharacter);
+                if(availableTargets!=null) {
+                    chosenCharacter = availableTargets.get(index);
+                    targetCharacter.add(chosenCharacter);
+                }
             }
         }
 

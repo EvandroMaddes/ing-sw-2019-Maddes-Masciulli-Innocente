@@ -245,7 +245,7 @@ public class GenericPaymentController extends AbstractController {
     void finishClick(ActionEvent event) {
 
         finishButton.setDisable(false);
-        setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(), (String[]) powerUpNameChoice.toArray(), (CubeColour[]) powerUpColorChoice.toArray()));
+        setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(),  powerUpNameChoice.toArray(new String[0]),  powerUpColorChoice.toArray(new CubeColour[0])));
         getWindow().close();
         skipAction.setDisable(false);
 
@@ -259,7 +259,7 @@ public class GenericPaymentController extends AbstractController {
             finishButton.setDisable(false);
         }
         if (max == powerUpNameChoice.size()) {
-            setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(), (String[]) powerUpNameChoice.toArray(), (CubeColour[]) powerUpColorChoice.toArray()));
+            setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(),powerUpNameChoice.toArray(new String[0]),  powerUpColorChoice.toArray(new CubeColour[0])));
             getWindow().close();
         }
         skipAction.setDisable(false);

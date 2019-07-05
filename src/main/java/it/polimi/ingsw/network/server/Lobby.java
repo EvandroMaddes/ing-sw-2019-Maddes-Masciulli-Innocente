@@ -228,19 +228,20 @@ public class Lobby extends Thread {
             if (disconnectedClients.isEmpty()) {
                 Event nextMessage = findNextMessage();
                 try {
-                    String currentUser = nextMessage.getUser();
+                    if(nextMessage!=null){
+                        String currentUser = nextMessage.getUser();
+                        message = sendAndWaitNextMessage(nextMessage);
+                        if (message == null) {
+                            message = new DisconnectedEvent(currentUser);
+                            disconnectClient(currentUser);
+                        } else if (!message.getUser().equals("BROADCAST")) {
+                            try {
+                                mapUserView.get(message.getUser()).toController(message);
+                                log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
 
-                    message = sendAndWaitNextMessage(nextMessage);
-                    if (message == null) {
-                        message = new DisconnectedEvent(currentUser);
-                        disconnectClient(currentUser);
-                    } else if (!message.getUser().equals("BROADCAST")) {
-                        try {
-                            mapUserView.get(message.getUser()).toController(message);
-                            log.info(lobbyName.concat(":\tListened message from:\t" + message.getUser() + "\n"));
-
-                        } catch (ClassCastException exc) {
-                            message = null;
+                            } catch (ClassCastException exc) {
+                                message = null;
+                            }
                         }
                     }
                 } catch (NullPointerException noNewMessage) {
