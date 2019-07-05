@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.viewcontrollerevent.SkipActionChoiceEvent;
 import it.polimi.ingsw.event.viewcontrollerevent.WeaponChoiceEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,8 +30,6 @@ public class WeaponChoiceController extends AbstractController {
     @FXML
     private ImageView weapon3Image;
 
-    @FXML
-    private Button skipChoiceButton;
 
     @FXML
     private ImageView weapon4Image;
@@ -58,6 +55,10 @@ public class WeaponChoiceController extends AbstractController {
      */
     private ArrayList<ImageView> weaponImageView = new ArrayList<>();
     /**
+     *
+     */
+    ArrayList<Button> weaponButton = new ArrayList<>();
+    /**
      * Use to get image
      */
     private DecodeMessage decodeMessage;
@@ -65,12 +66,16 @@ public class WeaponChoiceController extends AbstractController {
     /**
      * Constructor: set image view on array list
      */
-    WeaponChoiceController() {
+    void init() {
         decodeMessage = new DecodeMessage();
         weaponImageView.add(weapon1Image);
+        weaponButton.add(weapon1Button);
         weaponImageView.add(weapon2Image);
+        weaponButton.add(weapon2Button);
         weaponImageView.add(weapon3Image);
+        weaponButton.add(weapon2Button);
         weaponImageView.add(weapon4Image);
+        weaponButton.add(weapon3Button);
         weapon1Image.setImage(null);
         weapon2Image.setImage(null);
         weapon3Image.setImage(null);
@@ -83,9 +88,13 @@ public class WeaponChoiceController extends AbstractController {
      */
     public void setController(ArrayList<String> weapon) {
         this.weapon = (String[]) weapon.toArray();
+        for (Button currentButton: weaponButton){
+            currentButton.setDisable(true);
+        }
         for (int i = 0; i < weapon.size(); i++) {
             Image currentImage = decodeMessage.weaponImage(weapon.get(i));
             weaponImageView.get(i).setImage(currentImage);
+            weaponButton.get(i).setDisable(false);
         }
     }
 

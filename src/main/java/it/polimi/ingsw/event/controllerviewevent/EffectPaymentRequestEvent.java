@@ -18,7 +18,7 @@ public class EffectPaymentRequestEvent extends PaymentRequestEvent {
      * @param powerUpNames the list of powerUps types he can use to pay
      * @param powerUpColours the list of powerUps colours
      * @param minimumPowerUpRequest the minimum number of powerUps to use for pay (Red - Yellow - Blue)
-     * @param maximumPowerUpRequest teh maximum number of powerUps to use for pay (Red - Yellow - Blue)
+     * @param maximumPowerUpRequest the maximum number of powerUps to use for pay (Red - Yellow - Blue)
      */
     public EffectPaymentRequestEvent(String user, String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         super(user, powerUpNames, powerUpColours, minimumPowerUpRequest, maximumPowerUpRequest);

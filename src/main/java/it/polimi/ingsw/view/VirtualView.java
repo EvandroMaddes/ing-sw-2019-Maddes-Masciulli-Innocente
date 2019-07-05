@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Is a model observer and controller observable
  * Has three functions :
- * 1 - Send the messages receved from the model to controller threw the networck
+ * 1 - Send the messages recieved from the model to controller threw the networck
  * 2 - Send the message from the client to the controller
  * 3 - Take the request messages from the controller to the clients
  */

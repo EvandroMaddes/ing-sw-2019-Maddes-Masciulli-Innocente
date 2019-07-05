@@ -15,7 +15,7 @@ public class EndGameUpdate extends ModelViewBroadcastEvent {
 
     /**
      * Constructor: call super-class constructor and set the endGameMessage
-     * @param endGameMessage
+     * @param endGameMessage is the end game message
      */
     public EndGameUpdate(String endGameMessage) {
         this.endGameMessage = endGameMessage;

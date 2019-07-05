@@ -1,17 +1,24 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.event.viewcontrollerevent.MoveChoiceEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
+import java.util.HashMap;
 
 public class PositionChoiceController extends AbstractController {
+    @FXML
+    private AnchorPane ancorPane;
     @FXML
     private Button square7Button;
     @FXML
     private Button square10Button;
     @FXML
-    private Button square0Buttom;
+    private Button square0Button;
     @FXML
     private Button square2Button;
     @FXML
@@ -27,74 +34,137 @@ public class PositionChoiceController extends AbstractController {
     @FXML
     private Button square9Button;
 
-     @FXML
-     private Button square11Button;
+    @FXML
+    private Button square11Button;
 
-     @FXML
-     private Button square3Button;
+    @FXML
+    private Button square3Button;
 
-     @FXML
-     private Button square8Button;
+    @FXML
+    private Button square8Button;
 
-     @FXML
-     void square0Click(ActionEvent event) {
+    /**
+     * link between square and button
+     */
+    private HashMap<Integer, Button[]> mapSquareButton = new HashMap<>();
 
-     }
 
-     @FXML
-     void square1Click(ActionEvent event) {
+    void init() {
+        mapSquareButton.put(0, new Button[]{square0Button, square1Button, square2Button, square3Button});
+        mapSquareButton.put(1, new Button[]{square4Button, square5Button, square6Button, square7Button});
+        mapSquareButton.put(2, new Button[]{square8Button, square9Button, square10Button, square11Button});
 
-     }
+    }
 
-     @FXML
-     void square2Click(ActionEvent event) {
+    void setController(int[] x, int[] y) {
+        for (int i = 0; i < 4; i++) {
+            mapSquareButton.get(0)[i].setDisable(true);
+            mapSquareButton.get(1)[i].setDisable(true);
+            mapSquareButton.get(2)[i].setDisable(true);
+        }
+        for (int i = 0; i < x.length; i++) {
+            mapSquareButton.get(y[i])[x[i]].setDisable(false);
+        }
 
-     }
+    }
 
-     @FXML
-     void square3Click(ActionEvent event) {
+    @FXML
+    void square0Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 0));
+        getWindow().close();
+    }
 
-     }
+    @FXML
+    void square1Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 0));
+        getWindow().close();
+    }
 
-     @FXML
-     void square4Click(ActionEvent event) {
+    @FXML
+    void square2Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 0));
+        getWindow().close();
+    }
 
-     }
+    @FXML
+    void square3Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 0));
+        getWindow().close();
+    }
 
-     @FXML
-     void square5Click(ActionEvent event) {
+    @FXML
+    void square4Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 1));
+        getWindow().close();
+    }
 
-     }
+    @FXML
+    void square5Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 1));
+        getWindow().close();
+    }
 
-     @FXML
-     void square6Click(ActionEvent event) {
+    @FXML
+    void square6Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 1));
+        getWindow().close();
+    }
 
-     }
+    @FXML
+    void square7Click(ActionEvent event) {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 1));
+        getWindow().close();
 
-     @FXML
-     void square7Click(ActionEvent event) {
+    }
 
-     }
+    @FXML
+    void square8Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 2));
+        getWindow().close();
+    }
 
-     @FXML
-     void square8Click(ActionEvent event) {
+    @FXML
+    void square9Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 2));
+        getWindow().close();
+    }
 
-     }
+    @FXML
+    void square10Click() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 2));
+        getWindow().close();
+    }
 
-     @FXML
-     void square9Click(ActionEvent event) {
+    @FXML
+    void square11Button() {
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 2));
+        getWindow().close();
+    }
 
-     }
+    /**
+     * setter: it seta image on image view
+     * @param mapNumber map selected
+     */
+     void setMapImage(int mapNumber) {
+       Image image;
+        switch (mapNumber){
+            case 0:
+               image = new Image("map/map0.png");
+                break;
+            case 1:
+               image = new Image("map/map1.png");
+                break;
+            case 2:
+              image =  new Image("map/map2.png");
+                break;
+            case 3:
+              image =  new Image("map/map3.png");
+                break;
+                default:
+                    image = new Image("map/map0.png");
 
-     @FXML
-     void square10Click(ActionEvent event) {
-
-     }
-
-     @FXML
-     void square11Button(ActionEvent event) {
-
-     }
-
+        }
+        mapImage.setImage(image);
+    }
 
 }

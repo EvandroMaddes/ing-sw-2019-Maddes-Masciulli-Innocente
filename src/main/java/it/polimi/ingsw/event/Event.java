@@ -32,12 +32,4 @@ public abstract class Event implements Serializable {
         return user;
     }
 
-    /**
-     * Setter method: set the user value to the one given as argument
-     *
-     * @param user is the user that will be set
-     */
-    public void setUser(String user) {
-        this.user = user;
-    }
 }

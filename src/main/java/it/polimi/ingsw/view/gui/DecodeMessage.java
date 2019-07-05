@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * It links an image with a card, map, character, player board, player token, ammo tile, power up
@@ -190,11 +189,11 @@ public class DecodeMessage {
     private Path findAmmoCubeImage(AmmoCube ammo) {
         Path path = null;
         if (ammo.getColour() == CubeColour.Red) {
-            path = getPath("ammoboxes/redammobox.png");
+            path = getPath("ammoCube/redammobox.png");
         } else if (ammo.getColour() == CubeColour.Yellow) {
-            path = getPath("ammoboxes/yellowammobox.png");
+            path = getPath("ammoCube/yellowammobox.png");
         } else {
-            path = getPath("ammoboxes/blueammobox.png");
+            path = getPath("ammoCube/blueammobox.png");
         }
 
         return path;
@@ -404,5 +403,6 @@ public class DecodeMessage {
         Path path = findCharacterImage(character);
         return loadImage(path);
     }
+
 }
 

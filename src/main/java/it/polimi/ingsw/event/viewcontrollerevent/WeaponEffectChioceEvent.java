@@ -34,5 +34,7 @@ public class WeaponEffectChioceEvent extends ViewControllerEvent {
         controller.getGameManager().getCurrentRound().getActionManager().askForEffectPay(effectChoice);
     }
 
-
+    public int getEffectChoice() {
+        return effectChoice;
+    }
 }

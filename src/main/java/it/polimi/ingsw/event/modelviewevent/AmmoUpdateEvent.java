@@ -24,29 +24,13 @@ public class AmmoUpdateEvent extends ModelViewBroadcastEvent {
 
     /**
      * Constructor: call super-class constructor and set currCharacter and ammo values
-     * @param currCharacter
-     * @param ammo
+     * @param currCharacter is the player character
+     * @param ammo are th eplayer ammo
      */
     public AmmoUpdateEvent(Character currCharacter, List<AmmoCube> ammo) {
         super();
         this.currCharacter = currCharacter;
         this.ammo = (ArrayList<AmmoCube>) ammo;
-    }
-
-    /**
-     * Getter method
-     * @return currCharacter value
-     */
-    public Character getCurrCharacter() {
-        return currCharacter;
-    }
-
-    /**
-     * Getter method:
-     * @return the ammo ArrayList
-     */
-    public ArrayList<AmmoCube> getAmmo() {
-        return ammo;
     }
 
     /**
@@ -57,6 +41,6 @@ public class AmmoUpdateEvent extends ModelViewBroadcastEvent {
     @Override
     public Event performAction(RemoteView remoteView) {
 
-        return remoteView.playerAmmoUpdate(getCurrCharacter(), getAmmo());
+        return remoteView.playerAmmoUpdate(currCharacter, ammo);
     }
 }

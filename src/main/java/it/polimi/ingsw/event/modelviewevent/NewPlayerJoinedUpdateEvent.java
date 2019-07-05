@@ -12,11 +12,11 @@ public class NewPlayerJoinedUpdateEvent extends ModelViewBroadcastEvent {
     /**
      * Is the new player username
      */
-    String newPlayer;
+    private String newPlayer;
     /**
      * is the Character chosen by the new player
      */
-    Character characterChoice;
+    private Character characterChoice;
 
     /**
      * Constructor: call super-class constructor and set newPlayer and characterChoice values
@@ -29,7 +29,6 @@ public class NewPlayerJoinedUpdateEvent extends ModelViewBroadcastEvent {
         this.newPlayer = username;
         this.characterChoice = characterChoice;
     }
-
 
     /**
      * Implements the performAction: notify the character choice
