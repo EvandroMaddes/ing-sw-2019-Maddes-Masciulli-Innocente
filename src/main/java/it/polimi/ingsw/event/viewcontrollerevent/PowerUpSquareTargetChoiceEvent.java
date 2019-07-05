@@ -28,8 +28,6 @@ public class PowerUpSquareTargetChoiceEvent extends PositionChoiceEvent {
      */
     @Override
     public void performAction(Controller controller) {
-        Object destination = Decoder.decodeSquare(getPositionX(), getPositionY(), controller.getGameManager().getModel().getGameboard().getMap());
-        controller.getGameManager().getCurrentRound().getActionManager().performPowerUp(destination);
-        controller.getGameManager().getCurrentRound().getActionManager().endPowerUpPhase();
+        controller.getGameManager().getCurrentRound().getActionManager().performPowerUpSquareTarget(getPositionX(), getPositionY());
     }
 }

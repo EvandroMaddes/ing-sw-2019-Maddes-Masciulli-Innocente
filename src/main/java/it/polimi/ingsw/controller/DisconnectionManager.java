@@ -75,7 +75,7 @@ public class DisconnectionManager {
                 disconnectedInChampSelect = true;
             }
         }
-        Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, controller.getGameManager().getModel().getPlayers());
+        Player disconnectedPlayer = Decoder.decodePlayerFromUsername(username, gamePlayers);
         if (controller.getGameManager().getCurrentRound() == null || controller.getGameManager().getCurrentRound().getCurrentPlayer() != disconnectedPlayer) {
             disconnectingQueue.add(disconnectedPlayer);
             if (controller.getGameManager().getCurrentRound() != null && controller.getGameManager().getCurrentRound().getPhase() == 7)

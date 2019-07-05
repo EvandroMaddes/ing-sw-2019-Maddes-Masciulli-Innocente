@@ -200,9 +200,8 @@ public class GameManager {
         }
         if (!characterChosen) {
             Player newPlayer = new Player(user, character);
-            if (model.getPlayers().isEmpty()) {
+            if (model.getPlayers().isEmpty())
                 newPlayer.setFirstPlayer();
-            }
             model.addPlayer(newPlayer);
         }
         characterSelect();
@@ -228,8 +227,8 @@ public class GameManager {
      */
     public void newRound() {
         refillMap();
-        if (lastPlayer > getModel().getPlayers().size())
-            lastPlayer = getModel().getPlayers().size();
+        if (lastPlayer >= getModel().getPlayers().size())
+            lastPlayer = getModel().getPlayers().size() - 1 ;
 
         if (gameEnded() && !isFinalFrenzyPhase())
             setFinalFrenzyPhase();
@@ -363,9 +362,9 @@ public class GameManager {
     private void giveEndGamePoints() {
         ArrayList<Player> playerList;
         if (disconnectionManager != null)
-            playerList = getDisconnectionManager().getGamePlayers();
+            playerList = new ArrayList<>(getDisconnectionManager().getGamePlayers());
         else
-            playerList = getModel().getPlayers();
+            playerList = new ArrayList<>(getModel().getPlayers());
         for (Player p : playerList) {
             collectPlayerBoardPoints(p);
         }
@@ -380,9 +379,9 @@ public class GameManager {
     void collectPlayerBoardPoints(Player evaluatedPlayer) {
         ArrayList<Player> playersList;
         if (disconnectionManager != null)
-            playersList = getDisconnectionManager().getGamePlayers();
+            playersList = new ArrayList<>(getDisconnectionManager().getGamePlayers());
         else
-            playersList = getModel().getPlayers();
+            playersList = new ArrayList<>(getModel().getPlayers());
 
         int[] damageDealed = new int[playersList.size()];
         Player[] damageDealer = new Player[playersList.size()];
