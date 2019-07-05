@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.event.Event;
-import it.polimi.ingsw.event.viewcontrollerevent.UpdateChoiceEvent;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -9,11 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * It is a controller
+ * It is a controller with common method of all controller
+ *
+ * @author Evandro Maddes
  */
 public abstract class AbstractController {
     private GUI gui;
-    private Stage primaryStage;
     private Event message;
     private Stage window;
 
@@ -21,7 +21,7 @@ public abstract class AbstractController {
         return message;
     }
 
-    public void setWindow(Stage window) {
+    void setWindow(Stage window) {
         this.window = window;
     }
 
@@ -55,23 +55,6 @@ public abstract class AbstractController {
         return gui;
     }
 
-    /**
-     * getter
-     *
-     * @return primary stage
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    /**
-     * setter
-     *
-     * @param primaryStage
-     */
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
 
     /**
      * @return

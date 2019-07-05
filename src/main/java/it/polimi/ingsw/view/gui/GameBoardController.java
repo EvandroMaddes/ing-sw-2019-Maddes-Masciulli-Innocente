@@ -241,6 +241,14 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
+     * getter
+     * @return left map image view
+     */
+    public ImageView getLeftMap() {
+        return leftMap;
+    }
+
+    /**
      * setter: It link one player to his playerboard
      *
      * @param playerboard image of a playerboard
@@ -249,7 +257,7 @@ public class GameBoardController extends AbstractController {
      void setPrincipalPlayerboard(Image playerboard, Character character) {
         principalPlayerBoard.setImage(playerboard);
         mapCharacterAmmoCube.put(character, new GridPane[]{principalDamage, principalAmmoCube, principalMarks});
-
+         initAmmocube(principalAmmoCube);
     }
 
     /**
@@ -415,6 +423,8 @@ public class GameBoardController extends AbstractController {
      * @param powerUp power up to set
      */
     void setPlayerPowerUp(Image[] powerUp) {
+        hBoxImageClean(yourPowerUp);
+        System.out.println(" rimossi power up");
         for (int i = 0; i < powerUp.length; i++) {
             ((ImageView) yourPowerUp.getChildren().get(i)).setImage(powerUp[i]);
         }
@@ -620,64 +630,6 @@ public class GameBoardController extends AbstractController {
         ((ImageView) ammoCubeGrid.getChildren().get(0)).setImage(new Image("ammoCube/yellowammobox.png"));
         ((ImageView) ammoCubeGrid.getChildren().get(1)).setImage(new Image("ammoCube/blueammobox.png"));
         ((ImageView) ammoCubeGrid.getChildren().get(2)).setImage(new Image("ammoCube/redammobox.png"));
-    }
-
-
-    /*********************************PROVA******************************/
-
-    public AbstractController getPopUpController() {
-        return popUpController;
-    }
-
-    /**
-     * @return
-     */
-    public Event askPopUp(AbstractController popUpController, Path popUpPath, Scene scene) {
-        setPopUpPane(popUpPath);
-        //popUpController.setWindow(getWindow());
-
-        Event returnedEvent = ask(scene);
-        cleanPopUpPane();
-        return returnedEvent;
-    }
-
-    /**
-     * set the popUpPane in the invisible AnchorPane and make it visible
-     *
-     * @param popUpPath is the popUp fxml Path given to te loader;
-     */
-    private void setPopUpPane(Path popUpPath) {
-        Task query = new Task() {
-            @Override
-            protected AnchorPane call() throws Exception {
-                try {
-                    Pane popUp = FXMLLoader.load(getClass().getResource(popUpPath.toString()));
-                    popUpPane.getChildren().add(popUp);
-                    popUpPane.setStyle("-fx-background-color: grey;");
-                } catch (IOException noFXML) {
-                    CustomLogger.logException(noFXML);
-                }
-                return popUpPane;
-            }
-
-        };
-        Platform.runLater(query);
-    }
-
-    /**
-     *
-     */
-    private void cleanPopUpPane() {
-        Task query = new Task() {
-            @Override
-            protected AnchorPane call() throws Exception {
-                popUpPane.getChildren().addAll(popUpPane.getChildren());
-                popUpPane.setStyle("-fx-background-color: rgba(0, 255, 0, 0);");
-                return popUpPane;
-            }
-
-        };
-        Platform.runLater(query);
     }
 
 }

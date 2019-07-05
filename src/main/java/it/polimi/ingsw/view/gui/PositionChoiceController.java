@@ -6,31 +6,38 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 
 import java.util.HashMap;
 
 public class PositionChoiceController extends AbstractController {
     @FXML
-    private AnchorPane ancorPane;
+    private ImageView mapImageView;
+
     @FXML
     private Button square7Button;
+
     @FXML
     private Button square10Button;
+
     @FXML
     private Button square0Button;
+
     @FXML
     private Button square2Button;
+
     @FXML
     private Button square5Button;
+
     @FXML
     private Button square6Button;
-    @FXML
-    private ImageView mapImage;
+
     @FXML
     private Button square1Button;
+
     @FXML
     private Button square4Button;
+
     @FXML
     private Button square9Button;
 
@@ -42,6 +49,7 @@ public class PositionChoiceController extends AbstractController {
 
     @FXML
     private Button square8Button;
+
 
     /**
      * link between square and button
@@ -61,33 +69,48 @@ public class PositionChoiceController extends AbstractController {
             mapSquareButton.get(0)[i].setDisable(true);
             mapSquareButton.get(1)[i].setDisable(true);
             mapSquareButton.get(2)[i].setDisable(true);
+
+            mapSquareButton.get(0)[i].setOpacity(0.5);
+            mapSquareButton.get(1)[i].setDisable(true);
+            mapSquareButton.get(1)[i].setOpacity(0.5);
+            mapSquareButton.get(2)[i].setDisable(true);
+            mapSquareButton.get(2)[i].setOpacity(0.5);
         }
         for (int i = 0; i < x.length; i++) {
-            mapSquareButton.get(y[i])[x[i]].setDisable(false);
+            mapSquareButton.get(x[i])[y[i]].setDisable(false);
+            mapSquareButton.get(x[i])[y[i]].setOpacity(0.0);
+
         }
 
     }
 
     @FXML
     void square0Click() {
+        System.out.println("pressato");
         setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 0));
         getWindow().close();
     }
 
     @FXML
     void square1Click() {
+        System.out.println("pressato");
+
         setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 0));
         getWindow().close();
     }
 
     @FXML
     void square2Click() {
+        System.out.println("pressato");
+
         setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 0));
         getWindow().close();
     }
 
     @FXML
     void square3Click() {
+        System.out.println("pressato");
+
         setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 0));
         getWindow().close();
     }
@@ -164,7 +187,8 @@ public class PositionChoiceController extends AbstractController {
                     image = new Image("map/map0.png");
 
         }
-        mapImage.setImage(image);
+
+        mapImageView.setImage(image);
     }
 
 }

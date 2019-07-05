@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.lang.reflect.Array;
@@ -47,7 +48,7 @@ public class PowerUpChoiceController extends AbstractController {
     private Button powerUp1Button;
 
     @FXML
-    private Label infoLabel;
+    private TextField infoArea;
 
     /**
      * Contains user choices
@@ -71,7 +72,12 @@ public class PowerUpChoiceController extends AbstractController {
      */
     private int toChose = 1;
 
-
+    /**
+     * It set scene of powerUp choice
+     * @param powerUpNames name of available powerUp
+     * @param powerUpColours color of available powerUp
+     * @param toChose number of powerUp to choose
+     */
     public void setController(String[] powerUpNames, CubeColour[] powerUpColours, int toChose) {
         this.toChose = toChose;
         powerUpChoice = new ArrayList<>(Arrays.asList(powerUpNames));
@@ -85,6 +91,11 @@ public class PowerUpChoiceController extends AbstractController {
 
     }
 
+    /**
+     * It find the correct image
+     * @param i number of image
+     * @return image view
+     */
     private ImageView whichImage(int i) {
         if (i == 0) {
             return powerUp1Image;
@@ -95,6 +106,11 @@ public class PowerUpChoiceController extends AbstractController {
         }
     }
 
+    /**
+     * It find the correct button
+     * @param i number of button
+     * @return correct button
+     */
     private Button whichButton(int i) {
         if (i == 0) {
             return powerUp1Button;
@@ -109,7 +125,10 @@ public class PowerUpChoiceController extends AbstractController {
     void powerUp1Click(ActionEvent event) {
         powerUp1Button.setDisable(true);
         wantToUse=true;
+        System.out.println("Seleziono power up 1");
         checkChoice(powerUpChoice.get(0), colorChoice.get(0));
+        System.out.println("Seleziono power up 1");
+
     }
 
     @FXML
@@ -123,7 +142,7 @@ public class PowerUpChoiceController extends AbstractController {
     void powerUp3Click(ActionEvent event) {
         wantToUse=true;
         powerUp3Button.setDisable(true);
-        checkChoice(powerUpChoice.get(1), colorChoice.get(1));
+        checkChoice(powerUpChoice.get(2), colorChoice.get(2));
     }
 
     @FXML
@@ -152,13 +171,16 @@ public class PowerUpChoiceController extends AbstractController {
 
 
     public void setInfoLabel(String info) {
-        infoLabel.setText(info);
+        infoArea.setText(info);
     }
 
     private void checkChoice(String name, CubeColour color) {
         if (toChose == 1) {
+            System.out.println("invio messaggio di spawn");
             setMessage(new PowerUpChoiceEvent(getGui().getUser(), name, color));
             getWindow().close();
+            System.out.println("invio messaggio di spawn");
+
         } else {
             powerUpChoice.add(name);
             colorChoice.add(color);
@@ -168,14 +190,25 @@ public class PowerUpChoiceController extends AbstractController {
 
     }
 
+    /**
+     * it set true endOfRoundPowerUp
+     */
     public void setTrueEndOfRoundPowerUp() {
         endOfRoundPowerUp=true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isWantToUse() {
         return wantToUse;
     }
 
+    /**
+     * setter
+     * @param mode able or disable skipChoiceButton
+     */
     public void setSkipChoiceButtonDisable(boolean mode) {
         skipChoiceButton.setDisable(mode);
     }
