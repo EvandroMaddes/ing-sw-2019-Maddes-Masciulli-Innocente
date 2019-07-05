@@ -845,8 +845,8 @@ public class CLI extends RemoteView {
         int[] index = payment(powerUpNames, powerUpColours, minimumPowerUpRequest, maximumPowerUpRequest);
         String[] nameSelected = new String[index.length];
         CubeColour[] colourSelected = new CubeColour[index.length];
-        if (index == null) {
-            message = new WeaponEffectPaymentChoiceEvent(getUser(), null, null);
+        if (index[0] == 404) {
+            message = new WeaponEffectPaymentChoiceEvent(getUser(), new String[]{},new CubeColour[]{});
         } else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
@@ -873,8 +873,8 @@ public class CLI extends RemoteView {
         int[] index = payment(powerUpNames, powerUpColours, minimumPowerUpRequest, maximumPowerUpRequest);
         String[] nameSelected = new String[index.length];
         CubeColour[] colourSelected = new CubeColour[index.length];
-        if (index == null) {
-            message = new WeaponGrabPaymentChoiceEvent(getUser(), null, null);
+        if (index[0] == 404) {
+            message = new WeaponGrabPaymentChoiceEvent(getUser(), new String[]{}, new CubeColour[]{});
         } else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
@@ -902,8 +902,8 @@ public class CLI extends RemoteView {
         String[] nameSelected = new String[index.length];
         CubeColour[] colourSelected = new CubeColour[index.length];
 
-        if (index == null) {
-            message = new WeaponReloadPaymentChoiceEvent(getUser(), null, null);
+        if (index[0] == 404) {
+            message = new WeaponReloadPaymentChoiceEvent(getUser(), new String[]{}, new CubeColour[]{});
         } else {
             for (int i = 0; i < index.length; i++) {
                 nameSelected[i] = powerUpNames[index[i]];
@@ -1085,7 +1085,7 @@ public class CLI extends RemoteView {
 
 
         } else if (choice.equalsIgnoreCase("n")) {
-            message = new EndRoundPowerUpChoiceEvent(getUser(), null, null);
+            message = new EndRoundPowerUpChoiceEvent(getUser(), new String[]{},new CubeColour[]{});
         }
         return message;
     }
@@ -1203,8 +1203,9 @@ public class CLI extends RemoteView {
                     }
                 }
             }
-        } else if (choice.equalsIgnoreCase("N"))
-            selected = null;
+        } else if (choice.equalsIgnoreCase("N")){
+            return new int[]{404};
+        }
 
         int[] indexChoose = new int[selected.size()];
         for (int i = 0; i < selected.size(); i++) {
