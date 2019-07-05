@@ -48,6 +48,7 @@ public class LobbyChioceController extends AbstractController {
         if (available[1]) {
             ObservableList<String> list = FXCollections.observableArrayList(waitingLobbies);
             waitingLobbyComboBox.setItems(list);
+            waitingLobbyComboBox.setOpacity(1.0);
 
         } else {
             waitingLobbyComboBox.setDisable(true);
@@ -56,6 +57,8 @@ public class LobbyChioceController extends AbstractController {
         if (available[2]) {
             ObservableList<String> list = FXCollections.observableArrayList(startedLobbies);
             startedLobbyComboBox.setItems(list);
+            startedLobbyComboBox.setOpacity(1.0);
+
         } else {
             startedLobbyComboBox.setDisable(true);
         }
