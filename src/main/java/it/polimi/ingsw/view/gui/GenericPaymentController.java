@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -55,7 +56,7 @@ public class GenericPaymentController extends AbstractController {
     private Button finishButton;
 
     @FXML
-    private Label payRquest;
+    private TextField infoArea;
     /**
      * Image of a ammo cube yellow
      */
@@ -133,7 +134,9 @@ public class GenericPaymentController extends AbstractController {
         powerUpColorChoice.clear();
         min = maximumPowerUpRequest;
         max = maximumPowerUpRequest;
-        payRquest.setText(powerUpPayRequest);
+        infoArea.setText(powerUpPayRequest);
+        infoArea.setDisable(true);
+        infoArea.setOpacity(1.0);
         powerUpName = powerUpNames;
         powerUpColor = powerUpColours;
         for (int i = 0; i < powerUpNames.length; i++) {
@@ -157,7 +160,8 @@ public class GenericPaymentController extends AbstractController {
         genericPayment = true;
         powerUpName = powerUpsType;
         this.powerUpColor = powerUpsColour;
-        payRquest.setText("YOU MUST CHOOSE ONE ITEM TO PAY:");
+        infoArea.setText("YOU MUST CHOOSE ONE ITEM TO PAY:");
+        infoArea.setDisable(true);
         for (int i = 0; i < powerUpsType.length; i++) {
             Image currImage = decodeMessage.powerUpImage(powerUpsType[i], powerUpsColour[i]);
             powerUpImageView.get(i).setImage(currImage);

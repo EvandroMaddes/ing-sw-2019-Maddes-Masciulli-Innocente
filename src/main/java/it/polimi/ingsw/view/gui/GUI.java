@@ -265,6 +265,7 @@ public class GUI extends RemoteView {
     public void setGame(int mapNumber) {
         Image[] maps = decodeMessage.mapImage(mapNumber);
         gameBoardController.setMap(maps[0], maps[1]);
+        positionChoiceController.setMapImage(mapNumber);
 
     }
 
