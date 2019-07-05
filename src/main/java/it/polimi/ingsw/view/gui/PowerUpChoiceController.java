@@ -172,6 +172,8 @@ public class PowerUpChoiceController extends AbstractController {
 
     public void setInfoLabel(String info) {
         infoArea.setText(info);
+        infoArea.setDisable(true);
+        infoArea.setOpacity(1.0);
     }
 
     private void checkChoice(String name, CubeColour color) {

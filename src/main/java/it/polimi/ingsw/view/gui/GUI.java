@@ -198,18 +198,20 @@ public class GUI extends RemoteView {
         weaponChoiceController.init();
         positionChoiceController.init();
         genericPaymentController.init();
+        metodoPROVA();
     }
 
     // TODO: 03/07/2019 da eliminare!!
     public void metodoPROVA() {
          Platform.runLater(()->
          {
-             int[] x = {0,1,2};
-             int[] y= {1,1,2};
-            positionChoiceController.setMapImage(2);
-            positionChoiceController.setController(x,y);
-            positionChoiceStage.show();
-         });
+             powerUpController.setInfoLabel("SELECT YOUR POWER UP TO RESPAWN");
+             PowerUp power1 = new TagbackGrenade(CubeColour.Red);
+             PowerUp power2 = new TagbackGrenade(CubeColour.Red);
+             powerUpController.setController(new String[]{power1.getName(),power2.getName()}, new CubeColour[]{power1.getColour(),power2.getColour()},1);
+             powerUpStage.show();
+
+              });
 
     }
 
@@ -520,7 +522,7 @@ public class GUI extends RemoteView {
     // TODO: 03/07/2019 RIMOZIONE CON 404
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
-        gameBoardController.setPosition(x, y, decodeMessage.characterImage(currCharacter));
+        gameBoardController.setPosition(x, y, decodeMessage.characterImage(currCharacter),currCharacter);
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 

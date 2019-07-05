@@ -1,20 +1,15 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.event.Event;
 import it.polimi.ingsw.model.player.Character;
-import it.polimi.ingsw.utils.CustomLogger;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -159,6 +154,7 @@ public class GameBoardController extends AbstractController {
     private Image skullImage;
 
     private Map<Character, GridPane[]> mapCharacterAmmoCube = new EnumMap<>(Character.class);
+    private Map<Character, ImageView> mapCharcaterPosition = new EnumMap<Character, ImageView>(Character.class);
     private Map<VBox, int[]> mapSquareVBox = new HashMap<>();
     private int numberOfSkull = 0;
     private ArrayList<VBox> square = new ArrayList<>();
@@ -171,7 +167,7 @@ public class GameBoardController extends AbstractController {
     private AbstractController popUpController;
 
 
-     void init() {
+    void init() {
 
         gridImageAmmoCubeSetting(topLeftAmmoCube);
         gridImageAmmoCubeSetting(principalAmmoCube);
@@ -242,6 +238,7 @@ public class GameBoardController extends AbstractController {
 
     /**
      * getter
+     *
      * @return left map image view
      */
     public ImageView getLeftMap() {
@@ -254,10 +251,10 @@ public class GameBoardController extends AbstractController {
      * @param playerboard image of a playerboard
      * @param character   character of playerboard
      */
-     void setPrincipalPlayerboard(Image playerboard, Character character) {
+    void setPrincipalPlayerboard(Image playerboard, Character character) {
         principalPlayerBoard.setImage(playerboard);
         mapCharacterAmmoCube.put(character, new GridPane[]{principalDamage, principalAmmoCube, principalMarks});
-         initAmmocube(principalAmmoCube);
+        initAmmocube(principalAmmoCube);
     }
 
     /**
@@ -333,7 +330,6 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     * /**
      * It removes every single image of a hBox
      *
      * @param hBox grid pane to clean
@@ -467,35 +463,35 @@ public class GameBoardController extends AbstractController {
     }
 
     /**
-     * It remove character from old position and it sets character ii  the new one
+     * It remove characterImage from old position and it sets characterImage ii  the new one
      *
-     * @param character character to set
+     * @param character characterImage to set
      */
-    public void setPosition(int x, int y, Image character) {
+    public void setPosition(int x, int y, Image characterImage,Character character) {
         removeCharacter(character);
-        VBox sqare = null;
-        for (VBox currentSquare : square
+
+        VBox square = null;
+        for (VBox currentSquare : this.square
         ) {
             if (mapSquareVBox.get(currentSquare)[0] == x && mapSquareVBox.get(currentSquare)[1] == y) {
-                sqare = currentSquare;
+                square = currentSquare;
             }
         }
         //gli passo null perche mi serve il primo posto libero sul quadrato
-        getPosition(sqare, null).setImage(character);
-
+       ImageView newPosition = getPosition(square, null);
+        newPosition.setImage(characterImage);
+        mapCharcaterPosition.replace(character,newPosition);
 
     }
 
     /**
      * It remove one character from the map
      *
-     * @param toRemove image of character to remove
+     * @param character character to remove
      */
-    private void removeCharacter(Image toRemove) {
-        for (VBox currentSquare : square
-        ) {
-            getPosition(currentSquare, toRemove).setImage(null);
-        }
+    private void removeCharacter(Character character) {
+       if (mapCharcaterPosition.containsKey(character))
+           mapCharcaterPosition.get(character).setImage(null);
     }
 
 

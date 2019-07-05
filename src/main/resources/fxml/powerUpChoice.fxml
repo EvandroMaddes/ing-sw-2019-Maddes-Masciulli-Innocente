@@ -16,7 +16,7 @@
     <children>
         <VBox prefHeight="250.0" prefWidth="500.0">
             <children>
-            <TextField alignment="CENTER" prefHeight="2.0" prefWidth="494.0" style="-fx-background-color: grey;" text="Chose your next powerup:">
+            <TextField fx:id="infoArea" alignment="CENTER" prefHeight="2.0" prefWidth="494.0" style="-fx-background-color: grey;" text="Chose your next powerup:">
                <font>
                   <Font name="Arial Black" size="13.0" />
                </font>
