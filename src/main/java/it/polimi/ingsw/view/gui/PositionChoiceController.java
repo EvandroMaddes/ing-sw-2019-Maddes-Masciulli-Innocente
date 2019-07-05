@@ -95,7 +95,7 @@ public class PositionChoiceController extends AbstractController {
     void square1Click() {
         System.out.println("pressato");
 
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 0));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 1));
         getWindow().close();
     }
 
@@ -103,7 +103,7 @@ public class PositionChoiceController extends AbstractController {
     void square2Click() {
         System.out.println("pressato");
 
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 0));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 2));
         getWindow().close();
     }
 
@@ -111,13 +111,13 @@ public class PositionChoiceController extends AbstractController {
     void square3Click() {
         System.out.println("pressato");
 
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 0));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 0,3));
         getWindow().close();
     }
 
     @FXML
     void square4Click() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 1));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1,0));
         getWindow().close();
     }
 
@@ -129,26 +129,26 @@ public class PositionChoiceController extends AbstractController {
 
     @FXML
     void square6Click() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 1));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 2));
         getWindow().close();
     }
 
     @FXML
     void square7Click(ActionEvent event) {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 1));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 3));
         getWindow().close();
 
     }
 
     @FXML
     void square8Click() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 0, 2));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 0));
         getWindow().close();
     }
 
     @FXML
     void square9Click() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 1, 2));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 1));
         getWindow().close();
     }
 
@@ -160,7 +160,7 @@ public class PositionChoiceController extends AbstractController {
 
     @FXML
     void square11Button() {
-        setMessage(new MoveChoiceEvent(getGui().getUser(), 3, 2));
+        setMessage(new MoveChoiceEvent(getGui().getUser(), 2, 3));
         getWindow().close();
     }
 

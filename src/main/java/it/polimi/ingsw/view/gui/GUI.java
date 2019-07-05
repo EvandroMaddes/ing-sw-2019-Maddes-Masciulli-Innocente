@@ -1074,8 +1074,8 @@ public class GUI extends RemoteView {
             for (int i = 0; i < powerUp.length; i++) {
                 toAdd[i] = decodeMessage.powerUpImage(powerUp[i], color[i]);
             }
-        }
         gameBoardController.setPlayerPowerUp(toAdd);
+        }
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 

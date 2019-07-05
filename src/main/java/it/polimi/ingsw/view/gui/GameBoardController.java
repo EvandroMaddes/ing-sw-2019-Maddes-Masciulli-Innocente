@@ -433,6 +433,7 @@ public class GameBoardController extends AbstractController {
      */
     void setInfo(String toSet) {
         infoArea.setText(toSet);
+        infoArea.setOpacity(1.0);
     }
 
     /**
