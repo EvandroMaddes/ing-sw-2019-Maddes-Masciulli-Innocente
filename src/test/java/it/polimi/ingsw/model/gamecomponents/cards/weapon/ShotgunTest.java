@@ -13,6 +13,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Shotgun tests
+ */
 public class ShotgunTest {
     private Shotgun shotgun;
     private Square[][] map;
@@ -40,6 +43,9 @@ public class ShotgunTest {
         player5.setPosition(map[1][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
     public void isUsableTest(){
         Assert.assertTrue(shotgun.isUsable());
@@ -47,6 +53,9 @@ public class ShotgunTest {
         Assert.assertTrue(shotgun.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one
+     */
     @Test
     public void effectOneTest(){
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) shotgun.getTargetEffect(1);
@@ -82,6 +91,9 @@ public class ShotgunTest {
         Assert.assertFalse(shotgun.isUsable());
     }
 
+    /**
+     * Test the effect two
+     */
     @Test
     public void effectTwoTest(){
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) shotgun.getTargetEffect(2);

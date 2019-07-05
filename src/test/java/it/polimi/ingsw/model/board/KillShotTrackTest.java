@@ -11,15 +11,18 @@ public class KillShotTrackTest {
     private GameTrack testedTrack;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         testedTrack = new KillShotTrack();
     }
 
+    /**
+     * Check that the killshot damage tocken are correctly evaluated
+     */
     @Test
-    public void evaluateDamageTest(){
+    public void evaluateDamageTest() {
         Player testPlayer = new Player("TestUser", Character.D_STRUCT_OR);
-        testedTrack.evaluateDamage(new DamageToken(testPlayer),2);
-        Assert.assertEquals(2, ((KillShotTrack)testedTrack).getTokenTrack().size());
+        testedTrack.evaluateDamage(new DamageToken(testPlayer), 2);
+        Assert.assertEquals(2, ((KillShotTrack) testedTrack).getTokenTrack().size());
         Assert.assertEquals(testPlayer, ((KillShotTrack) testedTrack).getTokenTrack().get(0).getPlayer());
         Assert.assertEquals(2, testedTrack.getTokenSequence()[0]);
         Assert.assertEquals(0, testedTrack.getTokenSequence()[1]);
@@ -30,8 +33,11 @@ public class KillShotTrackTest {
 
     }
 
+    /**
+     * Check that the killshot track points are corerctly given to the players
+     */
     @Test
-    public void collectTrackPointsTest(){
+    public void collectTrackPointsTest() {
         Player player1 = new Player("Federico", Character.BANSHEE);
         Player player2 = new Player("Evandro", Character.SPROG);
         Player player3 = new Player("Francesco", Character.DOZER);
@@ -48,8 +54,11 @@ public class KillShotTrackTest {
         Assert.assertEquals(0, player4.getPoints());
     }
 
+    /**
+     * Check that in case of ties the track points are correctly given
+     */
     @Test
-    public void collectTrackPointsWithTiesTest(){
+    public void collectTrackPointsWithTiesTest() {
         Player player1 = new Player("Federico", Character.BANSHEE);
         Player player2 = new Player("Evandro", Character.SPROG);
         Player player3 = new Player("Francesco", Character.DOZER);

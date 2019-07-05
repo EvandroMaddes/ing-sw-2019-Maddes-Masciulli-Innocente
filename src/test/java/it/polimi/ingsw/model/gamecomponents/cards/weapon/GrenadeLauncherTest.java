@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * grenade launcher tests
+ */
 public class GrenadeLauncherTest {
     private GrenadaLauncher grenadeLauncher;
     private Square[][] map;
@@ -26,7 +29,7 @@ public class GrenadeLauncherTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         grenadeLauncher = new GrenadaLauncher();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -44,23 +47,29 @@ public class GrenadeLauncherTest {
         player5.setPosition(map[0][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(grenadeLauncher.isUsable());
         Assert.assertTrue(grenadeLauncher.isUsableEffect(1));
         Assert.assertTrue(grenadeLauncher.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one without moving the target, than test the effect two
+     */
     @Test
-    public void effectOneWithoutMoveThanEffectTwoTest(){
+    public void effectOneWithoutMoveThanEffectTwoTest() {
         ControllerViewEvent message = grenadeLauncher.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -73,13 +82,13 @@ public class GrenadeLauncherTest {
         Assert.assertTrue(grenadeLauncher.isUsableEffect(1));
 
         message = grenadeLauncher.getTargetEffect(2);
-        int[] expectedX = new int[]{2,2,1};
-        int[] exepctedY = new int[]{3,2,2};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        int[] expectedX = new int[]{2, 2, 1};
+        int[] exepctedY = new int[]{3, 2, 2};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -94,17 +103,20 @@ public class GrenadeLauncherTest {
         Assert.assertFalse(grenadeLauncher.isUsable());
     }
 
+    /**
+     * Test the effectt two than the effect one with moveing the target
+     */
     @Test
-    public void effectTwoThanEffectOneWithMove(){
+    public void effectTwoThanEffectOneWithMove() {
         player5.setPosition(map[1][2]);
         ControllerViewEvent message = grenadeLauncher.getTargetEffect(2);
-        int[] expectedX = new int[]{2,2,1};
-        int[] exepctedY = new int[]{3,2,2};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        int[] expectedX = new int[]{2, 2, 1};
+        int[] exepctedY = new int[]{3, 2, 2};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -125,9 +137,9 @@ public class GrenadeLauncherTest {
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(4, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(4, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         target.clear();
@@ -141,13 +153,13 @@ public class GrenadeLauncherTest {
         Assert.assertTrue(grenadeLauncher.isUsableEffect(1));
 
         message = grenadeLauncher.getTargetEffect(1);
-        expectedX = new int[]{0,2,1};
-        exepctedY = new int[]{2,2,3};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        expectedX = new int[]{0, 2, 1};
+        exepctedY = new int[]{2, 2, 3};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && exepctedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);

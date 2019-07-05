@@ -15,6 +15,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * heatseeker tests
+ */
 public class HeatseekerTest {
     private Heatseeker heatseeker;
     private Square[][] map;
@@ -24,7 +27,7 @@ public class HeatseekerTest {
     private Player player4;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         heatseeker = new Heatseeker();
         player1 = new Player("Federico", Character.DOZER);
         player2 = new Player("Evandro", Character.SPROG);
@@ -34,8 +37,11 @@ public class HeatseekerTest {
         player1.addWeapon(heatseeker);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
         player1.setPosition(map[0][3]);
@@ -47,8 +53,11 @@ public class HeatseekerTest {
         Assert.assertTrue(heatseeker.isUsableEffect(1));
     }
 
+    /**
+     * TEst the effect one on the large map
+     */
     @Test
-    public void effectOnLargeMapTest(){
+    public void effectOnLargeMapTest() {
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
         player1.setPosition(map[0][3]);
@@ -57,8 +66,8 @@ public class HeatseekerTest {
         player4.setPosition(map[2][0]);
 
         ControllerViewEvent message = heatseeker.getTargetEffect(1);
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertEquals(Character.VIOLET, ((TargetPlayerRequestEvent)message).getPossibleTargets().get(0));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertEquals(Character.VIOLET, ((TargetPlayerRequestEvent) message).getPossibleTargets().get(0));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player4);
@@ -67,8 +76,11 @@ public class HeatseekerTest {
         Assert.assertFalse(heatseeker.isUsable());
     }
 
+    /**
+     * Test the efefct on a small map
+     */
     @Test
-    public void effectOnSmallMap(){
+    public void effectOnSmallMap() {
         Map gameMap = new Map(Map.SMALL_LEFT, Map.SMALL_RIGHT);
         map = gameMap.getSquareMatrix();
         player1.setPosition(map[2][3]);
@@ -77,8 +89,8 @@ public class HeatseekerTest {
         player4.setPosition(map[0][0]);
 
         ControllerViewEvent message = heatseeker.getTargetEffect(1);
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertEquals(Character.VIOLET, ((TargetPlayerRequestEvent)message).getPossibleTargets().get(0));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertEquals(Character.VIOLET, ((TargetPlayerRequestEvent) message).getPossibleTargets().get(0));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player4);

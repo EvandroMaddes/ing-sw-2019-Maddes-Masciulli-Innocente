@@ -14,6 +14,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * THOR tests
+ */
 public class ThorTest {
     private Thor thor;
     private Square[][] map;
@@ -24,7 +27,7 @@ public class ThorTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         thor = new Thor();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -42,16 +45,22 @@ public class ThorTest {
         player5.setPosition(map[0][1]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(thor.isUsable());
         Assert.assertTrue(thor.isUsableEffect(1));
         Assert.assertFalse(thor.isUsableEffect(2));
         Assert.assertFalse(thor.isUsableEffect(3));
     }
 
+    /**
+     * Test the three effetc in that order: 1 - 2 - 3
+     */
     @Test
-    public void effectOneTwoThreeTest(){
+    public void effectOneTwoThreeTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) thor.getTargetEffect(1);
         Assert.assertEquals(1, message.getPossibleTargets().size());
         Assert.assertEquals(player2.getCharacter(), message.getPossibleTargets().get(0));
@@ -95,8 +104,11 @@ public class ThorTest {
         Assert.assertFalse(thor.isUsable());
     }
 
+    /**
+     * Test the first two, choosing the first target in the same square of the shooter
+     */
     @Test
-    public void effectOneOnSameSquareThanTwoTest(){
+    public void effectOneOnSameSquareThanTwoTest() {
         Map gameMap = new Map(Map.SMALL_LEFT, Map.SMALL_RIGHT);
         map = gameMap.getSquareMatrix();
         player1.setPosition(map[1][1]);

@@ -15,6 +15,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Railgun tests
+ */
 public class RailgunTest {
     private Railgun railgun;
     private Square[][] map;
@@ -25,7 +28,7 @@ public class RailgunTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         railgun = new Railgun();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -43,23 +46,29 @@ public class RailgunTest {
         player5.setPosition(map[1][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(railgun.isUsable());
         Assert.assertTrue(railgun.isUsableEffect(1));
         Assert.assertTrue(railgun.isUsableEffect(2));
     }
 
+    /**
+     * Test effect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         ControllerViewEvent message = railgun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c: expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -69,16 +78,19 @@ public class RailgunTest {
         Assert.assertFalse(railgun.isUsable());
     }
 
+    /**
+     * Test the effect two, choosing the first target in the same square of the shooter
+     */
     @Test
-    public void effectTwoFirstTargetInSameSquareTest(){
+    public void effectTwoFirstTargetInSameSquareTest() {
         ControllerViewEvent message = railgun.getTargetEffect(2);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c: expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -91,9 +103,9 @@ public class RailgunTest {
         expectedTargets.clear();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c: expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         target.clear();
@@ -103,16 +115,19 @@ public class RailgunTest {
         Assert.assertFalse(railgun.isUsable());
     }
 
+    /**
+     * Test the effect two choosing targets in different squares
+     */
     @Test
-    public void effectTwoFirstTargetInDifferentSquareSquareTest(){
+    public void effectTwoFirstTargetInDifferentSquareSquareTest() {
         ControllerViewEvent message = railgun.getTargetEffect(2);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c: expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -124,9 +139,9 @@ public class RailgunTest {
         message = railgun.getTargetEffect(2);
         expectedTargets.clear();
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c: expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         target.clear();

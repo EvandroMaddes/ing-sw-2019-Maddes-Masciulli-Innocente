@@ -4,8 +4,17 @@ import it.polimi.ingsw.model.gamecomponents.ammo.AmmoTile;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test class for the decks
+ * @author Federico Innocente
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
+ */
 public class DeckTest {
 
+    /**
+     * Check the right reaction to an empty powerUp deck
+     */
     @Test
     public void emptyPowerUpDeckTest(){
         PowerUpDeck powerUpDeck1 = new PowerUpDeck();
@@ -27,6 +36,9 @@ public class DeckTest {
         Assert.assertFalse(sameOrder);
     }
 
+    /**
+     * Check that powerUps decks are correctly resuffled
+     */
     @Test
     public void reshufflePowerUpDeckTest(){
         PowerUpDeck powerUpDeck = new PowerUpDeck();
@@ -56,6 +68,9 @@ public class DeckTest {
 
     }
 
+    /**
+     * Check that AmmoTile decks are correctly resuffled
+     */
     @Test
     public void reshuffleAmmoTileDeckTest(){
         AmmoTilesDeck ammoTilesDeck1 = new AmmoTilesDeck();

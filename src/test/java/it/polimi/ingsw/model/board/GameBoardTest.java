@@ -6,10 +6,13 @@ import it.polimi.ingsw.model.gamecomponents.cards.WeaponDeck;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameBoardTest{
+public class GameBoardTest {
 
+    /**
+     * Check that the gameboard is correctly assembled
+     */
     @Test
-    public void createGameBoardTest(){
+    public void createGameBoardTest() {
         GameTrack gameTrack = new KillShotTrack();
         Map map = new Map("leftFirst", "rightSecond");
         WeaponDeck weaponDeck = new WeaponDeck();
@@ -18,9 +21,9 @@ public class GameBoardTest{
         GameBoard gameBoard = new GameBoard(gameTrack, map, weaponDeck, ammoTilesDeck, powerUpDeck);
         Assert.assertFalse(gameBoard.isFinalFrenzy());
         Assert.assertFalse((gameBoard.getGameTrack()).checkEndTrack());
-        Assert.assertEquals(21,gameBoard.getWeaponDeck().getDeck().size());
-        Assert.assertEquals(36,gameBoard.getAmmoTilesDeck().getDeck().size());
-        Assert.assertEquals(24,gameBoard.getPowerUpDeck().getDeck().size());
+        Assert.assertEquals(21, gameBoard.getWeaponDeck().getDeck().size());
+        Assert.assertEquals(36, gameBoard.getAmmoTilesDeck().getDeck().size());
+        Assert.assertEquals(24, gameBoard.getPowerUpDeck().getDeck().size());
     }
 
 }

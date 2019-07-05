@@ -10,6 +10,9 @@ import org.junit.Test;
 
 public class BasicSquareTest {
 
+    /**
+     * Check that ammo tile are correctly collected
+     */
     @Test
     public void tileTest() {
         AmmoTile testTile = new AmmoTile(new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Blue), new AmmoCube(CubeColour.Yellow), false);

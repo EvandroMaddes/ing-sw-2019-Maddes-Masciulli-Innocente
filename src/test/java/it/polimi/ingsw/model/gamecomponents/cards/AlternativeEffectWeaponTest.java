@@ -10,17 +10,29 @@ import java.util.List;
 
 public class AlternativeEffectWeaponTest {
 
+    /**
+     * Test the default effectControlFlow for AlternativeEffectWeapon after use the first effect
+     */
     @Test
-    public void effectControlFlowEffectOneTest(){
+    public void effectControlFlowEffectOneTest() {
         Weapon weaponTest = new AlternateFireWeapon(CubeColour.Blue, "Test", new AmmoCube[]{}, new AmmoCube[]{}) {
             @Override
-            public ControllerViewEvent getTargetEffectTwo() { return null; }
+            public ControllerViewEvent getTargetEffectTwo() {
+                return null;
+            }
+
             @Override
-            public void performEffectTwo(List<Object> targets) { }
+            public void performEffectTwo(List<Object> targets) {
+            }
+
             @Override
-            public void performEffectOne(List<Object> targets) { }
+            public void performEffectOne(List<Object> targets) {
+            }
+
             @Override
-            public ControllerViewEvent getTargetEffectOne() { return null; }
+            public ControllerViewEvent getTargetEffectOne() {
+                return null;
+            }
         };
         Assert.assertTrue(weaponTest.getEffectsEnable()[0]);
         Assert.assertTrue(weaponTest.getEffectsEnable()[1]);
@@ -33,17 +45,29 @@ public class AlternativeEffectWeaponTest {
         Assert.assertFalse(weaponTest.getUsableEffect()[2]);
     }
 
+    /**
+     * Test the default effectControlFlow for AlternativeEffectWeapon after use the second effect
+     */
     @Test
-    public void effectControlFlowEffectTwo(){
+    public void effectControlFlowEffectTwo() {
         Weapon weaponTest = new AlternateFireWeapon(CubeColour.Blue, "Test", new AmmoCube[]{}, new AmmoCube[]{}) {
             @Override
-            public ControllerViewEvent getTargetEffectTwo() { return null; }
+            public ControllerViewEvent getTargetEffectTwo() {
+                return null;
+            }
+
             @Override
-            public void performEffectTwo(List<Object> targets) { }
+            public void performEffectTwo(List<Object> targets) {
+            }
+
             @Override
-            public void performEffectOne(List<Object> targets) { }
+            public void performEffectOne(List<Object> targets) {
+            }
+
             @Override
-            public ControllerViewEvent getTargetEffectOne() { return null; }
+            public ControllerViewEvent getTargetEffectOne() {
+                return null;
+            }
         };
         weaponTest.effectControlFlow(2);
         Assert.assertFalse(weaponTest.getUsableEffect()[0]);

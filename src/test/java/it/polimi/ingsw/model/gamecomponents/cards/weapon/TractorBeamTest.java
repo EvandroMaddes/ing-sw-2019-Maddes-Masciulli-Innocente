@@ -14,6 +14,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Tractor beam tests
+ */
 public class TractorBeamTest {
     private TractorBeam tractorBeam;
     private Square[][] map;
@@ -24,7 +27,7 @@ public class TractorBeamTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         tractorBeam = new TractorBeam();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -41,20 +44,26 @@ public class TractorBeamTest {
         player5.setPosition(map[1][0]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(tractorBeam.isUsable());
         Assert.assertTrue(tractorBeam.isUsableEffect(1));
         Assert.assertTrue(tractorBeam.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect two by targetting a player on the same square of the shooter
+     */
     @Test
-    public void effectTwoOnSameSquarePlayerTest(){
+    public void effectTwoOnSameSquarePlayerTest() {
         ControllerViewEvent message = tractorBeam.getTargetEffect(2);
         ArrayList<Character> expectedTargets = new ArrayList<>();
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player2.getCharacter()));
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player5.getCharacter()));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player5.getCharacter()));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player5);
@@ -66,13 +75,16 @@ public class TractorBeamTest {
         Assert.assertFalse(tractorBeam.isUsable());
     }
 
+    /**
+     * Test the effect two by targetting a player on a different square of the shooter
+     */
     @Test
-    public void effectTwoOnDifferentSquarePlayerTest(){
+    public void effectTwoOnDifferentSquarePlayerTest() {
         ControllerViewEvent message = tractorBeam.getTargetEffect(2);
         ArrayList<Character> expectedTargets = new ArrayList<>();
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player2.getCharacter()));
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player5.getCharacter()));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player5.getCharacter()));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player2);
@@ -84,17 +96,20 @@ public class TractorBeamTest {
         Assert.assertFalse(tractorBeam.isUsable());
     }
 
+    /**
+     * Test the effect one on a visible target
+     */
     @Test
-    public void effectOneOnVisibleTargetTest(){
+    public void effectOneOnVisibleTargetTest() {
         player2.setPosition(map[0][0]);
         ControllerViewEvent message = tractorBeam.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -103,13 +118,13 @@ public class TractorBeamTest {
         Assert.assertTrue(tractorBeam.isUsableEffect(1));
 
         message = tractorBeam.getTargetEffect(1);
-        int[] expectedX = new int[]{0,1,2};
-        int[] expectedY = new int[]{0,0,0};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length );
+        int[] expectedX = new int[]{0, 1, 2};
+        int[] expectedY = new int[]{0, 0, 0};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -123,16 +138,19 @@ public class TractorBeamTest {
         Assert.assertFalse(tractorBeam.isUsable());
     }
 
+    /**
+     * Test the effect one on a not visible target
+     */
     @Test
-    public void effectOneOnUnseenTargetTest(){
+    public void effectOneOnUnseenTargetTest() {
         ControllerViewEvent message = tractorBeam.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player5.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -141,13 +159,13 @@ public class TractorBeamTest {
         Assert.assertTrue(tractorBeam.isUsableEffect(1));
 
         message = tractorBeam.getTargetEffect(1);
-        int[] expectedX = new int[]{0,2,2};
-        int[] expectedY = new int[]{0,1,0};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length );
+        int[] expectedX = new int[]{0, 2, 2};
+        int[] expectedY = new int[]{0, 1, 0};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);

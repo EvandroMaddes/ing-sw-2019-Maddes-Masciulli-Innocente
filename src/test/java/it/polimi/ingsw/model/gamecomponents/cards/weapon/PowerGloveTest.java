@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * PowerGlove test
+ */
 public class PowerGloveTest {
     private PowerGlove powerGlove;
     private Square[][] map;
@@ -22,7 +25,7 @@ public class PowerGloveTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         powerGlove = new PowerGlove();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -39,15 +42,21 @@ public class PowerGloveTest {
         player5.setPosition(map[1][2]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(powerGlove.isUsable());
         Assert.assertTrue(powerGlove.isUsableEffect(1));
         Assert.assertTrue(powerGlove.isUsableEffect(2));
     }
 
+    /**
+     * test the effect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) powerGlove.getTargetEffect(1);
 
         Assert.assertEquals(1, message.getMaxTarget());
@@ -66,8 +75,11 @@ public class PowerGloveTest {
         Assert.assertFalse(powerGlove.isUsable());
     }
 
+    /**
+     * test the effect two
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) powerGlove.getTargetEffect(2);
 
         Assert.assertEquals(1, message.getMaxTarget());

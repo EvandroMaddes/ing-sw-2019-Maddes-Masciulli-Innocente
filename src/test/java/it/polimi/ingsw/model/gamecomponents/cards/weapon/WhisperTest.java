@@ -13,6 +13,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Whisper tests
+ */
 public class WhisperTest {
     private Whisper whisper;
     private Square[][] map;
@@ -23,7 +26,7 @@ public class WhisperTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         whisper = new Whisper();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -40,22 +43,28 @@ public class WhisperTest {
         player5.setPosition(map[1][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(whisper.isUsable());
         Assert.assertTrue(whisper.isUsableEffect(1));
     }
 
+    /**
+     * Test the effect of the weapon
+     */
     @Test
-    public void effectTest(){
+    public void effectTest() {
         ControllerViewEvent message = whisper.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player4.getCharacter());
         expectedTargets.add(player5.getCharacter());
 
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();
@@ -66,8 +75,11 @@ public class WhisperTest {
         Assert.assertFalse(whisper.isUsable());
     }
 
+    /**
+     * Test the effect on a small map
+     */
     @Test
-    public void effectTestOnSmallMap(){
+    public void effectTestOnSmallMap() {
         Map gameMap = new Map(Map.SMALL_LEFT, Map.SMALL_RIGHT);
         map = gameMap.getSquareMatrix();
         player1.setPosition(map[1][0]);
@@ -77,9 +89,9 @@ public class WhisperTest {
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
 
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         ArrayList<Object> target = new ArrayList<>();

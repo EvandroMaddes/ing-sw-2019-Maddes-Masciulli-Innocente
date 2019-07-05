@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * ZX-2 tests
+ */
 public class Zx2Test {
     private Zx2 zx2;
     private Square[][] map;
@@ -21,7 +24,7 @@ public class Zx2Test {
     private Player player4;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Map gameMap = new Map("leftSecond", "rightFirst");
         map = gameMap.getSquareMatrix();
         zx2 = new Zx2();
@@ -36,15 +39,21 @@ public class Zx2Test {
         player4.setPosition(map[0][2]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(zx2.isUsable());
         Assert.assertTrue(zx2.isUsableEffect(1));
         Assert.assertTrue(zx2.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) zx2.getTargetEffect(1);
         ArrayList<Character> expected = new ArrayList<>();
         expected.add(Character.BANSHEE);
@@ -52,7 +61,7 @@ public class Zx2Test {
         expected.add(Character.VIOLET);
         Assert.assertEquals(1, message.getMaxTarget());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expected) {
+        for (Character c : expected) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
 
@@ -66,8 +75,11 @@ public class Zx2Test {
         Assert.assertFalse(zx2.isUsable());
     }
 
+    /**
+     * Test the effect two
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) zx2.getTargetEffect(2);
         ArrayList<Character> expected = new ArrayList<>();
         expected.add(Character.BANSHEE);
@@ -75,7 +87,7 @@ public class Zx2Test {
         expected.add(Character.VIOLET);
         Assert.assertEquals(3, message.getMaxTarget());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expected) {
+        for (Character c : expected) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
 

@@ -14,6 +14,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Vortex cannon tests
+ */
 public class VortexCannonTest {
     private VortexCannon vortexCannon;
     private Square[][] map;
@@ -24,7 +27,7 @@ public class VortexCannonTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         vortexCannon = new VortexCannon();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -41,23 +44,29 @@ public class VortexCannonTest {
         player5.setPosition(map[1][1]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(vortexCannon.isUsable());
         Assert.assertTrue(vortexCannon.isUsableEffect(1));
         Assert.assertFalse(vortexCannon.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one, than the effect two
+     */
     @Test
-    public void effectOneThanTwoTest(){
+    public void effectOneThanTwoTest() {
         ControllerViewEvent message = vortexCannon.getTargetEffect(1);
-        int[] expectedX = new int[]{0,0,2};
-        int[] expectedY = new int[]{1,2,1};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length );
+        int[] expectedX = new int[]{0, 0, 2};
+        int[] expectedY = new int[]{1, 2, 1};
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -74,9 +83,9 @@ public class VortexCannonTest {
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player4.getCharacter());
         expectedTargets.add(player3.getCharacter());
-        Assert.assertEquals(3, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(3, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         target.clear();
@@ -91,9 +100,9 @@ public class VortexCannonTest {
         expectedTargets.clear();
         expectedTargets.add(player4.getCharacter());
         expectedTargets.add(player3.getCharacter());
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        for (Character c:expectedTargets) {
-            Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(c));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        for (Character c : expectedTargets) {
+            Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(c));
         }
 
         target.clear();
