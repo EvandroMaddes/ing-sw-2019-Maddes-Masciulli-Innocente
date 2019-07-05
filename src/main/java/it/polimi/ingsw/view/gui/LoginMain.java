@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ public class LoginMain extends Application {
         try {
             root = loginFxml.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            CustomLogger.logException(e);
         }
         loginController = loginFxml.getController();
         loginController.getEnterButton().setDisable(true);
