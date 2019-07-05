@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli.graph;
 
 /**
  * Char 'R'
+ * @author Francesco Masciulli
+
  */
  class RTitleCharacter  extends TitleCharacter{
      RTitleCharacter(){

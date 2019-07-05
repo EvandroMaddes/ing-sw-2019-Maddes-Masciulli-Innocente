@@ -13,26 +13,55 @@ import javafx.stage.Stage;
  * @author Evandro Maddes
  */
 public abstract class AbstractController {
+    /**
+     * User interface
+     */
     private GUI gui;
+    /**
+     * user choice
+     */
     private Event message;
+    /**
+     * stage showed
+     */
     private Stage window;
 
+    /**
+     * fetter
+     * @return message
+     */
     public Event getMessage() {
         return message;
     }
 
+    /**
+     * setter
+     * @param window window to show
+     */
     void setWindow(Stage window) {
         this.window = window;
     }
 
+    /**
+     * getter
+     * @return window
+     */
     public Stage getWindow() {
         return window;
     }
 
+    /**
+     * setter
+     * @param window stage to show
+     */
     public void setStage(Stage window) {
         this.window = window;
     }
 
+    /**
+     * setter
+     * @param message event
+     */
     public void setMessage(Event message) {
         this.message = message;
     }
@@ -40,7 +69,7 @@ public abstract class AbstractController {
     /**
      * setter
      *
-     * @param gui is the GUI instance
+     * @param gui
      */
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -57,9 +86,8 @@ public abstract class AbstractController {
 
 
     /**
-     * Handle the respectively scene update and
-     * @param scene is the choice respectively scene
-     * @return the Event representing the user choice
+     * It show a request and wait user choice
+     * @return user choice
      */
     public Event ask(Scene scene) {
         final Task<Event> query = new Task<Event>() {
@@ -76,9 +104,9 @@ public abstract class AbstractController {
 
 
     /**
-     * Call a Task get using Platform.runLater and waiting the update on graphic interface
-     * @param query is the Task implementation that show the scene and wait for an answer
-     * @return the Event representing the user choice
+     * It take user choice
+     * @param query stage showed
+     * @return user choice
      */
     public final Event ask(Task<Event> query) {
         Platform.runLater(query);

@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli.graph;
 
 /**
  * it contains color
+ *
+ * @author Francesco Masciulli
  */
 public enum Color {
      ANSI_BLACK("\u001B[30m"),

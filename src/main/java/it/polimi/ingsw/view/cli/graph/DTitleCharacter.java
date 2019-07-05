@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli.graph;
 
 /**
  * Char 'D'
+ *
+ * @author Francesco Masciulli
  */
  class DTitleCharacter extends TitleCharacter {
      DTitleCharacter(){
