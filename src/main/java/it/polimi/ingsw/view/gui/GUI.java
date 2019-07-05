@@ -198,7 +198,7 @@ public class GUI extends RemoteView {
         weaponChoiceController.init();
         positionChoiceController.init();
         genericPaymentController.init();
-
+      //  metodoPROVA();
     }
 
     // TODO: 03/07/2019 da eliminare!!
@@ -540,8 +540,8 @@ public class GUI extends RemoteView {
                 characterController.setInfoText("Choose your target:");
                 characterController.setCharacterChoice(availableTargets);
                 characterController.setWindow(characterStage);
-                NewtonPlayerTargetChoiceEvent message = (NewtonPlayerTargetChoiceEvent) characterController.ask(characterScene);
-                return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenTarget());
+                CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
+                return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
             }
         };
         return userChoice(query);
@@ -1073,8 +1073,8 @@ public class GUI extends RemoteView {
             for (int i = 0; i < powerUp.length; i++) {
                 toAdd[i] = decodeMessage.powerUpImage(powerUp[i], color[i]);
             }
-        }
         gameBoardController.setPlayerPowerUp(toAdd);
+        }
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
