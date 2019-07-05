@@ -88,7 +88,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
 
     /**
      * Overloaded constructor, is given the portNumber given to the UnicastRemoteObject constructor
-     *
+     * @param portNumber is the port number
      * @throws RemoteException from UnicastRemoteObject constructor
      */
     public RMIServer(int portNumber) throws RemoteException {
@@ -183,8 +183,8 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     //Getter RemoteInterface Implementations
 
     /**
+     * Getter method:
      * @return the number of connected clients
-     * @throws RemoteException if called from remote host and couldn't complete
      */
     @Override
     public int getClientListNumber() {
@@ -392,7 +392,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      * this method check that the clientList's clients are still connected calling a method on each one,
      * if this call throw an exception, the method update the disconnectedClients Event ArrayList;
      *
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public synchronized void clientConnectionGuard() throws RemoteException {
@@ -432,7 +432,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
     /**
      * clean the currMessage, is called by server when the client message is retrieved
      *
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public void remoteCleanCurrEvent() throws RemoteException {
@@ -475,7 +475,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
      * remoteListenMessage implementation
      *
      * @return the listened message, null if the currMessage isn't updated
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     @Override
     public synchronized Event remoteListenMessage() throws RemoteException {

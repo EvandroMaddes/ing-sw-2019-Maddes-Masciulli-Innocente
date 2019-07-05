@@ -97,6 +97,7 @@ public class Map {
      *
      * @param selectedLeftMap  choice of the first part(left)
      * @param selectedRightMap choice of the second part(right)
+     * @return the created map as a Square matrix
      */
     public Square[][] createGround(String selectedLeftMap, String selectedRightMap) {
 

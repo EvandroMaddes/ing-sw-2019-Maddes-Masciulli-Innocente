@@ -67,6 +67,7 @@ public class VirtualView extends Observable implements Observer {
      * this method is called by the server when a message arrives from Remote view;
      * this means that message should be send to controller.
      * Remember: VIRTUAL_VIEW IS AN OBSERVABLE FROM THE CONTROLLER
+     * @param message is the message from client, notified to the Controller
      */
     public void toController(Event message) {
         setToController(message);

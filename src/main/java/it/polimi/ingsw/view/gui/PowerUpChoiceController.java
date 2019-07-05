@@ -201,7 +201,7 @@ public class PowerUpChoiceController extends AbstractController {
 
     /**
      *
-     * @return
+     * @return wantToUse value
      */
     public boolean isWantToUse() {
         return wantToUse;

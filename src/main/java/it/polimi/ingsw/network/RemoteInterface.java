@@ -22,14 +22,15 @@ public interface RemoteInterface extends Remote {
 
     /**
      * this method check the livability of a host with a continue lifeline
-     * @throws RemoteException
+     *
+     * @throws RemoteException if couldn't be called by remote
      */
     void clientConnectionGuard() throws RemoteException;
 
     /**
      * Implementation with RMI of the sendMessage()
-     * @param message
-     * @throws RemoteException
+     * @param message is the mesagge that must be sent
+     * @throws RemoteException if couldn't be called by remote
      */
     void remoteSendMessage(Event message) throws RemoteException;
 
@@ -42,7 +43,7 @@ public interface RemoteInterface extends Remote {
 
     /**
      * clean the currMessage, is called by server when the client message is retrieved
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     void remoteCleanCurrEvent() throws RemoteException;
 
@@ -56,7 +57,7 @@ public interface RemoteInterface extends Remote {
     /**
      * update a listened message
      * @return the listened message, null if the currMessage isn't updated
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     Event remoteListenMessage() throws RemoteException;
 
@@ -77,7 +78,7 @@ public interface RemoteInterface extends Remote {
     /**
      * Getter method:
      * @return the host username
-     * @throws RemoteException
+     * @throws RemoteException if couldn't be called by remote
      */
     String getUser() throws RemoteException;
 }

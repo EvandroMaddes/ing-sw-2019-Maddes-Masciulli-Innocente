@@ -10,7 +10,7 @@ public abstract class TitleCharacter {
     /**
      * getter
      * @param row row
-     * @return
+     * @return the row String representation
      */
     public String getRow(int row) {
         return string[row];

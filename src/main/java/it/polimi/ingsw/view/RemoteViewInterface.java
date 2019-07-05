@@ -333,6 +333,7 @@ public interface RemoteViewInterface {
      *
      * @param currCharacter modified player board
      * @param weapons       weapons of player
+     * @param load indicates the weapon that are loaded
      * @return message notify the success of updating
      */
     Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load);
@@ -364,6 +365,7 @@ public interface RemoteViewInterface {
      * It shows winner of the game and his point
      *
      * @param endGameUpdate is the end-game notification
+     * @return an UpdateChoiceEvent
      */
     Event winnerUpdate(EndGameUpdate endGameUpdate);
 

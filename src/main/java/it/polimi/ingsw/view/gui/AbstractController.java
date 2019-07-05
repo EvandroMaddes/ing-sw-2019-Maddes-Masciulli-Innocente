@@ -40,7 +40,7 @@ public abstract class AbstractController {
     /**
      * setter
      *
-     * @param gui
+     * @param gui is the GUI instance
      */
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -57,7 +57,9 @@ public abstract class AbstractController {
 
 
     /**
-     * @return
+     * Handle the respectively scene update and
+     * @param scene is the choice respectively scene
+     * @return the Event representing the user choice
      */
     public Event ask(Scene scene) {
         final Task<Event> query = new Task<Event>() {
@@ -73,6 +75,11 @@ public abstract class AbstractController {
     }
 
 
+    /**
+     * Call a Task get using Platform.runLater and waiting the update on graphic interface
+     * @param query is the Task implementation that show the scene and wait for an answer
+     * @return the Event representing the user choice
+     */
     public final Event ask(Task<Event> query) {
         Platform.runLater(query);
         try {

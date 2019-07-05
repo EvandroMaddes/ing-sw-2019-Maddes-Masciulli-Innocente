@@ -226,7 +226,7 @@ public class GUI extends RemoteView {
      *
      * @param possibleSquareX row of possible destination square
      * @param possibleSquareY column of possible destination square
-     * @return
+     * @return the event representing the user choice
      */
     @Override
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
