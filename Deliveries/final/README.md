@@ -33,11 +33,11 @@
    * Per avviare un'istanza del gioco aprire il terminale; chiamare dalla directory in cui risiede il file [Client.jar] il comando:
      
      
-        java -jar Client.jar [interface]
+            java -jar Client.jar [interface]
         
         
-        //[interface] = "CLI" or "GUI"; default (no argument given) = "CLI"
-        //si ipotizza che al momento della connessione si conosca l'indirizzo ip del server
+            //[interface] = "CLI" or "GUI"; default (no argument given) = "CLI"
+            //si ipotizza che al momento della connessione si conosca l'indirizzo ip del server
         
     
     
