@@ -10,12 +10,14 @@ import java.io.IOException;
 
 /**
  * It launch GUI interface
+ *
  * @author Evandro Maddes
  */
 public class LoginMain extends Application {
 
     /**
      * It loads first controller and first scene and then shows it
+     *
      * @param primaryStage stage to show
      * @throws Exception
      */
@@ -44,7 +46,6 @@ public class LoginMain extends Application {
     public static void guiMain() {
         launch();
     }
-
 
 
 }

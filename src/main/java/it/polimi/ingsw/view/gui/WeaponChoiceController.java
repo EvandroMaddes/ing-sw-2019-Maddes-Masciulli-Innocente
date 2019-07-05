@@ -21,7 +21,7 @@ import java.util.Collections;
 public class WeaponChoiceController extends AbstractController {
 
     @FXML
-    private TextField infoText;
+    private TextField infoArea;
 
     @FXML
     private Button weapon3Button;
@@ -127,10 +127,15 @@ public class WeaponChoiceController extends AbstractController {
 
     }
 
-    void  setText(String info){
-        infoText.setText(info);
-        infoText.setDisable(true);
-        infoText.setOpacity(1.0);
+    /**
+     * It sets text on scene
+     *
+     * @param info text to show
+     */
+    void setText(String info) {
+        infoArea.setText(info);
+        infoArea.setDisable(true);
+        infoArea.setOpacity(1.0);
     }
 
 }

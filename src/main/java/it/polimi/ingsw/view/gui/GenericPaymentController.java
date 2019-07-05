@@ -6,14 +6,20 @@ import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
+/**
+ * It controls scene of payment
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
+ */
 public class GenericPaymentController extends AbstractController {
+    @FXML
+    private Button skipAction;
     //Ammo button
     @FXML
     private Button button8;
@@ -93,7 +99,7 @@ public class GenericPaymentController extends AbstractController {
      */
     private String[] powerUpName;
     /**
-     *color of available power up
+     * color of available power up
      */
     private CubeColour[] powerUpColor;
     /**
@@ -144,7 +150,7 @@ public class GenericPaymentController extends AbstractController {
             powerUpImageView.get(i).setImage(currImage);
         }
         finishButton.setDisable(true);
-
+        skipAction.setDisable(false);
         setPowerUpButtons(powerUpNames);
 
     }
@@ -162,6 +168,7 @@ public class GenericPaymentController extends AbstractController {
         this.powerUpColor = powerUpsColour;
         infoArea.setText("YOU MUST CHOOSE ONE ITEM TO PAY:");
         infoArea.setDisable(true);
+        skipAction.setDisable(true);
         for (int i = 0; i < powerUpsType.length; i++) {
             Image currImage = decodeMessage.powerUpImage(powerUpsType[i], powerUpsColour[i]);
             powerUpImageView.get(i).setImage(currImage);
@@ -183,12 +190,16 @@ public class GenericPaymentController extends AbstractController {
     void button1Click(ActionEvent event) {
         setMessage(new GenericPayChoiceEvent(getGui().getUser(), new boolean[]{true, false, false}, null, null));
         getWindow().close();
+        skipAction.setDisable(false);
+
     }
 
     @FXML
     void button2Click(ActionEvent event) {
         setMessage(new GenericPayChoiceEvent(getGui().getUser(), new boolean[]{false, true, false}, null, null));
         getWindow().close();
+        skipAction.setDisable(false);
+
     }
 
     @FXML
@@ -204,6 +215,7 @@ public class GenericPaymentController extends AbstractController {
             setMessage(new GenericPayChoiceEvent(getGui().getUser(), new boolean[]{false, false, true}, powerUpName[0], powerUpColor[0]));
             getWindow().close();
         } else checkAnswer();
+        skipAction.setDisable(false);
 
     }
 
@@ -214,6 +226,8 @@ public class GenericPaymentController extends AbstractController {
             setMessage(new GenericPayChoiceEvent(getGui().getUser(), new boolean[]{false, false, true}, powerUpName[1], powerUpColor[1]));
             getWindow().close();
         } else checkAnswer();
+        skipAction.setDisable(false);
+
     }
 
     @FXML
@@ -223,6 +237,8 @@ public class GenericPaymentController extends AbstractController {
             setMessage(new GenericPayChoiceEvent(getGui().getUser(), new boolean[]{false, false, true}, powerUpName[2], powerUpColor[2]));
             getWindow().close();
         } else checkAnswer();
+        skipAction.setDisable(false);
+
     }
 
     @FXML
@@ -231,6 +247,8 @@ public class GenericPaymentController extends AbstractController {
         finishButton.setDisable(false);
         setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(), (String[]) powerUpNameChoice.toArray(), (CubeColour[]) powerUpColorChoice.toArray()));
         getWindow().close();
+        skipAction.setDisable(false);
+
     }
 
     /**
@@ -244,12 +262,14 @@ public class GenericPaymentController extends AbstractController {
             setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(), (String[]) powerUpNameChoice.toArray(), (CubeColour[]) powerUpColorChoice.toArray()));
             getWindow().close();
         }
+        skipAction.setDisable(false);
+
     }
 
     /**
-     * It sets disable power up button on screee
+     * It sets disable power up button on display
      *
-     * @param powerUpNames available power Up\
+     * @param powerUpNames available power up
      */
     private void setPowerUpButtons(String[] powerUpNames) {
 
@@ -265,5 +285,11 @@ public class GenericPaymentController extends AbstractController {
         if (powerUpNames.length == 2) {
             powerUp1Button.setDisable(true);
         }
+    }
+
+    @FXML
+    void skipActionClick(ActionEvent event) {
+        setMessage(new WeaponReloadPaymentChoiceEvent(getGui().getUser(), new String[]{},new CubeColour[]{}));
+        getWindow().close();
     }
 }

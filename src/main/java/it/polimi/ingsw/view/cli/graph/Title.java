@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli.graph;
 
 /**
  * It manage title "ADRENALINE"
+ *
+ * @author Francesco Masciulli
  */
 public class Title {
     private static final int LENGHT = 210;
@@ -11,7 +13,7 @@ public class Title {
     /**
      * It prints title "ADRENALINE"
      */
-    public static void printTitle(){
+    public static void printTitle() {
         String[] strings = new String[LENGHT];
         TitleCharacter[] title = new TitleCharacter[10];
         title[0] = new ATitleCharacter();
@@ -26,14 +28,13 @@ public class Title {
         title[9] = new ETitleCharacter();
 
         for (int i = 0; i < HEIGHT; i++) {
-            for (TitleCharacter currCharacter :title) {
-                if(strings[i]==null){
-                    strings[i]= currCharacter.getRow(i);
-                }
-                else {
+            for (TitleCharacter currCharacter : title) {
+                if (strings[i] == null) {
+                    strings[i] = currCharacter.getRow(i);
+                } else {
                     strings[i] = strings[i] + currCharacter.getRow(i);
                 }
-                }
+            }
         }
 
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape());
@@ -47,7 +48,6 @@ public class Title {
             System.out.println(title[0].getColor().escape() + strings[i]);
 
         }
-
 
 
     }

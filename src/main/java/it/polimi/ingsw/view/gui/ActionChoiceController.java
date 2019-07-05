@@ -7,7 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class ActionChoiceController extends AbstractController{
+/**
+ * It controls action choice scene
+ *
+ * @author Evandro Maddes
+ * @author Francesco Masciulli
+ */
+public class ActionChoiceController extends AbstractController {
 
     @FXML
     private Button skipButton;
@@ -21,14 +27,18 @@ public class ActionChoiceController extends AbstractController{
     @FXML
     private Button grabButton;
 
-    public void setController(boolean isFireEnable){
+    /**
+     * It set action choice scene
+     *
+     * @param isFireEnable if player can fire
+     */
+    public void setController(boolean isFireEnable) {
         skipButton.setDisable(false);
         moveButton.setDisable(false);
         grabButton.setDisable(false);
-        if(isFireEnable){
+        if (isFireEnable) {
             shotButton.setDisable(false);
-        }
-        else{
+        } else {
             shotButton.setDisable(true);
         }
     }

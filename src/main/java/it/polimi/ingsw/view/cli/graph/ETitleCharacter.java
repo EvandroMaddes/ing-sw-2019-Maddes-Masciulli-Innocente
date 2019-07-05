@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli.graph;
 
 /**
  * Char 'E'
+ *
+ * @author Francesco Masciulli
  */
  class ETitleCharacter extends TitleCharacter {
      ETitleCharacter(){
