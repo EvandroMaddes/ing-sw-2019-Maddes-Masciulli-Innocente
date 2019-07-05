@@ -6,8 +6,6 @@ import it.polimi.ingsw.event.serverviewevent.UsernameModificationEvent;
 import it.polimi.ingsw.event.viewcontrollerevent.*;
 import it.polimi.ingsw.model.gamecomponents.ammo.AmmoCube;
 import it.polimi.ingsw.model.gamecomponents.ammo.CubeColour;
-import it.polimi.ingsw.model.gamecomponents.cards.PowerUp;
-import it.polimi.ingsw.model.gamecomponents.cards.powerups.TagbackGrenade;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.view.RemoteView;
@@ -18,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.ir.CallNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -538,7 +535,7 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 characterController.setInfoText("Choose your target:");
-                characterController.setCharacterChoice(availableTargets,1, false);
+                characterController.setCharacterChoice(availableTargets,1);
                 characterController.setWindow(characterStage);
 
                 CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
@@ -559,7 +556,7 @@ public class GUI extends RemoteView {
         final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
-                characterController.setCharacterChoice(availableCharacters, 1, false);
+                characterController.setCharacterChoice(availableCharacters, 1);
                 characterController.setWindow(characterStage);
                 Event message = characterController.ask(characterScene);
                 characterChoose = ((CharacterChoiceEvent) message).getChosenCharacter();
@@ -584,7 +581,7 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                 characterController.trueWeaponTarget();
                 characterController.setInfoText("You can choose max " + numTarget + " target:");
-                characterController.setCharacterChoice(availableTargets, numTarget, true);
+                characterController.setCharacterChoice(availableTargets, numTarget);
                 characterController.setWindow(characterStage);
                 return characterController.ask(characterScene);
 
@@ -885,7 +882,7 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 characterController.setInfoText("Choose your target:");
-                characterController.setCharacterChoice(possibleTargets,1, false);
+                characterController.setCharacterChoice(possibleTargets,1);
                 characterController.setWindow(characterStage);
                 CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
                 return new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
@@ -1101,12 +1098,11 @@ public class GUI extends RemoteView {
     }
 
     /**
-     * It "takes" choice from controller
+     * Call a new Task Thread get() method, that block the thread until the requested resource is update by the GUIControllers
      *
-     * @param query
+     * @param query is the Task.get() query
      * @return event that contains player's choice
      */
-    // TODO: 03/07/2019 fra completa javadoc grazie
     private Event userChoice(Task<Event> query) {
         Thread th = new Thread(query);
         th.start();
@@ -1139,5 +1135,17 @@ public class GUI extends RemoteView {
             toShow = toShow+ powerUpRequest[2] + " BLUE -";
         }
         return toShow;
+    }
+
+    /**
+     * Override the RemoteInterview method, closing the screen before returning
+     */
+    @Override
+    public void disconnect() {
+        primaryStage.close();
+        lobbyStage.close();
+        gameBoardStage.close();
+        super.disconnect();
+
     }
 }

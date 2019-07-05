@@ -102,9 +102,11 @@ public abstract class RemoteView implements RemoteViewInterface {
         } catch (Exception closingException) {
             LOG.warning("Can't close correctly the client connection!");
             CustomLogger.logException(closingException);
+            System.exit(503);
         } finally {
             LOG.info("Shutting-down the game.");
         }
+        System.exit(0);
     }
 
     /**
@@ -159,5 +161,6 @@ public abstract class RemoteView implements RemoteViewInterface {
             LOG.severe("Unable to disconnect client: ");
             CustomLogger.logException(e);
         }
+
     }
 }
