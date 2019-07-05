@@ -56,10 +56,8 @@ public class CharacterChoiceController extends AbstractController {
      *
      * @param availableCharacters characters to choose
      */
-    void setCharacterChoice(ArrayList<Character> availableCharacters, int numberOfTargets, boolean weaponTarget) {
+    void setCharacterChoice(ArrayList<Character> availableCharacters, int numberOfTargets) {
         this.numberOfTargets = numberOfTargets;
-        this.weaponTarget = weaponTarget;
-
         if (weaponTarget) {
             finishButtom.setDisable(false);
         } else {

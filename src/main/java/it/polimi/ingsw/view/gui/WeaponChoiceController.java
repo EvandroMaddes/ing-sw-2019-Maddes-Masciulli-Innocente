@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * It controls action choice scene
@@ -88,7 +89,7 @@ public class WeaponChoiceController extends AbstractController {
      * @param weapon weapons available
      */
     public void setController(ArrayList<String> weapon) {
-        this.weapon = (String[]) weapon.toArray();
+        this.weapon = weapon.toArray(new String[weapon.size()]);
         for (Button currentButton: weaponButton){
             currentButton.setDisable(true);
         }

@@ -240,10 +240,17 @@ public class ActionManager {
         for (int i = 0; i < 3; i++)
             usableEffects[i] = chosenWeapon.isUsableEffect(i + 1);
         if (Arrays.equals(usableEffects, new boolean[]{false, false, false})) {
-            chosenWeapon.setUnloaded();
-            currentRoundManager.nextPhase();
+            setWeaponUnloaded();
         } else
             controller.callView(new WeaponEffectRequest(currentRoundManager.getCurrentPlayer().getUsername(), usableEffects));
+    }
+
+    /**
+     * Set the weapon unloaded an go to the next phase
+     */
+    public void setWeaponUnloaded(){
+        chosenWeapon.setUnloaded();
+        currentRoundManager.nextPhase();
     }
 
     /**
@@ -677,5 +684,13 @@ public class ActionManager {
         chosenPowerUp.performEffect(decodedTarget);
         decodedTarget.removeOneTimesGetDamaged();
         sendPossibleEffects();
+    }
+
+    /**
+     * Getter method
+     * @return the chosen weapon
+     */
+    public Weapon getChosenWeapon() {
+        return chosenWeapon;
     }
 }
