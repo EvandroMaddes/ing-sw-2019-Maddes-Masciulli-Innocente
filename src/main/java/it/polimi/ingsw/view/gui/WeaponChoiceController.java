@@ -89,7 +89,7 @@ public class WeaponChoiceController extends AbstractController {
      * @param weapon weapons available
      */
     public void setController(ArrayList<String> weapon) {
-        this.weapon = weapon.toArray(new String[weapon.size()]);
+        this.weapon = weapon.toArray(this.weapon);
         for (Button currentButton: weaponButton){
             currentButton.setDisable(true);
         }
