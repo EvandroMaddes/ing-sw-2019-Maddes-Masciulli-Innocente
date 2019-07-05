@@ -54,5 +54,5 @@ inoltre sono state utilizzate le seguenti librerie esterne:
 
 
 
-[Server.jar]: JAR/ServerJAR/Server.jar
-[Client.jar]: JAR/ClientJAR/Client.jar
+[Server.jar]: Deliveries/final/JAR/ServerJAR/Server.jar
+[Client.jar]: Deliveries/final/JAR/ClientJAR/Client.jar
