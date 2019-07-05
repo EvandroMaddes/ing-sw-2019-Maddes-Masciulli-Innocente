@@ -8,17 +8,19 @@ import java.rmi.RemoteException;
 /**
  * This interface is implemented by RMIServer and RMIClient
  * its methods handle the remote connection beetwen Lobby and Client(the latter will not implements the Broadcast)
+ *
  * @author Francesco Masciulli
  */
 public interface RemoteInterface extends Remote {
 
     /**
      * handle the connection between two remote hosts
-     * @param remotePort is the server Port, from the NetConfiguration Class
+     *
+     * @param remotePort      is the server Port, from the NetConfiguration Class
      * @param remoteIPAddress is the ip address of the host to which is trying the connection
      * @throws RemoteException if couldn't connect properly
      */
-    void acceptRemoteClient( int remotePort, String remoteIPAddress, String bindName) throws RemoteException;
+    void acceptRemoteClient(int remotePort, String remoteIPAddress, String bindName) throws RemoteException;
 
     /**
      * this method check the livability of a host with a continue lifeline
@@ -29,6 +31,7 @@ public interface RemoteInterface extends Remote {
 
     /**
      * Implementation with RMI of the sendMessage()
+     *
      * @param message is the mesagge that must be sent
      * @throws RemoteException if couldn't be called by remote
      */
@@ -36,6 +39,7 @@ public interface RemoteInterface extends Remote {
 
     /**
      * is called during the remoteSendMessage() from a RMIClient, wait for a latch
+     *
      * @param remoteImplementation is the client remote implementation in which will be retrieved the message
      * @throws RemoteException if client isn't reachable
      */
@@ -43,12 +47,14 @@ public interface RemoteInterface extends Remote {
 
     /**
      * clean the currMessage, is called by server when the client message is retrieved
+     *
      * @throws RemoteException if couldn't be called by remote
      */
     void remoteCleanCurrEvent() throws RemoteException;
 
     /**
      * This method send a message to each of the connected client
+     *
      * @param message is the Event that must be sent
      * @throws RemoteException if couldn't reach the server
      */
@@ -56,20 +62,23 @@ public interface RemoteInterface extends Remote {
 
     /**
      * update a listened message
+     *
      * @return the listened message, null if the currMessage isn't updated
      * @throws RemoteException if couldn't be called by remote
      */
     Event remoteListenMessage() throws RemoteException;
 
     /**
-     *  Getter method:
+     * Getter method:
+     *
      * @return the number of client connected to the server
      * @throws RemoteException if couldn't get the resource properly
      */
-    int getClientListNumber() throws  RemoteException;
+    int getClientListNumber() throws RemoteException;
 
     /**
      * Getter method:
+     *
      * @return currMessage
      * @throws RemoteException if couldn't get the resource properly
      */
@@ -77,6 +86,7 @@ public interface RemoteInterface extends Remote {
 
     /**
      * Getter method:
+     *
      * @return the host username
      * @throws RemoteException if couldn't be called by remote
      */

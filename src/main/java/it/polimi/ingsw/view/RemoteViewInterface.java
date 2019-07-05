@@ -333,7 +333,7 @@ public interface RemoteViewInterface {
      *
      * @param currCharacter modified player board
      * @param weapons       weapons of player
-     * @param load indicates the weapon that are loaded
+     * @param load          indicates the weapon that are loaded
      * @return message notify the success of updating
      */
     Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load);

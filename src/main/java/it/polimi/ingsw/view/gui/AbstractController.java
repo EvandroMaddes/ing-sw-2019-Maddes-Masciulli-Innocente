@@ -28,6 +28,7 @@ public abstract class AbstractController {
 
     /**
      * fetter
+     *
      * @return message
      */
     public Event getMessage() {
@@ -36,6 +37,7 @@ public abstract class AbstractController {
 
     /**
      * setter
+     *
      * @param window window to show
      */
     void setWindow(Stage window) {
@@ -44,6 +46,7 @@ public abstract class AbstractController {
 
     /**
      * getter
+     *
      * @return window
      */
     public Stage getWindow() {
@@ -52,6 +55,7 @@ public abstract class AbstractController {
 
     /**
      * setter
+     *
      * @param window stage to show
      */
     public void setStage(Stage window) {
@@ -60,6 +64,7 @@ public abstract class AbstractController {
 
     /**
      * setter
+     *
      * @param message event
      */
     public void setMessage(Event message) {
@@ -87,6 +92,7 @@ public abstract class AbstractController {
 
     /**
      * It show a request and wait user choice
+     *
      * @return user choice
      */
     public Event ask(Scene scene) {
@@ -105,6 +111,7 @@ public abstract class AbstractController {
 
     /**
      * It take user choice
+     *
      * @param query stage showed
      * @return user choice
      */
