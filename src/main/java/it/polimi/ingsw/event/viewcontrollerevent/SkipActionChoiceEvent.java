@@ -26,6 +26,12 @@ public class SkipActionChoiceEvent extends ViewControllerEvent {
      */
     @Override
     public void performAction(Controller controller) {
-        controller.getGameManager().getCurrentRound().nextPhase();
+        if ((controller.getGameManager().getCurrentRound().getPhase() == 4 ||
+                controller.getGameManager().getCurrentRound().getPhase() == 2) &&
+                (controller.getGameManager().getCurrentRound().getActionManager() != null &&
+                        controller.getGameManager().getCurrentRound().getActionManager().getChosenWeapon() != null))
+            controller.getGameManager().getCurrentRound().getActionManager().setWeaponUnloaded();
+        else
+            controller.getGameManager().getCurrentRound().nextPhase();
     }
 }
