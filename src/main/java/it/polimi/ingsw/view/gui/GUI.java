@@ -205,12 +205,11 @@ public class GUI extends RemoteView {
     public void metodoPROVA() {
          Platform.runLater(()->
          {
-             powerUpController.setInfoLabel("SELECT YOUR POWER UP TO RESPAWN");
-             PowerUp power1 = new TagbackGrenade(CubeColour.Red);
-             PowerUp power2 = new TagbackGrenade(CubeColour.Red);
-             powerUpController.setController(new String[]{power1.getName(),power2.getName()}, new CubeColour[]{power1.getColour(),power2.getColour()},1);
-             powerUpStage.show();
-
+             Image[] map = decodeMessage.mapImage(2);
+             gameBoardController.setMap(map[0], map[1]);
+             gameBoardController.setPosition(2,2, decodeMessage.characterImage(Character.VIOLET), Character.VIOLET);
+             gameBoardController.setPosition(1,1, decodeMessage.characterImage(Character.VIOLET), Character.VIOLET);
+             gameBoardStage.show();
               });
 
     }

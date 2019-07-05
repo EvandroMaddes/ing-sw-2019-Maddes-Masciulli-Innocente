@@ -467,7 +467,7 @@ public class GameBoardController extends AbstractController {
      *
      * @param character characterImage to set
      */
-    public void setPosition(int x, int y, Image characterImage,Character character) {
+    public void setPosition(int x, int y, Image characterImage, Character character) {
         removeCharacter(character);
 
         VBox square = null;
@@ -478,9 +478,12 @@ public class GameBoardController extends AbstractController {
             }
         }
         //gli passo null perche mi serve il primo posto libero sul quadrato
-       ImageView newPosition = getPosition(square, null);
+        ImageView newPosition = getPosition(square, null);
         newPosition.setImage(characterImage);
-        mapCharcaterPosition.replace(character,newPosition);
+        if (mapCharcaterPosition.containsKey(character))
+            mapCharcaterPosition.replace(character, newPosition);
+        else
+            mapCharcaterPosition.put(character, newPosition);
 
     }
 
@@ -490,8 +493,8 @@ public class GameBoardController extends AbstractController {
      * @param character character to remove
      */
     private void removeCharacter(Character character) {
-       if (mapCharcaterPosition.containsKey(character))
-           mapCharcaterPosition.get(character).setImage(null);
+        if (mapCharcaterPosition.containsKey(character))
+            mapCharcaterPosition.get(character).setImage(null);
     }
 
 
@@ -502,7 +505,6 @@ public class GameBoardController extends AbstractController {
      * @return location in which set an image
      */
     private ImageView getPosition(VBox square, Image toFind) {
-        // TODO: 03/07/2019 funziona nel mettere più player su uno square quindi nel cercare un toFind=null ma non funziona con toFind = (un'immagine)
         ImageView position = new ImageView();
 
         for (int i = 0; i < 3; i++) {
