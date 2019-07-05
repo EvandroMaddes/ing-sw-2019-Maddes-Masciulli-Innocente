@@ -48,17 +48,23 @@ public class CharacterChoiceController extends AbstractController {
      */
     private boolean weaponTarget = false;
 
+    private int numberOfTargets;
+
 
     /**
      * It set button on screen from available characters
      *
      * @param availableCharacters characters to choose
      */
-    void setCharacterChoice(ArrayList<Character> availableCharacters) {
+    void setCharacterChoice(ArrayList<Character> availableCharacters, int numberOfTargets, boolean weaponTarget) {
+        this.numberOfTargets = numberOfTargets;
+        this.weaponTarget = weaponTarget;
+
         if (weaponTarget) {
             finishButtom.setDisable(false);
         } else {
             finishButtom.setDisable(true);
+            finishButtom.setStyle("-fx-background-color: RGB(0,0,1,0.0)");
         }
         if (availableCharacters.contains(Character.BANSHEE)) {
             bansheeButton.setDisable(false);
@@ -101,6 +107,7 @@ public class CharacterChoiceController extends AbstractController {
             getWindow().close();
         }
         sprogButton.setDisable(true);
+        checkOthersTargets();
     }
 
     /**
@@ -115,6 +122,7 @@ public class CharacterChoiceController extends AbstractController {
             getWindow().close();
         }
         bansheeButton.setDisable(true);
+        checkOthersTargets();
     }
 
     /**
@@ -129,6 +137,7 @@ public class CharacterChoiceController extends AbstractController {
             getWindow().close();
         }
         dstructorButton.setDisable(true);
+        checkOthersTargets();
     }
 
     /**
@@ -143,6 +152,7 @@ public class CharacterChoiceController extends AbstractController {
             getWindow().close();
         }
         violetButton.setDisable(true);
+        checkOthersTargets();
     }
 
     /**
@@ -157,6 +167,7 @@ public class CharacterChoiceController extends AbstractController {
             getWindow().close();
         }
         dozerButton.setDisable(true);
+        checkOthersTargets();
     }
 
     /**
@@ -166,6 +177,16 @@ public class CharacterChoiceController extends AbstractController {
     void finishClick() {
         setMessage(new WeaponPlayersTargetChoiceEvent(getGui().getUser(), targets));
         getWindow().close();
+    }
+
+    private void checkOthersTargets(){
+        if(weaponTarget){
+            numberOfTargets--;
+            if(numberOfTargets==0){
+                finishButtom.setDisable(false);
+                finishClick();
+            }
+        }
     }
 
     /**

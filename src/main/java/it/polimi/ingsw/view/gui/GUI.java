@@ -198,7 +198,7 @@ public class GUI extends RemoteView {
         weaponChoiceController.init();
         positionChoiceController.init();
         genericPaymentController.init();
-        metodoPROVA();
+        //metodoPROVA();
     }
 
     // TODO: 03/07/2019 da eliminare!!
@@ -538,10 +538,11 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 characterController.setInfoText("Choose your target:");
-                characterController.setCharacterChoice(availableTargets);
+                characterController.setCharacterChoice(availableTargets,1, false);
                 characterController.setWindow(characterStage);
-                NewtonPlayerTargetChoiceEvent message = (NewtonPlayerTargetChoiceEvent) characterController.ask(characterScene);
-                return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenTarget());
+
+                CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
+                return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
             }
         };
         return userChoice(query);
@@ -558,7 +559,7 @@ public class GUI extends RemoteView {
         final Task<Event> query = new Task<Event>() {
             @Override
             public Event call() throws Exception {
-                characterController.setCharacterChoice(availableCharacters);
+                characterController.setCharacterChoice(availableCharacters, 1, false);
                 characterController.setWindow(characterStage);
                 Event message = characterController.ask(characterScene);
                 characterChoose = ((CharacterChoiceEvent) message).getChosenCharacter();
@@ -583,7 +584,7 @@ public class GUI extends RemoteView {
             public Event call() throws Exception {
                 characterController.trueWeaponTarget();
                 characterController.setInfoText("You can choose max " + numTarget + " target:");
-                characterController.setCharacterChoice(availableTargets);
+                characterController.setCharacterChoice(availableTargets, numTarget, true);
                 characterController.setWindow(characterStage);
                 return characterController.ask(characterScene);
 
@@ -884,7 +885,7 @@ public class GUI extends RemoteView {
             @Override
             public Event call() throws Exception {
                 characterController.setInfoText("Choose your target:");
-                characterController.setCharacterChoice(possibleTargets);
+                characterController.setCharacterChoice(possibleTargets,1, false);
                 characterController.setWindow(characterStage);
                 CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
                 return new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
