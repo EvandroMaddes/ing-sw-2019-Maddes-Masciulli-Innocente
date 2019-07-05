@@ -466,9 +466,9 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
-        ArrayList<String> cliColorCharacters = new ArrayList<String>();
+        ArrayList<String> cliColorCharacters = new ArrayList<>();
         ArrayList<String> cliStringCharacter = new ArrayList<>();
-        ArrayList<Character> targetCharacter = new ArrayList<Character>();
+        ArrayList<Character> targetCharacter = new ArrayList<>();
         for (Character currCharacter : availableTargets) {
             cliColorCharacters.add(mapCharacterNameColors.get(currCharacter) + currCharacter.name().toUpperCase());
             cliStringCharacter.add(currCharacter.name().toUpperCase());
