@@ -29,7 +29,7 @@ public abstract class RemoteView implements RemoteViewInterface {
     /**
      * Is the final client Logger, used for errors notification
      */
-    private static final Logger log = Logger.getLogger("ClientLogger");
+    private static final Logger LOG = Logger.getLogger("ClientLogger");
     /**
      * Is the chosen ClientInterface implementation, handling the network connection
      */
@@ -87,7 +87,7 @@ public abstract class RemoteView implements RemoteViewInterface {
             }
             connected = true;
         } catch (ConnectException | RemoteException e) {
-            log.warning("Can't reach the Lobby!\nClosing the app..");
+            LOG.warning("Can't reach the Lobby!\nClosing the app..");
             CustomLogger.logException(e);
         }
 
@@ -98,12 +98,12 @@ public abstract class RemoteView implements RemoteViewInterface {
         try {
             clientImplementation.disconnectClient();
         } catch (NullPointerException nullPointer) {
-            log.warning("Client implementation doesn't exist, nothing to disconnect..");
+            LOG.warning("Client implementation doesn't exist, nothing to disconnect..");
         } catch (Exception closingException) {
-            log.warning("Can't close correctly the client connection!");
+            LOG.warning("Can't close correctly the client connection!");
             CustomLogger.logException(closingException);
         } finally {
-            log.info("Shutting-down the game.");
+            LOG.info("Shutting-down the game.");
         }
     }
 
@@ -140,7 +140,7 @@ public abstract class RemoteView implements RemoteViewInterface {
                 waiting = false;
                 connected = false;
                 CustomLogger.logException(e);
-                log.info("Lobby was disconnected!");
+                LOG.info("Lobby was disconnected!");
             }
             connected = clientImplementation.isConnected();
         }
@@ -156,7 +156,7 @@ public abstract class RemoteView implements RemoteViewInterface {
         try {
             clientImplementation.disconnectClient();
         } catch (Exception e) {
-            log.severe("Unable to disconnect client: ");
+            LOG.severe("Unable to disconnect client: ");
             CustomLogger.logException(e);
         }
     }

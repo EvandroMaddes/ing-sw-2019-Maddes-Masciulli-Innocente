@@ -83,6 +83,7 @@ public class SocketServer extends Thread implements ServerInterface {
      *
      * @return an ArrayList with the usernames.
      */
+    @Override
     public ArrayList<String> getClientList() {
         ArrayList<String> clientUserList = new ArrayList<>();
         for (SocketServerThread currClientThread : socketList) {

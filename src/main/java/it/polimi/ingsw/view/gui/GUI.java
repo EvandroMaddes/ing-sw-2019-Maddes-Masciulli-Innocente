@@ -208,6 +208,43 @@ public class GUI extends RemoteView {
     }
 
     /**
+     * The Task call to get() method wait until the requested resource is updated by the respectively GUI controller
+     *
+     * @param query
+     * @return event that contains player's choice
+     */
+    private Event userChoice(Task<Event> query) {
+        Thread th = new Thread(query);
+        th.start();
+        try {
+            Event event = query.get();
+            return event;
+        } catch (Exception interrupted) {
+            CustomLogger.logException(interrupted);
+            return null;
+        }
+    }
+
+    /**
+     * It create a string with information about power up payment request
+     * @param powerUpRequest
+     * @return
+     */
+    private String powerUpRequest(int[] powerUpRequest) {
+        String toShow= "";
+        if (powerUpRequest[0] != 0) {
+            toShow = powerUpRequest[0] + " RED -";
+        }
+        if (powerUpRequest[1] != 0) {
+            toShow = toShow+powerUpRequest[1] + " YELLOW -";
+
+        }
+        if (powerUpRequest[2] != 0) {
+            toShow = toShow+ powerUpRequest[2] + " BLUE -";
+        }
+        return toShow;
+    }
+    /**
      * setter:
      *
      * @param choices user choices for username, connection and ip address
@@ -1087,42 +1124,5 @@ public class GUI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-    /**
-     * It "takes" choice from controller
-     *
-     * @param query
-     * @return event that contains player's choice
-     */
-    // TODO: 03/07/2019 fra completa javadoc grazie
-    private Event userChoice(Task<Event> query) {
-        Thread th = new Thread(query);
-        th.start();
-        try {
-            Event event = query.get();
-            return event;
-        } catch (Exception interrupted) {
-            CustomLogger.logException(interrupted);
-            return null;
-        }
-    }
 
-    /**
-     * It create a string with information about power up payment request
-     * @param powerUpRequest
-     * @return
-     */
-    private String powerUpRequest(int[] powerUpRequest) {
-        String toShow= "";
-        if (powerUpRequest[0] != 0) {
-            toShow = powerUpRequest[0] + " RED -";
-        }
-        if (powerUpRequest[1] != 0) {
-            toShow = toShow+powerUpRequest[1] + " YELLOW -";
-
-        }
-        if (powerUpRequest[2] != 0) {
-            toShow = toShow+ powerUpRequest[2] + " BLUE -";
-        }
-        return toShow;
-    }
 }

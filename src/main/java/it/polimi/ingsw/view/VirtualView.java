@@ -13,8 +13,8 @@ import java.util.*;
  * 3 - Take the request messages from the controller to the clients
  */
 
-public class VirtualView extends Observable implements Observer {
 
+public class VirtualView extends Observable implements Observer {
     /**
      * Is the user of who is associated to the virtual view
      */

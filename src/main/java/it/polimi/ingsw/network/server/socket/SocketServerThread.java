@@ -47,7 +47,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
      *
      * @param socket is the client socket
      */
-    public SocketServerThread(Socket socket) {
+    SocketServerThread(Socket socket) {
         this.client = socket;
         connected = true;
         try {
@@ -78,7 +78,12 @@ public class SocketServerThread extends Thread implements NetworkHandler {
 
     }
 
-    public void setClientUser(String clientUser) {
+    /**
+     * Setter method: seth the given client username
+     *
+     * @param clientUser is the username
+     */
+    void setClientUser(String clientUser) {
         this.clientUser = clientUser;
     }
 
@@ -102,7 +107,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     /**
      * Handle the thread's disconnection process
      */
-    public synchronized void disconnect() {
+    synchronized void disconnect() {
         currMessage = new DisconnectedEvent(getClientUser());
         connected = false;
     }
@@ -112,7 +117,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
      *
      * @return the last listened Event
      */
-    public Event getCurrMessage() {
+     Event getCurrMessage() {
         return currMessage;
     }
 
@@ -121,7 +126,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
      *
      * @return the username of the client connected with this thread
      */
-    public String getClientUser() {
+    String getClientUser() {
         return clientUser;
     }
 
@@ -138,7 +143,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
     /**
      * This method, which is called from a client disconnection, kill the SocketThread
      */
-    public synchronized void kill() {
+    synchronized void kill() {
         interrupt();
     }
 
@@ -182,7 +187,7 @@ public class SocketServerThread extends Thread implements NetworkHandler {
         return currMessage;
     }
 
-    public void resetMessage() {
+    void resetMessage() {
         currMessage = null;
     }
 
