@@ -334,6 +334,7 @@ public class GUI extends RemoteView {
                     powerUpController.setController(powerUpNames, powerUpColours, 1);
                     powerUpController.setWindow(powerUpStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
 
                 }
                 PowerUpChoiceEvent event = (PowerUpChoiceEvent) powerUpController.ask(powerUpScene);
@@ -380,6 +381,8 @@ public class GUI extends RemoteView {
                     genericPaymentController.genericPayment(usableAmmo, powerUpsType, powerUpsColour);
                     genericPaymentController.setWindow(genericPaymentStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
+
                 }
                 return genericPaymentController.ask(genericPaymentScene);
             }
@@ -406,6 +409,8 @@ public class GUI extends RemoteView {
                     powerUpController.setController(powerUpNames, powerUpColours, maxUsablePowerUps);
                     powerUpController.setWindow(powerUpStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
+
                 }
                 return powerUpController.ask(powerUpScene);
 
@@ -437,6 +442,7 @@ public class GUI extends RemoteView {
                     genericPaymentController.setUpController(toShow, powerUpNames, powerUpColours, min, max);
                     genericPaymentController.setWindow(genericPaymentStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
                 }
                 return genericPaymentController.ask(genericPaymentScene);
             }
@@ -467,6 +473,8 @@ public class GUI extends RemoteView {
                     genericPaymentController.setUpController(toShow, powerUpNames, powerUpColours, min, max);
                     genericPaymentController.setWindow(genericPaymentStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
+
                 }
                 WeaponReloadPaymentChoiceEvent message = ((WeaponReloadPaymentChoiceEvent) genericPaymentController.ask(genericPaymentScene));
                 return new WeaponGrabPaymentChoiceEvent(getUser(), message.getPowerUpType(), message.getPowerUpColour());
@@ -498,6 +506,8 @@ public class GUI extends RemoteView {
                     genericPaymentController.setUpController(toShow, powerUpNames, powerUpColours, min, max);
                     genericPaymentController.setWindow(genericPaymentStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
+
                 }
                 WeaponReloadPaymentChoiceEvent message = ((WeaponReloadPaymentChoiceEvent) genericPaymentController.ask(genericPaymentScene));
                 return new WeaponEffectPaymentChoiceEvent(getUser(), message.getPowerUpType(), message.getPowerUpColour());
@@ -576,7 +586,6 @@ public class GUI extends RemoteView {
                 characterController.setInfoText("Choose your target:");
                 characterController.setCharacterChoice(availableTargets, 1);
                 characterController.setWindow(characterStage);
-
                 CharacterChoiceEvent message = (CharacterChoiceEvent) characterController.ask(characterScene);
                 return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
             }
@@ -741,6 +750,7 @@ public class GUI extends RemoteView {
                     mapChoice.add(3);
                     mapController.setMapComboBox(mapChoice);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
                 }
                 Event event = mapController.ask(mapChoiceScene);
                 Image[] mapChoice = decodeMessage.mapImage(((GameChoiceEvent) event).getMap());
@@ -815,7 +825,7 @@ public class GUI extends RemoteView {
                     powerUpController.setWindow(powerUpStage);
                     powerUpController.setController(powerUpNames, powerUpColours, 1);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    CustomLogger.logException(e);
                 }
                 System.out.println("Ritorno messaggio di spawn");
                 PowerUpChoiceEvent event = (PowerUpChoiceEvent) powerUpController.ask(powerUpScene);
@@ -948,6 +958,7 @@ public class GUI extends RemoteView {
                     powerUpController.setController(powerUpNames, powerUpColours, 1);
                     powerUpController.setWindow(powerUpStage);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
                 }
                 Event event = powerUpController.ask(powerUpScene);
                 return event;
@@ -975,6 +986,8 @@ public class GUI extends RemoteView {
                     lobbyController.setWindow(lobbyStage);
                     lobbyController.setLobby(available, startedLobbies, waitingLobbies);
                 } catch (Exception e) {
+                    CustomLogger.logException(e);
+
                 }
                 return lobbyController.ask(lobbyScene);
             }

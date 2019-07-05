@@ -207,7 +207,7 @@ public class CLI extends RemoteView {
     @Override
     public Event actionChoice(boolean fireEnable) {
         int chosenAction = 404;
-        while (chosenAction < 1 || chosenAction >= 5 || (!fireEnable && chosenAction==3)) {
+        while (chosenAction < 1 || chosenAction >= 5 || (!fireEnable && chosenAction == 3)) {
             try {
                 System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() +
                         "option 1 for MOVE"
@@ -312,14 +312,10 @@ public class CLI extends RemoteView {
         int[] chosenSquare = null;
         while (chosenSquare == null) {
             try {
-
-
                 chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
             } catch (IllegalArgumentException e) {
-                chosenSquare = null;
-
+                CustomLogger.logException(e);
             }
-
         }
         return new MoveChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
@@ -338,14 +334,10 @@ public class CLI extends RemoteView {
 
         while (chosenSquare == null) {
             try {
-
-
                 chosenSquare = CLIHandler.coordinatePrintAndRead(possibleSquareX, possibleSquareY);
             } catch (IllegalArgumentException e) {
-                chosenSquare = null;
-
+                CustomLogger.logException(e);
             }
-
         }
         return new GrabChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
@@ -805,7 +797,7 @@ public class CLI extends RemoteView {
      */
     @Override
     public Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget) {
-
+        System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select target of newton:");
         CharacterChoiceEvent message = (CharacterChoiceEvent) characterChoice(availableTargets);
         return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
     }
@@ -886,7 +878,6 @@ public class CLI extends RemoteView {
                 nameSelected[i] = powerUpNames[index[i]];
                 colourSelected[i] = powerUpColours[index[i]];
             }
-
             message = new WeaponGrabPaymentChoiceEvent(getUser(), nameSelected, colourSelected);
         }
         return message;
