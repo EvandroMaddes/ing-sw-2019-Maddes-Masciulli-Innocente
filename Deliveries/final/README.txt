@@ -1,13 +1,11 @@
-# ADRENALINE: THE GAME
-#Progetto di ingegneria del software, Politecnico di Milano A.A. 2018-2019
+ADRENALINE: THE GAME
+Progetto di ingegneria del software, Politecnico di Milano A.A. 2018-2019
 
 
-* Esecuzione del programma:
+Esecuzione del programma:
     
-   * Per avviare il Server, aprire il terminale; chiamare dalla directory in cui risiede il file [Server.jar] (Deliveries/final/JAR/ServerJAR) il seguente comando per iniziare l'esecuzione:
+   * Per avviare il Server, aprire il terminale; chiamare dalla directory in cui risiede il file Server.jar (Deliveries/final/JAR/ServerJAR) il seguente comando per iniziare l'esecuzione:
        
-       
-     
             java -jar Server.jar 
             
             
@@ -17,7 +15,7 @@
     
    
     
-   * Per avviare un'istanza del gioco aprire il terminale; chiamare dalla directory in cui risiede il file [Client.jar] il comando:
+   * Per avviare un'istanza del gioco aprire il terminale; chiamare dalla directory in cui risiede il file Client.jar il comando:
      
      
         java -jar Client.jar [interface]
@@ -28,17 +26,17 @@
         
     
     
-* Funzionalità implementate:
+Funzionalità implementate:
     
    * le funzionalità implementate in questo progettono seguono quelle indicate nel documento de requisiti;
-    è implementato il set di regole complete ("[..] tutte le modalità dellze armi; sono presenti la “frenesia finale” e le “azioni adrenaliniche”."); 
-   * insieme ai requisiti indicati nella sezione 2.2 del suddetto documento, è stata implementata la funzionalità avanzata che gestisce multiple partite in contemporanea sul Server, allocando una Lobby per ogni match creato;
-   * le tecnologie di connessione usate sono, a scelta indistinta di ogni client, sia RMI che Socket; 
-   * l'utente potrà scegliere se utilizzare l' interfaccia grafica (GUI) o da console (CLI)
+    	- è implementato il set di regole complete ("[..] tutte le modalità dellze armi; sono presenti la “frenesia finale” e le “azioni adrenaliniche”."); 
+   	- insieme ai requisiti indicati nella sezione 2.2 del suddetto documento, è stata implementata la funzionalità avanzata che gestisce multiple partite in contemporanea sul Server, allocando una Lobby per ogni match creato;
+   	- le tecnologie di connessione usate sono, a scelta indistinta di ogni client, sia RMI che Socket; 
+    	- l'utente potrà scegliere se utilizzare l' interfaccia grafica (GUI) o da console (CLI)
     
     
      
-* Tools e librerie esterne: 
+Tools e librerie esterne: 
 il progetto è stato sviluppato con l'ausilio dell'IDE IntelliJ V.2019.1.3; con quest'ultima è stato generato i file .jar da eseguire. Durante il corso di tutta l'implementazione sono stati usati i tools Sonar e Maven, oltre che SceneBuilder fornito da Oracle come ausilio allo sviluppo dell'interfaccia grafica;  
 inoltre sono state utilizzate le seguenti librerie esterne:
     * junit per il test d'unità, 
@@ -46,13 +44,5 @@ inoltre sono state utilizzate le seguenti librerie esterne:
     * JavaFX per lo sviluppo della GUI
 
 
----
-##Federico Innocente, Evandro Maddes, Francesco Masciulli
-
-
-
-
-
-
-[Server.jar]: JAR/ServerJAR/Server.jar
-[Client.jar]: JAR/ClientJAR/Client.jar
+-------------------------------------------------------
+Federico Innocente, Evandro Maddes, Francesco Masciulli

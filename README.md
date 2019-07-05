@@ -38,7 +38,7 @@
     
     
      
-* Generazione file jar: 
+* Tools e librerie esterne: 
 il progetto è stato sviluppato con l'ausilio dell'IDE IntelliJ V.2019.1.3; con quest'ultima è stato generato i file .jar da eseguire. Durante il corso di tutta l'implementazione sono stati usati i tools Sonar e Maven, oltre che SceneBuilder fornito da Oracle come ausilio allo sviluppo dell'interfaccia grafica;  
 inoltre sono state utilizzate le seguenti librerie esterne:
     * junit per il test d'unità, 
