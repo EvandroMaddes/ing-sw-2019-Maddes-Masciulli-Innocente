@@ -163,7 +163,7 @@ public class PowerUpChoiceController extends AbstractController {
     void finishClick(ActionEvent event) {
 
         if (endOfRoundPowerUp) {
-            setMessage(new EndRoundPowerUpChoiceEvent(getGui().getUser(), (String[]) powerUpChoice.toArray(), (CubeColour[]) colorChoice.toArray()));
+            setMessage(new EndRoundPowerUpChoiceEvent(getGui().getUser(),  powerUpChoice.toArray(new String[0]),  colorChoice.toArray(new CubeColour[0])));
             endOfRoundPowerUp = false;
             getWindow().close();
         }

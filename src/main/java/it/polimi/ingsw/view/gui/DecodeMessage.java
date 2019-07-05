@@ -309,6 +309,9 @@ public class DecodeMessage {
      */
      Image ammoTileImage(String firstColor, String secondColor, String thrirdColor) {
         Path path = findAmmoTileImage(firstColor, secondColor, thrirdColor);
+        if(path==null){
+            path = new File("/").toPath();
+        }
         return loadImage(path);
     }
 
@@ -320,6 +323,9 @@ public class DecodeMessage {
      */
      Image ammoCubeImage(AmmoCube ammoCube) {
         Path path = findAmmoCubeImage(ammoCube);
+         if(path==null){
+             path = new File("/").toPath();
+         }
         return loadImage(path);
     }
 
@@ -388,6 +394,9 @@ public class DecodeMessage {
      */
      Image playerTokenImage(Character character) {
         Path path = findPlayerTokenImage(character);
+         if(path==null){
+             path = new File("/").toPath();
+         }
         return loadImage(path);
 
     }
@@ -401,6 +410,9 @@ public class DecodeMessage {
      */
      Image characterImage(Character character) {
         Path path = findCharacterImage(character);
+         if(path==null){
+             path = new File("/").toPath();
+         }
         return loadImage(path);
     }
 

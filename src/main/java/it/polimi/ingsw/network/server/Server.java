@@ -160,7 +160,9 @@ public class Server {
     private static void joinLobby(String lobbyID, String user){
         Lobby returnedLobby;
             returnedLobby = findLobbyByID(lobbyID);
-            reconnectClient(user,returnedLobby);
+            if(returnedLobby!=null){
+            reconnectClient(user, returnedLobby);
+        }
     }
 
     /**

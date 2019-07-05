@@ -451,6 +451,7 @@ public class RMIServer extends UnicastRemoteObject implements Runnable, RemoteIn
             while (currMessage != null) wait(50);
         } catch (InterruptedException exc) {
             CustomLogger.logException(exc);
+            Thread.currentThread().interrupt();
         }
         currMessage = remoteImplementation.getCurrMessage();
     }
