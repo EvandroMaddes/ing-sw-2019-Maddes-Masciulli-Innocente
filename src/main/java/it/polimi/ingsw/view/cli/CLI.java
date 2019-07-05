@@ -331,7 +331,7 @@ public class CLI extends RemoteView {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Would you like to use one of weapon EFFECT?[Y/N]");
             choice = CLIHandler.stringRead();
         }
-        if(choice.equalsIgnoreCase("Y")) {
+        if (choice.equalsIgnoreCase("Y")) {
             if (availableWeaponEffects[0]) {
                 first = 0;
             }
@@ -366,7 +366,7 @@ public class CLI extends RemoteView {
             }
             effectChoice++;
             message = new WeaponEffectChioceEvent(getUser(), effectChoice);
-        }else {
+        } else {
             message = new SkipActionChoiceEvent(getUser());
         }
         return message;
@@ -445,8 +445,7 @@ public class CLI extends RemoteView {
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
         System.out.println("Select one square before shooting:");
         PositionChoiceEvent message = (PositionChoiceEvent) positionMoveChoice(possibleSquareX, possibleSquareY);
-        Event choice = new ShotMoveChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
-        return choice;
+        return new ShotMoveChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
     }
 
     @Override
@@ -609,8 +608,7 @@ public class CLI extends RemoteView {
     public Event newtonTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
 
         CharacterChoiceEvent message = (CharacterChoiceEvent) characterChoice(availableTargets);
-        Event choice = new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
-        return choice;
+        return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
     }
 
     @Override
@@ -713,7 +711,7 @@ public class CLI extends RemoteView {
             //BLUE
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_BLUE.escape() + "BLUE option 2\t");
         }
-        if (usableAmmo[0] == false && usableAmmo[1] == false && usableAmmo[2] == false) {
+        if (!usableAmmo[0] && !usableAmmo[1] && !usableAmmo[2]) {
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "no ammo in your bag");
         }
 
@@ -766,8 +764,7 @@ public class CLI extends RemoteView {
     @Override
     public Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets) {
         CharacterChoiceEvent message = (CharacterChoiceEvent) characterChoice(possibleTargets);
-        Event choice = new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
-        return choice;
+        return new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
     }
 
 

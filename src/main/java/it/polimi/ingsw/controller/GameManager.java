@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.gamecomponents.cards.*;
 import it.polimi.ingsw.model.player.Character;
 import it.polimi.ingsw.model.player.DamageToken;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.player.PlayerBoard;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -418,8 +417,8 @@ public class GameManager {
                 currentMaxDamager++;
             damageDealed[currentMaxDamager] = 100;
 
-            if (evaluatedPlayer.getPlayerBoard().getSkullsNumber() + i < PlayerBoard.POINTS.length)
-                damageDealer[currentMaxDamager].addPoints(PlayerBoard.POINTS[i + evaluatedPlayer.getPlayerBoard().getSkullsNumber()]);
+            if (evaluatedPlayer.getPlayerBoard().getSkullsNumber() + i < evaluatedPlayer.getPlayerBoard().getPlayerBoardPoints().length)
+                damageDealer[currentMaxDamager].addPoints(evaluatedPlayer.getPlayerBoard().getPlayerBoardPoints()[i + evaluatedPlayer.getPlayerBoard().getSkullsNumber()]);
             else
                 damageDealer[currentMaxDamager].addPoints(1);
         }
