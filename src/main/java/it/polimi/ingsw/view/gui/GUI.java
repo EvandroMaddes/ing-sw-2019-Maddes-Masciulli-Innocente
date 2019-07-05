@@ -1063,7 +1063,7 @@ public class GUI extends RemoteView {
             }
         }
         gameBoardController.setPlayerPowerUp(toAdd);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
@@ -1084,7 +1084,7 @@ public class GUI extends RemoteView {
        }
        toShow = toShow + " with " +character.name();
        gameBoardController.setInfo(toShow);
-        return new UpdateChoiceEvent(BROADCASTSTRING);
+        return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
     /**
