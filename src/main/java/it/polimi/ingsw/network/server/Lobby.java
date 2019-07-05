@@ -97,7 +97,7 @@ public class Lobby extends Thread {
      *
      * @return RMIServer port number
      */
-    public int getPortRMI() {
+     int getPortRMI() {
         return portRMI;
     }
 
@@ -106,7 +106,7 @@ public class Lobby extends Thread {
      *
      * @return the SocketServer port number
      */
-    public int getPortSocket() {
+    int getPortSocket() {
         return portSocket;
     }
 
@@ -115,7 +115,7 @@ public class Lobby extends Thread {
      *
      * @return all of the Lobby disconnected clients username
      */
-    public ArrayList<String> getDisconnectedClientList() {
+    ArrayList<String> getDisconnectedClientList() {
         return disconnectedClientList;
     }
 
@@ -125,7 +125,7 @@ public class Lobby extends Thread {
      * @param lobbyName    is the lobby creator's username
      * @param aliveLobbies is the number of already created lobbies
      */
-    public void setLobby(String lobbyName, int aliveLobbies) {
+    void setLobby(String lobbyName, int aliveLobbies) {
         this.lobbyName = lobbyName + "'s lobby";
         portRMI = NetConfiguration.RMISERVERPORTNUMBER + 6 * aliveLobbies + 1;
         portSocket = NetConfiguration.SOCKETSERVERPORTNUMBER + aliveLobbies + 1;
@@ -144,7 +144,7 @@ public class Lobby extends Thread {
      *
      * @return lobbyName String
      */
-    public String getLobbyName() {
+    String getLobbyName() {
         return lobbyName;
     }
 
@@ -272,22 +272,22 @@ public class Lobby extends Thread {
      *
      * @return the activeClientList usernames
      */
-    public ArrayList<String> getActiveClientList() {
+    ArrayList<String> getActiveClientList() {
         return activeClientList;
     }
 
-    public boolean isGameCouldStart() {
+    boolean isGameCouldStart() {
         return gameCouldStart;
     }
 
-    public boolean isShutDown() {
+    boolean isShutDown() {
         return shutDown;
     }
 
     /**
      * this method set the Lobby shutdown signal to false;
      */
-    public void shutDownLobby() {
+    void shutDownLobby() {
         shutDown = true;
     }
 
@@ -337,9 +337,9 @@ public class Lobby extends Thread {
 
     /**
      * Iterate on the VirtualViews and find the message that will be sent:
-     * if is Broadcast, and this messages have higher priority than the Controller-View ones, it is dequed from all the Views
+     * if is Broadcast, and this messages have higher priority than the Controller-View ones, it is dequeued from all the Views
      *
-     * @return
+     * @return the next message to send from VirtualViews, null if the match is over
      */
     private Event findNextMessage() {
         message = null;
@@ -378,10 +378,8 @@ public class Lobby extends Thread {
                     mapUserView.putIfAbsent(connectedUser, userView);
 
                 }
-                if (mapChoice != 404) {
-                    if (mapUserServer.containsKey(connectedUser)) {
-                        mapUserServer.get(connectedUser).sendMessage(new LobbySettingsEvent(connectedUser, mapChoice));
-                    }
+                if (mapChoice != 404&&mapUserServer.containsKey(connectedUser)) {
+                    mapUserServer.get(connectedUser).sendMessage(new LobbySettingsEvent(connectedUser, mapChoice));
                 }
             } else {
                 reconnectClient();

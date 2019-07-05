@@ -22,9 +22,12 @@ public class SquareTest {
         player3 = new Player("Evandro", Character.DOZER);
     }
 
+    /**
+     * Check that the players are correctly visible in their squares
+     */
     @Test
     public void squarePlayersTest() {
-        Square testSquare = new Square(0,0) {
+        Square testSquare = new Square(0, 0) {
             @Override
             public boolean isGrabbable(Player grabber) {
                 return false;
@@ -38,8 +41,11 @@ public class SquareTest {
         Assert.assertEquals(0, testSquare.getSquarePlayers().size());
     }
 
+    /**
+     * Check that the method findVisibleSquare() returns the correct squares
+     */
     @Test
-    public void findVisibleSquaresTest(){
+    public void findVisibleSquaresTest() {
         ArrayList<Square> visibleSquareResult;
         ArrayList<Square> expectedVisibleSquare = new ArrayList<>();
         Square startingSquare = map.getSquareMatrix()[0][0];
@@ -48,16 +54,19 @@ public class SquareTest {
         expectedVisibleSquare.add(map.getSquareMatrix()[0][1]);
         expectedVisibleSquare.add(map.getSquareMatrix()[0][2]);
         expectedVisibleSquare.add(map.getSquareMatrix()[1][0]);
-        for (Square s: visibleSquareResult) {
+        for (Square s : visibleSquareResult) {
             Assert.assertTrue(expectedVisibleSquare.contains(s));
         }
-        for (Square s: expectedVisibleSquare) {
+        for (Square s : expectedVisibleSquare) {
             Assert.assertTrue(visibleSquareResult.contains(s));
         }
     }
 
+    /**
+     * Check that getNextSquaresPlayer return the correct squares
+     */
     @Test
-    public void getNextSquarePlayersTest(){
+    public void getNextSquarePlayersTest() {
         player1.setPosition(map.getSquareMatrix()[1][0]);
         player2.setPosition(map.getSquareMatrix()[1][1]);
         player3.setPosition(map.getSquareMatrix()[1][2]);
@@ -66,8 +75,11 @@ public class SquareTest {
         Assert.assertEquals(expectedResult, map.getSquareMatrix()[1][1].getNextSquarePlayer());
     }
 
+    /**
+     * Check that the method reachableInMoves return the correct squares
+     */
     @Test
-    public void reachableInMovesTest(){
+    public void reachableInMovesTest() {
         ArrayList<Square> result = map.getSquareMatrix()[2][0].reachableInMoves(2);
         ArrayList<Square> expectedResult = new ArrayList<>();
         expectedResult.add(map.getSquareMatrix()[2][0]);
@@ -76,10 +88,10 @@ public class SquareTest {
         expectedResult.add(map.getSquareMatrix()[2][1]);
         expectedResult.add(map.getSquareMatrix()[1][1]);
         expectedResult.add(map.getSquareMatrix()[2][2]);
-        for (Square s:result) {
+        for (Square s : result) {
             Assert.assertTrue(expectedResult.contains(s));
         }
-        for (Square s:expectedResult) {
+        for (Square s : expectedResult) {
             Assert.assertTrue(result.contains(s));
         }
 
@@ -89,8 +101,11 @@ public class SquareTest {
         Assert.assertEquals(expectedResult, result);
     }
 
+    /**
+     * Check that the method findRoomPlayers return all and only the visible squares from a square
+     */
     @Test
-    public void findRoomPlayersTest(){
+    public void findRoomPlayersTest() {
         player1.setPosition(map.getSquareMatrix()[2][0]);
         player2.setPosition(map.getSquareMatrix()[2][2]);
         player3.setPosition(map.getSquareMatrix()[1][0]);
@@ -98,10 +113,10 @@ public class SquareTest {
         ArrayList<Player> expectedResult = new ArrayList<>();
         expectedResult.add(player1);
         expectedResult.add(player2);
-        for (Player p:result) {
+        for (Player p : result) {
             Assert.assertTrue(expectedResult.contains(p));
         }
-        for (Player p:expectedResult) {
+        for (Player p : expectedResult) {
             Assert.assertTrue(result.contains(p));
         }
         expectedResult.clear();
@@ -109,8 +124,11 @@ public class SquareTest {
         Assert.assertEquals(expectedResult, result);
     }
 
+    /**
+     * Check that the method findRoomPlayers return all and only the visible squares from a square
+     */
     @Test
-    public void findVisiblePlayersTest(){
+    public void findVisiblePlayersTest() {
         player1.setPosition(map.getSquareMatrix()[1][3]);
         player1.setPosition(map.getSquareMatrix()[2][0]);
         player1.setPosition(map.getSquareMatrix()[1][2]);
@@ -118,10 +136,10 @@ public class SquareTest {
         ArrayList<Player> expectedResult = new ArrayList<>();
         Assert.assertEquals(expectedResult, result);
         result = map.getSquareMatrix()[2][2].findVisiblePlayers();
-        for (Player p:result) {
+        for (Player p : result) {
             Assert.assertTrue(expectedResult.contains(p));
         }
-        for (Player p:expectedResult) {
+        for (Player p : expectedResult) {
             Assert.assertTrue(result.contains(p));
         }
     }

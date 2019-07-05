@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * flamethrower tests
+ */
 public class FlamethrowerTest {
     private Flamethrower flamethrower;
     private Square[][] map;
@@ -26,7 +29,7 @@ public class FlamethrowerTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         flamethrower = new Flamethrower();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -44,15 +47,21 @@ public class FlamethrowerTest {
         player5.setPosition(map[0][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(flamethrower.isUsable());
         Assert.assertTrue(flamethrower.isUsableEffect(1));
         Assert.assertTrue(flamethrower.isUsableEffect(2));
     }
 
+    /**
+     * Test the first effetc
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) flamethrower.getTargetEffect(1);
         Assert.assertEquals(1, message.getPossibleTargets().size());
         Assert.assertEquals(player2.getCharacter(), message.getPossibleTargets().get(0));
@@ -77,13 +86,16 @@ public class FlamethrowerTest {
         Assert.assertFalse(flamethrower.isUsable());
     }
 
+    /**
+     * TEst the second effect
+     */
     @Test
     public void effectTwoTest() {
         player5.setPosition(map[2][2]);
         ControllerViewEvent message = flamethrower.getTargetEffect(2);
-        Assert.assertEquals(1, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
-        Assert.assertEquals(2, ((TargetSquareRequestEvent)message).getPossibleTargetsX()[0]);
-        Assert.assertEquals(2, ((TargetSquareRequestEvent)message).getPossibleTargetsY()[0]);
+        Assert.assertEquals(1, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
+        Assert.assertEquals(2, ((TargetSquareRequestEvent) message).getPossibleTargetsX()[0]);
+        Assert.assertEquals(2, ((TargetSquareRequestEvent) message).getPossibleTargetsY()[0]);
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(map[2][2]);

@@ -9,35 +9,79 @@ import org.junit.Test;
 
 import java.util.List;
 
+/**
+ * Class to test generic weapon with optional efeftcs
+ *
+ * @author Federico Innocente
+ */
 public class OptionalEffectWeaponTest {
     private Weapon oneOptionalTest;
     private Weapon twoOptionalTest;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         oneOptionalTest = new OneOptionalEffectWeapon(CubeColour.Blue, "Test", new AmmoCube[]{}, new AmmoCube[]{}) {
-            @Override public ControllerViewEvent getTargetEffectTwo() { return null; }
-            @Override public void performEffectTwo(List<Object> targets) { }
-            @Override public void performEffectOne(List<Object> targets) { }
-            @Override public ControllerViewEvent getTargetEffectOne() { return null; }
+            @Override
+            public ControllerViewEvent getTargetEffectTwo() {
+                return null;
+            }
+
+            @Override
+            public void performEffectTwo(List<Object> targets) {
+            }
+
+            @Override
+            public void performEffectOne(List<Object> targets) {
+            }
+
+            @Override
+            public ControllerViewEvent getTargetEffectOne() {
+                return null;
+            }
         };
         twoOptionalTest = new TwoOptionalEffectWeapon(CubeColour.Blue, "Test", new AmmoCube[]{}, new AmmoCube[]{}, new AmmoCube[]{}) {
-            @Override public ControllerViewEvent getTargetEffectThree() { return null; }
-            @Override public void performEffectThree(List<Object> targets) { }
-            @Override public ControllerViewEvent getTargetEffectTwo() { return null; }
-            @Override public void performEffectTwo(List<Object> targets) { }
-            @Override public void performEffectOne(List<Object> targets) { }
-            @Override public ControllerViewEvent getTargetEffectOne() { return null; }
+            @Override
+            public ControllerViewEvent getTargetEffectThree() {
+                return null;
+            }
+
+            @Override
+            public void performEffectThree(List<Object> targets) {
+            }
+
+            @Override
+            public ControllerViewEvent getTargetEffectTwo() {
+                return null;
+            }
+
+            @Override
+            public void performEffectTwo(List<Object> targets) {
+            }
+
+            @Override
+            public void performEffectOne(List<Object> targets) {
+            }
+
+            @Override
+            public ControllerViewEvent getTargetEffectOne() {
+                return null;
+            }
         };
     }
 
+    /**
+     * Test the generic effectControlFlow for oneOptionalEffect weapons after using effect one
+     */
     @Test
-    public void oneOptionalControlFlowEffectOneTest(){
+    public void oneOptionalControlFlowEffectOneTest() {
         oneOptionalTest.effectControlFlow(1);
         Assert.assertFalse(oneOptionalTest.getUsableEffect()[0]);
         Assert.assertTrue(oneOptionalTest.getUsableEffect()[1]);
     }
 
+    /**
+     * Test the generic effectControlFlow for oneOptionalEffect weapons after using effect two
+     */
     @Test
     public void oneOptionalControlFlowEffectTwoTest() {
         oneOptionalTest.effectControlFlow(2);
@@ -45,16 +89,22 @@ public class OptionalEffectWeaponTest {
         Assert.assertTrue(oneOptionalTest.getUsableEffect()[2]);
     }
 
+    /**
+     * Test the generic effectControlFlow for twoOptionalEffect weapons after using effect one
+     */
     @Test
-    public void twoOptionalControlFlowEffectOneTest(){
+    public void twoOptionalControlFlowEffectOneTest() {
         twoOptionalTest.effectControlFlow(1);
         Assert.assertFalse(twoOptionalTest.getUsableEffect()[0]);
         Assert.assertTrue(twoOptionalTest.getUsableEffect()[1]);
         Assert.assertTrue(twoOptionalTest.getUsableEffect()[2]);
     }
 
+    /**
+     * Test the generic effectControlFlow for twoOptionalEffect weapons after using effect two
+     */
     @Test
-    public void twoOptionalControlFlowEffectTwoTest(){
+    public void twoOptionalControlFlowEffectTwoTest() {
         twoOptionalTest.effectControlFlow(3);
         Assert.assertFalse(twoOptionalTest.getUsableEffect()[2]);
         Assert.assertTrue(twoOptionalTest.getUsableEffect()[1]);

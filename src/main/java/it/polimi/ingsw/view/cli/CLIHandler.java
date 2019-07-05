@@ -9,7 +9,12 @@ import java.util.Scanner;
  * It menages reading and printing on screen
  */
  class CLIHandler {
-    private static final Scanner inputScanner = new Scanner(System.in);
+
+    private CLIHandler() {
+    }
+
+
+    private static final Scanner INPUT_SCANNER = new Scanner(System.in);
 
     /**
      * It prints one string and it reads from input buffer
@@ -47,31 +52,31 @@ import java.util.Scanner;
 
     /**
      * This method prints an array of Square and read square selected by user
-     * @param X column
-     * @param Y row
+     * @param x column
+     * @param y row
      * @return square selected
      */
-     static int[] coordinatePrintAndRead(int X[], int Y[]){
+     static int[] coordinatePrintAndRead(int[] x, int[] y){
         int index = 404;
         System.out.print(Color.RESET.escape());
 
-        for (int i =0; i<X.length;i++) {
+        for (int i =0; i<x.length;i++) {
 
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_CYAN.escape()+"\n"
-                    +"Row:"+X[i]+" Column:"+Y[i]+" option "+i);
+                    +"Row:"+x[i]+" Column:"+y[i]+" option "+i);
             System.out.flush();
         }
         while(index==404) {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+ Color.ANSI_GREEN.escape()+"\n"+"Select Square:[option number]");
             System.out.flush();
              index = intRead();
-             if(index<0 || index>=X.length){
+             if(index<0 || index>=x.length){
                  System.out.println(Color.ANSI_BLACK_BACKGROUND.escape()+Color.ANSI_GREEN.escape()+"Select one choice available");
                  index=404;
              }
 
         }
-        int[] coordinateSelected = {X[index],Y[index]};
+        int[] coordinateSelected = {x[index],y[index]};
         return coordinateSelected;
     }
 
@@ -81,11 +86,11 @@ import java.util.Scanner;
      */
      static int intRead(){
         try {
-            int returned = inputScanner.nextInt();
-            inputScanner.nextLine();
+            int returned = INPUT_SCANNER.nextInt();
+            INPUT_SCANNER.nextLine();
             return returned;
         } catch (Exception e){
-            inputScanner.nextLine();
+            INPUT_SCANNER.nextLine();
             return 404;
         }
 
@@ -118,7 +123,7 @@ import java.util.Scanner;
      */
      static String stringRead(){
 
-        return inputScanner.nextLine();
+        return INPUT_SCANNER.nextLine();
 
 
     }

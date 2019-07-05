@@ -7,19 +7,21 @@ import java.time.LocalTime;
 
 public class CustomTimerTest {
 
-
+    /**
+     * Test the correct use of a custom timer
+     */
     @Test
-    public void gameTimerTest(){
+    public void gameTimerTest() {
         CustomTimer gameTimer = new CustomTimer(1);
         gameTimer.start();
-        System.out.println("Timer started at:\t"+ LocalTime.now());
-        try{
+        System.out.println("Timer started at:\t" + LocalTime.now());
+        try {
             gameTimer.join();
 
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
         }
         Assert.assertTrue(!gameTimer.isAlive());
-        System.out.println("CustomTimer terminated!\nTimer interrupted at:\t"+ LocalTime.now());
+        System.out.println("CustomTimer terminated!\nTimer interrupted at:\t" + LocalTime.now());
 
     }
 }

@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Machine gun test
+ */
 public class MachineGunTest {
     private MachineGun machineGun;
     private Square[][] map;
@@ -22,7 +25,7 @@ public class MachineGunTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
         machineGun = new MachineGun();
@@ -39,26 +42,30 @@ public class MachineGunTest {
         player5.setPosition(map[0][0]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(machineGun.isUsable());
         Assert.assertTrue(machineGun.isUsableEffect(1));
         Assert.assertFalse(machineGun.isUsableEffect(2));
         Assert.assertFalse(machineGun.isUsableEffect(3));
     }
 
-    @Test
-    /*
+    /**
      * test effect one, than two, than three +1 damage, than three +1 target
      */
-    public void effectOneWithTwoTargetsThanTwoThanThreeTest(){
+    @Test
+
+    public void effectOneWithTwoTargetsThanTwoThanThreeTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) machineGun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
         Assert.assertEquals(2, message.getMaxTarget());
@@ -108,18 +115,19 @@ public class MachineGunTest {
         Assert.assertFalse(machineGun.isUsable());
     }
 
+    /**
+     * test effect one, than two, than three +1 target, than three +1 damage
+     */
     @Test
-    public void effectOneWithTwoTargetsThanTwoThanThreeInvertedTest(){
-        /*
-         * test effect one, than two, than three +1 target, than three +1 damage
-         */
+    public void effectOneWithTwoTargetsThanTwoThanThreeInvertedTest() {
+
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) machineGun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
         Assert.assertEquals(2, message.getMaxTarget());
@@ -161,18 +169,18 @@ public class MachineGunTest {
         Assert.assertFalse(machineGun.isUsable());
     }
 
-    @Test
-    /*
+    /**
      * test effect one on one target, than two, than three +1 target (three +1 damage not allowed)
      */
-    public void effectOneWithOneTargetThanTwoThanThreeTest(){
+    @Test
+    public void effectOneWithOneTargetThanTwoThanThreeTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) machineGun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
         Assert.assertEquals(2, message.getMaxTarget());
@@ -210,18 +218,18 @@ public class MachineGunTest {
         Assert.assertFalse(machineGun.isUsable());
     }
 
-    @Test
-    /*
+    /**
      * test effect one on one target, than three +1 target
      */
-    public void effectOneWithOneTargetThanThreeTest(){
+    @Test
+    public void effectOneWithOneTargetThanThreeTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) machineGun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
         Assert.assertEquals(2, message.getMaxTarget());
@@ -249,18 +257,19 @@ public class MachineGunTest {
         Assert.assertFalse(machineGun.isUsable());
     }
 
-    @Test
-    /*
+    /**
      * test effect one, than three +1 target, than three +1 damage, than 2
      */
-    public void effectOneWithTwoTargetsThanThreeThanTwoTest(){
+    @Test
+
+    public void effectOneWithTwoTargetsThanThreeThanTwoTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) machineGun.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
         expectedTargets.add(player3.getCharacter());
         expectedTargets.add(player4.getCharacter());
         Assert.assertEquals(3, message.getPossibleTargets().size());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
         Assert.assertEquals(2, message.getMaxTarget());

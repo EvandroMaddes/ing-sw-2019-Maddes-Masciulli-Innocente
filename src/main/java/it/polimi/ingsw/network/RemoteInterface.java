@@ -25,6 +25,12 @@ public interface RemoteInterface extends Remote {
      * @throws RemoteException
      */
     void clientConnectionGuard() throws RemoteException;
+
+    /**
+     * Implementation with RMI of the sendMessage()
+     * @param message
+     * @throws RemoteException
+     */
     void remoteSendMessage(Event message) throws RemoteException;
 
     /**

@@ -24,12 +24,15 @@ public class PlayerTest {
     private Player player;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         player = new Player("Federico", Character.SPROG);
     }
 
+    /**
+     * Check that player'position is corerctly updated
+     */
     @Test
-    public void setPositionTest(){
+    public void setPositionTest() {
         Square square = new BasicSquare(1, 2);
         player.setPosition(square);
         ArrayList<Player> expectedPlayerList = new ArrayList<>();
@@ -39,8 +42,11 @@ public class PlayerTest {
         Assert.assertEquals(expectedPlayerList, square.getSquarePlayers());
     }
 
+    /**
+     * Check that getCubeColourNumberTest(CubeColour ) mothod of the player get the right number of ammo
+     */
     @Test
-    public void getCubeColourNumberTest(){
+    public void getCubeColourNumberTest() {
         player.discardAmmo(new AmmoCube(CubeColour.Blue));
         player.addAmmo(new AmmoCube(CubeColour.Yellow));
         player.addAmmo(new AmmoCube(CubeColour.Yellow));
@@ -54,8 +60,11 @@ public class PlayerTest {
         Assert.assertEquals(3, yellow);
     }
 
+    /**
+     * Check that player ammos are correctly updated
+     */
     @Test
-    public void ammoChange(){
+    public void ammoChange() {
         AmmoCube ammo = new AmmoCube(CubeColour.Blue);
         player.addAmmo(ammo);
 
@@ -64,13 +73,16 @@ public class PlayerTest {
 
         player.discardAmmo(ammo);
         player.discardAmmo(ammo);
-        for (AmmoCube a:player.getAmmo()) {
+        for (AmmoCube a : player.getAmmo()) {
             Assert.assertNotEquals(ammo.getColour(), a.getColour());
         }
     }
 
+    /**
+     * Check that the canAffortCostTest(ArrayList[AmmoCube] ) calculate correctly the possibility to pay a cost
+     */
     @Test
-    public void canAffortCostTest(){
+    public void canAffortCostTest() {
         player.discardAmmo(new AmmoCube(CubeColour.Blue));
         player.addPowerUp(new Newton(CubeColour.Red));
 
@@ -83,13 +95,16 @@ public class PlayerTest {
         Assert.assertTrue(player.canAffortCost(payableWithPowerUp));
     }
 
+    /**
+     * Check that the player's weapon are correctly discarded
+     */
     @Test
-    public void discardWeaponTest(){
+    public void discardWeaponTest() {
         Weapon weapon1 = new LockRifle();
         Weapon weapon2 = new Electroscythe();
         Weapon weapon3 = new PlasmaGun();
         Weapon weapon4 = new Heatseeker();
-        Square spawnSquare = new SpawnSquare(1,1);
+        Square spawnSquare = new SpawnSquare(1, 1);
         player.setPosition(spawnSquare);
 
         player.addWeapon(weapon1);
@@ -118,8 +133,11 @@ public class PlayerTest {
         }
     }
 
+    /**
+     * Check that while-action player's powerUp are correctly searched
+     */
     @Test
-    public void getWhileActionPowerUp(){
+    public void getWhileActionPowerUp() {
         PowerUp powerUp1 = new TargetingScope(CubeColour.Blue);
         PowerUp powerUp2 = new TargetingScope(CubeColour.Red);
         PowerUp powerUp3 = new Newton(CubeColour.Blue);

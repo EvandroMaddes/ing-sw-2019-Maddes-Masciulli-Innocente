@@ -11,9 +11,12 @@ import org.junit.Test;
 
 public class SpawnSquareTest {
 
+    /**
+     * Check that the spawn squares are coorectly assumed grabbable
+     */
     @Test
-    public void grabTest(){
-        SpawnSquare testSquare = new SpawnSquare(0,0);
+    public void grabTest() {
+        SpawnSquare testSquare = new SpawnSquare(0, 0);
         Player testPlayer = new Player("Federico", Character.SPROG);
         Weapon weapon1 = new Heatseeker();
 

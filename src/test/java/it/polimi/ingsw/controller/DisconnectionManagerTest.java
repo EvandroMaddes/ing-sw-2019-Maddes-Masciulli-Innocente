@@ -27,7 +27,7 @@ public class DisconnectionManagerTest {
     private Square[][] map;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -55,8 +55,11 @@ public class DisconnectionManagerTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
+    /**
+     * Check that a player disconnected during an another player round is correctly managed, putting him into the disconnection queue
+     */
     @Test
-    public void disconnectionOnAnotherRoundTest(){
+    public void disconnectionOnAnotherRoundTest() {
         Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
         Assert.assertEquals(map[0][2], player3.getPosition());
         controller.getGameManager().newRound();
@@ -72,8 +75,11 @@ public class DisconnectionManagerTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that a player disconnected in his round is correctly managed, removing him from the game and skipping to the next round
+     */
     @Test
-    public void disconnectedOnHisRoundTest(){
+    public void disconnectedOnHisRoundTest() {
         Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
         Assert.assertEquals(map[0][1], player2.getPosition());
         controller.getGameManager().newRound();
@@ -93,8 +99,11 @@ public class DisconnectionManagerTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that a player disconnected in another player round is correctly removed from the game at his first round, if he didn't reconnect before
+     */
     @Test
-    public void disconnectedOnAnotherRoundThanWaitHisRoundTest(){
+    public void disconnectedOnAnotherRoundThanWaitHisRoundTest() {
         controller.getGameManager().newRound();
         ViewControllerEvent choiceEvent = new SkipActionChoiceEvent(player2.getUsername());
         choiceEvent.performAction(controller);
@@ -124,8 +133,13 @@ public class DisconnectionManagerTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that a player can correctly disconnect before the character choice.
+     * A default character is given to him.
+     * Than check that if he reconnect during the first round phase, he can correctly have his spawn phase
+     */
     @Test
-    public void disconnectionBeforeToChoseTheCharacterAndReconnectedInFirstRoundPhaseTest(){
+    public void disconnectionBeforeToChoseTheCharacterAndReconnectedInFirstRoundPhaseTest() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -133,13 +147,13 @@ public class DisconnectionManagerTest {
         hashMap.put("Chiara", new VirtualView("Chiara"));
         controller = new Controller(hashMap, 3);
         Event requestMessage = hashMap.get("Federico").getToRemoteView();
-        Assert.assertEquals(5, ((CharacterRequestEvent)requestMessage).getAvailableCharacter().size());
+        Assert.assertEquals(5, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
         ViewControllerEvent choiceEvent = new CharacterChoiceEvent("Federico", Character.DOZER);
         choiceEvent.performAction(controller);
         Assert.assertEquals(1, controller.getGameManager().getModel().getPlayers().size());
         Assert.assertEquals("Federico", controller.getGameManager().getModel().getPlayers().get(0).getUsername());
         requestMessage = hashMap.get("Chiara").getToRemoteView();
-        Assert.assertEquals(4, ((CharacterRequestEvent)requestMessage).getAvailableCharacter().size());
+        Assert.assertEquals(4, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
         DisconnectedEvent disconnectedEvent = new DisconnectedEvent("Francesco");
         disconnectedEvent.performAction(controller);
         choiceEvent = new CharacterChoiceEvent("Chiara", Character.SPROG);
@@ -160,20 +174,20 @@ public class DisconnectionManagerTest {
         choiceEvent.performAction(controller);
         choiceEvent.performAction(controller);
         Assert.assertEquals(3, controller.getGameManager().getModel().getPlayers().size());
-        for (Player p: controller.getGameManager().getModel().getPlayers()) {
+        for (Player p : controller.getGameManager().getModel().getPlayers()) {
             Assert.assertNotEquals("Francesco", p.getUsername());
         }
         Assert.assertEquals(0, controller.getGameManager().getDisconnectionManager().getDisconnectingQueue().size());
         Assert.assertEquals(1, controller.getGameManager().getDisconnectionManager().getDisconnectedPlayers().size());
         Assert.assertEquals("Francesco", controller.getGameManager().getDisconnectionManager().getDisconnectedPlayers().get(0).getUsername());
-        Assert.assertEquals("Federico",  controller.getGameManager().getModel().getPlayers().get(0).getUsername());
-        Assert.assertEquals("Chiara",  controller.getGameManager().getModel().getPlayers().get(1).getUsername());
-        Assert.assertEquals("Evandro",  controller.getGameManager().getModel().getPlayers().get(2).getUsername());
+        Assert.assertEquals("Federico", controller.getGameManager().getModel().getPlayers().get(0).getUsername());
+        Assert.assertEquals("Chiara", controller.getGameManager().getModel().getPlayers().get(1).getUsername());
+        Assert.assertEquals("Evandro", controller.getGameManager().getModel().getPlayers().get(2).getUsername());
         choiceEvent = new SpawnChoiceEvent("Chiara", "Teleporter", CubeColour.Blue);
         controller.getGameManager().getModel().getPlayers().get(1).getPowerUps().clear();
         controller.getGameManager().getModel().getPlayers().get(1).addPowerUp(new Teleporter(CubeColour.Blue));
         choiceEvent.performAction(controller);
-        Assert.assertEquals("Chiara",  controller.getGameManager().getModel().getPlayers().get(1).getUsername());
+        Assert.assertEquals("Chiara", controller.getGameManager().getModel().getPlayers().get(1).getUsername());
         controller.getGameManager().getModel().getPlayers().get(1).getPowerUps().clear();
         choiceEvent = new SkipActionChoiceEvent("Chiara");
         choiceEvent.performAction(controller);
@@ -198,6 +212,75 @@ public class DisconnectionManagerTest {
         Assert.assertEquals(2, ((RespawnRequestEvent) requestMessage).getPowerUpNames().length);
     }
 
+    /**
+     * Check that a player reconnected before of his next round after disconnection is correctly rejoin the game with no penalties
+     */
+    @Test
+    public void reconnectionInTheDisconnectionQueue() {
+        controller.getGameManager().newRound();
+        Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
+        Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        ViewControllerEvent choiceMessage = new SkipActionChoiceEvent(player2.getUsername());
+        choiceMessage.performAction(controller);
+        DisconnectedEvent disconnectedEvent = new DisconnectedEvent(player4.getUsername());
+        disconnectedEvent.performAction(controller);
+        Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
+        Assert.assertEquals(1, controller.getGameManager().getDisconnectionManager().getDisconnectingQueue().size());
+        Assert.assertTrue(controller.getGameManager().getDisconnectionManager().getDisconnectingQueue().contains(player4));
+        Assert.assertEquals(0, controller.getGameManager().getDisconnectionManager().getDisconnectedPlayers().size());
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(player3, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        ReconnectedEvent reconnectedEvent = new ReconnectedEvent(player4.getUsername());
+        reconnectedEvent.performAction(controller);
+        Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
+        Assert.assertEquals(0, controller.getGameManager().getDisconnectionManager().getDisconnectedPlayers().size());
+        Assert.assertEquals(0, controller.getGameManager().getDisconnectionManager().getDisconnectingQueue().size());
+        Assert.assertEquals(player3, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(player4, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+        choiceMessage.performAction(controller);
+        choiceMessage.performAction(controller);
+        Assert.assertEquals(player5, controller.getGameManager().getCurrentRound().getCurrentPlayer());
+    }
 
+    /**
+     * Check that a default character is correctly given to a player that disconnect without choosing one
+     */
+    @Test
+    public void defaultCharacterTest() {
+        hashMap = new HashMap<>();
+        hashMap.put("Federico", new VirtualView("Federico"));
+        hashMap.put("Francesco", new VirtualView("Francesco"));
+        hashMap.put("Evandro", new VirtualView("Evandro"));
+        hashMap.put("Chiara", new VirtualView("Chiara"));
+        hashMap.put("TestPlayer", new VirtualView("TestPlayer"));
+        controller = new Controller(hashMap, 3);
+        Event requestMessage = hashMap.get("Federico").getToRemoteView();
+        Assert.assertEquals(5, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
+        ViewControllerEvent choiceEvent = new CharacterChoiceEvent("Federico", Character.DOZER);
+        choiceEvent.performAction(controller);
+        Assert.assertEquals(1, controller.getGameManager().getModel().getPlayers().size());
+        Assert.assertEquals("Federico", controller.getGameManager().getModel().getPlayers().get(0).getUsername());
+        requestMessage = hashMap.get("Chiara").getToRemoteView();
+        Assert.assertEquals(4, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
+        choiceEvent = new CharacterChoiceEvent("Chiara", Character.SPROG);
+        choiceEvent.performAction(controller);
+        Assert.assertEquals(2, controller.getGameManager().getModel().getPlayers().size());
+        requestMessage = hashMap.get("Francesco").getToRemoteView();
+        Assert.assertEquals(3, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
+        choiceEvent = new CharacterChoiceEvent("Francesco", Character.BANSHEE);
+        choiceEvent.performAction(controller);
+        Assert.assertEquals(3, controller.getGameManager().getModel().getPlayers().size());
+        requestMessage = hashMap.get("TestPlayer").getToRemoteView();
+        Assert.assertEquals(2, ((CharacterRequestEvent) requestMessage).getAvailableCharacter().size());
+        choiceEvent = new CharacterChoiceEvent("TestPlayer", Character.D_STRUCT_OR);
+        choiceEvent.performAction(controller);
+        DisconnectedEvent disconnectedEvent = new DisconnectedEvent("Evandro");
+        disconnectedEvent.performAction(controller);
+        Assert.assertEquals(5, controller.getGameManager().getModel().getPlayers().size());
+        Assert.assertEquals(Character.VIOLET, controller.getGameManager().getModel().getPlayers().get(4).getCharacter());
+        Assert.assertEquals("Federico", controller.getGameManager().getCurrentRound().getCurrentPlayer().getUsername());
+    }
 
 }

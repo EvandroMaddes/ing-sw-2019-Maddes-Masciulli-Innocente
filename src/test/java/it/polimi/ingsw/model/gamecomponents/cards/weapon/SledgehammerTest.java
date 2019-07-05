@@ -13,6 +13,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Sledgehammer tests
+ */
 public class SledgehammerTest {
     private Sledgehammer sledgehammer;
     private Square[][] map;
@@ -21,7 +24,7 @@ public class SledgehammerTest {
     private Player player3;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         sledgehammer = new Sledgehammer();
         Map gameMap = new Map(Map.SMALL_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -34,15 +37,21 @@ public class SledgehammerTest {
         player3.setPosition(map[0][0]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(sledgehammer.isUsable());
         Assert.assertTrue(sledgehammer.isUsableEffect(1));
         Assert.assertTrue(sledgehammer.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) sledgehammer.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
@@ -59,8 +68,11 @@ public class SledgehammerTest {
         Assert.assertFalse(sledgehammer.isUsable());
     }
 
+    /**
+     * Test the effect two
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) sledgehammer.getTargetEffect(2);
         ArrayList<Character> expectedTargets = new ArrayList<>();
         expectedTargets.add(player2.getCharacter());
@@ -77,8 +89,8 @@ public class SledgehammerTest {
         Assert.assertFalse(sledgehammer.isUsableEffect(1));
 
         TargetSquareRequestEvent message2 = (TargetSquareRequestEvent) sledgehammer.getTargetEffect(2);
-        int[] expextedX = new int[]{0,1,1};
-        int[] expectedY = new int[]{0,0,1};
+        int[] expextedX = new int[]{0, 1, 1};
+        int[] expectedY = new int[]{0, 0, 1};
 
         Assert.assertEquals(3, message2.getPossibleTargetsX().length);
         Assert.assertEquals(3, message2.getPossibleTargetsY().length);
@@ -100,8 +112,6 @@ public class SledgehammerTest {
         Assert.assertEquals(map[0][0], player3.getPosition());
         Assert.assertFalse(sledgehammer.isUsable());
     }
-
-
 
 
 }

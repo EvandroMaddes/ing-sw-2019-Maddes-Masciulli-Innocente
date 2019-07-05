@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Shockwave tests
+ */
 public class ShockWaveTest {
     private ShockWave shockWave;
     private Square[][] map;
@@ -22,7 +25,7 @@ public class ShockWaveTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         shockWave = new ShockWave();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -39,15 +42,21 @@ public class ShockWaveTest {
         player5.setPosition(map[2][2]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableEffectTest(){
+    public void isUsableEffectTest() {
         Assert.assertTrue(shockWave.isUsable());
         Assert.assertTrue(shockWave.isUsableEffect(1));
         Assert.assertTrue(shockWave.isUsableEffect(2));
     }
 
+    /**
+     * Test the effect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) shockWave.getTargetEffect(1);
         ArrayList<Character> expectedTargets = new ArrayList<>();
 
@@ -56,7 +65,7 @@ public class ShockWaveTest {
         expectedTargets.add(Character.VIOLET);
         Assert.assertEquals(3, message.getPossibleTargets().size());
         Assert.assertEquals(1, message.getMaxTarget());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
 
@@ -74,7 +83,7 @@ public class ShockWaveTest {
         expectedTargets.add(Character.VIOLET);
         Assert.assertEquals(2, message.getPossibleTargets().size());
         Assert.assertEquals(1, message.getMaxTarget());
-        for (Character c: expectedTargets) {
+        for (Character c : expectedTargets) {
             Assert.assertTrue(message.getPossibleTargets().contains(c));
         }
 
@@ -87,8 +96,12 @@ public class ShockWaveTest {
         Assert.assertFalse(shockWave.isUsableEffect(2));
     }
 
+
+    /**
+     * Test the efefct two
+     */
     @Test
-    public void secondEffectTest(){
+    public void secondEffectTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) shockWave.getTargetEffect(2);
         Assert.assertEquals(-1, message.getMaxTarget());
 

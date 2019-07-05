@@ -19,17 +19,32 @@ public class ValidatorTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         validator = new Validator() {
-            @Override public ArrayList<Square> availableMoves(Controller controller) { return null; }
-            @Override public ArrayList<Square> availableGrab(Controller controller) { return null; }
-            @Override public boolean[] getUsableActions(Controller controller) { return new boolean[0]; }};
+            @Override
+            public ArrayList<Square> availableMoves(Controller controller) {
+                return null;
+            }
+
+            @Override
+            public ArrayList<Square> availableGrab(Controller controller) {
+                return null;
+            }
+
+            @Override
+            public boolean[] getUsableActions(Controller controller) {
+                return new boolean[0];
+            }
+        };
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
     }
 
+    /**
+     * Check that the method reachableInMoves(int ) of a square return the correct squares of the map
+     */
     @Test
-    public void reachableInMovesTest(){
+    public void reachableInMovesTest() {
         ArrayList<Square> possibleSquares = map[0][0].reachableInMoves(2);
         Assert.assertEquals(6, possibleSquares.size());
         ArrayList<Square> expectedSquares = new ArrayList<>();
@@ -39,13 +54,16 @@ public class ValidatorTest {
         expectedSquares.add(map[0][1]);
         expectedSquares.add(map[0][2]);
         expectedSquares.add(map[1][1]);
-        for (Square s :expectedSquares) {
+        for (Square s : expectedSquares) {
             Assert.assertTrue(possibleSquares.contains(s));
         }
     }
 
+    /**
+     * Check that the availableToFireWeapons(Player) return the correct weapons of the player
+     */
     @Test
-    public void aviableToFireWeaponsTest(){
+    public void availableToFireWeaponsTest() {
         Player player1 = new Player("Federico", Character.SPROG);
         player1.setPosition(map[0][0]);
         ArrayList<Weapon> possibleWeapon;
@@ -58,7 +76,7 @@ public class ValidatorTest {
         Assert.assertTrue(possibleWeapon.isEmpty());
         lockRifle.setUnloaded();
         Player player2 = new Player("Francesco", Character.DOZER);
-        player2.setPosition(map [0][1]);
+        player2.setPosition(map[0][1]);
         possibleWeapon = Validator.availableToFireWeapons(player1);
         Assert.assertTrue(possibleWeapon.isEmpty());
         lockRifle.setLoaded();

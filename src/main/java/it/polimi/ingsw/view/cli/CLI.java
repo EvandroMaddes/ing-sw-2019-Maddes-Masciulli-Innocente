@@ -51,12 +51,22 @@ public class CLI extends RemoteView {
         return display;
     }
 
+    /**
+     * RemoteViewInterface implementation: It checks if game is ready to start(display ready)
+     *
+     * @return game set or not
+     */
     @Override
     public boolean isGameSet() {
         return getDisplay().getMap() != null;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: it prints on screen the UpdateNotification message, requesting a choice if necessary;
+     *
+     * @param usernameEvent notify modification of a user name
+     * @return the answer that will be sent to the server.
+     */
     @Override
     public Event printUserNotification(UsernameModificationEvent usernameEvent) {
         String newUser = usernameEvent.getNewUser();
@@ -83,7 +93,11 @@ public class CLI extends RemoteView {
         return returnedEvent;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: it catches user choices for username,connection(RMI/SOCKET) and IP address
+     *
+     * @return user choices
+     */
     @Override
     public String[] gameInit() {
         Title.printTitle();
@@ -98,7 +112,11 @@ public class CLI extends RemoteView {
         return userInput;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: setter
+     *
+     * @param mapNumber is the map chosen
+     */
     @Override
     public void setGame(int mapNumber) {
         display.setMap(new CLIMap(mapNumber));
@@ -107,7 +125,12 @@ public class CLI extends RemoteView {
         display.setGameTrack(gameTrack);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: user choice for character
+     *
+     * @param availableCharacters character available
+     * @return event that contains player's choice
+     */
     @Override
     public Event characterChoice(ArrayList<Character> availableCharacters) {
         ArrayList<String> stringCharacter = new ArrayList<>();
@@ -134,7 +157,11 @@ public class CLI extends RemoteView {
         return new CharacterChoiceEvent(getUser(), chosenCharacter);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User choice for map
+     *
+     * @return event that contains player's choice
+     */
     @Override
     public Event gameChoice() {
         int map = 404;
@@ -165,7 +192,12 @@ public class CLI extends RemoteView {
         return new GameChoiceEvent(getUser(), map);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses an action at the beginning of his own turn
+     *
+     * @param fireEnable true if player can use action fire
+     * @return event that contains player's choice
+     */
     @Override
     public Event actionChoice(boolean fireEnable) {
         int chosenAction = 404;
@@ -196,7 +228,12 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: user chooses weapon to reload
+     *
+     * @param reloadableWeapons list of weapon that can be reloaded
+     * @return event that contains player's choice
+     */
     @Override
     public Event reloadChoice(ArrayList<String> reloadableWeapons) {
         int selected;
@@ -216,7 +253,13 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses square target for his selected effect
+     *
+     * @param possibleSquareX column of available square
+     * @param possibleSquareY row of available square
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponEffectSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
         PositionChoiceEvent message = (PositionChoiceEvent) positionMoveChoice(possibleSquareX, possibleSquareY);
@@ -224,7 +267,13 @@ public class CLI extends RemoteView {
 
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses which powerUp discard
+     *
+     * @param powerUpNames   list of powerUp
+     * @param powerUpColours color of powerUp
+     * @return event that contains player's choice
+     */
     @Override
     public Event respawnChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
 
@@ -245,7 +294,13 @@ public class CLI extends RemoteView {
         return new SpawnChoiceEvent(getUser(), powerUpNames[chosenPowerUp], powerUpColours[chosenPowerUp]);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: user chooses where move his character
+     *
+     * @param possibleSquareX column
+     * @param possibleSquareY row
+     * @return event that contains player's choice
+     */
     @Override
     public Event positionMoveChoice(int[] possibleSquareX, int[] possibleSquareY) {
         int[] chosenSquare = null;
@@ -263,7 +318,13 @@ public class CLI extends RemoteView {
         return new MoveChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses where move his character and grab item on new position
+     *
+     * @param possibleSquareX column
+     * @param possibleSquareY row
+     * @return event that contains player's choice
+     */
     @Override
     public Event positionGrabChoice(int[] possibleSquareX, int[] possibleSquareY) {
         int[] chosenSquare = null;
@@ -283,16 +344,26 @@ public class CLI extends RemoteView {
         return new GrabChoiceEvent(getUser(), chosenSquare[0], chosenSquare[1]);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses one weapon to discard
+     *
+     * @param yourWeapon player's weapon
+     * @return event that contains player's choice
+     */
     @Override
-    public Event weaponDiscardChoice(ArrayList<String> yourWeapons) {
+    public Event weaponDiscardChoice(ArrayList<String> yourWeapon) {
         int weaponSelected;
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "You choose to discard one weapon:");
-        weaponSelected = CLIHandler.arraylistPrintRead(yourWeapons);
-        return new WeaponDiscardChoiceEvent(getUser(), yourWeapons.get(weaponSelected));
+        weaponSelected = CLIHandler.arraylistPrintRead(yourWeapon);
+        return new WeaponDiscardChoiceEvent(getUser(), yourWeapon.get(weaponSelected));
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses weapon to fire
+     *
+     * @param availableWeapons weapon loaded and ready to fire
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponChoice(ArrayList<String> availableWeapons) {
         int weaponSelected;
@@ -301,7 +372,12 @@ public class CLI extends RemoteView {
         return new WeaponChoiceEvent(getUser(), availableWeapons.get(weaponSelected));
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User selects one weapon to grab
+     *
+     * @param availableWeapon weapon on spawn square
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponGrabChoice(ArrayList<String> availableWeapon) {
         int weaponSelected;
@@ -310,14 +386,23 @@ public class CLI extends RemoteView {
         return new WeaponGrabChoiceEvent(getUser(), availableWeapon.get(weaponSelected));
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It shows winner of the game and his point
+     *
+     * @param endGameUpdate is the end-game notification
+     */
     @Override
     public Event winnerUpdate(EndGameUpdate endGameUpdate) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + endGameUpdate.getEndGameMessage());
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses at least one effect for his own weapon
+     *
+     * @param availableWeaponEffects effect available for selected weapon
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponEffectChoice(boolean[] availableWeaponEffects) {
         int effectChoice = 40;
@@ -331,7 +416,7 @@ public class CLI extends RemoteView {
             System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "Would you like to use one of weapon EFFECT?[Y/N]");
             choice = CLIHandler.stringRead();
         }
-        if(choice.equalsIgnoreCase("Y")) {
+        if (choice.equalsIgnoreCase("Y")) {
             if (availableWeaponEffects[0]) {
                 first = 0;
             }
@@ -366,13 +451,19 @@ public class CLI extends RemoteView {
             }
             effectChoice++;
             message = new WeaponEffectChioceEvent(getUser(), effectChoice);
-        }else {
+        } else {
             message = new SkipActionChoiceEvent(getUser());
         }
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User select target to hit(characters)
+     *
+     * @param availableTargets characters that can be hit
+     * @param numTarget        number of target
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
         ArrayList<String> cliColorCharacters = new ArrayList<String>();
@@ -412,7 +503,13 @@ public class CLI extends RemoteView {
         return new WeaponPlayersTargetChoiceEvent(getUser(), targetCharacter);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses one powerUp to use
+     *
+     * @param powerUpNames   name of powerUp available
+     * @param powerUpColours color of powerUp available
+     * @return event that contains player's choice
+     */
     @Override
     public Event powerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours) {
         Event message;
@@ -440,22 +537,37 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses one destination square for action move
+     *
+     * @param possibleSquareX row of possible destination square
+     * @param possibleSquareY column of possible destination square
+     * @return a ShotMoveChoiceEvent that contains the chosen position
+     */
     @Override
     public Event shotMoveChoiceEvent(int[] possibleSquareX, int[] possibleSquareY) {
         System.out.println("Select one square before shooting:");
         PositionChoiceEvent message = (PositionChoiceEvent) positionMoveChoice(possibleSquareX, possibleSquareY);
-        Event choice = new ShotMoveChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
-        return choice;
+        return new ShotMoveChoiceEvent(getUser(), message.getPositionX(), message.getPositionY());
     }
 
+    /**
+     * RemoteViewInterface implementation: it shows game board updated: map, player boards and game track
+     */
     @Override
     public void printScreen() {
         display.createDisplay();
         display.printDisplay();
     }
 
-
+    /**
+     * RemoteViewInterface implementation: Print a reconnection or disconnection (depending on disconnected value) update notifying the user and character disconnected
+     *
+     * @param user         is the involved user
+     * @param character    is the involved user's character
+     * @param disconnected is true if the user was disconnected, false if was reconnected
+     * @return event that contains player's choice
+     */
     @Override
     public Event playerReconnectionNotify(String user, Character character, boolean disconnected) {
         String optional;
@@ -471,7 +583,13 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: Every time one player joins the game it's notified to other player
+     *
+     * @param newPlayer       new player username
+     * @param characterChoice new player character choose
+     * @return message notify the success of updating
+     */
     @Override
     public Event newPlayerJoinedUpdate(String newPlayer, Character characterChoice) {
         System.out.println(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "New player joined the game:" + newPlayer + " with " + Color.ANSI_BLACK_BACKGROUND.escape() + mapCharacterNameColors.get(characterChoice) + characterChoice.name());
@@ -480,7 +598,16 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It updates map by adding an ammo tile
+     *
+     * @param x            row
+     * @param y            column
+     * @param fistColour   ammo cube
+     * @param secondColour ammo cube
+     * @param thirdColour  ammo cube or power up
+     * @return message notify the success of updating
+     */
     @Override
     public Event addAmmoTileUpdate(int x, int y, String fistColour, String secondColour, String thirdColour) {
         String[] color = {fistColour, secondColour, "PowerUp"};
@@ -495,7 +622,13 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It updates map by deleting an ammo tile
+     *
+     * @param x row
+     * @param y column
+     * @return message notify the success of updating
+     */
     @Override
     public Event removeAmmoTileUpdate(int x, int y) {
         CLIPrintableElement currElement = new CLIPrintableElement(false);
@@ -503,7 +636,14 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: it sets character on a new position on map
+     *
+     * @param currCharacter modified player position
+     * @param x             row: if sets at 404, player must be removed
+     * @param y             column: if sets at 404, players must be removed
+     * @return message notify the success of updating
+     */
     @Override
     public Event positionUpdate(Character currCharacter, int x, int y) {
 
@@ -516,7 +656,15 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: Modification of player Board(damage, mark, skull)
+     *
+     * @param character   modified player board
+     * @param skullNumber number of skull
+     * @param marks       number of marks and who did it
+     * @param damages     number of damage and who did it
+     * @return message notify the success of updating
+     */
     @Override
     public Event playerBoardUpdate(Character character, int skullNumber, Character[] marks, Character[] damages) {
         display.getPlayerBoard(character).clean(2);//MARKS
@@ -539,7 +687,14 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It shows power up available
+     *
+     * @param currCharacter modified player board
+     * @param powerUp       power up of player
+     * @param colour         colour of power up
+     * @return message notify the success of updating
+     */
     @Override
     public Event playerPowerUpUpdate(Character currCharacter, String[] powerUp, CubeColour[] colour) {
 
@@ -551,7 +706,13 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It shows weapon available
+     *
+     * @param currCharacter modified player board
+     * @param weapons       weapons of player
+     * @return message notify the success of updating
+     */
     @Override
     public Event playerWeaponUpdate(Character currCharacter, String[] weapons, boolean[] load) {
         for (int i = 0; i < load.length; i++) {
@@ -566,7 +727,13 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It shows ammo available
+     *
+     * @param currCharacter modified player board
+     * @param ammo          ammo of player
+     * @return message notify the success of updating
+     */
     @Override
     public Event playerAmmoUpdate(Character currCharacter, ArrayList<AmmoCube> ammo) {
         int size = ammo.size();
@@ -586,6 +753,16 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
+    /**
+     * RemoteViewInterface implementation: It updates number of skull on the game track
+     *
+     * @param damageTokenNumber player who takes the skull
+     * @param skullNumber     number of skull left:
+     *                        0-one skull;
+     *                        1-one damage;
+     *                        2-two damage;
+     * @return message notify the success of updating
+     */
     @Override
     public Event gameTrackSkullUpdate(Character[] damageTokenNumber, int[] skullNumber) {
 
@@ -599,20 +776,41 @@ public class CLI extends RemoteView {
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
+    /**
+     * RemoteViewInterface implementation: It replaces weapons on spawn square
+     *
+     * @param x      coordinate x (row)
+     * @param y      coordinate y (column)
+     * @param weapon weapon to add
+     * @return message notify the success of updating
+     */
     @Override
     public Event weaponReplaceUpdate(int x, int y, String[] weapon) {
         display.weaponsSpawnSquare(x, y, weapon);
         return new UpdateChoiceEvent(BROADCAST_STRING);
     }
 
+    /**
+     * RemoteViewInterface implementation: User chooses target of his power up
+     *
+     * @param availableTargets character available to hit
+     * @param maxTarget        max number of target
+     * @return event that contains player's choice
+     */
     @Override
-    public Event newtonTargetChoice(ArrayList<Character> availableTargets, int numTarget) {
+    public Event newtonTargetChoice(ArrayList<Character> availableTargets, int maxTarget) {
 
         CharacterChoiceEvent message = (CharacterChoiceEvent) characterChoice(availableTargets);
-        Event choice = new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
-        return choice;
+        return new NewtonPlayerTargetChoiceEvent(getUser(), message.getChosenCharacter());
     }
 
+    /**
+     * RemoteViewInterface implementation: it selects the destination square of target of newton powerUp
+     *
+     * @param possibleSquareX column of possible square
+     * @param possibleSquareY row of possible square
+     * @return event that contains player's choice
+     */
     @Override
     public Event newtonTeleporterTargetSquareChoice(int[] possibleSquareX, int[] possibleSquareY) {
         int[] chosenSquare = null;
@@ -628,11 +826,18 @@ public class CLI extends RemoteView {
 
     }
 
-    /*
+    /**
+     * RemoteViewInterface implementation: it returns how a player pay the cost of effect selected(weapon effect)
      * int arrays are built like that:
      * [0] - # Red
      * [1] - # Yellow
      * [2] - # Blue
+     *
+     * @param powerUpNames          list of power up's name available to use
+     * @param powerUpColours        list of power up's colour available to use
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
      */
     @Override
     public Event weaponEffectPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
@@ -653,6 +858,15 @@ public class CLI extends RemoteView {
     }
 
 
+    /**
+     * RemoteViewInterface implementation: It returns how a player pay the weapon GRAB cost
+     *
+     * @param powerUpNames          list of power up's name available to use
+     * @param powerUpColours        list of power up's colour available to use
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponGrabPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         Event message;
@@ -672,7 +886,15 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User selects how to reload his weapon: power Up, ammo or both
+     *
+     * @param powerUpNames          list of power up's name available to use
+     * @param powerUpColours        list of power up's colour available to use
+     * @param minimumPowerUpRequest if player ammo are not enough he must pay with powerUp
+     * @param maximumPowerUpRequest max number of power up you can use
+     * @return event that contains player's choice
+     */
     @Override
     public Event weaponReloadPaymentChoice(String[] powerUpNames, CubeColour[] powerUpColours, int[] minimumPowerUpRequest, int[] maximumPowerUpRequest) {
         Event message;
@@ -692,7 +914,14 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: it shows how to pay when player can choose one item from ammo or powerUp
+     *
+     * @param usableAmmo     available ammo
+     * @param powerUpsType   list of power up's name available to use
+     * @param powerUpsColour list of power up's colour available to use
+     * @return event that contains player's choice
+     */
     @Override
     public Event genericPaymentChoice(boolean[] usableAmmo, String[] powerUpsType, CubeColour[] powerUpsColour) {
         int payChoice = 404;
@@ -713,7 +942,7 @@ public class CLI extends RemoteView {
             //BLUE
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_BLUE.escape() + "BLUE option 2\t");
         }
-        if (usableAmmo[0] == false && usableAmmo[1] == false && usableAmmo[2] == false) {
+        if (!usableAmmo[0] && !usableAmmo[1] && !usableAmmo[2]) {
             System.out.print(Color.ANSI_BLACK_BACKGROUND.escape() + Color.ANSI_GREEN.escape() + "no ammo in your bag");
         }
 
@@ -762,15 +991,25 @@ public class CLI extends RemoteView {
         return new GenericPayChoiceEvent(getUser(), ammoChoice, powerUpChoice, colourChoice);
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses a target character
+     *
+     * @param possibleTargets character available to hit
+     * @return event that contains player's choice
+     */
     @Override
     public Event targetingScopeTargetChoice(ArrayList<Character> possibleTargets) {
         CharacterChoiceEvent message = (CharacterChoiceEvent) characterChoice(possibleTargets);
-        Event choice = new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
-        return choice;
+        return new TargetingScopeTargetChoiceEvent(getUser(), message.getChosenCharacter());
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses to use one of his power up during an action
+     *
+     * @param powerUpNames   available power up
+     * @param powerUpColours colour of power up
+     * @return event that contains player's choice
+     */
     @Override
     public Event whileActionPowerUpRequestEvent(String[] powerUpNames, CubeColour[] powerUpColours) {
         String choice = answerControl();
@@ -785,7 +1024,14 @@ public class CLI extends RemoteView {
         return selected;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: It shows the possibility to use one power up at the end of turn(no your turn)
+     *
+     * @param powerUpNames      list of  power up's name available to use
+     * @param powerUpColours    list of power up's colour available to use
+     * @param maxUsablePowerUps max powerUp that you can use
+     * @return event that contains player's choice
+     */
     @Override
     public Event endRoundPowerUpChoice(String[] powerUpNames, CubeColour[] powerUpColours, int maxUsablePowerUps) {
         String choice = null;
@@ -844,7 +1090,16 @@ public class CLI extends RemoteView {
         return message;
     }
 
-
+    /**
+     * RemoteViewInterface implementation: User chooses which game would like to join
+     *
+     * @param available      : availableChoice[0] = new game
+     *                       : availableChoice[1] = wait lobby
+     *                       : availableChoice[2] = started game
+     * @param startedLobbies Name of started game
+     * @param waitingLobbies Games are going to begin
+     * @return event that contains player's choice
+     */
     @Override
     public Event welcomeChoice(boolean[] available, ArrayList<String> startedLobbies, ArrayList<String> waitingLobbies) {
         int choice = 404;
@@ -893,7 +1148,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * User choose one way for pay
+     * RemoteViewInterface implementation: User choose one way for pay
      *
      * @param powerUpNames          list of power up's name available to use
      * @param powerUpColours        list of power up's colour available to use
@@ -960,7 +1215,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * it finds color by name
+     * RemoteViewInterface implementation: it finds color by name
      *
      * @param colourString name of colour
      * @return colour escape
@@ -978,7 +1233,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * it prints request of power up
+     * RemoteViewInterface implementation: it prints request of power up
      *
      * @param powerUpRequest pos 0-RED
      *                       pos 1-YELLOW
@@ -998,7 +1253,7 @@ public class CLI extends RemoteView {
     }
 
     /**
-     * It checks if input is equals to Y (yes) or N (no)
+     * RemoteViewInterface implementation: It checks if input is equals to Y (yes) or N (no)
      *
      * @return user choice
      */

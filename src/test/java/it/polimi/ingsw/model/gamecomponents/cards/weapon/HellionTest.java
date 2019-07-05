@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * hellion tests
+ */
 public class HellionTest {
     private Hellion hellion;
     private Square[][] map;
@@ -22,7 +25,7 @@ public class HellionTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hellion = new Hellion();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -39,6 +42,9 @@ public class HellionTest {
         player5.setPosition(map[2][2]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
     public void isUsableTest() {
         Assert.assertTrue(hellion.isUsable());
@@ -46,8 +52,11 @@ public class HellionTest {
         Assert.assertTrue(hellion.isUsableEffect(2));
     }
 
+    /**
+     * Test the efect one
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) hellion.getTargetEffect(1);
         Assert.assertEquals(2, message.getPossibleTargets().size());
         Assert.assertTrue(message.getPossibleTargets().contains(player4.getCharacter()));
@@ -69,8 +78,11 @@ public class HellionTest {
         Assert.assertFalse(hellion.isUsable());
     }
 
+    /**
+     * Test the effect two
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         TargetPlayerRequestEvent message = (TargetPlayerRequestEvent) hellion.getTargetEffect(2);
         Assert.assertEquals(2, message.getPossibleTargets().size());
         Assert.assertTrue(message.getPossibleTargets().contains(player4.getCharacter()));

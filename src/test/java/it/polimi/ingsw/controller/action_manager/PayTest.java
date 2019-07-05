@@ -36,7 +36,7 @@ public class PayTest {
     private RoundManager roundManager;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         hashMap = new HashMap<>();
         hashMap.put("Federico", new VirtualView("Federico"));
         hashMap.put("Francesco", new VirtualView("Francesco"));
@@ -56,8 +56,12 @@ public class PayTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
+    /**
+     * Check that a weapon effect can be correctly payed with the player's powerUps.
+     * Check also that only the usable powerUps are sent to the player for the pay action
+     */
     @Test
-    public void payEffectWithPowerUp(){
+    public void payEffectWithPowerUp() {
         Weapon plasmaGun = new PlasmaGun();
         PowerUp tagbackGrenade = new TagbackGrenade(CubeColour.Blue);
         player1.addWeapon(plasmaGun);
@@ -68,45 +72,45 @@ public class PayTest {
         roundManager.manageRound();
         //richiesta azione
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((ActionRequestEvent)requestMessage).getUsableActions()[2]);
+        Assert.assertTrue(((ActionRequestEvent) requestMessage).getUsableActions()[2]);
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         //richiesta arma
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponRequestEvent)requestMessage).getWeapons().size());
-        Assert.assertTrue(((WeaponRequestEvent)requestMessage).getWeapons().contains(plasmaGun.getName()));
+        Assert.assertEquals(1, ((WeaponRequestEvent) requestMessage).getWeapons().size());
+        Assert.assertTrue(((WeaponRequestEvent) requestMessage).getWeapons().contains(plasmaGun.getName()));
         choiceMessage = new WeaponChoiceEvent(player1.getUsername(), plasmaGun.getName());
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         // richiesta target
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestMessage).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestMessage).getPossibleTargets().contains(player2.getCharacter()));
         ArrayList<Character> target = new ArrayList<>();
         target.add(player2.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
         choiceMessage.performAction(controller);
         //richiesta effetto
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertFalse(((WeaponEffectRequest)requestMessage).getAvailableEffect()[0]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[1]);
-        Assert.assertTrue(((WeaponEffectRequest)requestMessage).getAvailableEffect()[2]);
+        Assert.assertFalse(((WeaponEffectRequest) requestMessage).getAvailableEffect()[0]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[1]);
+        Assert.assertTrue(((WeaponEffectRequest) requestMessage).getAvailableEffect()[2]);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         //richiesta pagamento
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertArrayEquals(new int[]{0,0,0}, ((EffectPaymentRequestEvent)requestMessage).getMinimumPowerUpRequest());
-        Assert.assertArrayEquals(new int[]{0,0,1}, ((EffectPaymentRequestEvent)requestMessage).getMaximumPowerUpRequest());
-        Assert.assertEquals(1, ((EffectPaymentRequestEvent)requestMessage).getPowerUpColours().length);
-        Assert.assertEquals(CubeColour.Blue, ((EffectPaymentRequestEvent)requestMessage).getPowerUpColours()[0]);
-        Assert.assertEquals(1, ((EffectPaymentRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(tagbackGrenade.getName(), ((EffectPaymentRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertArrayEquals(new int[]{0, 0, 0}, ((EffectPaymentRequestEvent) requestMessage).getMinimumPowerUpRequest());
+        Assert.assertArrayEquals(new int[]{0, 0, 1}, ((EffectPaymentRequestEvent) requestMessage).getMaximumPowerUpRequest());
+        Assert.assertEquals(1, ((EffectPaymentRequestEvent) requestMessage).getPowerUpColours().length);
+        Assert.assertEquals(CubeColour.Blue, ((EffectPaymentRequestEvent) requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(1, ((EffectPaymentRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(tagbackGrenade.getName(), ((EffectPaymentRequestEvent) requestMessage).getPowerUpNames()[0]);
         choiceMessage = new WeaponEffectPaymentChoiceEvent(player1.getUsername(), new String[]{tagbackGrenade.getName()}, new CubeColour[]{CubeColour.Blue});
         choiceMessage.performAction(controller);
 
@@ -118,8 +122,11 @@ public class PayTest {
         Assert.assertTrue(plasmaGun.isLoaded());
     }
 
+    /**
+     * Check that the reload of a weapon can be correclty payed with powerUps and only the usable powerUps are given to teh player for teh pay choice
+     */
     @Test
-    public void reloadTest(){
+    public void reloadTest() {
         Weapon railgun = new Railgun();
         Weapon flamethrower = new Flamethrower();
         player1.addWeapon(flamethrower);
@@ -137,18 +144,18 @@ public class PayTest {
         choiceMessage.performAction(controller);
         Assert.assertEquals(6, roundManager.getPhase());
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponReloadRequestEvent)requestMessage).getWeapons().size());
-        Assert.assertTrue(((WeaponReloadRequestEvent)requestMessage).getWeapons().contains(railgun.getName()));
+        Assert.assertEquals(1, ((WeaponReloadRequestEvent) requestMessage).getWeapons().size());
+        Assert.assertTrue(((WeaponReloadRequestEvent) requestMessage).getWeapons().contains(railgun.getName()));
 
         choiceMessage = new WeaponReloadChoiceEvent(player1.getUsername(), railgun.getName());
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertArrayEquals(new int[]{0,1,0}, ((WeaponReloadPaymentRequestEvent)requestMessage).getMinimumPowerUpRequest());
-        Assert.assertArrayEquals(new int[]{0,2,1}, ((WeaponReloadPaymentRequestEvent)requestMessage).getMaximumPowerUpRequest());
-        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpColours().length);
-        Assert.assertEquals(CubeColour.Yellow, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpColours()[0]);
-        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(tagbackGrenade.getName(), ((WeaponReloadPaymentRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertArrayEquals(new int[]{0, 1, 0}, ((WeaponReloadPaymentRequestEvent) requestMessage).getMinimumPowerUpRequest());
+        Assert.assertArrayEquals(new int[]{0, 2, 1}, ((WeaponReloadPaymentRequestEvent) requestMessage).getMaximumPowerUpRequest());
+        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent) requestMessage).getPowerUpColours().length);
+        Assert.assertEquals(CubeColour.Yellow, ((WeaponReloadPaymentRequestEvent) requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(1, ((WeaponReloadPaymentRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(tagbackGrenade.getName(), ((WeaponReloadPaymentRequestEvent) requestMessage).getPowerUpNames()[0]);
 
         choiceMessage = new WeaponReloadPaymentChoiceEvent(player1.getUsername(), new String[]{tagbackGrenade.getName()}, new CubeColour[]{CubeColour.Yellow});
         choiceMessage.performAction(controller);

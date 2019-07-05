@@ -12,15 +12,18 @@ public class AmmoCubeTest {
     AmmoCube ammoCube3;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         ammoCube1 = new AmmoCube(CubeColour.Blue);
         ammoCube2 = new AmmoCube(CubeColour.Red);
         ammoCube3 = new AmmoCube(CubeColour.Blue);
     }
 
+    /**
+     * Check that the costs are rightly encoded in a in a int[]
+     */
     @Test
-    public void getColoursTest(){
-        int[] expectedRYB = new int[]{1,0,2};
+    public void getColoursTest() {
+        int[] expectedRYB = new int[]{1, 0, 2};
 
         AmmoCube[] ammoCubesArray = new AmmoCube[]{ammoCube1, ammoCube2, ammoCube3};
         int[] result = AmmoCube.getColoursByAmmoCubeArrayRYB(ammoCubesArray);
@@ -44,19 +47,22 @@ public class AmmoCubeTest {
         }
     }
 
+    /**
+     * Check that the method cubeDifference(int[], int[]) works correctly
+     */
     @Test
-    public void cubeDifferenceTest(){
-        int[] a = new int[]{2,3,1};
-        int[] b = new int[]{1,2,1};
-        int[] expectedResult = new int[]{1,1,0};
-        int[] result = AmmoCube.cubeDifference(a,b);
+    public void cubeDifferenceTest() {
+        int[] a = new int[]{2, 3, 1};
+        int[] b = new int[]{1, 2, 1};
+        int[] expectedResult = new int[]{1, 1, 0};
+        int[] result = AmmoCube.cubeDifference(a, b);
         for (int i = 0; i < 3; i++) {
             Assert.assertEquals(expectedResult[i], result[i]);
         }
-        a = new int[]{2,3,1};
-        b = new int[]{3,3,3};
-        expectedResult = new int[]{0,0,0};
-        result = AmmoCube.cubeDifference(a,b);
+        a = new int[]{2, 3, 1};
+        b = new int[]{3, 3, 3};
+        expectedResult = new int[]{0, 0, 0};
+        result = AmmoCube.cubeDifference(a, b);
         for (int i = 0; i < 3; i++) {
             Assert.assertEquals(expectedResult[i], result[i]);
         }

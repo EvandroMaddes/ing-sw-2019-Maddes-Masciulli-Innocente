@@ -14,6 +14,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * cyberblade tests
+ */
 public class CyberBladeTest {
     private CyberBlade cyberBlade;
     private Square[][] map;
@@ -24,7 +27,7 @@ public class CyberBladeTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         cyberBlade = new CyberBlade();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -41,8 +44,11 @@ public class CyberBladeTest {
         player5.setPosition(map[0][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
-    public void isUsableTest(){
+    public void isUsableTest() {
         Assert.assertTrue(cyberBlade.isUsable());
         Assert.assertFalse(cyberBlade.isUsableEffect(1));
         Assert.assertTrue(cyberBlade.isUsableEffect(2));
@@ -51,16 +57,19 @@ public class CyberBladeTest {
         Assert.assertTrue(cyberBlade.isUsableEffect(1));
     }
 
+    /**
+     * Test the effect two
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         ControllerViewEvent message = cyberBlade.getTargetEffect(2);
         int[] expectedX = new int[]{2, 1, 2};
         int[] expectedY = new int[]{2, 3, 3};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -76,14 +85,17 @@ public class CyberBladeTest {
         Assert.assertFalse(cyberBlade.isUsableEffect(3));
     }
 
+    /**
+     * test the three effect in that order : 1 - 2 - 3
+     */
     @Test
-    public void effectOneThanTwoThanThreeTest(){
+    public void effectOneThanTwoThanThreeTest() {
         player5.setPosition(map[2][3]);
         Assert.assertTrue(cyberBlade.isUsableEffect(1));
 
         ControllerViewEvent message = cyberBlade.getTargetEffect(1);
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertEquals(player5.getCharacter(), ((TargetPlayerRequestEvent)message).getPossibleTargets().get(0));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertEquals(player5.getCharacter(), ((TargetPlayerRequestEvent) message).getPossibleTargets().get(0));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player5);
@@ -96,11 +108,11 @@ public class CyberBladeTest {
         message = cyberBlade.getTargetEffect(2);
         int[] expectedX = new int[]{2, 1, 2};
         int[] expectedY = new int[]{2, 3, 3};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -116,8 +128,8 @@ public class CyberBladeTest {
         Assert.assertTrue(cyberBlade.isUsableEffect(3));
 
         message = cyberBlade.getTargetEffect(3);
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertEquals(player4.getCharacter(), ((TargetPlayerRequestEvent)message).getPossibleTargets().get(0));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertEquals(player4.getCharacter(), ((TargetPlayerRequestEvent) message).getPossibleTargets().get(0));
 
         target.clear();
         target.add(player4);
@@ -129,16 +141,19 @@ public class CyberBladeTest {
         Assert.assertFalse(cyberBlade.isUsable());
     }
 
+    /**
+     * Test the three effect in that order: 1 - 3 - 2
+     */
     @Test
-    public void effectOneThanThreeThanTwoTest(){
+    public void effectOneThanThreeThanTwoTest() {
         player5.setPosition(map[2][3]);
         player3.setPosition(map[2][3]);
         Assert.assertTrue(cyberBlade.isUsableEffect(1));
 
         ControllerViewEvent message = cyberBlade.getTargetEffect(1);
-        Assert.assertEquals(2, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player5.getCharacter()));
-        Assert.assertTrue(((TargetPlayerRequestEvent)message).getPossibleTargets().contains(player3.getCharacter()));
+        Assert.assertEquals(2, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player5.getCharacter()));
+        Assert.assertTrue(((TargetPlayerRequestEvent) message).getPossibleTargets().contains(player3.getCharacter()));
 
         ArrayList<Object> target = new ArrayList<>();
         target.add(player5);
@@ -149,8 +164,8 @@ public class CyberBladeTest {
         Assert.assertTrue(cyberBlade.isUsableEffect(3));
 
         message = cyberBlade.getTargetEffect(3);
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)message).getPossibleTargets().size());
-        Assert.assertEquals(player3.getCharacter(), ((TargetPlayerRequestEvent)message).getPossibleTargets().get(0));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) message).getPossibleTargets().size());
+        Assert.assertEquals(player3.getCharacter(), ((TargetPlayerRequestEvent) message).getPossibleTargets().get(0));
 
         target.clear();
         target.add(player3);
@@ -164,11 +179,11 @@ public class CyberBladeTest {
         message = cyberBlade.getTargetEffect(2);
         int[] expectedX = new int[]{2, 1, 2};
         int[] expectedY = new int[]{2, 3, 3};
-        Assert.assertEquals(3, ((TargetSquareRequestEvent)message).getPossibleTargetsX().length);
+        Assert.assertEquals(3, ((TargetSquareRequestEvent) message).getPossibleTargetsX().length);
         for (int i = 0; i < 3; i++) {
             boolean check = false;
             for (int j = 0; j < 3; j++) {
-                if (expectedX[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent)message).getPossibleTargetsY()[j])
+                if (expectedX[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsX()[j] && expectedY[i] == ((TargetSquareRequestEvent) message).getPossibleTargetsY()[j])
                     check = true;
             }
             Assert.assertTrue(check);

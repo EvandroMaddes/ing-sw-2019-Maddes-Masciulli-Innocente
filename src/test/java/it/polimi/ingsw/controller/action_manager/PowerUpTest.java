@@ -57,19 +57,22 @@ public class PowerUpTest {
         SetUpObserverObservable.connect(controller.getGameManager().getModel().getPlayers(), controller.getUsersVirtualView(), controller.getGameManager().getModel());
     }
 
+    /**
+     * Check that the option of use a teleporter is correctly given to a player if he has one, and that its use set the right player position
+     */
     @Test
-    public void teleporterTest(){
+    public void teleporterTest() {
         PowerUp teleporter = new Teleporter(CubeColour.Blue);
         player1.addPowerUp(teleporter);
         player1.setPosition(map[0][0]);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
         ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), teleporter.getName(), CubeColour.Blue);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(12, ((TeleporterTargetRequestEvent)requestMessage).getPossibleSquareX().length);
+        Assert.assertEquals(12, ((TeleporterTargetRequestEvent) requestMessage).getPossibleSquareX().length);
         choiceMessage = new PowerUpSquareTargetChoiceEvent(player1.getUsername(), 2, 0);
         choiceMessage.performAction(controller);
         Assert.assertEquals(map[2][0], player1.getPosition());
@@ -77,8 +80,11 @@ public class PowerUpTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that the possible destination of the teleporter are colleclty calculate on a map with empty square
+     */
     @Test
-    public void teleporterOnMediumMapTest(){
+    public void teleporterOnMediumMapTest() {
         controller = new Controller(hashMap, 1);
         controller.getGameManager().getModel().getPlayers().add(player1);
         controller.getGameManager().getModel().getPlayers().add(player2);
@@ -94,12 +100,12 @@ public class PowerUpTest {
         player1.setPosition(map[0][0]);
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(teleporter.getName(), ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
         ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), teleporter.getName(), CubeColour.Blue);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(11, ((TeleporterTargetRequestEvent)requestMessage).getPossibleSquareX().length);
+        Assert.assertEquals(11, ((TeleporterTargetRequestEvent) requestMessage).getPossibleSquareX().length);
         choiceMessage = new PowerUpSquareTargetChoiceEvent(player1.getUsername(), 2, 0);
         choiceMessage.performAction(controller);
         Assert.assertEquals(map[2][0], player1.getPosition());
@@ -107,8 +113,11 @@ public class PowerUpTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that the newton powerUp correctly get the possible targets and move them on the chosen position
+     */
     @Test
-    public void newtonTest(){
+    public void newtonTest() {
         PowerUp newton = new Newton(CubeColour.Blue);
         player1.addPowerUp(newton);
         player1.setPosition(map[0][0]);
@@ -116,22 +125,22 @@ public class PowerUpTest {
         Assert.assertFalse(controller.getGameManager().isFirstRoundPhase());
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(newton.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(newton.getName(), ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
         ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), newton.getName(), CubeColour.Blue);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((NewtonPlayerTargetRequestEvent)requestMessage).getPossibleTargets().size());
+        Assert.assertEquals(1, ((NewtonPlayerTargetRequestEvent) requestMessage).getPossibleTargets().size());
         choiceMessage = new NewtonPlayerTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(5, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{0,0,0,1,2};
-        int[] expectedY = new int[]{0,1,2,0,0};
+        Assert.assertEquals(5, ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{0, 0, 0, 1, 2};
+        int[] expectedY = new int[]{0, 1, 2, 0, 0};
         for (int i = 0; i < 5; i++) {
             boolean check = false;
             for (int j = 0; j < 5; j++) {
-                if (expectedX[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareY()[j])
+                if (expectedX[i] == ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -144,8 +153,11 @@ public class PowerUpTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that the newton powerUp correctly get the possible targets and move them on the chosen position on map with empty squares
+     */
     @Test
-    public void newtonTestOnSmallMap(){
+    public void newtonTestOnSmallMap() {
         controller = new Controller(hashMap, 3);
         controller.getGameManager().getModel().getPlayers().add(player1);
         controller.getGameManager().getModel().getPlayers().add(player2);
@@ -162,22 +174,22 @@ public class PowerUpTest {
         Assert.assertFalse(controller.getGameManager().isFirstRoundPhase());
         roundManager.manageRound();
         Event requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames().length);
-        Assert.assertEquals(newton.getName(), ((AsActionPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(1, ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames().length);
+        Assert.assertEquals(newton.getName(), ((AsActionPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
         ViewControllerEvent choiceMessage = new PowerUpChoiceEvent(player1.getUsername(), newton.getName(), CubeColour.Blue);
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((NewtonPlayerTargetRequestEvent)requestMessage).getPossibleTargets().size());
+        Assert.assertEquals(1, ((NewtonPlayerTargetRequestEvent) requestMessage).getPossibleTargets().size());
         choiceMessage = new NewtonPlayerTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         requestMessage = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(4, ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX().length);
-        int[] expectedX = new int[]{1,2,1,1};
-        int[] expectedY = new int[]{3,3,2,1};
+        Assert.assertEquals(4, ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareX().length);
+        int[] expectedX = new int[]{1, 2, 1, 1};
+        int[] expectedY = new int[]{3, 3, 2, 1};
         for (int i = 0; i < 4; i++) {
             boolean check = false;
             for (int j = 0; j < 4; j++) {
-                if (expectedX[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent)requestMessage).getPossibleSquareY()[j])
+                if (expectedX[i] == ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareX()[j] && expectedY[i] == ((NewtonTargetSquareRequestEvent) requestMessage).getPossibleSquareY()[j])
                     check = true;
             }
             Assert.assertTrue(check);
@@ -190,8 +202,11 @@ public class PowerUpTest {
         Assert.assertEquals(2, controller.getGameManager().getCurrentRound().getPhase());
     }
 
+    /**
+     * Check that a damaged player can correctly use his tagback granade at the end of the round
+     */
     @Test
-    public void tagbackGrenadeTest(){
+    public void tagbackGrenadeTest() {
         controller.getGameManager().setPlayerTurn(2);
         player1.setPosition(map[0][0]);
         player2.setPosition(map[0][0]);
@@ -219,9 +234,9 @@ public class PowerUpTest {
         choiceMessage.performAction(controller);
         Assert.assertEquals(7, controller.getGameManager().getCurrentRound().getPhase());
         Event requestMessage = hashMap.get(player2.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((EndRoundPowerUpRequestEvent)requestMessage).getMaxUsablePowerUps());
-        Assert.assertEquals(tagbackGrenade1.getName(), ((EndRoundPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
-        Assert.assertEquals(tagbackGrenade1.getColour(), ((EndRoundPowerUpRequestEvent)requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(1, ((EndRoundPowerUpRequestEvent) requestMessage).getMaxUsablePowerUps());
+        Assert.assertEquals(tagbackGrenade1.getName(), ((EndRoundPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(tagbackGrenade1.getColour(), ((EndRoundPowerUpRequestEvent) requestMessage).getPowerUpColours()[0]);
         choiceMessage = new EndRoundPowerUpChoiceEvent(player2.getUsername(), new String[]{tagbackGrenade1.getName()}, new CubeColour[]{tagbackGrenade1.getColour()});
         choiceMessage.performAction(controller);
         Assert.assertEquals(1, player1.getPlayerBoard().getMarks().size());
@@ -229,9 +244,9 @@ public class PowerUpTest {
         Assert.assertEquals(0, player2.getPowerUps().size());
         Assert.assertEquals(7, controller.getGameManager().getCurrentRound().getPhase());
         requestMessage = hashMap.get(player3.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((EndRoundPowerUpRequestEvent)requestMessage).getMaxUsablePowerUps());
-        Assert.assertEquals(tagbackGrenade2.getName(), ((EndRoundPowerUpRequestEvent)requestMessage).getPowerUpNames()[0]);
-        Assert.assertEquals(tagbackGrenade2.getColour(), ((EndRoundPowerUpRequestEvent)requestMessage).getPowerUpColours()[0]);
+        Assert.assertEquals(1, ((EndRoundPowerUpRequestEvent) requestMessage).getMaxUsablePowerUps());
+        Assert.assertEquals(tagbackGrenade2.getName(), ((EndRoundPowerUpRequestEvent) requestMessage).getPowerUpNames()[0]);
+        Assert.assertEquals(tagbackGrenade2.getColour(), ((EndRoundPowerUpRequestEvent) requestMessage).getPowerUpColours()[0]);
         choiceMessage = new EndRoundPowerUpChoiceEvent(player3.getUsername(), new String[]{tagbackGrenade2.getName()}, new CubeColour[]{tagbackGrenade2.getColour()});
         choiceMessage.performAction(controller);
         Assert.assertEquals(2, player1.getPlayerBoard().getMarks().size());
@@ -241,8 +256,12 @@ public class PowerUpTest {
         Assert.assertEquals(player2, controller.getGameManager().getCurrentRound().getCurrentPlayer());
     }
 
+    /**
+     * Check that a player can correctly use a targeting scope, paying it with another powerUp.
+     * Check also that the powerUp itself is not showed as a possible pay method
+     */
     @Test
-    public void tagretingScopePayedWithPowerUpTest(){
+    public void tagretingScopePayedWithPowerUpTest() {
         PlasmaGun plasmaGun = new PlasmaGun();
         PowerUp targetingScope1 = new TargetingScope(CubeColour.Yellow);
         PowerUp targetingScope2 = new TargetingScope(CubeColour.Red);
@@ -258,42 +277,42 @@ public class PowerUpTest {
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         Event requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponRequestEvent)requestEvent).getWeapons().size());
+        Assert.assertEquals(1, ((WeaponRequestEvent) requestEvent).getWeapons().size());
         choiceMessage = new WeaponChoiceEvent(player1.getUsername(), plasmaGun.getName());
         choiceMessage.performAction(controller);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)requestEvent).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) requestEvent).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestEvent).getPossibleTargets().contains(player2.getCharacter()));
         ArrayList<Character> target = new ArrayList<>();
         target.add(player2.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
         choiceMessage.performAction(controller);
         //richiesta targetingScope
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours().length);
-        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames().length);
-        Assert.assertEquals(targetingScope1.getName(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames()[0]);
-        Assert.assertEquals(targetingScope1.getColour(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours()[0]);
-        Assert.assertEquals(targetingScope2.getName(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames()[1]);
-        Assert.assertEquals(targetingScope2.getColour(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours()[1]);
-        choiceMessage = new WhileActionPowerUpChoiceEvent(player1.getUsername(),true, targetingScope1.getName(), targetingScope1.getColour());
+        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours().length);
+        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames().length);
+        Assert.assertEquals(targetingScope1.getName(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(targetingScope1.getColour(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours()[0]);
+        Assert.assertEquals(targetingScope2.getName(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames()[1]);
+        Assert.assertEquals(targetingScope2.getColour(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours()[1]);
+        choiceMessage = new WhileActionPowerUpChoiceEvent(player1.getUsername(), true, targetingScope1.getName(), targetingScope1.getColour());
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[0]);
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[1]);
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[2]);
-        Assert.assertEquals(2, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour().length);
-        Assert.assertEquals(targetingScope2.getName(), ((GenericPayRequestEvent)requestEvent).getPowerUpsType()[0]);
-        Assert.assertEquals(tagbackGrenade.getName(), ((GenericPayRequestEvent)requestEvent).getPowerUpsType()[1]);
-        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour()[0]);
-        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour()[0]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[0]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[1]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[2]);
+        Assert.assertEquals(2, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour().length);
+        Assert.assertEquals(targetingScope2.getName(), ((GenericPayRequestEvent) requestEvent).getPowerUpsType()[0]);
+        Assert.assertEquals(tagbackGrenade.getName(), ((GenericPayRequestEvent) requestEvent).getPowerUpsType()[1]);
+        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour()[0]);
+        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour()[0]);
         choiceMessage = new GenericPayChoiceEvent(player1.getUsername(), new boolean[]{false, false, false}, tagbackGrenade.getName(), tagbackGrenade.getColour());
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetingScopeTargetRequestEvent)requestEvent).getPossibleTargets().size());
-        Assert.assertTrue(((TargetingScopeTargetRequestEvent)requestEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetingScopeTargetRequestEvent) requestEvent).getPossibleTargets().size());
+        Assert.assertTrue(((TargetingScopeTargetRequestEvent) requestEvent).getPossibleTargets().contains(player2.getCharacter()));
         choiceMessage = new TargetingScopeTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         Assert.assertEquals(1, player1.getPowerUps().size());
@@ -306,8 +325,11 @@ public class PowerUpTest {
         Assert.assertEquals(1, player1.getCubeColourNumber(CubeColour.Blue));
     }
 
+    /**
+     * Check that the option to use a targeting scope is not given to the player if he use only move effect in his shot actions
+     */
     @Test
-    public void noDamageEffectTargetingScopeTest(){
+    public void noDamageEffectTargetingScopeTest() {
         PlasmaGun plasmaGun = new PlasmaGun();
         PowerUp targetingScope1 = new TargetingScope(CubeColour.Yellow);
         PowerUp targetingScope2 = new TargetingScope(CubeColour.Red);
@@ -323,25 +345,28 @@ public class PowerUpTest {
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         Event requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponRequestEvent)requestEvent).getWeapons().size());
+        Assert.assertEquals(1, ((WeaponRequestEvent) requestEvent).getWeapons().size());
         choiceMessage = new WeaponChoiceEvent(player1.getUsername(), plasmaGun.getName());
         choiceMessage.performAction(controller);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 2);
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(5, ((TargetSquareRequestEvent)requestEvent).getPossibleTargetsX().length);
-        TestPattern.checkSquares(new int[]{0,0,1,1,2}, new int[]{1,2,0,1,0}, ((TargetSquareRequestEvent)requestEvent).getPossibleTargetsX(), ((TargetSquareRequestEvent)requestEvent).getPossibleTargetsY());
-        choiceMessage = new WeaponSquareTargetChoiceEvent(player1.getUsername(), 0,1);
+        Assert.assertEquals(5, ((TargetSquareRequestEvent) requestEvent).getPossibleTargetsX().length);
+        TestPattern.checkSquares(new int[]{0, 0, 1, 1, 2}, new int[]{1, 2, 0, 1, 0}, ((TargetSquareRequestEvent) requestEvent).getPossibleTargetsX(), ((TargetSquareRequestEvent) requestEvent).getPossibleTargetsY());
+        choiceMessage = new WeaponSquareTargetChoiceEvent(player1.getUsername(), 0, 1);
         choiceMessage.performAction(controller);
         Assert.assertEquals(map[0][1], player1.getPosition());
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((WeaponEffectRequest)requestEvent).getAvailableEffect()[0]);
-        Assert.assertFalse(((WeaponEffectRequest)requestEvent).getAvailableEffect()[1]);
-        Assert.assertFalse(((WeaponEffectRequest)requestEvent).getAvailableEffect()[2]);
+        Assert.assertTrue(((WeaponEffectRequest) requestEvent).getAvailableEffect()[0]);
+        Assert.assertFalse(((WeaponEffectRequest) requestEvent).getAvailableEffect()[1]);
+        Assert.assertFalse(((WeaponEffectRequest) requestEvent).getAvailableEffect()[2]);
     }
 
+    /**
+     * Check the correct use of of a targeting scope and that it can be correclty payed with ammo
+     */
     @Test
-    public void targetingScopePayedWithAmmoTest(){
+    public void targetingScopePayedWithAmmoTest() {
         PlasmaGun plasmaGun = new PlasmaGun();
         PowerUp targetingScope1 = new TargetingScope(CubeColour.Yellow);
         PowerUp targetingScope2 = new TargetingScope(CubeColour.Red);
@@ -357,42 +382,42 @@ public class PowerUpTest {
         ViewControllerEvent choiceMessage = new ActionChoiceEvent(player1.getUsername(), 3);
         choiceMessage.performAction(controller);
         Event requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((WeaponRequestEvent)requestEvent).getWeapons().size());
+        Assert.assertEquals(1, ((WeaponRequestEvent) requestEvent).getWeapons().size());
         choiceMessage = new WeaponChoiceEvent(player1.getUsername(), plasmaGun.getName());
         choiceMessage.performAction(controller);
         choiceMessage = new WeaponEffectChioceEvent(player1.getUsername(), 1);
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetPlayerRequestEvent)requestEvent).getPossibleTargets().size());
-        Assert.assertTrue(((TargetPlayerRequestEvent)requestEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetPlayerRequestEvent) requestEvent).getPossibleTargets().size());
+        Assert.assertTrue(((TargetPlayerRequestEvent) requestEvent).getPossibleTargets().contains(player2.getCharacter()));
         ArrayList<Character> target = new ArrayList<>();
         target.add(player2.getCharacter());
         choiceMessage = new WeaponPlayersTargetChoiceEvent(player1.getUsername(), target);
         choiceMessage.performAction(controller);
         //richiesta targetingScope
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours().length);
-        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames().length);
-        Assert.assertEquals(targetingScope1.getName(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames()[0]);
-        Assert.assertEquals(targetingScope1.getColour(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours()[0]);
-        Assert.assertEquals(targetingScope2.getName(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpNames()[1]);
-        Assert.assertEquals(targetingScope2.getColour(), ((WhileActionPowerUpRequestEvent)requestEvent).getPowerUpColours()[1]);
-        choiceMessage = new WhileActionPowerUpChoiceEvent(player1.getUsername(),true, targetingScope1.getName(), targetingScope1.getColour());
+        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours().length);
+        Assert.assertEquals(2, ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames().length);
+        Assert.assertEquals(targetingScope1.getName(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames()[0]);
+        Assert.assertEquals(targetingScope1.getColour(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours()[0]);
+        Assert.assertEquals(targetingScope2.getName(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpNames()[1]);
+        Assert.assertEquals(targetingScope2.getColour(), ((WhileActionPowerUpRequestEvent) requestEvent).getPowerUpColours()[1]);
+        choiceMessage = new WhileActionPowerUpChoiceEvent(player1.getUsername(), true, targetingScope1.getName(), targetingScope1.getColour());
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[0]);
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[1]);
-        Assert.assertTrue(((GenericPayRequestEvent)requestEvent).getUsableAmmo()[2]);
-        Assert.assertEquals(2, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour().length);
-        Assert.assertEquals(targetingScope2.getName(), ((GenericPayRequestEvent)requestEvent).getPowerUpsType()[0]);
-        Assert.assertEquals(tagbackGrenade.getName(), ((GenericPayRequestEvent)requestEvent).getPowerUpsType()[1]);
-        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour()[0]);
-        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent)requestEvent).getPowerUpsColour()[0]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[0]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[1]);
+        Assert.assertTrue(((GenericPayRequestEvent) requestEvent).getUsableAmmo()[2]);
+        Assert.assertEquals(2, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour().length);
+        Assert.assertEquals(targetingScope2.getName(), ((GenericPayRequestEvent) requestEvent).getPowerUpsType()[0]);
+        Assert.assertEquals(tagbackGrenade.getName(), ((GenericPayRequestEvent) requestEvent).getPowerUpsType()[1]);
+        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour()[0]);
+        Assert.assertEquals(CubeColour.Red, ((GenericPayRequestEvent) requestEvent).getPowerUpsColour()[0]);
         choiceMessage = new GenericPayChoiceEvent(player1.getUsername(), new boolean[]{false, true, false}, null, null);
         choiceMessage.performAction(controller);
         requestEvent = hashMap.get(player1.getUsername()).getToRemoteView();
-        Assert.assertEquals(1, ((TargetingScopeTargetRequestEvent)requestEvent).getPossibleTargets().size());
-        Assert.assertTrue(((TargetingScopeTargetRequestEvent)requestEvent).getPossibleTargets().contains(player2.getCharacter()));
+        Assert.assertEquals(1, ((TargetingScopeTargetRequestEvent) requestEvent).getPossibleTargets().size());
+        Assert.assertTrue(((TargetingScopeTargetRequestEvent) requestEvent).getPossibleTargets().contains(player2.getCharacter()));
         choiceMessage = new TargetingScopeTargetChoiceEvent(player1.getUsername(), player2.getCharacter());
         choiceMessage.performAction(controller);
         Assert.assertEquals(2, player1.getPowerUps().size());

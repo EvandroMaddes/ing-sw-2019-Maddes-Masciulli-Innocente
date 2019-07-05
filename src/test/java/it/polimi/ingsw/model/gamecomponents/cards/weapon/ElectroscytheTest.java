@@ -13,6 +13,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * electroscythe tests
+ */
 public class ElectroscytheTest {
     private Electroscythe electroscythe;
     private Square[][] map;
@@ -23,7 +26,7 @@ public class ElectroscytheTest {
     private Player player5;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         electroscythe = new Electroscythe();
         Map gameMap = new Map(Map.BIG_LEFT, Map.BIG_RIGHT);
         map = gameMap.getSquareMatrix();
@@ -40,6 +43,9 @@ public class ElectroscytheTest {
         player5.setPosition(map[0][3]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
     public void isUsableTest() {
         Assert.assertFalse(electroscythe.isUsable());
@@ -50,12 +56,15 @@ public class ElectroscytheTest {
         Assert.assertTrue(electroscythe.isUsableEffect(2));
     }
 
+    /**
+     * Test the first effect
+     */
     @Test
-    public void effectOneTest(){
+    public void effectOneTest() {
         player2.setPosition(map[2][3]);
         player3.setPosition(map[2][3]);
         ControllerViewEvent message = electroscythe.getTargetEffect(1);
-        Assert.assertEquals(-1, ((TargetPlayerRequestEvent)message).getMaxTarget());
+        Assert.assertEquals(-1, ((TargetPlayerRequestEvent) message).getMaxTarget());
 
         ArrayList<Object> target = new ArrayList<>();
         electroscythe.performEffect(1, target);
@@ -68,12 +77,15 @@ public class ElectroscytheTest {
         Assert.assertFalse(electroscythe.isUsable());
     }
 
+    /**
+     * Test the second effect
+     */
     @Test
-    public void effectTwoTest(){
+    public void effectTwoTest() {
         player2.setPosition(map[2][3]);
         player3.setPosition(map[2][3]);
         ControllerViewEvent message = electroscythe.getTargetEffect(2);
-        Assert.assertEquals(-1, ((TargetPlayerRequestEvent)message).getMaxTarget());
+        Assert.assertEquals(-1, ((TargetPlayerRequestEvent) message).getMaxTarget());
 
         ArrayList<Object> target = new ArrayList<>();
         electroscythe.performEffect(2, target);

@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * furnace tests
+ */
 public class FurnaceTest {
     private Furnace furnace;
     private Square[][] map;
@@ -42,6 +45,9 @@ public class FurnaceTest {
         player6.setPosition(map[0][2]);
     }
 
+    /**
+     * Test the usability of the weapon
+     */
     @Test
     public void isUsableEffectTest(){
         Assert.assertTrue(furnace.isUsable());
