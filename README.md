@@ -11,7 +11,7 @@
 
 # ADRENALINE: THE GAME
 
-#Progetto di ingegneria del software, Politecnico di Milano A.A. 2018-2019
+# Progetto di ingegneria del software, Politecnico di Milano A.A. 2018-2019
 
 
             
@@ -61,10 +61,7 @@ inoltre sono state utilizzate le seguenti librerie esterne:
 
 
 ---
-##Federico Innocente, Evandro Maddes, Francesco Masciulli
-
-
-
+## Federico Innocente, Evandro Maddes, Francesco Masciulli
 
 
 
